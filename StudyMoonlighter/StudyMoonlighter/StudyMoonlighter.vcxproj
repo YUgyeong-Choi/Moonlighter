@@ -114,6 +114,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,19 +136,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CBitManager.h" />
+    <ClInclude Include="CMainGame.h" />
+    <ClInclude Include="CMenuScene.h" />
+    <ClInclude Include="CMyBmp.h" />
+    <ClInclude Include="CScene.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="StudyMoonlighter.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBitManager.cpp" />
+    <ClCompile Include="CMainGame.cpp" />
+    <ClCompile Include="CMenuScene.cpp" />
+    <ClCompile Include="CMyBmp.cpp" />
+    <ClCompile Include="CScene.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="StudyMoonlighter.cpp" />
   </ItemGroup>
   <ItemGroup>

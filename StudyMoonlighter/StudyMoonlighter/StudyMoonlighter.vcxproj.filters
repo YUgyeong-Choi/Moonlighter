@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -12,6 +8,34 @@
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="00_MainGame">
+      <UniqueIdentifier>{9f9b1569-b416-4996-ab15-e29c6e57fea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes">
+      <UniqueIdentifier>{d3b83315-b4bd-4200-b13f-b231e0062f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\00_Menu">
+      <UniqueIdentifier>{3cfe7aee-d12d-4b91-b5c3-0a4e77ea8c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="99_Managers">
+      <UniqueIdentifier>{13aaad2f-65e9-4642-9da3-f664f0d23740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\SceneManager">
+      <UniqueIdentifier>{518b4f3f-4927-4bb1-b8e2-d6b5cd8667fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\BitManager">
+      <UniqueIdentifier>{3be85566-612f-4b30-93a2-ee615bdf5edb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\BitManager\Bmp">
+      <UniqueIdentifier>{5357c609-c55c-4c95-bdc4-9c5e15ccab6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\AnimationManager">
+      <UniqueIdentifier>{908a1b5e-3d9f-4584-950f-2c3fe242b7a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +54,27 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CMainGame.h">
+      <Filter>00_MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneManager.h">
+      <Filter>99_Managers\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>01_Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuScene.h">
+      <Filter>01_Scenes\00_Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="CBitManager.h">
+      <Filter>99_Managers\BitManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyBmp.h">
+      <Filter>99_Managers\BitManager\Bmp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -37,6 +82,24 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainGame.cpp">
+      <Filter>00_MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneManager.cpp">
+      <Filter>99_Managers\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>01_Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuScene.cpp">
+      <Filter>01_Scenes\00_Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="CBitManager.cpp">
+      <Filter>99_Managers\BitManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyBmp.cpp">
+      <Filter>99_Managers\BitManager\Bmp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
