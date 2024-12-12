@@ -137,10 +137,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CBitManager.h" />
+    <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenuScene.h" />
     <ClInclude Include="CMyBmp.h" />
     <ClInclude Include="CScene.h" />
+    <ClInclude Include="CVillageScene.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -151,10 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBitManager.cpp" />
+    <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenuScene.cpp" />
     <ClCompile Include="CMyBmp.cpp" />
     <ClCompile Include="CScene.cpp" />
+    <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

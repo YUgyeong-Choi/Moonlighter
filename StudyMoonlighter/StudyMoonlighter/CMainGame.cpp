@@ -30,9 +30,12 @@ void CMainGame::Render()
 {
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(L"Back");
 	CSceneManager::GetInstance()->Render(hMemDC);
-	BitBlt(m_hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, SRCCOPY);
+	GdiTransparentBlt(m_hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, 1024, 576, SRCCOPY);
 }
 
 void CMainGame::Release()
 {
+	CSceneManager::DestroyInstance();
+	CBitManager::DestroyInstance();
+	ReleaseDC(g_hWnd, m_hDC);
 }

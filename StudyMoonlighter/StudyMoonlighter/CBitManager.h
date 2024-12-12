@@ -9,7 +9,6 @@ private:
 
 public:
 	void		InsertBmp(const TCHAR* pFilePath, const TCHAR* pImgKey);
-	void		InsertBmpList(const TCHAR* pFilePath, int num);
 	HDC			FindImage(const TCHAR* pImgKey);
 	void		Release();
 

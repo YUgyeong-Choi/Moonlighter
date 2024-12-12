@@ -1,8 +1,10 @@
 #pragma once
-#define WINCX		800
-#define WINCY		600
+#define WINCX		1024
+#define WINCY		576
 
 #define	PURE		= 0
+
+#define VK_MAX				0xff
 
 extern HWND		g_hWnd;
 

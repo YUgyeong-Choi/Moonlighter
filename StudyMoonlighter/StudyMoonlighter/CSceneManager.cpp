@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CSceneManager.h"
 #include "CMenuScene.h"
+#include "CVillageScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -23,7 +24,7 @@ void CSceneManager::SetScene(SCENEID eID)
 			break;
 
 		case SC_VILLAGE:
-			///m_pScene = new CMyEdit;
+			m_pScene = new CVillageScene;
 			break;
 		}
 

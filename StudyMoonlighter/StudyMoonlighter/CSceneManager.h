@@ -23,7 +23,7 @@ public:
 		return m_pInstance;
 	}
 	
-	static void DestoryInstance() {
+	static void DestroyInstance() {
 		if (m_pInstance) {
 			delete m_pInstance;
 			m_pInstance = nullptr;
