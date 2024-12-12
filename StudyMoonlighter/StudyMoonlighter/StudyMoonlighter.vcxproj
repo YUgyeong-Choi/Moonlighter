@@ -141,6 +141,8 @@
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenuScene.h" />
     <ClInclude Include="CMyBmp.h" />
+    <ClInclude Include="CObject.h" />
+    <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CVillageScene.h" />
     <ClInclude Include="Define.h" />
@@ -157,6 +159,8 @@
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenuScene.cpp" />
     <ClCompile Include="CMyBmp.cpp" />
+    <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="pch.cpp">

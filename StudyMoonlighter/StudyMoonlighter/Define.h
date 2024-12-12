@@ -49,3 +49,13 @@ public:
 		}
 	}
 };
+
+typedef struct tagFrame
+{
+	int		iFrameStart;
+	int		iFrameEnd;
+	int		iMotion;
+	ULONGLONG	dwSpeed;
+	ULONGLONG	dwTime;
+
+}FRAME;

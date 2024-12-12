@@ -13,7 +13,6 @@ void CMenuScene::Initialize()
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/GameLogo_1.bmp", L"GameLogo_1");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/GameLogo_2.bmp", L"GameLogo_2");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/GameLogo_3.bmp", L"GameLogo_3");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/GameLogo_4.bmp", L"GameLogo_4");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/Main_menu_1_1.bmp", L"MainMenu_1_1");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/Main_menu_1_2.bmp", L"MainMenu_1_2");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/Main_menu_1_3.bmp", L"MainMenu_1_3");

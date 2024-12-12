@@ -43,6 +43,12 @@
     <Filter Include="01_Scenes\01_Village">
       <UniqueIdentifier>{992b423e-e629-4d9f-912e-0b6d1de26ae2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object">
+      <UniqueIdentifier>{8d2acc47-fea3-40c0-9e05-cb36344c001c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\Player">
+      <UniqueIdentifier>{1e8ebda4-da77-42cd-bf79-b11655ece936}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -87,6 +93,12 @@
     <ClInclude Include="CVillageScene.h">
       <Filter>01_Scenes\01_Village</Filter>
     </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>02_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>02_Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -118,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="CVillageScene.cpp">
       <Filter>01_Scenes\01_Village</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>02_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>02_Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

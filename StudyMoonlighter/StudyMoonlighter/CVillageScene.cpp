@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CVillageScene.h"
 #include "CBitManager.h"
-
 CVillageScene::CVillageScene()
 {
 }
