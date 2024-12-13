@@ -14,6 +14,7 @@ public:
 	void			Set_ScrollY(float _fY) { m_fScrollY += _fY; }
 
 	void			Scroll_Lock();
+	void			Set_ScrollLock(float _x, float _y) { m_fMapXSize = _x, m_fMapYSize = _y; }
 
 public:
 	static CScrollManager* Get_Instance()
@@ -38,4 +39,7 @@ private:
 
 	float			    m_fScrollX;
 	float			    m_fScrollY;
+
+	float m_fMapXSize;
+	float m_fMapYSize;
 };

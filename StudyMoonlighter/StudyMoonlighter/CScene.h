@@ -14,5 +14,7 @@ public:
 	virtual void		Release()		PURE;
 protected:
 	int m_iAnimationTime;
+	float m_fMapXSize;
+	float m_fMapYSize;
 };
 

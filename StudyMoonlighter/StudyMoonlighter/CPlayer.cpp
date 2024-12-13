@@ -13,10 +13,10 @@ void CPlayer::Initialize()
 	Load_Assets();
 	m_fRollTime = 25.f;
 
-	m_tInfo.fX = WINCX / 2.f;
-	m_tInfo.fY = WINCY / 2.f;
-	m_tInfo.fCX = 40.f;
-	m_tInfo.fCY = 40.f;
+	m_tInfo.fX = WINCX/2;
+	m_tInfo.fY = WINCY/2;
+	m_tInfo.fCX = 80.f;
+	m_tInfo.fCY = 80.f;
 	m_fSpeed = 3.f;
 
 	m_pImgKey = L"Will_Idle_down";
@@ -51,7 +51,7 @@ void CPlayer::Render(HDC hDC)
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(m_pImgKey);
-	GdiTransparentBlt(hDC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.fCX, m_tInfo.fCY, hMemDC, m_tInfo.fCX *m_tFrame.iFrameStart, 0, 40, 40, RGB(255, 255, 255));		// 제거할 색상
+	GdiTransparentBlt(hDC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.fCX, m_tInfo.fCY, hMemDC, m_tInfo.fCX *m_tFrame.iFrameStart, 0, 80, 80, RGB(255, 255, 255));		// 제거할 색상
 }
 
 void CPlayer::Release()
@@ -184,8 +184,8 @@ void CPlayer::Rolling()
 
 void CPlayer::Offset()
 {
-	int iOffSetminX = 400;
-	int iOffSetmaxX = 624;
+	int		iOffSetminX = 412;
+	int		iOffSetmaxX = 612;
 
 	int iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	if (iOffSetminX > m_tInfo.fX + iScrollX)
@@ -194,8 +194,8 @@ void CPlayer::Offset()
 	if (iOffSetmaxX < m_tInfo.fX + iScrollX)
 		CScrollManager::Get_Instance()->Set_ScrollX(-m_fSpeed);
 
-	int		iOffSetminY = 200;
-	int		iOffSetmaxY = 376;
+	int		iOffSetminY = 260;
+	int		iOffSetmaxY = 460;
 
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 

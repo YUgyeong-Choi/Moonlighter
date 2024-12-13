@@ -13,11 +13,13 @@ void CVillageScene::Initialize()
 {
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Map/MainVillage.bmp", L"VillageBackground");
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
+	m_fMapXSize = 2602.f;
+	m_fMapYSize = 2134.f;
+	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 }
 
 int CVillageScene::Update()
 {
-
 	CObjectManager::Get_Instance()->Update();
 	return 0;
 }
@@ -32,7 +34,7 @@ void CVillageScene::Render(HDC hDC)
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"VillageBackground");
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, iScrollX, iScrollY, 1301, 1067, hMemDC, 0, 0, 1301, 1067, RGB(0, 0, 0));
+	GdiTransparentBlt(hDC, iScrollX, iScrollY, 2602, 2134, hMemDC, 0, 0, 2602, 2134, RGB(0, 0, 0));
 	CObjectManager::Get_Instance()->Render(hDC);
 }
 
