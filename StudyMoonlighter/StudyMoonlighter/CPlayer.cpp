@@ -63,7 +63,6 @@ void CPlayer::Key_Input()
 	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT) && !m_bIsRoll)
 	{
 		m_eCurState = IDLE;
-
 	}
 	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP) && CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN) && !m_bIsRoll) {
 		m_eCurState = IDLE;
@@ -75,16 +74,18 @@ void CPlayer::Key_Input()
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
 			m_tInfo.fX += diagonalSpeed; 
 			m_tInfo.fY -= diagonalSpeed; 
+			m_eCurDir = UP_RIGHT;
 		}
 		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY -= diagonalSpeed;
+			m_eCurDir = UP_LEFT;
 		}
 		else {
 			m_tInfo.fY -= m_fSpeed;
+			m_eCurDir = UP;
 		}
-		m_eCurDir = UP;
 		m_eCurState = WALK;
 
 	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN) && !m_bIsRoll)
@@ -93,16 +94,18 @@ void CPlayer::Key_Input()
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
+			m_eCurDir = DOWN_RIGHT;
 		}
 		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
+			m_eCurDir = DOWN_LEFT;
 		}
 		else {
 			m_tInfo.fY += m_fSpeed;
+			m_eCurDir = DOWN;
 		}
-		m_eCurDir = DOWN;
 		m_eCurState = WALK;
 
 
@@ -117,18 +120,16 @@ void CPlayer::Key_Input()
 		m_tInfo.fX += m_fSpeed;
 		m_eCurDir = RIGHT;
 		m_eCurState = WALK;
-
+	}else {
+		if (!m_bIsRoll) { 
+			m_eCurState = IDLE;
+		}
 	}
 
-	else if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
+	if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
 		if (!m_bIsRoll) {
 			m_bIsRoll = true;
 			m_eCurState = ROLL;
-		}
-	}
-	else {
-		if (!m_bIsRoll) {
-			m_eCurState = IDLE;
 		}
 	}
 }
@@ -136,6 +137,7 @@ void CPlayer::Key_Input()
 void CPlayer::Rolling()
 {
 	if (m_bIsRoll) {
+		float diagonalSpeed = m_fSpeed / sqrt(2.0f);
 		switch (m_eCurDir)
 		{
 		case CObject::LEFT:
@@ -149,6 +151,22 @@ void CPlayer::Rolling()
 			break;
 		case CObject::DOWN:
 			m_tInfo.fY += m_fSpeed;
+			break;
+		case CObject::UP_LEFT:
+			m_tInfo.fX -= diagonalSpeed;
+			m_tInfo.fY -= diagonalSpeed;
+			break;
+		case CObject::UP_RIGHT:
+			m_tInfo.fX += diagonalSpeed;
+			m_tInfo.fY -= diagonalSpeed;
+			break;
+		case CObject::DOWN_LEFT:
+			m_tInfo.fX -= diagonalSpeed;
+			m_tInfo.fY += diagonalSpeed;
+			break;
+		case CObject::DOWN_RIGHT:
+			m_tInfo.fX += diagonalSpeed;
+			m_tInfo.fY += diagonalSpeed;
 			break;
 		case CObject::DIR_END:
 			break;
@@ -222,9 +240,13 @@ void CPlayer::Change_Motion()
 				m_pImgKey = L"Will_Idle_right";
 				break;
 			case CObject::UP:
+			case CObject::UP_LEFT:
+			case CObject::UP_RIGHT:
 				m_pImgKey = L"Will_Idle_up";
 				break;
 			case CObject::DOWN:
+			case CObject::DOWN_LEFT:
+			case CObject::DOWN_RIGHT:
 				m_pImgKey = L"Will_Idle_down";
 				break;
 			case CObject::DIR_END:
@@ -248,9 +270,13 @@ void CPlayer::Change_Motion()
 				m_pImgKey = L"Will_Walk_right";
 				break;
 			case CObject::UP:
+			case CObject::UP_LEFT:
+			case CObject::UP_RIGHT:
 				m_pImgKey = L"Will_Walk_up";
 				break;
 			case CObject::DOWN:
+			case CObject::DOWN_LEFT:
+			case CObject::DOWN_RIGHT:
 				m_pImgKey = L"Will_Walk_down";
 				break;
 			case CObject::DIR_END:
@@ -273,9 +299,13 @@ void CPlayer::Change_Motion()
 				m_pImgKey = L"Will_Roll_right";
 				break;
 			case CObject::UP:
+			case CObject::UP_LEFT:
+			case CObject::UP_RIGHT:
 				m_pImgKey = L"Will_Roll_up";
 				break;
 			case CObject::DOWN:
+			case CObject::DOWN_LEFT:
+			case CObject::DOWN_RIGHT:
 				m_pImgKey = L"Will_Roll_down";
 				break;
 			case CObject::DIR_END:
