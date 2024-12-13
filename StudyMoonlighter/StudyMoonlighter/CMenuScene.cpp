@@ -62,7 +62,6 @@ int CMenuScene::Update()
 		m_bIsOpen = false;
 	}
 
-
 	if (m_bIsOpen) {
 		m_iOpenSize += 2;
 	}

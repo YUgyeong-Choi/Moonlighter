@@ -3,6 +3,7 @@
 #include "CBitManager.h"
 #include "CKeyManager.h"
 #include "CScrollManager.h"
+#include "CTileManager.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0)
 {
@@ -131,6 +132,18 @@ void CPlayer::Key_Input()
 			m_bIsRoll = true;
 			m_eCurState = ROLL;
 		}
+	}
+
+	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LBUTTON))
+	{
+		POINT	ptMouse{};
+		GetCursorPos(&ptMouse);
+		ScreenToClient(g_hWnd, &ptMouse);
+
+		ptMouse.x -= (int)CScrollManager::Get_Instance()->Get_ScrollX();
+		ptMouse.y -= (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
+		CTileManager::Get_Instance()->Picking_Tile(ptMouse);
 	}
 }
 

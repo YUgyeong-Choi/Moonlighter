@@ -5,10 +5,18 @@
 #define	PURE		= 0
 
 #define VK_MAX				0xff
+
+#define TILECX				32
+#define TILECY				32
+
+#define TILEX				82
+#define TILEY				67
+
 #define OBJ_NOEVENT			0
 #define OBJ_DEAD			1	
 
 extern HWND		g_hWnd;
+extern bool		g_bDevmode;
 
 enum SCENEID { SC_MENU, SC_VILLAGE, SC_END };
 enum OBJID {OBJ_PLAYER, OBJ_END};

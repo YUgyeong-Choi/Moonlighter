@@ -10,6 +10,7 @@ public:
 	float			Get_ScrollX() { return m_fScrollX; }
 	float			Get_ScrollY() { return m_fScrollY; }
 
+	void			Set_InitScroll() { m_fScrollX = 0; m_fScrollY=0; }
 	void			Set_ScrollX(float _fX) { m_fScrollX += _fX; }
 	void			Set_ScrollY(float _fY) { m_fScrollY += _fY; }
 

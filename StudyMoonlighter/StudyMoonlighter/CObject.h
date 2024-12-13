@@ -14,6 +14,8 @@ public:
 	virtual void		Render(HDC hDC)PURE;
 	virtual void		Release()PURE;
 public:
+	void Set_Pos(float _x, float _y) { m_tInfo.fX = _x, m_tInfo.fY = _y; }
+public:
 	void		Update_Rect();
 	void		Move_Frame();
 protected:

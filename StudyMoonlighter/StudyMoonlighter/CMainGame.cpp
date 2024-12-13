@@ -5,6 +5,9 @@
 #include "CObjectManager.h"
 #include "CKeyManager.h"
 #include "CScrollManager.h"
+#include "CTileManager.h"
+
+bool g_bDevmode = false;
 
 CMainGame::CMainGame():m_hDC(nullptr)
 {
@@ -17,6 +20,7 @@ void CMainGame::Initialize()
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Back/Back.bmp", L"Back");
 
 	CSceneManager::GetInstance()->SetScene(SC_MENU);
+
 }
 
 void CMainGame::Update()
@@ -28,7 +32,6 @@ void CMainGame::LateUpdate()
 {
 	CSceneManager::GetInstance()->LateUpdate();
 	CKeyManager::Get_Instance()->Update();
-	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
 void CMainGame::Render()
@@ -40,6 +43,7 @@ void CMainGame::Render()
 
 void CMainGame::Release()
 {
+	CTileManager::Destroy_Instance();
 	CSceneManager::DestroyInstance();
 	CBitManager::DestroyInstance();
 	CObjectManager::DestroyInstance();

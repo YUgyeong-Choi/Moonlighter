@@ -22,7 +22,6 @@ void CSceneManager::SetScene(SCENEID eID)
 		case SC_MENU:
 			m_pScene = new CMenuScene;
 			break;
-
 		case SC_VILLAGE:
 			m_pScene = new CVillageScene;
 			break;
