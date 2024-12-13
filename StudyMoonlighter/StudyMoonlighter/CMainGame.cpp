@@ -27,6 +27,7 @@ void CMainGame::Update()
 void CMainGame::LateUpdate()
 {
 	CSceneManager::GetInstance()->LateUpdate();
+	CKeyManager::Get_Instance()->Update();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 

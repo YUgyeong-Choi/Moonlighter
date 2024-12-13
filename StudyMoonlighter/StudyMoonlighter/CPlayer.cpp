@@ -4,19 +4,20 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0)
 {
 }
 
 void CPlayer::Initialize()
 {
 	Load_Assets();
+	m_fRollTime = 25.f;
 
 	m_tInfo.fX = WINCX / 2.f;
 	m_tInfo.fY = WINCY / 2.f;
 	m_tInfo.fCX = 40.f;
 	m_tInfo.fCY = 40.f;
-	m_fSpeed = 2.f;
+	m_fSpeed = 3.f;
 
 	m_pImgKey = L"Will_Idle_down";
 	m_eCurState = IDLE;
@@ -40,6 +41,7 @@ int CPlayer::Update()
 
 void CPlayer::Late_Update()
 {
+	Rolling();
 	Offset();
 	__super::Move_Frame();
 }
@@ -58,16 +60,18 @@ void CPlayer::Release()
 
 void CPlayer::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT))
+	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT) && !m_bIsRoll)
 	{
 		m_eCurState = IDLE;
+
 	}
-	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP) && CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN)) {
+	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP) && CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN) && !m_bIsRoll) {
 		m_eCurState = IDLE;
 	}
-	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP))
+	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP) && !m_bIsRoll)
 	{
 		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
+
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
 			m_tInfo.fX += diagonalSpeed; 
 			m_tInfo.fY -= diagonalSpeed; 
@@ -82,7 +86,8 @@ void CPlayer::Key_Input()
 		}
 		m_eCurDir = UP;
 		m_eCurState = WALK;
-	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN))
+
+	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN) && !m_bIsRoll)
 	{
 		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
@@ -100,18 +105,62 @@ void CPlayer::Key_Input()
 		m_eCurDir = DOWN;
 		m_eCurState = WALK;
 
-	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT))
+
+	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && !m_bIsRoll)
 	{
 		m_tInfo.fX -= m_fSpeed;
 		m_eCurDir = LEFT;
 		m_eCurState = WALK;
-	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT))
+
+	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT) && !m_bIsRoll)
 	{
 		m_tInfo.fX += m_fSpeed;
 		m_eCurDir = RIGHT;
 		m_eCurState = WALK;
-	}else {
-		m_eCurState = IDLE;
+
+	}
+
+	else if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
+		if (!m_bIsRoll) {
+			m_bIsRoll = true;
+			m_eCurState = ROLL;
+		}
+	}
+	else {
+		if (!m_bIsRoll) {
+			m_eCurState = IDLE;
+		}
+	}
+}
+
+void CPlayer::Rolling()
+{
+	if (m_bIsRoll) {
+		switch (m_eCurDir)
+		{
+		case CObject::LEFT:
+			m_tInfo.fX -= m_fSpeed;
+			break;
+		case CObject::RIGHT:
+			m_tInfo.fX += m_fSpeed;
+			break;
+		case CObject::UP:
+			m_tInfo.fY -= m_fSpeed;
+			break;
+		case CObject::DOWN:
+			m_tInfo.fY += m_fSpeed;
+			break;
+		case CObject::DIR_END:
+			break;
+		default:
+			break;
+		}
+		m_fRollTime--;
+
+		if (m_fRollTime < 0) {
+			m_bIsRoll = false;
+			m_fRollTime = 25.f;
+		}
 	}
 }
 
@@ -141,15 +190,20 @@ void CPlayer::Offset()
 
 void CPlayer::Load_Assets()
 {
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Down/will_walk_cycle_down.bmp", L"Will_Walk_down");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Left/will_walk_cycle_left.bmp", L"Will_Walk_left");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Right/will_walk_cycle_right.bmp", L"Will_Walk_right");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Up/will_walk_cycle_up.bmp", L"Will_Walk_up");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Down/will_walk_down.bmp", L"Will_Walk_down");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Left/will_walk_left.bmp", L"Will_Walk_left");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Right/will_walk_right.bmp", L"Will_Walk_right");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Up/will_walk_up.bmp", L"Will_Walk_up");
 
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Down/will_idle_down.bmp", L"Will_Idle_down");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Left/will_idle_left.bmp", L"Will_Idle_left");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Right/will_idle_right.bmp", L"Will_Idle_right");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Up/will_idle_up.bmp", L"Will_Idle_up");
+
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Down/will_roll_down.bmp", L"Will_Roll_down");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Left/will_roll_left.bmp", L"Will_Roll_left");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Right/will_roll_right.bmp", L"Will_Roll_right");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Up/will_roll_up.bmp", L"Will_Roll_up");
 }
 
 void CPlayer::Change_Motion()
@@ -209,6 +263,31 @@ void CPlayer::Change_Motion()
 			m_tFrame.dwSpeed = 200;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
+		case CPlayer::ROLL:
+			switch (m_eCurDir)
+			{
+			case CObject::LEFT:
+				m_pImgKey = L"Will_Roll_left";
+				break;
+			case CObject::RIGHT:
+				m_pImgKey = L"Will_Roll_right";
+				break;
+			case CObject::UP:
+				m_pImgKey = L"Will_Roll_up";
+				break;
+			case CObject::DOWN:
+				m_pImgKey = L"Will_Roll_down";
+				break;
+			case CObject::DIR_END:
+				break;
+			default:
+				break;
+			}
+			m_tFrame.iFrameStart = 0;
+			m_tFrame.iFrameEnd = 7;
+			m_tFrame.dwSpeed = 50;
+			m_tFrame.dwTime = GetTickCount64();
+			break;
 
 		//case CPlayer::ATTACK:
 		//	m_tFrame.iFrameStart = 0;
@@ -236,3 +315,5 @@ void CPlayer::Change_Motion()
 		m_ePreDir = m_eCurDir;
 	}
 }
+
+

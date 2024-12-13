@@ -17,6 +17,7 @@ void CVillageScene::Initialize()
 
 int CVillageScene::Update()
 {
+
 	CObjectManager::Get_Instance()->Update();
 	return 0;
 }
