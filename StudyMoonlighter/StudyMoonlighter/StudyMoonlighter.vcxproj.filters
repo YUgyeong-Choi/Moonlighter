@@ -49,6 +49,15 @@
     <Filter Include="02_Object\Player">
       <UniqueIdentifier>{1e8ebda4-da77-42cd-bf79-b11655ece936}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99_Managers\AbstractFactory">
+      <UniqueIdentifier>{eb3a70aa-1273-4bd7-a267-437b8d28e9d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\ObjectManager">
+      <UniqueIdentifier>{d65dcf1c-eae1-4c34-842c-fe038a6a9464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\ScrollManager">
+      <UniqueIdentifier>{02188db8-7d13-4944-a6c6-3e5f8e350de3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -99,6 +108,15 @@
     <ClInclude Include="CPlayer.h">
       <Filter>02_Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="CAbstractFactory.h">
+      <Filter>99_Managers\AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CObjectManager.h">
+      <Filter>99_Managers\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrollManager.h">
+      <Filter>99_Managers\ScrollManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -136,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>02_Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CObjectManager.cpp">
+      <Filter>99_Managers\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CScrollManager.cpp">
+      <Filter>99_Managers\ScrollManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

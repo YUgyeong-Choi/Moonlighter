@@ -1,25 +1,31 @@
 #include "pch.h"
 #include "CPlayer.h"
 #include "CBitManager.h"
+#include "CKeyManager.h"
+#include "CScrollManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(END), m_ePreState(END)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END)
 {
 }
 
 void CPlayer::Initialize()
 {
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Right/will_walking_cycle_right.bmp", L"Will_Walking_right");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Left/will_walking_cycle_left.bmp", L"Will_Walking_left");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Up/will_walking_cycle_up.bmp", L"Will_Walking_up");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Down/will_walking_cycle_down.bmp", L"Will_Walking_down");
+	Load_Assets();
 
-	m_pImgKey = L"Will_Walking_down";
+	m_tInfo.fX = WINCX / 2.f;
+	m_tInfo.fY = WINCY / 2.f;
+	m_tInfo.fCX = 40.f;
+	m_tInfo.fCY = 40.f;
+	m_fSpeed = 2.f;
+
+	m_pImgKey = L"Will_Idle_down";
 	m_eCurState = IDLE;
 	m_ePreState = IDLE;
+	m_ePreDir = DOWN;
+	m_eCurDir = DOWN;
 
 	m_tFrame.iFrameStart = 0;
-	m_tFrame.iFrameEnd = 8;
-	m_tFrame.iMotion = 0;
+	m_tFrame.iFrameEnd = 9;
 	m_tFrame.dwSpeed = 200;
 	m_tFrame.dwTime = GetTickCount64();
 }
@@ -28,6 +34,7 @@ int CPlayer::Update()
 {
 	Key_Input();
 	Change_Motion();
+	__super::Update_Rect();
 	return 0;
 }
 
@@ -39,8 +46,10 @@ void CPlayer::Late_Update()
 
 void CPlayer::Render(HDC hDC)
 {
+	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(m_pImgKey);
-	GdiTransparentBlt(hDC, 10 ,10, 23, 40, hMemDC,23 * m_tFrame.iFrameStart, 0, 23, 40, RGB(255, 255, 255));		// 제거할 색상
+	GdiTransparentBlt(hDC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.fCX, m_tInfo.fCY, hMemDC, m_tInfo.fCX *m_tFrame.iFrameStart, 0, 40, 40, RGB(255, 255, 255));		// 제거할 색상
 }
 
 void CPlayer::Release()
@@ -49,59 +58,181 @@ void CPlayer::Release()
 
 void CPlayer::Key_Input()
 {
+	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT))
+	{
+		m_eCurState = IDLE;
+	}
+	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP) && CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN)) {
+		m_eCurState = IDLE;
+	}
+	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP))
+	{
+		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
+			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_tInfo.fX += diagonalSpeed; 
+			m_tInfo.fY -= diagonalSpeed; 
+		}
+		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
+			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_tInfo.fX -= diagonalSpeed;
+			m_tInfo.fY -= diagonalSpeed;
+		}
+		else {
+			m_tInfo.fY -= m_fSpeed;
+		}
+		m_eCurDir = UP;
+		m_eCurState = WALK;
+	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN))
+	{
+		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
+			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_tInfo.fX += diagonalSpeed;
+			m_tInfo.fY += diagonalSpeed;
+		}
+		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
+			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_tInfo.fX -= diagonalSpeed;
+			m_tInfo.fY += diagonalSpeed;
+		}
+		else {
+			m_tInfo.fY += m_fSpeed;
+		}
+		m_eCurDir = DOWN;
+		m_eCurState = WALK;
+
+	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT))
+	{
+		m_tInfo.fX -= m_fSpeed;
+		m_eCurDir = LEFT;
+		m_eCurState = WALK;
+	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT))
+	{
+		m_tInfo.fX += m_fSpeed;
+		m_eCurDir = RIGHT;
+		m_eCurState = WALK;
+	}else {
+		m_eCurState = IDLE;
+	}
 }
 
 void CPlayer::Offset()
 {
+	int iOffSetminX = 400;
+	int iOffSetmaxX = 624;
+
+	int iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
+	if (iOffSetminX > m_tInfo.fX + iScrollX)
+		CScrollManager::Get_Instance()->Set_ScrollX(m_fSpeed);
+
+	if (iOffSetmaxX < m_tInfo.fX + iScrollX)
+		CScrollManager::Get_Instance()->Set_ScrollX(-m_fSpeed);
+
+	int		iOffSetminY = 200;
+	int		iOffSetmaxY = 376;
+
+	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
+	if (iOffSetminY > m_tInfo.fY + iScrollY)
+		CScrollManager::Get_Instance()->Set_ScrollY(m_fSpeed);
+
+	if (iOffSetmaxY < m_tInfo.fY + iScrollY)
+		CScrollManager::Get_Instance()->Set_ScrollY(-m_fSpeed);
+}
+
+void CPlayer::Load_Assets()
+{
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Down/will_walk_cycle_down.bmp", L"Will_Walk_down");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Left/will_walk_cycle_left.bmp", L"Will_Walk_left");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Right/will_walk_cycle_right.bmp", L"Will_Walk_right");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Up/will_walk_cycle_up.bmp", L"Will_Walk_up");
+
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Down/will_idle_down.bmp", L"Will_Idle_down");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Left/will_idle_left.bmp", L"Will_Idle_left");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Right/will_idle_right.bmp", L"Will_Idle_right");
+	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Up/will_idle_up.bmp", L"Will_Idle_up");
 }
 
 void CPlayer::Change_Motion()
 {
-	if (m_ePreState != m_eCurState)
+	if ((m_ePreState != m_eCurState) || (m_ePreDir != m_eCurDir))
 	{
 		switch (m_eCurState)
 		{
 		case CPlayer::IDLE:
+			switch (m_eCurDir)
+			{
+			case CObject::LEFT:
+				m_pImgKey = L"Will_Idle_left";
+				break;
+			case CObject::RIGHT:
+				m_pImgKey = L"Will_Idle_right";
+				break;
+			case CObject::UP:
+				m_pImgKey = L"Will_Idle_up";
+				break;
+			case CObject::DOWN:
+				m_pImgKey = L"Will_Idle_down";
+				break;
+			case CObject::DIR_END:
+				break;
+			default:
+				break;
+			}
 			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 3;
-			m_tFrame.iMotion = 0;
+			m_tFrame.iFrameEnd = 9;
 			m_tFrame.dwSpeed = 200;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
 		case CPlayer::WALK:
+			switch (m_eCurDir)
+			{
+			case CObject::LEFT:
+				m_pImgKey = L"Will_Walk_left";
+				break;
+			case CObject::RIGHT:
+				m_pImgKey = L"Will_Walk_right";
+				break;
+			case CObject::UP:
+				m_pImgKey = L"Will_Walk_up";
+				break;
+			case CObject::DOWN:
+				m_pImgKey = L"Will_Walk_down";
+				break;
+			case CObject::DIR_END:
+				break;
+			default:
+				break;
+			}
 			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 5;
-			m_tFrame.iMotion = 1;
+			m_tFrame.iFrameEnd = 7;
 			m_tFrame.dwSpeed = 200;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
-		case CPlayer::ATTACK:
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 5;
-			m_tFrame.iMotion = 2;
-			m_tFrame.dwSpeed = 200;
-			m_tFrame.dwTime = GetTickCount64();
-			break;
+		//case CPlayer::ATTACK:
+		//	m_tFrame.iFrameStart = 0;
+		//	m_tFrame.iFrameEnd = 5;
+		//	m_tFrame.dwSpeed = 200;
+		//	m_tFrame.dwTime = GetTickCount64();
+		//	break;
 
-		case CPlayer::HIT:
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 1;
-			m_tFrame.iMotion = 3;
-			m_tFrame.dwSpeed = 200;
-			m_tFrame.dwTime = GetTickCount64();
-			break;
+		//case CPlayer::HIT:
+		//	m_tFrame.iFrameStart = 0;
+		//	m_tFrame.iFrameEnd = 1;
+		//	m_tFrame.dwSpeed = 200;
+		//	m_tFrame.dwTime = GetTickCount64();
+		//	break;
 
-		case CPlayer::DEAD:
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 3;
-			m_tFrame.iMotion = 4;
-			m_tFrame.dwSpeed = 200;
-			m_tFrame.dwTime = GetTickCount64();
-			break;
+		//case CPlayer::DEAD:
+		//	m_tFrame.iFrameStart = 0;
+		//	m_tFrame.iFrameEnd = 3;
+		//	m_tFrame.dwSpeed = 200;
+		//	m_tFrame.dwTime = GetTickCount64();
+		//	break;
 		}
 
 		m_ePreState = m_eCurState;
+		m_ePreDir = m_eCurDir;
 	}
 }

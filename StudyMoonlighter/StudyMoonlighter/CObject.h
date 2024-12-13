@@ -3,6 +3,8 @@
 class CObject
 {
 public:
+	enum DIRECTION { LEFT, RIGHT, UP, DOWN, DIR_END };
+public:
 	CObject();
 	virtual ~CObject() { Release(); }
 public:
@@ -12,9 +14,16 @@ public:
 	virtual void		Render(HDC hDC)PURE;
 	virtual void		Release()PURE;
 public:
+	void		Update_Rect();
 	void		Move_Frame();
 protected:
+	INFO		m_tInfo;
+	RECT		m_tRect;
+	float		m_fSpeed;
+	
+	//애니메이션 관련
 	FRAME		m_tFrame;
 	const TCHAR* m_pImgKey;
+
 };
 

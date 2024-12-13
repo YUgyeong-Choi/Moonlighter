@@ -54,17 +54,17 @@ int CMenuScene::Update()
 		m_bIsOpen = true;
 	}
 
-	if (CKeyManager::Get_Instance()->Key_Down(VK_RETURN))
-	{
-		CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
-		return 0;
+	if (m_iOpenSize >= 350) {
+		if (CKeyManager::Get_Instance()->Key_Down(VK_RETURN))
+		{
+			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+		}
+		m_bIsOpen = false;
 	}
 
+
 	if (m_bIsOpen) {
-		m_iOpenSize++;
-		if (m_iOpenSize >= 350) {
-			m_bIsOpen = false;
-		}
+		m_iOpenSize += 2;
 	}
 
 	m_iAnimationTime++;

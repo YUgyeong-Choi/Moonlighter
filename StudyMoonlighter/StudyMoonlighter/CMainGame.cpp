@@ -2,8 +2,11 @@
 #include "CMainGame.h"
 #include "CSceneManager.h"
 #include "CBitManager.h"
+#include "CObjectManager.h"
+#include "CKeyManager.h"
+#include "CScrollManager.h"
 
-CMainGame::CMainGame()
+CMainGame::CMainGame():m_hDC(nullptr)
 {
 }
 
@@ -24,6 +27,7 @@ void CMainGame::Update()
 void CMainGame::LateUpdate()
 {
 	CSceneManager::GetInstance()->LateUpdate();
+	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
 void CMainGame::Render()
@@ -37,5 +41,8 @@ void CMainGame::Release()
 {
 	CSceneManager::DestroyInstance();
 	CBitManager::DestroyInstance();
+	CObjectManager::DestroyInstance();
+	CKeyManager::Destroy_Instance();
+	CScrollManager::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

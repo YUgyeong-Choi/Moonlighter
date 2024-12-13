@@ -5,10 +5,13 @@
 #define	PURE		= 0
 
 #define VK_MAX				0xff
+#define OBJ_NOEVENT			0
+#define OBJ_DEAD			1	
 
 extern HWND		g_hWnd;
 
 enum SCENEID { SC_MENU, SC_VILLAGE, SC_END };
+enum OBJID {OBJ_PLAYER, OBJ_END};
 
 template<typename T>
 void Safe_Delete(T& Temp)
@@ -54,8 +57,14 @@ typedef struct tagFrame
 {
 	int		iFrameStart;
 	int		iFrameEnd;
-	int		iMotion;
 	ULONGLONG	dwSpeed;
 	ULONGLONG	dwTime;
 
 }FRAME;
+
+typedef struct tagInfo
+{
+	float		fX, fY;
+	float		fCX, fCY;	// 가로, 세로 길이
+
+}INFO;
