@@ -13,8 +13,15 @@ public:
 	void		Release();
 
 	void		Delete_ID(OBJID eID);
-
+	void		RenderListClear()
+	{
+		for (size_t i = 0; i < RENDER_END; ++i)
+		{
+			m_RenderList[i].clear();
+		}
+	}
 	CObject* Get_LastMapObj() { return m_ObjList[OBJ_PORTAL].back(); }
+	CObject* Get_Player() { return m_ObjList[OBJ_PLAYER].back(); }
 
 public:
 	static CObjectManager* Get_Instance()

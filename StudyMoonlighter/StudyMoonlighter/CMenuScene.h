@@ -11,6 +11,8 @@ public:
 	void LateUpdate() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	void Key_Input() override;
+	void Create_MapObj() override;
 private:
 	bool m_bIsOpen;
 	int m_iOpenTime;

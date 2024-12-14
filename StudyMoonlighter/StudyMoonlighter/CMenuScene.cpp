@@ -112,3 +112,11 @@ void CMenuScene::Render(HDC hDC)
 void CMenuScene::Release()
 {
 }
+
+void CMenuScene::Key_Input()
+{
+}
+
+void CMenuScene::Create_MapObj()
+{
+}

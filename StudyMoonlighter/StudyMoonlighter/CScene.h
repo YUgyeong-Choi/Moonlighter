@@ -12,6 +12,8 @@ public:
 	virtual void		LateUpdate()	PURE;
 	virtual void		Render(HDC hDC)	PURE;
 	virtual void		Release()		PURE;
+	virtual void Key_Input() PURE;
+	virtual void Create_MapObj() PURE;
 protected:
 	int m_iAnimationTime;
 	float m_fMapXSize;

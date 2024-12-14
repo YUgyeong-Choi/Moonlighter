@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CPortal.h"
 #include "CScrollManager.h"
+#include "CSceneManager.h"
 
 CPortal::CPortal():m_ePortalType(PORTAL_END)
 {
@@ -39,6 +40,20 @@ void CPortal::Release()
 void CPortal::OnCollisionEnter(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
-		
+		switch (m_ePortalType)
+		{
+		case VILLAGE:
+			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+			break;
+		case FIELD:
+			CSceneManager::GetInstance()->SetScene(SC_FIELD);
+			break;
+		case DUNGEON:
+			break;
+		case PORTAL_END:
+			break;
+		default:
+			break;
+		}
 	}
 }

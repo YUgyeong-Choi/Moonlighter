@@ -139,6 +139,7 @@
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CBitManager.h" />
     <ClInclude Include="CCollisionManager.h" />
+    <ClInclude Include="CFieldScene.h" />
     <ClInclude Include="CHouse.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
@@ -165,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="CBitManager.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
+    <ClCompile Include="CFieldScene.cpp" />
     <ClCompile Include="CHouse.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />

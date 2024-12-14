@@ -1,12 +1,10 @@
 #pragma once
 #include "CScene.h"
-#include "CObject.h"
-
-class CVillageScene :public CScene
+class CFieldScene :public CScene
 {
 public:
-	CVillageScene();
-	virtual ~CVillageScene() { Release(); }
+	CFieldScene();
+	virtual ~CFieldScene() { Release(); }
 public:
 	void Initialize() override;
 	int Update() override;

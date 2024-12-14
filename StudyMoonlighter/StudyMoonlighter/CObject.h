@@ -13,6 +13,10 @@ public:
 	virtual void		Late_Update()PURE;
 	virtual void		Render(HDC hDC)PURE;
 	virtual void		Release()PURE;
+
+	virtual void		OnCollisionEnter(CObject* _obj);
+	virtual void		OnCollisionStay(CObject* _obj);
+	virtual void		OnCollisionExit(CObject* _obj);
 public:
 	const INFO* Get_Info_Pointer() { return &m_tInfo; }
 	const RENDERID Get_GroupID() const { return m_eRender; }
@@ -25,9 +29,6 @@ public:
 public:
 	void		Update_Rect();
 	void		Move_Frame();
-	void		OnCollisionEnter(CObject* _obj);
-	void		OnCollisionStay(CObject* _obj);
-	void		OnCollisionExit(CObject* _obj);
 protected:
 	INFO		m_tInfo;
 	RECT		m_tRect;

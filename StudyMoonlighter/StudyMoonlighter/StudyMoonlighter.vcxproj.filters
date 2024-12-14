@@ -76,6 +76,9 @@
     <Filter Include="02_Object\98.Portal">
       <UniqueIdentifier>{3659e383-a4df-45d9-bbec-8bf4c634e2b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Scenes\02_Field">
+      <UniqueIdentifier>{2bf1846f-8560-48da-8185-69022ff5f8f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -153,6 +156,9 @@
     <ClInclude Include="CPortal.h">
       <Filter>02_Object\98.Portal</Filter>
     </ClInclude>
+    <ClInclude Include="CFieldScene.h">
+      <Filter>01_Scenes\02_Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -214,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="CPortal.cpp">
       <Filter>02_Object\98.Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="CFieldScene.cpp">
+      <Filter>01_Scenes\02_Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

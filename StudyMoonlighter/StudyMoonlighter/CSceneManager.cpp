@@ -2,6 +2,7 @@
 #include "CSceneManager.h"
 #include "CMenuScene.h"
 #include "CVillageScene.h"
+#include "CFieldScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -25,6 +26,8 @@ void CSceneManager::SetScene(SCENEID eID)
 		case SC_VILLAGE:
 			m_pScene = new CVillageScene;
 			break;
+		case SC_FIELD:
+			m_pScene = new CFieldScene;
 		}
 
 		m_pScene->Initialize();
