@@ -5,7 +5,7 @@
 #include "CScrollManager.h"
 #include "CTileManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), m_fFixScrollSpeed(0)
 {
 }
 
@@ -19,6 +19,7 @@ void CPlayer::Initialize()
 	m_tInfo.fCX = 80.f;
 	m_tInfo.fCY = 80.f;
 	m_fSpeed = 3.f;
+	m_fFixScrollSpeed = 3.f;
 
 	m_pImgKey = L"Will_Idle_down";
 	m_eCurState = IDLE;
@@ -73,17 +74,20 @@ void CPlayer::Key_Input()
 		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
 
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed; 
 			m_tInfo.fY -= diagonalSpeed; 
 			m_eCurDir = UP_RIGHT;
 		}
 		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY -= diagonalSpeed;
 			m_eCurDir = UP_LEFT;
 		}
 		else {
+			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fY -= m_fSpeed;
 			m_eCurDir = UP;
 		}
@@ -93,17 +97,20 @@ void CPlayer::Key_Input()
 	{
 		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			m_eCurDir = DOWN_RIGHT;
 		}
 		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
 			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			m_eCurDir = DOWN_LEFT;
 		}
 		else {
+			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fY += m_fSpeed;
 			m_eCurDir = DOWN;
 		}
@@ -112,12 +119,14 @@ void CPlayer::Key_Input()
 
 	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && !m_bIsRoll)
 	{
+		m_fFixScrollSpeed = m_fSpeed;
 		m_tInfo.fX -= m_fSpeed;
 		m_eCurDir = LEFT;
 		m_eCurState = WALK;
 
 	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT) && !m_bIsRoll)
 	{
+		m_fFixScrollSpeed = m_fSpeed;
 		m_tInfo.fX += m_fSpeed;
 		m_eCurDir = RIGHT;
 		m_eCurState = WALK;
@@ -131,19 +140,8 @@ void CPlayer::Key_Input()
 		if (!m_bIsRoll) {
 			m_bIsRoll = true;
 			m_eCurState = ROLL;
+			m_fSpeed = 5.f;
 		}
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LBUTTON))
-	{
-		POINT	ptMouse{};
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		ptMouse.x -= (int)CScrollManager::Get_Instance()->Get_ScrollX();
-		ptMouse.y -= (int)CScrollManager::Get_Instance()->Get_ScrollY();
-
-		CTileManager::Get_Instance()->Picking_Tile(ptMouse);
 	}
 }
 
@@ -154,30 +152,38 @@ void CPlayer::Rolling()
 		switch (m_eCurDir)
 		{
 		case CObject::LEFT:
+			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX -= m_fSpeed;
 			break;
 		case CObject::RIGHT:
+			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX += m_fSpeed;
 			break;
 		case CObject::UP:
+			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fY -= m_fSpeed;
 			break;
 		case CObject::DOWN:
+			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fY += m_fSpeed;
 			break;
 		case CObject::UP_LEFT:
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY -= diagonalSpeed;
 			break;
 		case CObject::UP_RIGHT:
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY -= diagonalSpeed;
 			break;
 		case CObject::DOWN_LEFT:
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			break;
 		case CObject::DOWN_RIGHT:
+			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			break;
@@ -191,6 +197,8 @@ void CPlayer::Rolling()
 		if (m_fRollTime < 0) {
 			m_bIsRoll = false;
 			m_fRollTime = 25.f;
+			m_fFixScrollSpeed = m_fSpeed;
+			m_fSpeed =3.f;
 		}
 	}
 }
@@ -202,10 +210,10 @@ void CPlayer::Offset()
 
 	int iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	if (iOffSetminX > m_tInfo.fX + iScrollX)
-		CScrollManager::Get_Instance()->Set_ScrollX(m_fSpeed);
+		CScrollManager::Get_Instance()->Set_ScrollX(m_fFixScrollSpeed);
 
 	if (iOffSetmaxX < m_tInfo.fX + iScrollX)
-		CScrollManager::Get_Instance()->Set_ScrollX(-m_fSpeed);
+		CScrollManager::Get_Instance()->Set_ScrollX(-m_fFixScrollSpeed);
 
 	int		iOffSetminY = 260;
 	int		iOffSetmaxY = 460;
@@ -213,10 +221,10 @@ void CPlayer::Offset()
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 
 	if (iOffSetminY > m_tInfo.fY + iScrollY)
-		CScrollManager::Get_Instance()->Set_ScrollY(m_fSpeed);
+		CScrollManager::Get_Instance()->Set_ScrollY(m_fFixScrollSpeed);
 
 	if (iOffSetmaxY < m_tInfo.fY + iScrollY)
-		CScrollManager::Get_Instance()->Set_ScrollY(-m_fSpeed);
+		CScrollManager::Get_Instance()->Set_ScrollY(-m_fFixScrollSpeed);
 }
 
 void CPlayer::Load_Assets()

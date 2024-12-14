@@ -23,6 +23,7 @@ private:
 private:
 	bool m_bIsRoll;
 	float m_fRollTime;
+	float m_fFixScrollSpeed;
 	DIRECTION	m_eCurDir;
 	DIRECTION	m_ePreDir;
 	STATE               m_eCurState;

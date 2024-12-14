@@ -1,6 +1,7 @@
 #pragma once
 #include "CScene.h"
-//F1  - 타일 보여주기 F2 - 타일 로드 F3 타일 저장
+#include "CObject.h"
+
 class CVillageScene :public CScene
 {
 public:
@@ -12,6 +13,9 @@ public:
 	void LateUpdate() override;
 	void Render(HDC hDC) override;
 	void Release() override;
-	void KeyInput();
+private:
+	void Create_MapObj();
+private:
+	list<CObject*>		m_ObjList;
 };
 

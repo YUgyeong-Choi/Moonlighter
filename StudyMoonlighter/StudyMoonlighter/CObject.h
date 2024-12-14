@@ -14,7 +14,9 @@ public:
 	virtual void		Render(HDC hDC)PURE;
 	virtual void		Release()PURE;
 public:
+	const INFO* Get_Info_Pointer() { return &m_tInfo; }
 	void Set_Pos(float _x, float _y) { m_tInfo.fX = _x, m_tInfo.fY = _y; }
+	void Set_Size(float _x, float _y) { m_tInfo.fCX = _x, m_tInfo.fCY = _y; }
 public:
 	void		Update_Rect();
 	void		Move_Frame();

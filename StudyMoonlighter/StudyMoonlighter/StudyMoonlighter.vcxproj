@@ -140,6 +140,7 @@
     <ClInclude Include="CBitManager.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
+    <ClInclude Include="CMapObj.h" />
     <ClInclude Include="CMenuScene.h" />
     <ClInclude Include="CMyBmp.h" />
     <ClInclude Include="CObject.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="CBitManager.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
+    <ClCompile Include="CMapObj.cpp" />
     <ClCompile Include="CMenuScene.cpp" />
     <ClCompile Include="CMyBmp.cpp" />
     <ClCompile Include="CObject.cpp" />

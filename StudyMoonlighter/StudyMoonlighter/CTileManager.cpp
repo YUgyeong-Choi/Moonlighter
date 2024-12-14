@@ -9,14 +9,14 @@ CTileManager* CTileManager::m_pInstance = nullptr;
 
 CTileManager::CTileManager()
 {
-	m_vecTile.reserve(TILEX * TILEY);
+	//m_vecTile.reserve(m_tileX * m_tileY);
 }
 
 void CTileManager::Initialize()
 {
-	for (int i = 0; i < TILEY; ++i)
+	for (int i = 0; i < m_tileY; ++i)
 	{
-		for (int j = 0; j < TILEX; ++j)
+		for (int j = 0; j < m_tileX; ++j)
 		{
 			float fX = (float)(j * TILECX) + (TILECX >> 1);
 			float fY = (float)(i * TILECY) + (TILECY >> 1);
@@ -52,7 +52,7 @@ void CTileManager::Render(HDC hDC)
 	{
 		for (int j = iScrollX; j < iMaxX; ++j)
 		{
-			int		iIndex = i * TILEX + j;
+			int		iIndex = i * m_tileX + j;
 
 			if (0 > iIndex || m_vecTile.size() <= (size_t)iIndex)
 				continue;
@@ -73,7 +73,7 @@ void CTileManager::Picking_Tile(POINT pt)
 	int		x = pt.x / TILECX;
 	int		y = pt.y / TILECY;
 
-	int	iIndex = y * TILEX + x;
+	int	iIndex = y * m_tileX + x;
 
 	if (0 > iIndex || (size_t)iIndex >= m_vecTile.size())
 		return;
@@ -83,8 +83,52 @@ void CTileManager::Picking_Tile(POINT pt)
 
 void CTileManager::Save_Tile()
 {
+	HANDLE hFile = CreateFile(L"../Data/Tile.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
+
+	int		iDrawID(0);
+	DWORD	dwByte(0);
+
+	for (auto& pTile : m_vecTile)
+	{
+		iDrawID = dynamic_cast<CTile*>(pTile)->Get_DrawID();
+
+		WriteFile(hFile, pTile->Get_Info_Pointer(), sizeof(INFO), &dwByte, NULL);
+		WriteFile(hFile, &iDrawID, sizeof(bool), &dwByte, NULL);
+	}
+
+	CloseHandle(hFile);
+	MessageBox(g_hWnd, L"Tile Save", L"성공", MB_OK);
 }
 
 void CTileManager::Load_Tile()
 {
+	HANDLE hFile = CreateFile(L"../Data/Tile.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
+
+	int		iDrawID(0);
+	DWORD	dwByte(0);
+	INFO	tTile{};
+
+	Release();
+
+	while (true)
+	{
+		ReadFile(hFile, &tTile, sizeof(INFO), &dwByte, NULL);
+		ReadFile(hFile, &iDrawID, sizeof(bool), &dwByte, NULL);
+
+		if (0 == dwByte)
+			break;
+
+		CObject* pTile = CAbstractFactory<CTile>::Create(tTile.fX, tTile.fY);
+
+		m_vecTile.push_back(pTile);
+	}
+
+	CloseHandle(hFile);
+	MessageBox(g_hWnd, L"Load Save", L"성공", MB_OK);
 }

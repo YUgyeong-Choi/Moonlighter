@@ -46,9 +46,6 @@
     <Filter Include="02_Object">
       <UniqueIdentifier>{8d2acc47-fea3-40c0-9e05-cb36344c001c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Object\Player">
-      <UniqueIdentifier>{1e8ebda4-da77-42cd-bf79-b11655ece936}</UniqueIdentifier>
-    </Filter>
     <Filter Include="99_Managers\AbstractFactory">
       <UniqueIdentifier>{eb3a70aa-1273-4bd7-a267-437b8d28e9d1}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,12 @@
     </Filter>
     <Filter Include="99_Managers\TileManager\Tile">
       <UniqueIdentifier>{4598ac7d-d002-4e2f-809d-22597b1fbe58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\01.Player">
+      <UniqueIdentifier>{1e8ebda4-da77-42cd-bf79-b11655ece936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\99.MapObj">
+      <UniqueIdentifier>{3084e889-b79c-4747-a69f-fefc9ae1c94f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +115,7 @@
       <Filter>02_Object</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>02_Object\Player</Filter>
+      <Filter>02_Object\01.Player</Filter>
     </ClInclude>
     <ClInclude Include="CAbstractFactory.h">
       <Filter>99_Managers\AbstractFactory</Filter>
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="CTile.h">
       <Filter>99_Managers\TileManager\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapObj.h">
+      <Filter>02_Object\99.MapObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +171,7 @@
       <Filter>02_Object</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>02_Object\Player</Filter>
+      <Filter>02_Object\01.Player</Filter>
     </ClCompile>
     <ClCompile Include="CObjectManager.cpp">
       <Filter>99_Managers\ObjectManager</Filter>
@@ -178,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="CTile.cpp">
       <Filter>99_Managers\TileManager\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapObj.cpp">
+      <Filter>02_Object\99.MapObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

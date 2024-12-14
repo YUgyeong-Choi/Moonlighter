@@ -13,6 +13,7 @@ public:
 	void Render(HDC hDC);
 	void Release();
 
+	void Set_TileXY(int _x, int _y) { m_tileX = _x, m_tileY = _y; }
 	void		Picking_Tile(POINT pt);
 
 	void		Save_Tile();
@@ -39,4 +40,7 @@ public:
 private:
 	static CTileManager* m_pInstance;
 	vector<CObject*>	m_vecTile;
+
+	int m_tileX;
+	int m_tileY;
 };

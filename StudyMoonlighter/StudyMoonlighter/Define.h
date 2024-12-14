@@ -9,9 +9,6 @@
 #define TILECX				32
 #define TILECY				32
 
-#define TILEX				82
-#define TILEY				67
-
 #define OBJ_NOEVENT			0
 #define OBJ_DEAD			1	
 
