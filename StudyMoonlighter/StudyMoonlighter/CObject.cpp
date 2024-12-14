@@ -55,3 +55,15 @@ void CObject::Move_Frame()
 		m_tFrame.dwTime = GetTickCount64();
 	}
 }
+
+void CObject::OnCollisionEnter(CObject* _obj)
+{
+}
+
+void CObject::OnCollisionStay(CObject* _obj)
+{
+}
+
+void CObject::OnCollisionExit(CObject* _obj)
+{
+}

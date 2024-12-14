@@ -54,12 +54,17 @@ int CMenuScene::Update()
 		m_bIsOpen = true;
 	}
 
-	if (m_iOpenSize >= 350) {
-		if (CKeyManager::Get_Instance()->Key_Down(VK_RETURN))
-		{
-			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
-		}
-		m_bIsOpen = false;
+	//if (m_iOpenSize >= 350) {
+	//	if (CKeyManager::Get_Instance()->Key_Down(VK_RETURN))
+	//	{
+	//		CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+	//	}
+	//	m_bIsOpen = false;
+	//}
+
+	if (CKeyManager::Get_Instance()->Key_Down(VK_RETURN))
+	{
+		CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 	}
 
 	if (m_bIsOpen) {

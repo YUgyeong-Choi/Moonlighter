@@ -34,9 +34,6 @@
     <Filter Include="99_Managers\BitManager\Bmp">
       <UniqueIdentifier>{5357c609-c55c-4c95-bdc4-9c5e15ccab6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="99_Managers\AnimationManager">
-      <UniqueIdentifier>{908a1b5e-3d9f-4584-950f-2c3fe242b7a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="99_Managers\KeyManager">
       <UniqueIdentifier>{391192d5-4ead-456d-b19d-46e2705b4470}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,12 @@
     </Filter>
     <Filter Include="02_Object\99.MapObj\Tree">
       <UniqueIdentifier>{67007e74-6679-4d14-8033-44f0138f9467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\CollisionManager">
+      <UniqueIdentifier>{908a1b5e-3d9f-4584-950f-2c3fe242b7a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\99.MapObj\House">
+      <UniqueIdentifier>{8f01dc1b-d9d3-4f2e-8c20-c65ec97ea7c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +141,12 @@
     <ClInclude Include="CTree1.h">
       <Filter>02_Object\99.MapObj\Tree</Filter>
     </ClInclude>
+    <ClInclude Include="CCollisionManager.h">
+      <Filter>99_Managers\CollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CHouse.h">
+      <Filter>02_Object\99.MapObj\House</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -190,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="CTree1.cpp">
       <Filter>02_Object\99.MapObj\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionManager.cpp">
+      <Filter>99_Managers\CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CHouse.cpp">
+      <Filter>02_Object\99.MapObj\House</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

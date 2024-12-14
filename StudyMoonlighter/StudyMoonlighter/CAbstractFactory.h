@@ -28,8 +28,8 @@ public:
 	{
 		CObject* pObj = new T;
 		pObj->Set_Pos(_fX, _fY);
-		pObj->Set_Size(_fCX, _fCY);
 		pObj->Initialize();
+		pObj->Set_Size(_fCX, _fCY);
 		return pObj;
 	}
 };

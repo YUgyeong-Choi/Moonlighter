@@ -7,6 +7,7 @@
 #include "CScrollManager.h"
 #include "CKeyManager.h"
 #include "CTree1.h"
+#include "CHouse.h"
 CVillageScene::CVillageScene()
 {
 }
@@ -64,6 +65,12 @@ void CVillageScene::Key_Input()
 
 void CVillageScene::Create_MapObj()
 {
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CTree1>::Create(WINCX/2, WINCY/2));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CTree1>::Create(490, 530));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CHouse>::Create(450, 820));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CHouse>::Create(910, 350));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CHouse>::Create(1225, 410));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CHouse>::Create(1620,350,400,280));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CHouse>::Create(2185,845));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CHouse>::Create(2255,1280,480, 300));
 }
 

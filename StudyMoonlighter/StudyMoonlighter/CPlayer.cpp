@@ -5,28 +5,29 @@
 #include "CScrollManager.h"
 #include "CTileManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), m_fFixScrollSpeed(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0)
 {
 }
 
 void CPlayer::Initialize()
 {
 	Load_Assets();
-	m_fRollTime = 25.f;
+	m_eOBJID = OBJ_PLAYER;
 
-	m_tInfo.fCX = 50.f;
-	m_tInfo.fCY = 80.f;
+	m_tInfo.fCX = 40.f;
+	m_tInfo.fCY = 57.f;
 
 	m_fSpeed = 3.f;
 	m_fFixScrollSpeed = 3.f;
+	m_fRollTime = 25.f;
 
+	//그래픽 관련
 	m_pImgKey = L"Will_Idle_down";
 	m_eCurState = IDLE;
 	m_ePreState = IDLE;
 	m_ePreDir = DOWN;
 	m_eCurDir = DOWN;
-
-	//그래픽 관련
+	
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 9;
 	m_tFrame.dwSpeed = 200;
