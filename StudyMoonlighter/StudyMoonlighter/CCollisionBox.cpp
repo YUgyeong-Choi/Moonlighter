@@ -1,32 +1,25 @@
 #include "pch.h"
-#include "CHouse.h"
+#include "CCollisionBox.h"
 #include "CScrollManager.h"
 
-CHouse::CHouse()
-{
-}
-
-void CHouse::Initialize()
+void CCollisionBox::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
-
-	m_tInfo.fCX = 260.f;
-	m_tInfo.fCY = 280.f;
 
 	m_eRender = RENDER_BACKGROUND;
 }
 
-int CHouse::Update()
+int CCollisionBox::Update()
 {
-	__super::Update_Rect();
+	CObject::Update_Rect();
 	return 0;
 }
 
-void CHouse::Late_Update()
+void CCollisionBox::Late_Update()
 {
 }
 
-void CHouse::Render(HDC hDC)
+void CCollisionBox::Render(HDC hDC)
 {
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
@@ -35,6 +28,6 @@ void CHouse::Render(HDC hDC)
 	}
 }
 
-void CHouse::Release()
+void CCollisionBox::Release()
 {
 }

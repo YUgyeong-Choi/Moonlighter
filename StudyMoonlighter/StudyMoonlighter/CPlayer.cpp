@@ -15,7 +15,7 @@ void CPlayer::Initialize()
 	m_eOBJID = OBJ_PLAYER;
 
 	m_tInfo.fCX = 40.f;
-	m_tInfo.fCY = 57.f;
+	m_tInfo.fCY = 54.f;
 
 	m_fSpeed = 3.f;
 	m_fFixScrollSpeed = 3.f;
@@ -78,16 +78,16 @@ void CPlayer::Release()
 
 void CPlayer::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT) && !m_bIsRoll)
+	if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
 	{
 		m_eCurState = IDLE;
 	}
-	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP) && CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN) && !m_bIsRoll) {
+	else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll) {
 		m_eCurState = IDLE;
 	}
-	else if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP) && !m_bIsRoll)
+	else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll)
 	{
-		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
+		if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 
 			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
@@ -95,7 +95,7 @@ void CPlayer::Key_Input()
 			m_tInfo.fY -= diagonalSpeed; 
 			m_eCurDir = UP_RIGHT;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
+		else if (CKeyManager::Get_Instance()->Key_Pressing('A')) {
 			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
@@ -109,16 +109,16 @@ void CPlayer::Key_Input()
 		}
 		m_eCurState = WALK;
 
-	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN) && !m_bIsRoll)
+	}else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll)
 	{
-		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
+		if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			m_eCurDir = DOWN_RIGHT;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
+		else if (CKeyManager::Get_Instance()->Key_Pressing('A')) {
 			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
@@ -133,14 +133,14 @@ void CPlayer::Key_Input()
 		m_eCurState = WALK;
 
 
-	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT) && !m_bIsRoll)
+	}else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll)
 	{
 		m_fFixScrollSpeed = m_fSpeed;
 		m_tInfo.fX -= m_fSpeed;
 		m_eCurDir = LEFT;
 		m_eCurState = WALK;
 
-	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT) && !m_bIsRoll)
+	}else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
 	{
 		m_fFixScrollSpeed = m_fSpeed;
 		m_tInfo.fX += m_fSpeed;

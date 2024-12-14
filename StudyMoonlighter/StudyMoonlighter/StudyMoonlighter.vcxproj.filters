@@ -70,14 +70,20 @@
     <Filter Include="99_Managers\CollisionManager">
       <UniqueIdentifier>{908a1b5e-3d9f-4584-950f-2c3fe242b7a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Object\99.MapObj\House">
-      <UniqueIdentifier>{8f01dc1b-d9d3-4f2e-8c20-c65ec97ea7c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Object\98.Portal">
       <UniqueIdentifier>{3659e383-a4df-45d9-bbec-8bf4c634e2b5}</UniqueIdentifier>
     </Filter>
     <Filter Include="01_Scenes\02_Field">
       <UniqueIdentifier>{2bf1846f-8560-48da-8185-69022ff5f8f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\02_Dungeon">
+      <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\09_Tutorial">
+      <UniqueIdentifier>{d526c212-7185-41fa-a6a9-e2df9e07c150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\99.MapObj\CollisionBox">
+      <UniqueIdentifier>{c972b447-475d-4631-a147-31f13326e6af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,14 +156,20 @@
     <ClInclude Include="CCollisionManager.h">
       <Filter>99_Managers\CollisionManager</Filter>
     </ClInclude>
-    <ClInclude Include="CHouse.h">
-      <Filter>02_Object\99.MapObj\House</Filter>
-    </ClInclude>
     <ClInclude Include="CPortal.h">
       <Filter>02_Object\98.Portal</Filter>
     </ClInclude>
     <ClInclude Include="CFieldScene.h">
       <Filter>01_Scenes\02_Field</Filter>
+    </ClInclude>
+    <ClInclude Include="CDungeonScene.h">
+      <Filter>01_Scenes\02_Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="CTutorialScene.h">
+      <Filter>01_Scenes\09_Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollisionBox.h">
+      <Filter>02_Object\99.MapObj\CollisionBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,14 +227,20 @@
     <ClCompile Include="CCollisionManager.cpp">
       <Filter>99_Managers\CollisionManager</Filter>
     </ClCompile>
-    <ClCompile Include="CHouse.cpp">
-      <Filter>02_Object\99.MapObj\House</Filter>
-    </ClCompile>
     <ClCompile Include="CPortal.cpp">
       <Filter>02_Object\98.Portal</Filter>
     </ClCompile>
     <ClCompile Include="CFieldScene.cpp">
       <Filter>01_Scenes\02_Field</Filter>
+    </ClCompile>
+    <ClCompile Include="CDungeonScene.cpp">
+      <Filter>01_Scenes\02_Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="CTutorialScene.cpp">
+      <Filter>01_Scenes\09_Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionBox.cpp">
+      <Filter>02_Object\99.MapObj\CollisionBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

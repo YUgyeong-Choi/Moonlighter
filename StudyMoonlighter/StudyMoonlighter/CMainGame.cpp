@@ -38,7 +38,7 @@ void CMainGame::Render()
 {
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(L"Back");
 	CSceneManager::GetInstance()->Render(hMemDC);
-	GdiTransparentBlt(m_hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, 1280, 720, SRCCOPY);
+	GdiTransparentBlt(m_hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, 1024, 720, SRCCOPY);
 }
 
 void CMainGame::Release()

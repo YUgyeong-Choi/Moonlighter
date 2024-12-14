@@ -3,6 +3,8 @@
 #include "CMenuScene.h"
 #include "CVillageScene.h"
 #include "CFieldScene.h"
+#include "CDungeonScene.h"
+#include "CTutorialScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -28,6 +30,12 @@ void CSceneManager::SetScene(SCENEID eID)
 			break;
 		case SC_FIELD:
 			m_pScene = new CFieldScene;
+			break;
+		case SC_DUNGEON:
+			m_pScene = new CDungeonScene;
+			break;
+		case SC_TUTORIAL:
+			m_pScene = new CTutorialScene;
 		}
 
 		m_pScene->Initialize();

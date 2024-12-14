@@ -12,7 +12,7 @@ void CTree1::Initialize()
 	m_eOBJID = OBJ_MAPOBJ;
 	
 	m_tInfo.fCX = 30.f;
-	m_tInfo.fCY = 30.f;
+	m_tInfo.fCY = 10.f;
 
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Map/Object/Tree/Village_Tree_01.bmp", L"Tree1");
 	m_tRenderSizeX = 140.f;

@@ -67,6 +67,10 @@ int CMenuScene::Update()
 		CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 	}
 
+	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
+		CSceneManager::GetInstance()->SetScene(SC_TUTORIAL);
+	}
+
 	if (m_bIsOpen) {
 		m_iOpenSize += 2;
 	}

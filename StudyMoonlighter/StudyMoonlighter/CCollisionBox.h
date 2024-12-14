@@ -1,11 +1,8 @@
 #pragma once
 #include "CObject.h"
-class CHouse : public CObject
+class CCollisionBox :public CObject
 {
-public:
-	CHouse();
-	virtual ~CHouse() { Release(); }
-public:
+	// CObject을(를) 통해 상속됨
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;

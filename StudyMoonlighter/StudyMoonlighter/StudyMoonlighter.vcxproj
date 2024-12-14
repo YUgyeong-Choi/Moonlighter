@@ -138,9 +138,10 @@
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CBitManager.h" />
+    <ClInclude Include="CCollisionBox.h" />
     <ClInclude Include="CCollisionManager.h" />
+    <ClInclude Include="CDungeonScene.h" />
     <ClInclude Include="CFieldScene.h" />
-    <ClInclude Include="CHouse.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenuScene.h" />
@@ -154,6 +155,7 @@
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileManager.h" />
     <ClInclude Include="CTree1.h" />
+    <ClInclude Include="CTutorialScene.h" />
     <ClInclude Include="CVillageScene.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
@@ -165,9 +167,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBitManager.cpp" />
+    <ClCompile Include="CCollisionBox.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
+    <ClCompile Include="CDungeonScene.cpp" />
     <ClCompile Include="CFieldScene.cpp" />
-    <ClCompile Include="CHouse.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenuScene.cpp" />
@@ -181,6 +184,7 @@
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileManager.cpp" />
     <ClCompile Include="CTree1.cpp" />
+    <ClCompile Include="CTutorialScene.cpp" />
     <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

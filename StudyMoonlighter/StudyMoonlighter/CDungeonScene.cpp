@@ -1,66 +1,58 @@
 #include "pch.h"
-#include "CFieldScene.h"
+#include "CDungeonScene.h"
 #include "CKeyManager.h"
 #include "CObjectManager.h"
+#include "CBitManager.h"
 #include "CPlayer.h"
 #include "CScrollManager.h"
-#include "CBitManager.h"
-#include "CAbstractFactory.h"
-#include "CPortal.h"
 
-CFieldScene::CFieldScene()
+void CDungeonScene::Initialize()
 {
-}
-
-void CFieldScene::Initialize()
-{
-	ADD_BMP(L"../MoonlighterAssets/Map/DungeonsEntrance_Base.bmp", L"DungeonField");
-	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1200, 1800);
-	m_fMapXSize = 2400.f;
-	m_fMapYSize = 2048.f;
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background.bmp", L"DungeonBackground");
+	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(WINCX/2, WINCY/2);
+	m_fMapXSize = 1024.f;
+	m_fMapYSize = 720.f;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
-	
+
 	Create_MapObj();
 }
 
-int CFieldScene::Update()
+int CDungeonScene::Update()
 {
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
-	return 0;
+    return 0;
 }
 
-void CFieldScene::LateUpdate()
+void CDungeonScene::LateUpdate()
 {
 	CObjectManager::Get_Instance()->Late_Update();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
-void CFieldScene::Render(HDC hDC)
+void CDungeonScene::Render(HDC hDC)
 {
-	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonField");
+	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonBackground");
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	GdiTransparentBlt(hDC, iScrollX, iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
 	CObjectManager::Get_Instance()->Render(hDC);
 }
 
-void CFieldScene::Release()
+void CDungeonScene::Release()
 {
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 
-void CFieldScene::Key_Input()
+void CDungeonScene::Key_Input()
 {
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
 		g_bDevmode = !g_bDevmode;
 	}
 }
 
-void CFieldScene::Create_MapObj()
+void CDungeonScene::Create_MapObj()
 {
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(700, 940, 80, 30));
-	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_PortalType(DUNGEON);
 }
