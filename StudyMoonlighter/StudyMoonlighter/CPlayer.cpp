@@ -14,10 +14,9 @@ void CPlayer::Initialize()
 	Load_Assets();
 	m_fRollTime = 25.f;
 
-	m_tInfo.fX = WINCX/2;
-	m_tInfo.fY = WINCY/2;
-	m_tInfo.fCX = 80.f;
+	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 80.f;
+
 	m_fSpeed = 3.f;
 	m_fFixScrollSpeed = 3.f;
 
@@ -27,10 +26,15 @@ void CPlayer::Initialize()
 	m_ePreDir = DOWN;
 	m_eCurDir = DOWN;
 
+	//그래픽 관련
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 9;
 	m_tFrame.dwSpeed = 200;
 	m_tFrame.dwTime = GetTickCount64();
+
+	m_tRenderSizeX = 80.f;
+	m_tRenderSizeY = 80.f;
+	m_eRender = RENDER_GAMEOBJECT;
 }
 
 int CPlayer::Update()
@@ -53,7 +57,18 @@ void CPlayer::Render(HDC hDC)
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(m_pImgKey);
-	GdiTransparentBlt(hDC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.fCX, m_tInfo.fCY, hMemDC, m_tInfo.fCX *m_tFrame.iFrameStart, 0, 80, 80, RGB(255, 255, 255));		// 제거할 색상
+	GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, m_tRenderSizeX, m_tRenderSizeY, hMemDC, m_tRenderSizeX *m_tFrame.iFrameStart, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
+	if (g_bDevmode) {
+		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
+		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
+	}
+
+	TCHAR szBuffer[64];
+	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)m_tInfo.fX - iScrollX, (int)m_tInfo.fY - iScrollY);
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+	TextOut(hDC, 10, 10, szBuffer, _tcslen(szBuffer));
+
 }
 
 void CPlayer::Release()
@@ -73,14 +88,14 @@ void CPlayer::Key_Input()
 	{
 		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
 
-			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed; 
 			m_tInfo.fY -= diagonalSpeed; 
 			m_eCurDir = UP_RIGHT;
 		}
 		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
-			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY -= diagonalSpeed;
@@ -96,14 +111,14 @@ void CPlayer::Key_Input()
 	}else if (CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN) && !m_bIsRoll)
 	{
 		if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT)) {
-			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			m_eCurDir = DOWN_RIGHT;
 		}
 		else if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT)) {
-			float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
@@ -148,7 +163,7 @@ void CPlayer::Key_Input()
 void CPlayer::Rolling()
 {
 	if (m_bIsRoll) {
-		float diagonalSpeed = m_fSpeed / sqrt(2.0f);
+		float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 		switch (m_eCurDir)
 		{
 		case CObject::LEFT:

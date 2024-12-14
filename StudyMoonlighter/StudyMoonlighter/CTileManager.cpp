@@ -7,7 +7,7 @@
 
 CTileManager* CTileManager::m_pInstance = nullptr;
 
-CTileManager::CTileManager()
+CTileManager::CTileManager():m_tileX(0), m_tileY(0)
 {
 	//m_vecTile.reserve(m_tileX * m_tileY);
 }
@@ -118,8 +118,8 @@ void CTileManager::Load_Tile()
 
 	while (true)
 	{
-		ReadFile(hFile, &tTile, sizeof(INFO), &dwByte, NULL);
-		ReadFile(hFile, &iDrawID, sizeof(bool), &dwByte, NULL);
+		bool a = ReadFile(hFile, &tTile, sizeof(INFO), &dwByte, NULL);
+		bool b = ReadFile(hFile, &iDrawID, sizeof(bool), &dwByte, NULL);
 
 		if (0 == dwByte)
 			break;

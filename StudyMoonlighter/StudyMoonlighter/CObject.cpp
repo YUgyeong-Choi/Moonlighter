@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "CObject.h"
 
-CObject::CObject() :m_pImgKey(nullptr), m_fSpeed(0)
+CObject::CObject() :m_pImgKey(nullptr), m_fSpeed(0), m_eRender(RENDER_END), m_tRenderSizeX(0), m_tRenderSizeY(0)
 {
 	ZeroMemory(&m_tFrame, sizeof(FRAME));
 	ZeroMemory(&m_tRect, sizeof(RECT));
 	ZeroMemory(&m_tInfo, sizeof(INFO));
+	ZeroMemory(&m_tRenderRect, sizeof(RECT));
 }
 
 void CObject::Initialize()
@@ -35,6 +36,11 @@ void CObject::Update_Rect()
 	m_tRect.top = LONG(m_tInfo.fY - (m_tInfo.fCY * 0.5f));
 	m_tRect.right = LONG(m_tInfo.fX + (m_tInfo.fCX * 0.5f));
 	m_tRect.bottom = LONG(m_tInfo.fY + (m_tInfo.fCY * 0.5f));
+
+	m_tRenderRect.left = LONG(m_tInfo.fX - (m_tRenderSizeX * 0.5f));
+	m_tRenderRect.top = LONG(m_tInfo.fY - (m_tRenderSizeY * 0.5f));
+	m_tRenderRect.right = LONG(m_tInfo.fX + (m_tRenderSizeX * 0.5f));
+	m_tRenderRect.bottom = LONG(m_tInfo.fY + (m_tRenderSizeY * 0.5f));
 }
 
 void CObject::Move_Frame()

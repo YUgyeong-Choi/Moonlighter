@@ -67,6 +67,9 @@
     <Filter Include="02_Object\99.MapObj">
       <UniqueIdentifier>{3084e889-b79c-4747-a69f-fefc9ae1c94f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\99.MapObj\Tree">
+      <UniqueIdentifier>{67007e74-6679-4d14-8033-44f0138f9467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -132,8 +135,8 @@
     <ClInclude Include="CTile.h">
       <Filter>99_Managers\TileManager\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="CMapObj.h">
-      <Filter>02_Object\99.MapObj</Filter>
+    <ClInclude Include="CTree1.h">
+      <Filter>02_Object\99.MapObj\Tree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -185,8 +188,8 @@
     <ClCompile Include="CTile.cpp">
       <Filter>99_Managers\TileManager\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="CMapObj.cpp">
-      <Filter>02_Object\99.MapObj</Filter>
+    <ClCompile Include="CTree1.cpp">
+      <Filter>02_Object\99.MapObj\Tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

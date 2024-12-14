@@ -6,22 +6,25 @@
 #include "CPlayer.h"
 #include "CScrollManager.h"
 #include "CKeyManager.h"
+#include "CTree1.h"
 CVillageScene::CVillageScene()
 {
 }
 
 void CVillageScene::Initialize()
 {
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Map/MainVillage.bmp", L"VillageBackground");
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
+	ADD_BMP(L"../MoonlighterAssets/Map/MainVillage.bmp", L"VillageBackground");
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 	m_fMapXSize = 2602.f;
 	m_fMapYSize = 2134.f;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 
+	Create_MapObj();
 }
 
 int CVillageScene::Update()
 {
+	Key_Input();
 	CObjectManager::Get_Instance()->Update();
 	return 0;
 }
@@ -45,8 +48,22 @@ void CVillageScene::Release()
 {
 }
 
+void CVillageScene::Key_Input()
+{
+	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
+		g_bDevmode = !g_bDevmode;
+	}
+}
+
+//void CVillageScene::Load_Assets()
+//{
+//	
+//	
+//	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Map/Object/Tree2/Tree2.bmp", L"Tree2");
+//}
+
 void CVillageScene::Create_MapObj()
 {
-
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CTree1>::Create(WINCX/2, WINCY/2));
 }
 

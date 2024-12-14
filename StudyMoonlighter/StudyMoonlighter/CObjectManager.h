@@ -33,5 +33,6 @@ public:
 private:
 	static CObjectManager* m_pInstance;
 	list<CObject*>		m_ObjList[OBJ_END];
+	list<CObject*>		m_RenderList[RENDER_END];
 };
 

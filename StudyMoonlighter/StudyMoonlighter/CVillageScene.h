@@ -14,8 +14,8 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 private:
-	void Create_MapObj();
+	void Key_Input();
 private:
-	list<CObject*>		m_ObjList;
+	void Create_MapObj();
 };
 

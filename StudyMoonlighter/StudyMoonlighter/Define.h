@@ -12,11 +12,14 @@
 #define OBJ_NOEVENT			0
 #define OBJ_DEAD			1	
 
+#define ADD_BMP(file, name)   CBitManager::GetInstance()->InsertBmp(file, name); 
+
 extern HWND		g_hWnd;
 extern bool		g_bDevmode;
 
 enum SCENEID { SC_MENU, SC_VILLAGE, SC_END };
-enum OBJID {OBJ_PLAYER, OBJ_END};
+enum OBJID {OBJ_PLAYER, OBJ_MAPOBJ, OBJ_END};
+enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_END };
 
 template<typename T>
 void Safe_Delete(T& Temp)
@@ -73,3 +76,30 @@ typedef struct tagInfo
 	float		fCX, fCY;	// 가로, 세로 길이
 
 }INFO;
+
+
+static BOOL Hitbox(HDC hDC, RECT tRect, float x, float y)
+{
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
+	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
+	Rectangle(hDC, (int)tRect.left + x, (int)tRect.top +y, (int)tRect.right + x, (int)tRect.bottom + y);
+	SelectObject(hDC, hOldPen);
+	SelectObject(hDC, hOldBrush);
+
+	DeleteObject(hNewPen);
+	return true;
+}
+
+static BOOL Renderbox(HDC hDC, RECT tRect, float x, float y)
+{
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
+	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
+	Rectangle(hDC, (int)tRect.left + x, (int)tRect.top + y, (int)tRect.right + x, (int)tRect.bottom + y);
+	SelectObject(hDC, hOldPen);
+	SelectObject(hDC, hOldBrush);
+
+	DeleteObject(hNewPen);
+	return true;
+}

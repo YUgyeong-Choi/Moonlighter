@@ -140,7 +140,6 @@
     <ClInclude Include="CBitManager.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
-    <ClInclude Include="CMapObj.h" />
     <ClInclude Include="CMenuScene.h" />
     <ClInclude Include="CMyBmp.h" />
     <ClInclude Include="CObject.h" />
@@ -150,6 +149,7 @@
     <ClInclude Include="CScrollManager.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileManager.h" />
+    <ClInclude Include="CTree1.h" />
     <ClInclude Include="CVillageScene.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
@@ -163,7 +163,6 @@
     <ClCompile Include="CBitManager.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
-    <ClCompile Include="CMapObj.cpp" />
     <ClCompile Include="CMenuScene.cpp" />
     <ClCompile Include="CMyBmp.cpp" />
     <ClCompile Include="CObject.cpp" />
@@ -173,6 +172,7 @@
     <ClCompile Include="CScrollManager.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileManager.cpp" />
+    <ClCompile Include="CTree1.cpp" />
     <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

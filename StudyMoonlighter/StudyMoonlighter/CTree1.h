@@ -1,10 +1,11 @@
 #pragma once
 #include "CObject.h"
-class CMapObj :public CObject
+class CTree1 :public CObject
 {
 public:
-	CMapObj();
-	virtual ~CMapObj() { Release(); }
+	CTree1();
+	virtual ~CTree1() { Release(); }
+public:
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
