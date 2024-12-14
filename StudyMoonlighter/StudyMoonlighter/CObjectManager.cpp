@@ -54,6 +54,7 @@ void CObjectManager::Late_Update()
 	}
 
 	CCollisionManager::CollisionRectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]);
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_PORTAL]);
 }
 
 void CObjectManager::Render(HDC hDC)

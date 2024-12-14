@@ -147,6 +147,7 @@
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CObjectManager.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CPortal.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CScrollManager.h" />
     <ClInclude Include="CTile.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CObjectManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CPortal.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CScrollManager.cpp" />
     <ClCompile Include="CTile.cpp" />

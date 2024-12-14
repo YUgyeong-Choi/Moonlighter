@@ -73,6 +73,9 @@
     <Filter Include="02_Object\99.MapObj\House">
       <UniqueIdentifier>{8f01dc1b-d9d3-4f2e-8c20-c65ec97ea7c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\98.Portal">
+      <UniqueIdentifier>{3659e383-a4df-45d9-bbec-8bf4c634e2b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -147,6 +150,9 @@
     <ClInclude Include="CHouse.h">
       <Filter>02_Object\99.MapObj\House</Filter>
     </ClInclude>
+    <ClInclude Include="CPortal.h">
+      <Filter>02_Object\98.Portal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -205,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="CHouse.cpp">
       <Filter>02_Object\99.MapObj\House</Filter>
+    </ClCompile>
+    <ClCompile Include="CPortal.cpp">
+      <Filter>02_Object\98.Portal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,9 @@ public:
 	void		Release();
 
 	void		Delete_ID(OBJID eID);
+
+	CObject* Get_LastMapObj() { return m_ObjList[OBJ_PORTAL].back(); }
+
 public:
 	static CObjectManager* Get_Instance()
 	{

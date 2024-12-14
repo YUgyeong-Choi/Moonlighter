@@ -16,6 +16,7 @@ public:
 public:
 	const INFO* Get_Info_Pointer() { return &m_tInfo; }
 	const RENDERID Get_GroupID() const { return m_eRender; }
+	OBJID Get_OBJID() { return m_eOBJID; }
 	float Get_Speed() { return m_fFixScrollSpeed; }
 	RECT* Get_Rect() { return &m_tRect; }
 	INFO Get_Info() { return m_tInfo; }

@@ -19,6 +19,7 @@ private:
 	void Offset();
 	void Load_Assets();
 	void Change_Motion();
+	void Move_Lock();
 	
 private:
 	bool m_bIsRoll;
