@@ -55,8 +55,14 @@ void CPlayer::Late_Update()
 
 void CPlayer::Render(HDC hDC)
 {
+	//Image image(L"../MoonlighterAssets/Player/Idle/Down/will_idle_down.png");
+	//Graphics graphics(hDC);
+
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
+	//graphics.DrawImage(&image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(m_pImgKey);
 	GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, m_tRenderSizeX, m_tRenderSizeY, hMemDC, m_tRenderSizeX *m_tFrame.iFrameStart, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
 	if (g_bDevmode) {
