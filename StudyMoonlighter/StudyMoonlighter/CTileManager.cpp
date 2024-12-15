@@ -7,16 +7,16 @@
 
 CTileManager* CTileManager::m_pInstance = nullptr;
 
-CTileManager::CTileManager():m_tileX(0), m_tileY(0)
+CTileManager::CTileManager()
 {
 	//m_vecTile.reserve(m_tileX * m_tileY);
 }
 
 void CTileManager::Initialize()
 {
-	for (int i = 0; i < m_tileY; ++i)
+	for (int i = 0; i < TILEY; ++i)
 	{
-		for (int j = 0; j < m_tileX; ++j)
+		for (int j = 0; j < TILEX; ++j)
 		{
 			float fX = (float)(j * TILECX) + (TILECX >> 1);
 			float fY = (float)(i * TILECY) + (TILECY >> 1);
@@ -52,7 +52,7 @@ void CTileManager::Render(HDC hDC)
 	{
 		for (int j = iScrollX; j < iMaxX; ++j)
 		{
-			int		iIndex = i * m_tileX + j;
+			int		iIndex = i * TILEX + j;
 
 			if (0 > iIndex || m_vecTile.size() <= (size_t)iIndex)
 				continue;
@@ -73,12 +73,12 @@ void CTileManager::Picking_Tile(POINT pt)
 	int		x = pt.x / TILECX;
 	int		y = pt.y / TILECY;
 
-	int	iIndex = y * m_tileX + x;
+	int	iIndex = y * TILEX + x;
 
 	if (0 > iIndex || (size_t)iIndex >= m_vecTile.size())
 		return;
 
-	dynamic_cast<CTile*>(m_vecTile[iIndex])->Set_DrawID();
+	dynamic_cast<CTile*>(m_vecTile[iIndex])->Set_DrawIDPick();
 }
 
 void CTileManager::Save_Tile()
@@ -88,7 +88,7 @@ void CTileManager::Save_Tile()
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
 
-	int		iDrawID(0);
+	bool		iDrawID(0);
 	DWORD	dwByte(0);
 
 	for (auto& pTile : m_vecTile)
@@ -110,7 +110,7 @@ void CTileManager::Load_Tile()
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
 
-	int		iDrawID(0);
+	bool		iDrawID(0);
 	DWORD	dwByte(0);
 	INFO	tTile{};
 
@@ -125,6 +125,7 @@ void CTileManager::Load_Tile()
 			break;
 
 		CObject* pTile = CAbstractFactory<CTile>::Create(tTile.fX, tTile.fY);
+		static_cast<CTile*>(pTile)->Set_DrawID(iDrawID);
 
 		m_vecTile.push_back(pTile);
 	}

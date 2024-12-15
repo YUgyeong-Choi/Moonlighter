@@ -140,6 +140,7 @@
     <ClInclude Include="CBitManager.h" />
     <ClInclude Include="CCollisionBox.h" />
     <ClInclude Include="CCollisionManager.h" />
+    <ClInclude Include="CDungeonEditScene.h" />
     <ClInclude Include="CDungeonScene.h" />
     <ClInclude Include="CFieldScene.h" />
     <ClInclude Include="CKeyManager.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="CBitManager.cpp" />
     <ClCompile Include="CCollisionBox.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
+    <ClCompile Include="CDungeonEditScene.cpp" />
     <ClCompile Include="CDungeonScene.cpp" />
     <ClCompile Include="CFieldScene.cpp" />
     <ClCompile Include="CKeyManager.cpp" />

@@ -5,6 +5,7 @@
 #include "CFieldScene.h"
 #include "CDungeonScene.h"
 #include "CTutorialScene.h"
+#include "CDungeonEditScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -36,6 +37,10 @@ void CSceneManager::SetScene(SCENEID eID)
 			break;
 		case SC_TUTORIAL:
 			m_pScene = new CTutorialScene;
+			break;
+		case SC_EDIT:
+			m_pScene = new CDungeonEditScene;
+			break;
 		}
 
 		m_pScene->Initialize();

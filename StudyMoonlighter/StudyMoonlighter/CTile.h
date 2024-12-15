@@ -7,8 +7,9 @@ public:
 	virtual ~CTile() { Release(); }
 public:
 	bool			Get_DrawID() { return m_bIsWalk; }
+	void			Set_DrawID(bool _b) { m_bIsWalk = _b; }
 
-	void		Set_DrawID() {m_bIsWalk = !m_bIsWalk; }
+	void		Set_DrawIDPick() {m_bIsWalk = !m_bIsWalk; }
 
 public:
 	void Initialize() override;
