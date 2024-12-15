@@ -7,6 +7,7 @@
 #include "CScrollManager.h"
 #include "CAbstractFactory.h"
 #include "CCollisionBox.h"
+#include "CScrollWasd.h"
 
 CTutorialScene::CTutorialScene()
 {
@@ -65,4 +66,5 @@ void CTutorialScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX/2, 690, 1024, 60));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY/2, 60, 720));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY/2, 60, 720));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX/2,60, 0, 0));
 }

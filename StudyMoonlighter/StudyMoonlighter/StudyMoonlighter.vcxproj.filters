@@ -64,9 +64,6 @@
     <Filter Include="02_Object\99.MapObj">
       <UniqueIdentifier>{3084e889-b79c-4747-a69f-fefc9ae1c94f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Object\99.MapObj\Tree">
-      <UniqueIdentifier>{67007e74-6679-4d14-8033-44f0138f9467}</UniqueIdentifier>
-    </Filter>
     <Filter Include="99_Managers\CollisionManager">
       <UniqueIdentifier>{908a1b5e-3d9f-4584-950f-2c3fe242b7a6}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,18 @@
     </Filter>
     <Filter Include="02_Object\99.MapObj\CollisionBox">
       <UniqueIdentifier>{c972b447-475d-4631-a147-31f13326e6af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\99.MapObj\Tutorial">
+      <UniqueIdentifier>{29d3c85b-6930-4c95-afec-7cb2b4c36bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\99.MapObj\Village">
+      <UniqueIdentifier>{be0f4c50-ff69-4305-9999-ea667ea03418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\99.MapObj\Village\Tree">
+      <UniqueIdentifier>{67007e74-6679-4d14-8033-44f0138f9467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\99.MapObj\Tutorial\ScrollWASD">
+      <UniqueIdentifier>{5cd081d1-b1c7-48bd-8456-df1186e65743}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +160,7 @@
       <Filter>99_Managers\TileManager\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CTree1.h">
-      <Filter>02_Object\99.MapObj\Tree</Filter>
+      <Filter>02_Object\99.MapObj\Village\Tree</Filter>
     </ClInclude>
     <ClInclude Include="CCollisionManager.h">
       <Filter>99_Managers\CollisionManager</Filter>
@@ -170,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="CCollisionBox.h">
       <Filter>02_Object\99.MapObj\CollisionBox</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrollWasd.h">
+      <Filter>02_Object\99.MapObj\Tutorial\ScrollWASD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,7 +234,7 @@
       <Filter>99_Managers\TileManager\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CTree1.cpp">
-      <Filter>02_Object\99.MapObj\Tree</Filter>
+      <Filter>02_Object\99.MapObj\Village\Tree</Filter>
     </ClCompile>
     <ClCompile Include="CCollisionManager.cpp">
       <Filter>99_Managers\CollisionManager</Filter>
@@ -241,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="CCollisionBox.cpp">
       <Filter>02_Object\99.MapObj\CollisionBox</Filter>
+    </ClCompile>
+    <ClCompile Include="CScrollWasd.cpp">
+      <Filter>02_Object\99.MapObj\Tutorial\ScrollWASD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
