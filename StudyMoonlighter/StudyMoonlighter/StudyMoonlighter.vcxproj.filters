@@ -97,6 +97,9 @@
     <Filter Include="01_Scenes\09_DungeonEdit">
       <UniqueIdentifier>{8bc94942-8f51-4090-b5e6-dc2dd8f96574}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\99.MapObj\Dungeon1">
+      <UniqueIdentifier>{fdb6f8fc-758d-4d68-b0f9-cc19229e597d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">

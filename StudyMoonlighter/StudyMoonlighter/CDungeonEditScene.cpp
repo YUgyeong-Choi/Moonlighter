@@ -39,7 +39,9 @@ void CDungeonEditScene::Render(HDC hDC)
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	GdiTransparentBlt(hDC, iScrollX, iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
-	CTileManager::Get_Instance()->Render(hDC);
+	if (m_bIsShowTile) {
+		CTileManager::Get_Instance()->Render(hDC);
+	}
 }
 
 void CDungeonEditScene::Release()
