@@ -8,6 +8,7 @@
 #include "CAbstractFactory.h"
 #include "CCollisionBox.h"
 #include "CScrollWasd.h"
+#include "CGolemDoor.h"
 
 CTutorialScene::CTutorialScene()
 {
@@ -20,6 +21,7 @@ void CTutorialScene::Initialize()
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
+	Create_MapObj();
 }
 
 int CTutorialScene::Update()
@@ -60,11 +62,6 @@ void CTutorialScene::Key_Input()
 
 void CTutorialScene::Create_MapObj()
 {
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX/2, 30, 1024, 60));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX/2, 690, 1024, 60));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY/2, 60, 720));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY/2, 60, 720));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX/2,60, 0, 0));
 }
 
 void CTutorialScene::Offset()

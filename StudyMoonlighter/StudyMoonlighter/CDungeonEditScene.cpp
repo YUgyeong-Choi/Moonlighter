@@ -9,6 +9,7 @@
 #include "CScrollWasd.h"
 #include "CCollisionBox.h"
 #include "CAbstractFactory.h"
+#include "CGolemDoor.h"
 
 CDungeonEditScene::CDungeonEditScene():m_bIsShowTile(false)
 {
@@ -17,8 +18,8 @@ CDungeonEditScene::CDungeonEditScene():m_bIsShowTile(false)
 void CDungeonEditScene::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background.bmp", L"DungeonBackground");
-	ADD_BMP(L"../MoonlighterAssets/Tile/CanWalk32.bmp", L"CanWalk");
-	ADD_BMP(L"../MoonlighterAssets/Tile/CantWalk32.bmp", L"CantWalk");
+	ADD_BMP(L"../MoonlighterAssets/Tile/CanWalk48.bmp", L"CanWalk");
+	ADD_BMP(L"../MoonlighterAssets/Tile/CantWalk48.bmp", L"CantWalk");
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
 	CTileManager::Get_Instance()->Initialize();
@@ -68,14 +69,14 @@ void CDungeonEditScene::Key_Input()
 	}
 
 	if (m_bIsShowTile) {
-		if (CKeyManager::Get_Instance()->Key_Pressing(VK_LBUTTON))
+		if (CKeyManager::Get_Instance()->Key_Down(VK_LBUTTON))
 		{
 			POINT	ptMouse{};
 			GetCursorPos(&ptMouse);
 			ScreenToClient(g_hWnd, &ptMouse);
 
-			ptMouse.x -= (int)CScrollManager::Get_Instance()->Get_ScrollX();
-			ptMouse.y -= (int)CScrollManager::Get_Instance()->Get_ScrollY();
+			ptMouse.x -= (int)CScrollManager::Get_Instance()->Get_ScrollX() + 80;
+			ptMouse.y -= (int)CScrollManager::Get_Instance()->Get_ScrollY() + 96;
 
 			CTileManager::Get_Instance()->Picking_Tile(ptMouse);
 		}
@@ -97,11 +98,13 @@ void CDungeonEditScene::Key_Input()
 
 void CDungeonEditScene::Create_MapObj()
 {
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 30, 1024, 60));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 690, 1024, 60));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX / 2, 60, 0, 0));
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 30, 1024, 60));
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 690, 1024, 60));
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX / 2, 60, 0, 0));
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2, 80, 50));
+	//dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
 }
 
 void CDungeonEditScene::Offset()
@@ -117,6 +120,7 @@ void CDungeonEditScene::SaveMapObj()
 		return;
 
 	DWORD	dwByte(0);
+	DIRECTION _dir;
 	list<CObject*> mapObjList = CObjectManager::Get_Instance()->Get_MapObjList();
 
 	for (auto& mapObj : mapObjList)
@@ -124,6 +128,16 @@ void CDungeonEditScene::SaveMapObj()
 		CMapObj* obj = static_cast<CMapObj*>(mapObj);
 		WriteFile(hFile, obj, sizeof(CMapObj), &dwByte, NULL);
 	}
+
+	list<CObject*> protalList = CObjectManager::Get_Instance()->Get_PortalList(); //여기는 골렘 던전만 있다고 가정
+	for (auto& mapObj : protalList)
+	{
+		_dir = static_cast<CGolemDoor*>(mapObj)->Get_DIR();
+		CMapObj* obj = static_cast<CMapObj*>(mapObj);
+		WriteFile(hFile, mapObj, sizeof(CMapObj), &dwByte, NULL);
+		WriteFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
+	}
+
 
 	CloseHandle(hFile);
 	MessageBox(g_hWnd, L"MapObj Save", L"성공", MB_OK);
@@ -137,6 +151,7 @@ void CDungeonEditScene::LoadMapObj()
 		return;
 
 	DWORD	dwByte(0);
+	DIRECTION _dir;
 	CMapObj	_MapObj;
 
 	Release();
@@ -152,7 +167,12 @@ void CDungeonEditScene::LoadMapObj()
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 		}
 		else if (_MapObj.Get_MapObjType() == SCROLLWASD) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+		}
+		else if (_MapObj.Get_MapObjType() == GOLEM_DOOR) {
+			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
+			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			static_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(_dir);
 		}
 
 	}

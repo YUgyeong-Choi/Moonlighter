@@ -6,11 +6,11 @@
 
 #define VK_MAX				0xff
 
-#define TILECX				24
-#define TILECY				24
+#define TILECX				48
+#define TILECY				48
 
-#define TILEX				36
-#define TILEY				22
+#define TILEX				18
+#define TILEY				11
 
 #define OBJ_NOEVENT			0
 #define OBJ_DEAD			1	
@@ -21,10 +21,11 @@ extern HWND		g_hWnd;
 extern bool		g_bDevmode;
 
 enum SCENEID { SC_MENU, SC_TUTORIAL, SC_EDIT, SC_VILLAGE, SC_FIELD, SC_DUNGEON, SC_END };
-enum OBJID {OBJ_PLAYER, OBJ_MAPOBJ, OBJ_PORTAL, OBJ_END};
+enum OBJID {OBJ_PLAYER, OBJ_MONSTER, OBJ_MAPOBJ, OBJ_PORTAL, OBJ_END};
 enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_END };
 enum PORTALTYPE {VILLAGE, FIELD, DUNGEON, PORTAL_END};
-enum MAPOBJ{COLLISION, SCROLLWASD, MAPOBJ_END};
+enum MAPOBJ{COLLISION, SCROLLWASD, GOLEM_DOOR, MAPOBJ_END};
+enum DIRECTION { LEFT, RIGHT, UP, DOWN, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, DIR_END };
 
 template<typename T>
 void Safe_Delete(T& Temp)
@@ -83,7 +84,7 @@ typedef struct tagInfo
 }INFO;
 
 
-static BOOL Hitbox(HDC hDC, RECT tRect, float x, float y)
+static BOOL Hitbox(HDC hDC, RECT tRect, int x, int y)
 {
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
 	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
@@ -96,7 +97,7 @@ static BOOL Hitbox(HDC hDC, RECT tRect, float x, float y)
 	return true;
 }
 
-static BOOL Renderbox(HDC hDC, RECT tRect, float x, float y)
+static BOOL Renderbox(HDC hDC, RECT tRect, int x, int y)
 {
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
 	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));

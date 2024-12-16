@@ -59,20 +59,20 @@ void CPlayer::Render(HDC hDC)
 	case CPlayer::IDLE:
 		switch (m_eCurDir)
 		{
-		case CObject::LEFT:
+		case LEFT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Left/will_idle_left.png");
 			break;
-		case CObject::RIGHT:
+		case RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Right/will_idle_right.png");
 			break;
-		case CObject::UP:
-		case CObject::UP_LEFT:
-		case CObject::UP_RIGHT:
+		case UP:
+		case UP_LEFT:
+		case UP_RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Up/will_idle_up.png");
 			break;
-		case CObject::DOWN:
-		case CObject::DOWN_LEFT:
-		case CObject::DOWN_RIGHT:
+		case DOWN:
+		case DOWN_LEFT:
+		case DOWN_RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Down/will_idle_down.png");
 			break;
 		}
@@ -80,20 +80,20 @@ void CPlayer::Render(HDC hDC)
 	case CPlayer::WALK:
 		switch (m_eCurDir)
 		{
-		case CObject::LEFT:
+		case LEFT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Left/will_walk_left.png");
 			break;
-		case CObject::RIGHT:
+		case RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Right/will_walk_right.png");
 			break;
-		case CObject::UP:
-		case CObject::UP_LEFT:
-		case CObject::UP_RIGHT:
+		case UP:
+		case UP_LEFT:
+		case UP_RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Up/will_walk_up.png");
 			break;
-		case CObject::DOWN:
-		case CObject::DOWN_LEFT:
-		case CObject::DOWN_RIGHT:
+		case DOWN:
+		case DOWN_LEFT:
+		case DOWN_RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Down/will_walk_down.png");
 			break;
 		}
@@ -101,20 +101,20 @@ void CPlayer::Render(HDC hDC)
 	case CPlayer::ROLL:
 		switch (m_eCurDir)
 		{
-		case CObject::LEFT:
+		case LEFT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Left/will_roll_left.png");
 			break;
-		case CObject::RIGHT:
+		case RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Right/will_roll_right.png");
 			break;
-		case CObject::UP:
-		case CObject::UP_LEFT:
-		case CObject::UP_RIGHT:
+		case UP:
+		case UP_LEFT:
+		case UP_RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Up/will_roll_up.png");
 			break;
-		case CObject::DOWN:
-		case CObject::DOWN_LEFT:
-		case CObject::DOWN_RIGHT:
+		case DOWN:
+		case DOWN_LEFT:
+		case DOWN_RIGHT:
 			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Down/will_roll_down.png");
 			break;
 		}
@@ -247,43 +247,43 @@ void CPlayer::Rolling()
 		float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 		switch (m_eCurDir)
 		{
-		case CObject::LEFT:
+		case LEFT:
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX -= m_fSpeed;
 			break;
-		case CObject::RIGHT:
+		case RIGHT:
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX += m_fSpeed;
 			break;
-		case CObject::UP:
+		case UP:
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fY -= m_fSpeed;
 			break;
-		case CObject::DOWN:
+		case DOWN:
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fY += m_fSpeed;
 			break;
-		case CObject::UP_LEFT:
+		case UP_LEFT:
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY -= diagonalSpeed;
 			break;
-		case CObject::UP_RIGHT:
+		case UP_RIGHT:
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY -= diagonalSpeed;
 			break;
-		case CObject::DOWN_LEFT:
+		case DOWN_LEFT:
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX -= diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			break;
-		case CObject::DOWN_RIGHT:
+		case DOWN_RIGHT:
 			m_fFixScrollSpeed = diagonalSpeed;
 			m_tInfo.fX += diagonalSpeed;
 			m_tInfo.fY += diagonalSpeed;
 			break;
-		case CObject::DIR_END:
+		case DIR_END:
 			break;
 		default:
 			break;

@@ -13,16 +13,15 @@ void CScrollWasd::Initialize()
 	m_mapType = SCROLLWASD;
 
 	m_tInfo.fCX = 502.f;
-	m_tInfo.fCY = 80.f;
+	m_tInfo.fCY = 76.f;
 
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 5;
 	m_tFrame.dwSpeed = 200;
 	m_tFrame.dwTime = GetTickCount64();
 
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Map/Tutorial/tutorial_wasd.bmp", L"Tutorial_wasd");
 	m_tRenderSizeX = 502.f;
-	m_tRenderSizeY = 80.f;
+	m_tRenderSizeY = 76.f;
 
 	m_eRender = RENDER_BACKGROUND;
 }
@@ -52,10 +51,14 @@ void CScrollWasd::Late_Update()
 
 void CScrollWasd::Render(HDC hDC)
 {
-	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"Tutorial_wasd");
+	Image image(L"../MoonlighterAssets/Map/Tutorial/Scroll_WASD.png");
+	Graphics graphics(hDC);
+
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, m_tRenderSizeX, m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart*m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
+
+	graphics.DrawImage(&image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);

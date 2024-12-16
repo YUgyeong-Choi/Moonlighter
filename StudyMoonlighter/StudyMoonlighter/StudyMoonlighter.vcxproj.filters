@@ -85,9 +85,6 @@
     <Filter Include="02_Object\99.MapObj\Village">
       <UniqueIdentifier>{be0f4c50-ff69-4305-9999-ea667ea03418}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Object\99.MapObj\Tutorial\ScrollWASD">
-      <UniqueIdentifier>{5cd081d1-b1c7-48bd-8456-df1186e65743}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01_Scenes\09_DungeonEdit">
       <UniqueIdentifier>{8bc94942-8f51-4090-b5e6-dc2dd8f96574}</UniqueIdentifier>
     </Filter>
@@ -180,9 +177,6 @@
     <ClInclude Include="CCollisionBox.h">
       <Filter>02_Object\99.MapObj\CollisionBox</Filter>
     </ClInclude>
-    <ClInclude Include="CScrollWasd.h">
-      <Filter>02_Object\99.MapObj\Tutorial\ScrollWASD</Filter>
-    </ClInclude>
     <ClInclude Include="CDungeonEditScene.h">
       <Filter>01_Scenes\09_DungeonEdit</Filter>
     </ClInclude>
@@ -191,6 +185,12 @@
     </ClInclude>
     <ClInclude Include="CTree1.h">
       <Filter>02_Object\99.MapObj\Village</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrollWasd.h">
+      <Filter>02_Object\99.MapObj\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="CGolemDoor.h">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -260,9 +260,6 @@
     <ClCompile Include="CCollisionBox.cpp">
       <Filter>02_Object\99.MapObj\CollisionBox</Filter>
     </ClCompile>
-    <ClCompile Include="CScrollWasd.cpp">
-      <Filter>02_Object\99.MapObj\Tutorial\ScrollWASD</Filter>
-    </ClCompile>
     <ClCompile Include="CDungeonEditScene.cpp">
       <Filter>01_Scenes\09_DungeonEdit</Filter>
     </ClCompile>
@@ -271,6 +268,12 @@
     </ClCompile>
     <ClCompile Include="CTree1.cpp">
       <Filter>02_Object\99.MapObj\Village</Filter>
+    </ClCompile>
+    <ClCompile Include="CScrollWasd.cpp">
+      <Filter>02_Object\99.MapObj\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemDoor.cpp">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

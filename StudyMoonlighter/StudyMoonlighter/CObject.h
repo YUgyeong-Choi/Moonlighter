@@ -3,8 +3,6 @@
 class CObject
 {
 public:
-	enum DIRECTION { LEFT, RIGHT, UP, DOWN, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, DIR_END };
-public:
 	CObject();
 	virtual ~CObject() { Release(); }
 public:
