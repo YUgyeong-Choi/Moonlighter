@@ -12,11 +12,11 @@
 #include "CScrollWasd.h"
 #include "CGolemDoor.h"
 
-CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0)
+CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0), m_fMoveIndex(1), m_bMove(false)
 {
 }
 
-CDungeonScene::CDungeonScene(const TCHAR* _pFilePath, int _x, int _y)
+CDungeonScene::CDungeonScene(const TCHAR* _pFilePath, int _x, int _y) : m_fMoveIndex(1), m_bMove(false)
 {
 	pFilePath = _pFilePath;
 	m_iMapXIndex = _x;
@@ -33,14 +33,20 @@ void CDungeonScene::Initialize()
 
 int CDungeonScene::Update()
 {
+	if (m_bMove) {
+		m_fMoveIndex *= 1.3;
+		if (m_fMoveIndex > 1024) {
+			m_bMove = false;
+			m_fMoveIndex = 1;
+		}
+	}
 	Key_Input();
-	CObjectManager::Get_Instance()->Update();
+	
     return 0;
 }
 
 void CDungeonScene::LateUpdate()
 {
-	CObjectManager::Get_Instance()->Late_Update();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
@@ -49,8 +55,7 @@ void CDungeonScene::Render(HDC hDC)
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonBackground");
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, (m_iMapYIndex *m_fMapXSize) + iScrollX, (m_iMapXIndex * m_fMapYSize) + iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
-	CObjectManager::Get_Instance()->Render(hDC);
+	GdiTransparentBlt(hDC, (m_iMapYIndex *m_fMapXSize) - m_fMoveIndex + iScrollX, (m_iMapXIndex * m_fMapYSize) + iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
 }
 
 void CDungeonScene::Release()
@@ -77,7 +82,6 @@ void CDungeonScene::Offset()
 
 void CDungeonScene::Load_Map()
 {
-	CObjectManager::Get_Instance()->Get_Player()->Set_Pos((m_iMapYIndex * m_fMapXSize) + 100, (m_iMapXIndex * m_fMapYSize) + WINCY / 2);
 
 	HANDLE hFile = CreateFile(pFilePath, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 

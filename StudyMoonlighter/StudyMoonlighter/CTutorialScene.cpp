@@ -39,11 +39,14 @@ int CTutorialScene::Update()
 				m_iTutorialIndex--;
 				break;
 			case RIGHT:
-				CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
-				CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
-				CObjectManager::Get_Instance()->RenderListClear();
-				m_iTutorialIndex++;
-				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
+				//CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
+				//CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+				//CObjectManager::Get_Instance()->RenderListClear();
+				m_TutorialDungeon[m_iTutorialIndex]->Move_Map();
+				m_TutorialDungeon[m_iTutorialIndex+1]->Move_Map();
+				CObjectManager::Get_Instance()->Get_Player()->Set_Pos(100, +WINCY / 2);
+				//m_iTutorialIndex++;
+				//m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
 				break;
 			case UP:
 				break;
@@ -53,13 +56,17 @@ int CTutorialScene::Update()
 		}
 	}
 	m_TutorialDungeon[m_iTutorialIndex]->Update();
+	m_TutorialDungeon[m_iTutorialIndex+1]->Update();
+	CObjectManager::Get_Instance()->Update();
     return 0;
 }
 
 void CTutorialScene::LateUpdate()
 {
 	m_TutorialDungeon[m_iTutorialIndex]->LateUpdate();
-	CScrollManager::Get_Instance()->Scroll_Lock();
+	m_TutorialDungeon[m_iTutorialIndex+1]->LateUpdate();
+	CObjectManager::Get_Instance()->Late_Update();
+	//CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
 void CTutorialScene::Render(HDC hDC)
@@ -67,6 +74,7 @@ void CTutorialScene::Render(HDC hDC)
 	for (auto dungeon : m_TutorialDungeon) {
 		dungeon->Render(hDC);
 	}
+	CObjectManager::Get_Instance()->Render(hDC);
 }
 
 void CTutorialScene::Release()
