@@ -123,3 +123,7 @@ void CMenuScene::Key_Input()
 void CMenuScene::Create_MapObj()
 {
 }
+
+void CMenuScene::Offset()
+{
+}

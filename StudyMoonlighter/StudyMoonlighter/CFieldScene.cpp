@@ -15,9 +15,10 @@ CFieldScene::CFieldScene()
 void CFieldScene::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/DungeonsEntrance_Base.bmp", L"DungeonField");
-	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1200, 1800);
+	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1225, 1851);
 	m_fMapXSize = 2400.f;
 	m_fMapYSize = 2048.f;
+	CScrollManager::Get_Instance()->Set_Scroll(-613, -1327);
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 	
 	Create_MapObj();
@@ -32,6 +33,7 @@ int CFieldScene::Update()
 
 void CFieldScene::LateUpdate()
 {
+	Offset();
 	CObjectManager::Get_Instance()->Late_Update();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
@@ -62,5 +64,30 @@ void CFieldScene::Key_Input()
 void CFieldScene::Create_MapObj()
 {
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(700, 940, 80, 30));
-	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_PortalType(DUNGEON);
+	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(DUNGEON);
+}
+
+void CFieldScene::Offset()
+{
+	CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
+	int		iOffSetminX = 412;
+	int		iOffSetmaxX = 612;
+
+	int iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
+	if (iOffSetminX > _copyPlayer->Get_Info().fX + iScrollX)
+		CScrollManager::Get_Instance()->Set_ScrollX(_copyPlayer->Get_Speed());
+
+	if (iOffSetmaxX < _copyPlayer->Get_Info().fX + iScrollX)
+		CScrollManager::Get_Instance()->Set_ScrollX(-_copyPlayer->Get_Speed());
+
+	int		iOffSetminY = 260;
+	int		iOffSetmaxY = 460;
+
+	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
+	if (iOffSetminY > _copyPlayer->Get_Info().fY + iScrollY)
+		CScrollManager::Get_Instance()->Set_ScrollY(_copyPlayer->Get_Speed());
+
+	if (iOffSetmaxY < _copyPlayer->Get_Info().fY + iScrollY)
+		CScrollManager::Get_Instance()->Set_ScrollY(-_copyPlayer->Get_Speed());
 }

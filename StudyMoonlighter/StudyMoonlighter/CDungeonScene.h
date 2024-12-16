@@ -10,5 +10,6 @@ class CDungeonScene : public CScene
     void Release() override;
     void Key_Input() override;
     void Create_MapObj() override;
+    void Offset() override;
 };
 

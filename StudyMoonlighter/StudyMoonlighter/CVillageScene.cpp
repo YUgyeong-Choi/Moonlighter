@@ -33,6 +33,7 @@ int CVillageScene::Update()
 
 void CVillageScene::LateUpdate()
 {
+	Offset();
 	CObjectManager::Get_Instance()->Late_Update();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
@@ -70,8 +71,32 @@ void CVillageScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(2185,845,260,280));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(2255,1280,480, 300));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(670, 0, 140, 100));
-	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_PortalType(FIELD);
+	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(FIELD);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(2600,680,100,120));
-	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_PortalType(FIELD);
+	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(FIELD);
 }
 
+void CVillageScene::Offset()
+{
+	CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
+	int		iOffSetminX = 412;
+	int		iOffSetmaxX = 612;
+
+	int iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
+	if (iOffSetminX > _copyPlayer->Get_Info().fX + iScrollX)
+		CScrollManager::Get_Instance()->Set_ScrollX(_copyPlayer->Get_Speed());
+
+	if (iOffSetmaxX < _copyPlayer->Get_Info().fX + iScrollX)
+		CScrollManager::Get_Instance()->Set_ScrollX(-_copyPlayer->Get_Speed());
+
+	int		iOffSetminY = 260;
+	int		iOffSetmaxY = 460;
+
+	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
+	if (iOffSetminY > _copyPlayer->Get_Info().fY + iScrollY)
+		CScrollManager::Get_Instance()->Set_ScrollY(_copyPlayer->Get_Speed());
+
+	if (iOffSetmaxY < _copyPlayer->Get_Info().fY + iScrollY)
+		CScrollManager::Get_Instance()->Set_ScrollY(-_copyPlayer->Get_Speed());
+}

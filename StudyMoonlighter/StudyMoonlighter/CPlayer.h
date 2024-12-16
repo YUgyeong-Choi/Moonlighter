@@ -16,10 +16,8 @@ public:
 private:
 	void Key_Input();
 	void Rolling();
-	void Offset();
-	void Load_Assets();
 	void Change_Motion();
-	void Move_Lock();
+	//void Move_Lock();
 	
 private:
 	bool m_bIsRoll;

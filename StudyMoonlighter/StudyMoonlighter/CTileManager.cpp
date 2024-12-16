@@ -18,8 +18,8 @@ void CTileManager::Initialize()
 	{
 		for (int j = 0; j < TILEX; ++j)
 		{
-			float fX = (float)(j * TILECX) + (TILECX >> 1);
-			float fY = (float)(i * TILECY) + (TILECY >> 1);
+			float fX = (float)(j * TILECX) + (TILECX >> 1) + 80;
+			float fY = (float)(i * TILECY) + (TILECY >> 1) + 93;
 
 			CObject* pTile = CAbstractFactory<CTile>::Create(fX, fY);
 			m_vecTile.push_back(pTile);

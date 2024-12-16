@@ -56,3 +56,7 @@ void CDungeonScene::Key_Input()
 void CDungeonScene::Create_MapObj()
 {
 }
+
+void CDungeonScene::Offset()
+{
+}

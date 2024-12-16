@@ -11,10 +11,10 @@ void CTree1::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
 	
+	m_tInfo.fY -= 10.f;
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 10.f;
 
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Map/Object/Tree/Village_Tree_01.bmp", L"Tree1");
 	m_tRenderSizeX = 140.f;
 	m_tRenderSizeY = 170.f;
 
@@ -33,10 +33,13 @@ void CTree1::Late_Update()
 
 void CTree1::Render(HDC hDC)
 {
-	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"Tree1");
+	Image image(L"../MoonlighterAssets/Map/Tree/Village_Tree_01.png");
+	Graphics graphics(hDC);
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, m_tRenderRect.left+ iScrollX, m_tRenderRect.top+ iScrollY, m_tRenderSizeX, m_tRenderSizeY, hMemDC,  0, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
+
+	graphics.DrawImage(&image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, 0, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);

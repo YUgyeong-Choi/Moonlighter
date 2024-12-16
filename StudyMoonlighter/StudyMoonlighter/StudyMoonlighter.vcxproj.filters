@@ -73,9 +73,6 @@
     <Filter Include="01_Scenes\02_Field">
       <UniqueIdentifier>{2bf1846f-8560-48da-8185-69022ff5f8f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Scenes\02_Dungeon">
-      <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01_Scenes\09_Tutorial">
       <UniqueIdentifier>{d526c212-7185-41fa-a6a9-e2df9e07c150}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,9 @@
     </Filter>
     <Filter Include="02_Object\99.MapObj\Dungeon1">
       <UniqueIdentifier>{fdb6f8fc-758d-4d68-b0f9-cc19229e597d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\03_Dungeon">
+      <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -178,7 +178,7 @@
       <Filter>01_Scenes\02_Field</Filter>
     </ClInclude>
     <ClInclude Include="CDungeonScene.h">
-      <Filter>01_Scenes\02_Dungeon</Filter>
+      <Filter>01_Scenes\03_Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="CTutorialScene.h">
       <Filter>01_Scenes\09_Tutorial</Filter>
@@ -255,7 +255,7 @@
       <Filter>01_Scenes\02_Field</Filter>
     </ClCompile>
     <ClCompile Include="CDungeonScene.cpp">
-      <Filter>01_Scenes\02_Dungeon</Filter>
+      <Filter>01_Scenes\03_Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="CTutorialScene.cpp">
       <Filter>01_Scenes\09_Tutorial</Filter>

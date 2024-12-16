@@ -13,5 +13,9 @@ public:
 	void Release() override;
 	void Key_Input() override;
 	void Create_MapObj() override;
+	void Offset() override;
+private:/*
+	void SaveMapObj();
+	void LoadMapObj();*/
 };
 

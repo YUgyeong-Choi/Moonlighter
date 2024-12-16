@@ -20,8 +20,9 @@ public:
 			m_RenderList[i].clear();
 		}
 	}
-	CObject* Get_LastMapObj() { return m_ObjList[OBJ_PORTAL].back(); }
+	CObject* Get_LastPortal() { return m_ObjList[OBJ_PORTAL].back(); }
 	CObject* Get_Player() { return m_ObjList[OBJ_PLAYER].back(); }
+	list<CObject*> Get_MapObjList(){ return m_ObjList[OBJ_MAPOBJ]; }
 
 public:
 	static CObjectManager* Get_Instance()

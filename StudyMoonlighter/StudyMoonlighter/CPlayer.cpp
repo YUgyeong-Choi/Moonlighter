@@ -11,7 +11,6 @@ CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_E
 
 void CPlayer::Initialize()
 {
-	Load_Assets();
 	m_eOBJID = OBJ_PLAYER;
 
 	m_tInfo.fCX = 40.f;
@@ -49,29 +48,104 @@ int CPlayer::Update()
 void CPlayer::Late_Update()
 {
 	Rolling();
-	Offset();
 	__super::Move_Frame();
 }
 
 void CPlayer::Render(HDC hDC)
 {
-	//Image image(L"../MoonlighterAssets/Player/Idle/Down/will_idle_down.png");
-	//Graphics graphics(hDC);
+	Image* image(nullptr);
+	switch (m_eCurState)
+	{
+	case CPlayer::IDLE:
+		switch (m_eCurDir)
+		{
+		case CObject::LEFT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Left/will_idle_left.png");
+			break;
+		case CObject::RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Right/will_idle_right.png");
+			break;
+		case CObject::UP:
+		case CObject::UP_LEFT:
+		case CObject::UP_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Up/will_idle_up.png");
+			break;
+		case CObject::DOWN:
+		case CObject::DOWN_LEFT:
+		case CObject::DOWN_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Idle/Down/will_idle_down.png");
+			break;
+		}
+		break;
+	case CPlayer::WALK:
+		switch (m_eCurDir)
+		{
+		case CObject::LEFT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Left/will_walk_left.png");
+			break;
+		case CObject::RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Right/will_walk_right.png");
+			break;
+		case CObject::UP:
+		case CObject::UP_LEFT:
+		case CObject::UP_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Up/will_walk_up.png");
+			break;
+		case CObject::DOWN:
+		case CObject::DOWN_LEFT:
+		case CObject::DOWN_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Walk/Down/will_walk_down.png");
+			break;
+		}
+		break;
+	case CPlayer::ROLL:
+		switch (m_eCurDir)
+		{
+		case CObject::LEFT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Left/will_roll_left.png");
+			break;
+		case CObject::RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Right/will_roll_right.png");
+			break;
+		case CObject::UP:
+		case CObject::UP_LEFT:
+		case CObject::UP_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Up/will_roll_up.png");
+			break;
+		case CObject::DOWN:
+		case CObject::DOWN_LEFT:
+		case CObject::DOWN_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Player/Roll/Down/will_roll_down.png");
+			break;
+		}
+		break;
+	case CPlayer::ATTACK:
+		break;
+	case CPlayer::HIT:
+		break;
+	case CPlayer::DEAD:
+		break;
+	case CPlayer::STATE_END:
+		break;
+	default:
+		break;
+	}
+
+	Graphics graphics(hDC);
 
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 
-	//graphics.DrawImage(&image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 
-	HDC		hMemDC = CBitManager::GetInstance()->FindImage(m_pImgKey);
-	GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, m_tRenderSizeX, m_tRenderSizeY, hMemDC, m_tRenderSizeX *m_tFrame.iFrameStart, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
 
 	TCHAR szBuffer[64];
-	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)m_tInfo.fX - iScrollX, (int)m_tInfo.fY - iScrollY);
+	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY);
+	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 10, 10, szBuffer, _tcslen(szBuffer));
@@ -225,48 +299,6 @@ void CPlayer::Rolling()
 	}
 }
 
-void CPlayer::Offset()
-{
-	int		iOffSetminX = 412;
-	int		iOffSetmaxX = 612;
-
-	int iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
-	if (iOffSetminX > m_tInfo.fX + iScrollX)
-		CScrollManager::Get_Instance()->Set_ScrollX(m_fFixScrollSpeed);
-
-	if (iOffSetmaxX < m_tInfo.fX + iScrollX)
-		CScrollManager::Get_Instance()->Set_ScrollX(-m_fFixScrollSpeed);
-
-	int		iOffSetminY = 260;
-	int		iOffSetmaxY = 460;
-
-	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-
-	if (iOffSetminY > m_tInfo.fY + iScrollY)
-		CScrollManager::Get_Instance()->Set_ScrollY(m_fFixScrollSpeed);
-
-	if (iOffSetmaxY < m_tInfo.fY + iScrollY)
-		CScrollManager::Get_Instance()->Set_ScrollY(-m_fFixScrollSpeed);
-}
-
-void CPlayer::Load_Assets()
-{
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Down/will_walk_down.bmp", L"Will_Walk_down");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Left/will_walk_left.bmp", L"Will_Walk_left");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Right/will_walk_right.bmp", L"Will_Walk_right");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Walk/Up/will_walk_up.bmp", L"Will_Walk_up");
-
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Down/will_idle_down.bmp", L"Will_Idle_down");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Left/will_idle_left.bmp", L"Will_Idle_left");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Right/will_idle_right.bmp", L"Will_Idle_right");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Idle/Up/will_idle_up.bmp", L"Will_Idle_up");
-
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Down/will_roll_down.bmp", L"Will_Roll_down");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Left/will_roll_left.bmp", L"Will_Roll_left");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Right/will_roll_right.bmp", L"Will_Roll_right");
-	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Player/Roll/Up/will_roll_up.bmp", L"Will_Roll_up");
-}
-
 void CPlayer::Change_Motion()
 {
 	if ((m_ePreState != m_eCurState) || (m_ePreDir != m_eCurDir))
@@ -274,29 +306,6 @@ void CPlayer::Change_Motion()
 		switch (m_eCurState)
 		{
 		case CPlayer::IDLE:
-			switch (m_eCurDir)
-			{
-			case CObject::LEFT:
-				m_pImgKey = L"Will_Idle_left";
-				break;
-			case CObject::RIGHT:
-				m_pImgKey = L"Will_Idle_right";
-				break;
-			case CObject::UP:
-			case CObject::UP_LEFT:
-			case CObject::UP_RIGHT:
-				m_pImgKey = L"Will_Idle_up";
-				break;
-			case CObject::DOWN:
-			case CObject::DOWN_LEFT:
-			case CObject::DOWN_RIGHT:
-				m_pImgKey = L"Will_Idle_down";
-				break;
-			case CObject::DIR_END:
-				break;
-			default:
-				break;
-			}
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 9;
 			m_tFrame.dwSpeed = 200;
@@ -304,58 +313,12 @@ void CPlayer::Change_Motion()
 			break;
 
 		case CPlayer::WALK:
-			switch (m_eCurDir)
-			{
-			case CObject::LEFT:
-				m_pImgKey = L"Will_Walk_left";
-				break;
-			case CObject::RIGHT:
-				m_pImgKey = L"Will_Walk_right";
-				break;
-			case CObject::UP:
-			case CObject::UP_LEFT:
-			case CObject::UP_RIGHT:
-				m_pImgKey = L"Will_Walk_up";
-				break;
-			case CObject::DOWN:
-			case CObject::DOWN_LEFT:
-			case CObject::DOWN_RIGHT:
-				m_pImgKey = L"Will_Walk_down";
-				break;
-			case CObject::DIR_END:
-				break;
-			default:
-				break;
-			}
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 7;
 			m_tFrame.dwSpeed = 200;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CPlayer::ROLL:
-			switch (m_eCurDir)
-			{
-			case CObject::LEFT:
-				m_pImgKey = L"Will_Roll_left";
-				break;
-			case CObject::RIGHT:
-				m_pImgKey = L"Will_Roll_right";
-				break;
-			case CObject::UP:
-			case CObject::UP_LEFT:
-			case CObject::UP_RIGHT:
-				m_pImgKey = L"Will_Roll_up";
-				break;
-			case CObject::DOWN:
-			case CObject::DOWN_LEFT:
-			case CObject::DOWN_RIGHT:
-				m_pImgKey = L"Will_Roll_down";
-				break;
-			case CObject::DIR_END:
-				break;
-			default:
-				break;
-			}
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 7;
 			m_tFrame.dwSpeed = 50;

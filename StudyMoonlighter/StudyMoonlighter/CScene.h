@@ -14,6 +14,7 @@ public:
 	virtual void		Release()		PURE;
 	virtual void Key_Input() PURE;
 	virtual void Create_MapObj() PURE;
+	virtual void Offset() PURE;
 protected:
 	int m_iAnimationTime;
 	float m_fMapXSize;

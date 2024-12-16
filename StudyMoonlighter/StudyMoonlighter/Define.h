@@ -6,11 +6,11 @@
 
 #define VK_MAX				0xff
 
-#define TILECX				32
-#define TILECY				32
+#define TILECX				24
+#define TILECY				24
 
-#define TILEX				32
-#define TILEY				23
+#define TILEX				36
+#define TILEY				22
 
 #define OBJ_NOEVENT			0
 #define OBJ_DEAD			1	
