@@ -1,6 +1,6 @@
 #pragma once
-#include "CObject.h"
-class CTree1 :public CObject
+#include "CMapObj.h"
+class CTree1 :public CMapObj
 {
 public:
 	CTree1();

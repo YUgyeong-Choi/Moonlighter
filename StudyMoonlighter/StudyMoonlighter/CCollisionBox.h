@@ -1,8 +1,11 @@
 #pragma once
-#include "CObject.h"
-class CCollisionBox :public CObject
+#include "CMapObj.h"
+class CCollisionBox :public CMapObj
 {
-	// CObject을(를) 통해 상속됨
+public:
+	CCollisionBox();
+	virtual ~CCollisionBox() { Release(); }
+public:
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;

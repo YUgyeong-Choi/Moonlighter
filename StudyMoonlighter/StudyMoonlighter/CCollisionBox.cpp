@@ -2,9 +2,14 @@
 #include "CCollisionBox.h"
 #include "CScrollManager.h"
 
+CCollisionBox::CCollisionBox()
+{
+}
+
 void CCollisionBox::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
+	m_mapType = COLLISION;
 
 	m_eRender = RENDER_BACKGROUND;
 }

@@ -10,6 +10,7 @@ CScrollWasd::CScrollWasd():m_bIsOpen(false)
 void CScrollWasd::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
+	m_mapType = SCROLLWASD;
 
 	m_tInfo.fCX = 502.f;
 	m_tInfo.fCY = 80.f;

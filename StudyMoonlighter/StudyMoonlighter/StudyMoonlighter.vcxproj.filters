@@ -85,9 +85,6 @@
     <Filter Include="02_Object\99.MapObj\Village">
       <UniqueIdentifier>{be0f4c50-ff69-4305-9999-ea667ea03418}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Object\99.MapObj\Village\Tree">
-      <UniqueIdentifier>{67007e74-6679-4d14-8033-44f0138f9467}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Object\99.MapObj\Tutorial\ScrollWASD">
       <UniqueIdentifier>{5cd081d1-b1c7-48bd-8456-df1186e65743}</UniqueIdentifier>
     </Filter>
@@ -165,9 +162,6 @@
     <ClInclude Include="CTile.h">
       <Filter>99_Managers\TileManager\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="CTree1.h">
-      <Filter>02_Object\99.MapObj\Village\Tree</Filter>
-    </ClInclude>
     <ClInclude Include="CCollisionManager.h">
       <Filter>99_Managers\CollisionManager</Filter>
     </ClInclude>
@@ -191,6 +185,12 @@
     </ClInclude>
     <ClInclude Include="CDungeonEditScene.h">
       <Filter>01_Scenes\09_DungeonEdit</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapObj.h">
+      <Filter>02_Object\99.MapObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CTree1.h">
+      <Filter>02_Object\99.MapObj\Village</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +242,6 @@
     <ClCompile Include="CTile.cpp">
       <Filter>99_Managers\TileManager\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="CTree1.cpp">
-      <Filter>02_Object\99.MapObj\Village\Tree</Filter>
-    </ClCompile>
     <ClCompile Include="CCollisionManager.cpp">
       <Filter>99_Managers\CollisionManager</Filter>
     </ClCompile>
@@ -268,6 +265,12 @@
     </ClCompile>
     <ClCompile Include="CDungeonEditScene.cpp">
       <Filter>01_Scenes\09_DungeonEdit</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapObj.cpp">
+      <Filter>02_Object\99.MapObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CTree1.cpp">
+      <Filter>02_Object\99.MapObj\Village</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
