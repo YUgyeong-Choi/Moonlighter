@@ -12,7 +12,7 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 	void Set_PortalType(PORTALTYPE _type) { m_ePortalType = _type; }
-	void		OnCollisionEnter(CObject* _obj);
+	void		OnCollision(CObject* _obj);
 private:
 	PORTALTYPE m_ePortalType;
 };

@@ -11,8 +11,8 @@ void CCollisionManager::CollisionRect(list<CObject*> _Dst, list<CObject*> _Src)
         {
             if (IntersectRect(&rc, Dst->Get_Rect(), Src->Get_Rect()))
             {
-                Dst->OnCollisionEnter(Src);
-                Src->OnCollisionEnter(Dst);
+                Dst->OnCollision(Src);
+                Src->OnCollision(Dst);
             }
         }
     }
@@ -27,8 +27,8 @@ void CCollisionManager::CollisionCircle(list<CObject*> _Dst, list<CObject*> _Src
         {
             if (CheckCircle(Dst, Src))
             {
-                Dst->OnCollisionEnter(Src);
-                Src->OnCollisionEnter(Dst);
+                Dst->OnCollision(Src);
+                Src->OnCollision(Dst);
             }
         }
     }
@@ -56,8 +56,8 @@ void CCollisionManager::CollisionRectEx(list<CObject*> _Dst, list<CObject*> _Src
         {
             if (CheckRect(Dst, Src, &fX, &fY))
             {
-                Dst->OnCollisionEnter(Src);
-                Src->OnCollisionEnter(Dst);
+                Dst->OnCollision(Src);
+                Src->OnCollision(Dst);
                 if (fX > fY)
                 {
                     if (Dst->Get_Info().fY < Src->Get_Info().fY)

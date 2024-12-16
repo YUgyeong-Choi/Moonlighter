@@ -10,40 +10,32 @@
 #include "CScrollWasd.h"
 #include "CGolemDoor.h"
 
-CTutorialScene::CTutorialScene()
+CTutorialScene::CTutorialScene() :m_iTutorialIndex(0)
 {
 }
 
 void CTutorialScene::Initialize()
 {
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background.bmp", L"DungeonBackground");
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
-	m_fMapXSize = 1024.f;
-	m_fMapYSize = 720.f;
-	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
-	Create_MapObj();
+	m_TutorialDungeon[m_iTutorialIndex] = new CDungeonScene;
+	m_TutorialDungeon[m_iTutorialIndex]->Initialize();
 }
 
 int CTutorialScene::Update()
 {
-	Key_Input();
-	CObjectManager::Get_Instance()->Update();
+	m_TutorialDungeon[m_iTutorialIndex]->Update();
     return 0;
 }
 
 void CTutorialScene::LateUpdate()
 {
-	CObjectManager::Get_Instance()->Late_Update();
+	m_TutorialDungeon[m_iTutorialIndex]->LateUpdate();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
 void CTutorialScene::Render(HDC hDC)
 {
-	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonBackground");
-	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
-	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, iScrollX, iScrollY, (int)m_fMapXSize, (int)m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, (int)m_fMapYSize, RGB(0, 0, 0));
-	CObjectManager::Get_Instance()->Render(hDC);
+	m_TutorialDungeon[m_iTutorialIndex]->Render(hDC);
 }
 
 void CTutorialScene::Release()
@@ -55,9 +47,6 @@ void CTutorialScene::Release()
 
 void CTutorialScene::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
-		g_bDevmode = !g_bDevmode;
-	}
 }
 
 void CTutorialScene::Create_MapObj()
@@ -66,7 +55,6 @@ void CTutorialScene::Create_MapObj()
 
 void CTutorialScene::Offset()
 {
-	
 }
 
 

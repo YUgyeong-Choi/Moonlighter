@@ -1,5 +1,6 @@
 #pragma once
 #include "CScene.h"
+#include "CDungeonScene.h"
 class CTutorialScene :public CScene
 {
 public:
@@ -14,5 +15,8 @@ public:
 	void Key_Input() override;
 	void Create_MapObj() override;
 	void Offset() override;
+private:
+	CDungeonScene* m_TutorialDungeon[8];
+	int m_iTutorialIndex;
 };
 

@@ -37,7 +37,7 @@ void CPortal::Release()
 {
 }
 
-void CPortal::OnCollisionEnter(CObject* _obj)
+void CPortal::OnCollision(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
 		switch (m_ePortalType)

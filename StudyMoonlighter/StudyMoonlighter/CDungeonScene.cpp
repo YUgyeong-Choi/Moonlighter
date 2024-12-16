@@ -5,6 +5,16 @@
 #include "CBitManager.h"
 #include "CPlayer.h"
 #include "CScrollManager.h"
+#include "CMapObj.h"
+#include "CCollisionManager.h"
+#include "CAbstractFactory.h"
+#include "CCollisionBox.h"
+#include "CScrollWasd.h"
+#include "CGolemDoor.h"
+
+CDungeonScene::CDungeonScene()
+{
+}
 
 void CDungeonScene::Initialize()
 {
@@ -14,7 +24,7 @@ void CDungeonScene::Initialize()
 	m_fMapYSize = 720.f;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 
-	Create_MapObj();
+	Load_Map();
 }
 
 int CDungeonScene::Update()
@@ -59,4 +69,42 @@ void CDungeonScene::Create_MapObj()
 
 void CDungeonScene::Offset()
 {
+}
+
+void CDungeonScene::Load_Map()
+{
+	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj1.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
+
+	DWORD	dwByte(0);
+	DIRECTION _dir;
+	CMapObj	_MapObj;
+
+	Release();
+
+	while (true)
+	{
+		bool a = ReadFile(hFile, &_MapObj, sizeof(CMapObj), &dwByte, NULL);
+
+		if (0 == dwByte)
+			break;
+
+		if (_MapObj.Get_MapObjType() == COLLISION) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+		}
+		else if (_MapObj.Get_MapObjType() == SCROLLWASD) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+		}
+		else if (_MapObj.Get_MapObjType() == GOLEM_DOOR) {
+			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
+			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			static_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(_dir);
+		}
+
+	}
+
+	CloseHandle(hFile);
+	MessageBox(g_hWnd, L"MapObj Load", L"¼º°ø", MB_OK);
 }
