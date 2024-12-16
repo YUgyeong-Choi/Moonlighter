@@ -88,7 +88,7 @@ static BOOL Hitbox(HDC hDC, RECT tRect, float x, float y)
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
 	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
-	Rectangle(hDC, (int)tRect.left + x, (int)tRect.top +y, (int)tRect.right + x, (int)tRect.bottom + y);
+	Rectangle(hDC, (int)(tRect.left + x), (int)(tRect.top +y), (int)(tRect.right + x), (int)(tRect.bottom + y));
 	SelectObject(hDC, hOldPen);
 	SelectObject(hDC, hOldBrush);
 
@@ -101,7 +101,7 @@ static BOOL Renderbox(HDC hDC, RECT tRect, float x, float y)
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
 	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
-	Rectangle(hDC, (int)tRect.left + x, (int)tRect.top + y, (int)tRect.right + x, (int)tRect.bottom + y);
+	Rectangle(hDC, (int)(tRect.left + x), (int)(tRect.top + y), (int)(tRect.right + x), (int)(tRect.bottom + y));
 	SelectObject(hDC, hOldPen);
 	SelectObject(hDC, hOldBrush);
 
