@@ -12,19 +12,23 @@
 #include "CScrollWasd.h"
 #include "CGolemDoor.h"
 
-CDungeonScene::CDungeonScene()
+CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0)
 {
+}
+
+CDungeonScene::CDungeonScene(const TCHAR* _pFilePath, int _x, int _y)
+{
+	pFilePath = _pFilePath;
+	m_iMapXIndex = _x;
+	m_iMapYIndex = _y;
 }
 
 void CDungeonScene::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background.bmp", L"DungeonBackground");
-	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(WINCX/2, WINCY/2);
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
-	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
-
-	Load_Map();
+	CScrollManager::Get_Instance()->Set_ScrollLock(2000, 2000);
 }
 
 int CDungeonScene::Update()
@@ -45,7 +49,7 @@ void CDungeonScene::Render(HDC hDC)
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonBackground");
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, iScrollX, iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
+	GdiTransparentBlt(hDC, (m_iMapYIndex *m_fMapXSize) + iScrollX, (m_iMapXIndex * m_fMapYSize) + iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
 	CObjectManager::Get_Instance()->Render(hDC);
 }
 
@@ -73,7 +77,9 @@ void CDungeonScene::Offset()
 
 void CDungeonScene::Load_Map()
 {
-	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj1.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	CObjectManager::Get_Instance()->Get_Player()->Set_Pos((m_iMapYIndex * m_fMapXSize) + 100, (m_iMapXIndex * m_fMapYSize) + WINCY / 2);
+
+	HANDLE hFile = CreateFile(pFilePath, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
@@ -92,14 +98,14 @@ void CDungeonScene::Load_Map()
 			break;
 
 		if (_MapObj.Get_MapObjType() == COLLISION) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, (m_iMapXIndex * m_fMapYSize) + _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 		}
 		else if (_MapObj.Get_MapObjType() == SCROLLWASD) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, (m_iMapXIndex * m_fMapYSize) + _MapObj.Get_Info().fY, 0, 0));
 		}
 		else if (_MapObj.Get_MapObjType() == GOLEM_DOOR) {
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
-			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, (m_iMapXIndex * m_fMapYSize) + _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 			static_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(_dir);
 		}
 

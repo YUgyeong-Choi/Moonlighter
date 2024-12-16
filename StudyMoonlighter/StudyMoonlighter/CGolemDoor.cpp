@@ -3,7 +3,7 @@
 #include "CObjectManager.h"
 #include "CScrollManager.h"
 
-CGolemDoor::CGolemDoor() : m_bIsOpen(false), m_bAlreadyOpen(false), m_eDir(DIR_END)
+CGolemDoor::CGolemDoor() : m_bIsOpen(false), m_bAlreadyOpen(false), m_eDir(DIR_END), m_bLoad_Next(false)
 {
 }
 
@@ -28,6 +28,7 @@ void CGolemDoor::Initialize()
 
 int CGolemDoor::Update()
 {
+	m_bLoad_Next = false;
 	if (0 == CObjectManager::Get_Instance()->Get_MonsterSize()) {
 		m_bIsOpen = true;
 	}
@@ -88,4 +89,11 @@ void CGolemDoor::Render(HDC hDC)
 
 void CGolemDoor::Release()
 {
+}
+
+void CGolemDoor::OnCollision(CObject* _obj)
+{
+	if (_obj->Get_OBJID() == OBJ_PLAYER) {
+		m_bLoad_Next = true;
+	}
 }
