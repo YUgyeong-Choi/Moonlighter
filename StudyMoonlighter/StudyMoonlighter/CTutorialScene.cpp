@@ -15,8 +15,8 @@
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_iLimitMoveX(0), m_dir(DIR_END)
 {
 	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/CTutorialMapObj1.dat", 0, 0);	
-	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 0 ,1);	
-	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/CTutorialMapObj1.dat", 0 ,2);	
+	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 10 ,10);	
+	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 10 ,10);	
 }
 
 void CTutorialScene::Initialize()
@@ -37,14 +37,22 @@ int CTutorialScene::Update()
 			switch (static_cast<CGolemDoor*>(portal)->Get_DIR())
 			{
 			case LEFT:
+				m_dir = LEFT;
+				m_iLimitMoveX = 0;
 				m_iTutorialIndex--;
+				CObjectManager::Get_Instance()->Get_Player()->Set_Pos(-1024 + 900, WINCY / 2);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(-1);
+				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
+				CObjectManager::Get_Instance()->Set_IsMapMove(true);
 				break;
 			case RIGHT:
-				//CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
-				//CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
-				//CObjectManager::Get_Instance()->RenderListClear();
 				m_dir = RIGHT;
+				m_iLimitMoveX = 0;
 				m_iTutorialIndex++;
+				CObjectManager::Get_Instance()->Get_Player()->Set_Pos(1024 + 150, WINCY / 2);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(1);
 				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
 				CObjectManager::Get_Instance()->Set_IsMapMove(true);
 				break;
@@ -126,16 +134,36 @@ void CTutorialScene::MapMove()
 {
 	switch (m_dir) {
 	case LEFT:
+		if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
+			m_iLimitMoveX += 16;
+			if (m_iLimitMoveX > 1024) {
+				CObjectManager::Get_Instance()->Set_IsMapMove(false);
+				m_TutorialDungeon[m_iTutorialIndex + 1]->Set_MapXIndex(10);
+				m_TutorialDungeon[m_iTutorialIndex + 1]->Set_MapYIndex(10);
+				CObjectManager::Get_Instance()->Set_XYPosition();
+				CObjectManager::Get_Instance()->Set_MapMoveX(0);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(0);
+			}
+			else {
+				CObjectManager::Get_Instance()->Set_MapMoveX(-m_iLimitMoveX);
+			}
+		}
 		break;
 	case RIGHT:
 		if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
 			m_iLimitMoveX += 16;
 			if (m_iLimitMoveX > 1024) {
 				CObjectManager::Get_Instance()->Set_IsMapMove(false);
-				m_iLimitMoveX = 0;
+				m_TutorialDungeon[m_iTutorialIndex-1]->Set_MapXIndex(10);
+				m_TutorialDungeon[m_iTutorialIndex-1]->Set_MapYIndex(10);
+				CObjectManager::Get_Instance()->Set_XYPosition();
+				CObjectManager::Get_Instance()->Set_MapMoveX(0);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
+				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(0);
 			}
 			else {
-				CObjectManager::Get_Instance()->Set_MapMoveX(m_iLimitMoveX + ((m_iTutorialIndex - 1) * 1024));
+				CObjectManager::Get_Instance()->Set_MapMoveX(m_iLimitMoveX);
 			}
 		}
 		break;

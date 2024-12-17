@@ -32,6 +32,7 @@ public:
 	void Set_IsMapMove(bool _b) { m_IsMapMove = _b; }
 	int Get_MapMoveX() { return m_iMapMoveX; }
 	void Set_MapMoveX(int _i) { m_iMapMoveX = _i; }
+	void Set_XYPosition();
 
 public:
 	static CObjectManager* Get_Instance()

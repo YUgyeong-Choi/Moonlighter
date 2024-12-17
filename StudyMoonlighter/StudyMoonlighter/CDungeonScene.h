@@ -17,6 +17,8 @@ public:
     void Offset() override;
 public:
     void Load_Map();
+    void Set_MapXIndex(int _x) { m_iMapXIndex = _x; }
+    void Set_MapYIndex(int _y) { m_iMapYIndex = _y; }
 private:
     const TCHAR* pFilePath;
     int m_iMapXIndex;

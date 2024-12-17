@@ -77,7 +77,6 @@ void CDungeonScene::Offset()
 
 void CDungeonScene::Load_Map()
 {
-	CObjectManager::Get_Instance()->Get_Player()->Set_Pos((m_iMapYIndex * m_fMapXSize) + 150, WINCY / 2);
 	HANDLE hFile = CreateFile(pFilePath, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
