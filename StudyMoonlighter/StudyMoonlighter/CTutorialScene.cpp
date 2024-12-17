@@ -12,10 +12,11 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 
-CTutorialScene::CTutorialScene() :m_iTutorialIndex(0)
+CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_iLimitMoveX(0)
 {
 	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0, 0);	
 	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0 ,1);	
+	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0 ,2);	
 }
 
 void CTutorialScene::Initialize()
@@ -42,11 +43,10 @@ int CTutorialScene::Update()
 				//CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
 				//CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
 				//CObjectManager::Get_Instance()->RenderListClear();
-				m_TutorialDungeon[m_iTutorialIndex]->Move_Map();
-				m_TutorialDungeon[m_iTutorialIndex+1]->Move_Map();
-				CObjectManager::Get_Instance()->Get_Player()->Set_Pos(100, +WINCY / 2);
-				//m_iTutorialIndex++;
-				//m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
+				
+				m_iTutorialIndex++;
+				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
+				CObjectManager::Get_Instance()->Set_IsMapMove(true);
 				break;
 			case UP:
 				break;
@@ -55,16 +55,20 @@ int CTutorialScene::Update()
 			}
 		}
 	}
-	m_TutorialDungeon[m_iTutorialIndex]->Update();
-	m_TutorialDungeon[m_iTutorialIndex+1]->Update();
+
+	for (auto dungeon : m_TutorialDungeon) {
+		dungeon->Update();
+	}
 	CObjectManager::Get_Instance()->Update();
     return 0;
 }
 
 void CTutorialScene::LateUpdate()
 {
-	m_TutorialDungeon[m_iTutorialIndex]->LateUpdate();
-	m_TutorialDungeon[m_iTutorialIndex+1]->LateUpdate();
+	MapMove();
+	for (auto dungeon : m_TutorialDungeon) {
+		dungeon->LateUpdate();
+	}
 	CObjectManager::Get_Instance()->Late_Update();
 	//CScrollManager::Get_Instance()->Scroll_Lock();
 }
@@ -79,6 +83,9 @@ void CTutorialScene::Render(HDC hDC)
 
 void CTutorialScene::Release()
 {
+	for (auto dungeon : m_TutorialDungeon) {
+		Safe_Delete<CDungeonScene*>(dungeon);
+	}
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
 	CObjectManager::Get_Instance()->RenderListClear();
@@ -113,6 +120,20 @@ void CTutorialScene::Create_MapObj()
 
 void CTutorialScene::Offset()
 {
+}
+
+void CTutorialScene::MapMove()
+{
+	if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
+		m_iLimitMoveX += 16;
+		if (m_iLimitMoveX > 1024) {
+			CObjectManager::Get_Instance()->Set_IsMapMove(false);
+			m_iLimitMoveX = 0;
+		}
+		else {
+			CObjectManager::Get_Instance()->Set_MapMoveX(m_iLimitMoveX + ((m_iTutorialIndex-1) * 1024));
+		}
+	}
 }
 
 

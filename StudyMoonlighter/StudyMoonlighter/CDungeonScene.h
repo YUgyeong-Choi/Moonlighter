@@ -17,12 +17,9 @@ public:
     void Offset() override;
 public:
     void Load_Map();
-    void Move_Map() { m_bMove = true; }
 private:
     const TCHAR* pFilePath;
     int m_iMapXIndex;
     int m_iMapYIndex;
-    bool m_bMove;
-    float m_fMoveIndex;
 };
 

@@ -10,6 +10,7 @@
 #include "CCollisionBox.h"
 #include "CAbstractFactory.h"
 #include "CGolemDoor.h"
+#include "CScrollRoll.h"
 
 CDungeonEditScene::CDungeonEditScene():m_bIsShowTile(false)
 {
@@ -102,7 +103,8 @@ void CDungeonEditScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 690, 1024, 60));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX / 2, 60, 0, 0));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create(WINCX / 2, 60, 0, 0));
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX / 2, 60, 0, 0));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2, 80, 50));
 	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
 }
@@ -114,7 +116,7 @@ void CDungeonEditScene::Offset()
 
 void CDungeonEditScene::SaveMapObj()
 {
-	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj1.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj2.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
@@ -145,7 +147,7 @@ void CDungeonEditScene::SaveMapObj()
 
 void CDungeonEditScene::LoadMapObj()
 {
-	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj1.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj2.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
@@ -168,6 +170,9 @@ void CDungeonEditScene::LoadMapObj()
 		}
 		else if (_MapObj.Get_MapObjType() == SCROLLWASD) {
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+		}
+		else if (_MapObj.Get_MapObjType() == SCROLLROLL) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
 		}
 		else if (_MapObj.Get_MapObjType() == GOLEM_DOOR) {
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);

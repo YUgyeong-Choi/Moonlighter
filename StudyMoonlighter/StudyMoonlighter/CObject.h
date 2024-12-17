@@ -20,7 +20,7 @@ public:
 	float Get_Speed() { return m_fFixScrollSpeed; }
 	RECT* Get_Rect() { return &m_tRect; }
 	INFO Get_Info() { return m_tInfo; }
-	void Set_Pos(float _x, float _y) { m_tInfo.fX = _x, m_tInfo.fY = _y; }
+	void Set_Pos(float _x, float _y) { m_tInfo.fX = _x, m_tInfo.fY = _y, m_originX = _x, m_originY = _y; }
 	void Set_Size(float _x, float _y) { m_tInfo.fCX = _x, m_tInfo.fCY = _y; }
 public:
 	void		Update_Rect();
@@ -33,6 +33,9 @@ protected:
 	float		m_fSpeed;
 	float m_fFixScrollSpeed;
 
+	//원래 좌표
+	float m_originX;
+	float m_originY;
 
 	//애니메이션 관련
 	FRAME		m_tFrame;

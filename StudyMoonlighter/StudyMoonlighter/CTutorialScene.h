@@ -16,7 +16,10 @@ public:
 	void Create_MapObj() override;
 	void Offset() override;
 private:
-	CDungeonScene* m_TutorialDungeon[2];
+	void MapMove();
+private:
+	CDungeonScene* m_TutorialDungeon[3];
 	int m_iTutorialIndex;
+	int m_iLimitMoveX;
 };
 

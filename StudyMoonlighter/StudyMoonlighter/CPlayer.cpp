@@ -4,6 +4,7 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 #include "CTileManager.h"
+#include "CObjectManager.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0)
 {
@@ -39,6 +40,9 @@ void CPlayer::Initialize()
 
 int CPlayer::Update()
 {
+	if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
+		m_tInfo.fX = m_originX - CObjectManager::Get_Instance()->Get_MapMoveX();
+	}
 	Key_Input();
 	Change_Motion();
 	__super::Update_Rect();

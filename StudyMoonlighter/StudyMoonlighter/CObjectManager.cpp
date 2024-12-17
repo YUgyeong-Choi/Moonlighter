@@ -4,7 +4,7 @@
 
 CObjectManager* CObjectManager::m_pInstance = nullptr;
 
-CObjectManager::CObjectManager()
+CObjectManager::CObjectManager():m_IsMapMove(false), m_iMapMoveX(0)
 {
 }
 

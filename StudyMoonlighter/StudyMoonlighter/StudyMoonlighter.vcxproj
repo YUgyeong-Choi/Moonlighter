@@ -155,6 +155,7 @@
     <ClInclude Include="CPortal.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CScrollManager.h" />
+    <ClInclude Include="CScrollRoll.h" />
     <ClInclude Include="CScrollWasd.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CTileManager.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="CPortal.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CScrollManager.cpp" />
+    <ClCompile Include="CScrollRoll.cpp" />
     <ClCompile Include="CScrollWasd.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CTileManager.cpp" />
