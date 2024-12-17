@@ -12,6 +12,7 @@
 #include "CScrollWasd.h"
 #include "CGolemDoor.h"
 #include "CScrollRoll.h"
+#include "CGolemHole.h"
 
 CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0)
 {
@@ -76,7 +77,7 @@ void CDungeonScene::Offset()
 
 void CDungeonScene::Load_Map()
 {
-	CObjectManager::Get_Instance()->Get_Player()->Set_Pos((m_iMapYIndex * m_fMapXSize) + 300, WINCY / 2);
+	CObjectManager::Get_Instance()->Get_Player()->Set_Pos((m_iMapYIndex * m_fMapXSize) + 150, WINCY / 2);
 	HANDLE hFile = CreateFile(pFilePath, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
@@ -109,9 +110,15 @@ void CDungeonScene::Load_Map()
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
 			static_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(_dir);
 		}
+		else if (_MapObj.Get_MapObjType() == GOLEM_HOLE) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			HOLETYPE _type;
+			bool b = ReadFile(hFile, &_type, sizeof(HOLETYPE), &dwByte, NULL);
+			dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(_type);
+		}
+
 
 	}
 
 	CloseHandle(hFile);
-	MessageBox(g_hWnd, L"MapObj Load", L"¼º°ø", MB_OK);
 }

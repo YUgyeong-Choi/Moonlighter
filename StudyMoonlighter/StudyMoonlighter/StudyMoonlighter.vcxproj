@@ -144,6 +144,7 @@
     <ClInclude Include="CDungeonScene.h" />
     <ClInclude Include="CFieldScene.h" />
     <ClInclude Include="CGolemDoor.h" />
+    <ClInclude Include="CGolemHole.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMapObj.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="CDungeonScene.cpp" />
     <ClCompile Include="CFieldScene.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
+    <ClCompile Include="CGolemHole.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMapObj.cpp" />

@@ -13,12 +13,12 @@ void CPlayer::Initialize()
 {
 	m_eOBJID = OBJ_PLAYER;
 
-	m_tInfo.fCX = 40.f;
+	m_tInfo.fCX = 37.f;
 	m_tInfo.fCY = 54.f;
 
 	m_fSpeed = 3.f;
 	m_fFixScrollSpeed = 3.f;
-	m_fRollTime = 25.f;
+	m_fRollTime = 30.f;
 
 	//그래픽 관련
 	m_pImgKey = L"Will_Idle_down";

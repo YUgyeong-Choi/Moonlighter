@@ -13,6 +13,7 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	bool Get_IsRolling() { return m_bIsRoll; }
 private:
 	void Key_Input();
 	void Rolling();

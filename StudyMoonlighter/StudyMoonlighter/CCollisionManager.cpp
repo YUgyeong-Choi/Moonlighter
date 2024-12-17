@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CCollisionManager.h"
+#include "CPlayer.h"
 
 void CCollisionManager::CollisionRect(list<CObject*> _Dst, list<CObject*> _Src)
 {
@@ -56,6 +57,48 @@ void CCollisionManager::CollisionRectEx(list<CObject*> _Dst, list<CObject*> _Src
         {
             if (CheckRect(Dst, Src, &fX, &fY))
             {
+                Dst->OnCollision(Src);
+                Src->OnCollision(Dst);
+                if (fX > fY)
+                {
+                    if (Dst->Get_Info().fY < Src->Get_Info().fY)
+                    {
+                        Dst->Set_Pos(Dst->Get_Info().fX, Dst->Get_Info().fY - fY - Dst->Get_Speed());
+                    }
+                    else
+                    {
+                        Dst->Set_Pos(Dst->Get_Info().fX, Dst->Get_Info().fY + fY + Dst->Get_Speed());
+                    }
+                }
+                else
+                {
+                    if (Dst->Get_Info().fX < Src->Get_Info().fX)
+                    {
+                        Dst->Set_Pos(Dst->Get_Info().fX - fX - Dst->Get_Speed(), Dst->Get_Info().fY);
+                    }
+                    else
+                    {
+                        Dst->Set_Pos(Dst->Get_Info().fX + fX + Dst->Get_Speed(), Dst->Get_Info().fY);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void CCollisionManager::CollisionFloor(list<CObject*> _Dst, list<CObject*> _Src)
+{
+    float fX(0.f), fY(0.f);
+
+    for (auto& Dst : _Dst)
+    {
+        for (auto& Src : _Src)
+        {
+            if (CheckRect(Dst, Src, &fX, &fY))
+            {
+                if (static_cast<CPlayer*>(Dst)->Get_IsRolling()) {
+                    continue;
+                }
                 Dst->OnCollision(Src);
                 Src->OnCollision(Dst);
                 if (fX > fY)
