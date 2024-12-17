@@ -195,6 +195,9 @@
     <ClInclude Include="CScrollRoll.h">
       <Filter>02_Object\99.MapObj\Tutorial</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemHole.h">
+      <Filter>99_Managers\TileManager\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -280,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="CScrollRoll.cpp">
       <Filter>02_Object\99.MapObj\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemHole.cpp">
+      <Filter>99_Managers\TileManager\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,10 +12,10 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 
-CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_iLimitMoveX(0)
+CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_iLimitMoveX(0), m_dir(DIR_END)
 {
 	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0, 0);	
-	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0 ,1);	
+	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj2.dat", 0 ,1);	
 	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0 ,2);	
 }
 
@@ -43,7 +43,7 @@ int CTutorialScene::Update()
 				//CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
 				//CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
 				//CObjectManager::Get_Instance()->RenderListClear();
-				
+				m_dir = RIGHT;
 				m_iTutorialIndex++;
 				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
 				CObjectManager::Get_Instance()->Set_IsMapMove(true);
@@ -124,15 +124,25 @@ void CTutorialScene::Offset()
 
 void CTutorialScene::MapMove()
 {
-	if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
-		m_iLimitMoveX += 16;
-		if (m_iLimitMoveX > 1024) {
-			CObjectManager::Get_Instance()->Set_IsMapMove(false);
-			m_iLimitMoveX = 0;
+	switch (m_dir) {
+	case LEFT:
+		break;
+	case RIGHT:
+		if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
+			m_iLimitMoveX += 16;
+			if (m_iLimitMoveX > 1024) {
+				CObjectManager::Get_Instance()->Set_IsMapMove(false);
+				m_iLimitMoveX = 0;
+			}
+			else {
+				CObjectManager::Get_Instance()->Set_MapMoveX(m_iLimitMoveX + ((m_iTutorialIndex - 1) * 1024));
+			}
 		}
-		else {
-			CObjectManager::Get_Instance()->Set_MapMoveX(m_iLimitMoveX + ((m_iTutorialIndex-1) * 1024));
-		}
+		break;
+	case UP:
+		break;
+	case DOWN:
+		break;
 	}
 }
 

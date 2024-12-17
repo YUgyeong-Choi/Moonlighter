@@ -21,5 +21,6 @@ private:
 	CDungeonScene* m_TutorialDungeon[3];
 	int m_iTutorialIndex;
 	int m_iLimitMoveX;
+	DIRECTION m_dir;
 };
 

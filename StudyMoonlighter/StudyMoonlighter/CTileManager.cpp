@@ -83,7 +83,7 @@ void CTileManager::Picking_Tile(POINT pt)
 
 void CTileManager::Save_Tile()
 {
-	HANDLE hFile = CreateFile(L"../Data/Tile/CTutorialTile1.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(L"../Data/Tile/CTutorialTile2.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
@@ -105,7 +105,7 @@ void CTileManager::Save_Tile()
 
 void CTileManager::Load_Tile()
 {
-	HANDLE hFile = CreateFile(L"../Data/Tile/CTutorialTile1.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(L"../Data/Tile/CTutorialTile2.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
