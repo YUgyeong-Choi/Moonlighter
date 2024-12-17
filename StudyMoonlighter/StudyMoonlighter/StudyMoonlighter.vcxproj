@@ -144,7 +144,6 @@
     <ClInclude Include="CDungeonScene.h" />
     <ClInclude Include="CFieldScene.h" />
     <ClInclude Include="CGolemDoor.h" />
-    <ClInclude Include="CGolemHole.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMapObj.h" />
@@ -158,8 +157,6 @@
     <ClInclude Include="CScrollManager.h" />
     <ClInclude Include="CScrollRoll.h" />
     <ClInclude Include="CScrollWasd.h" />
-    <ClInclude Include="CTile.h" />
-    <ClInclude Include="CTileManager.h" />
     <ClInclude Include="CTree1.h" />
     <ClInclude Include="CTutorialScene.h" />
     <ClInclude Include="CVillageScene.h" />
@@ -179,7 +176,6 @@
     <ClCompile Include="CDungeonScene.cpp" />
     <ClCompile Include="CFieldScene.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
-    <ClCompile Include="CGolemHole.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMapObj.cpp" />
@@ -193,8 +189,6 @@
     <ClCompile Include="CScrollManager.cpp" />
     <ClCompile Include="CScrollRoll.cpp" />
     <ClCompile Include="CScrollWasd.cpp" />
-    <ClCompile Include="CTile.cpp" />
-    <ClCompile Include="CTileManager.cpp" />
     <ClCompile Include="CTree1.cpp" />
     <ClCompile Include="CTutorialScene.cpp" />
     <ClCompile Include="CVillageScene.cpp" />

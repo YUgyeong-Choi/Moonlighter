@@ -21,7 +21,5 @@ public:
 private:
 	void SaveMapObj();
 	void LoadMapObj();
-private:
-	bool m_bIsShowTile;
 };
 

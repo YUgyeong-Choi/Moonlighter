@@ -25,7 +25,7 @@ public:
 	CObject* Get_Player() { return m_ObjList[OBJ_PLAYER].back(); }
 	list<CObject*> Get_MapObjList(){ return m_ObjList[OBJ_MAPOBJ]; }
 	list<CObject*> Get_PortalList(){ return m_ObjList[OBJ_PORTAL]; }
-	int Get_MonsterSize() { return m_ObjList[OBJ_MONSTER].size(); }
+	int Get_MonsterSize() { return (int)(m_ObjList[OBJ_MONSTER].size()); }
 	bool Get_IsMapMove() { return m_IsMapMove; }
 	void Set_IsMapMove(bool _b) { m_IsMapMove = _b; }
 	int Get_MapMoveX() { return m_iMapMoveX; }

@@ -2,7 +2,6 @@
 #include "CDungeonEditScene.h"
 #include "CBitManager.h"
 #include "CScrollManager.h"
-#include "CTileManager.h"
 #include "CKeyManager.h"
 #include "CObjectManager.h"
 #include "CMapObj.h"
@@ -11,9 +10,8 @@
 #include "CAbstractFactory.h"
 #include "CGolemDoor.h"
 #include "CScrollRoll.h"
-#include "CGolemHole.h"
 
-CDungeonEditScene::CDungeonEditScene():m_bIsShowTile(false)
+CDungeonEditScene::CDungeonEditScene()
 {
 }
 
@@ -24,7 +22,6 @@ void CDungeonEditScene::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Tile/CantWalk48.bmp", L"CantWalk");
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
-	CTileManager::Get_Instance()->Initialize();
 	Create_MapObj();
 }
 
@@ -32,14 +29,12 @@ int CDungeonEditScene::Update()
 {
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
-	CTileManager::Get_Instance()->Update();
     return 0;
 }
 
 void CDungeonEditScene::LateUpdate()
 {
 	CObjectManager::Get_Instance()->Late_Update();
-	CTileManager::Get_Instance()->Late_Update();
 }
 
 void CDungeonEditScene::Render(HDC hDC)
@@ -50,9 +45,6 @@ void CDungeonEditScene::Render(HDC hDC)
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	GdiTransparentBlt(hDC, iScrollX, iScrollY, (int)m_fMapXSize, (int)m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, (int)m_fMapYSize, RGB(0, 0, 0));
 	CObjectManager::Get_Instance()->Render(hDC);
-	if (m_bIsShowTile) {
-		CTileManager::Get_Instance()->Render(hDC);
-	}
 }
 
 void CDungeonEditScene::Release()
@@ -66,32 +58,16 @@ void CDungeonEditScene::Key_Input()
 {
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
-		m_bIsShowTile = !m_bIsShowTile;
 		g_bDevmode = !g_bDevmode;
 	}
 
-	if (m_bIsShowTile) {
-		if (CKeyManager::Get_Instance()->Key_Down(VK_LBUTTON))
-		{
-			POINT	ptMouse{};
-			GetCursorPos(&ptMouse);
-			ScreenToClient(g_hWnd, &ptMouse);
-
-			ptMouse.x -= (int)CScrollManager::Get_Instance()->Get_ScrollX() + 80;
-			ptMouse.y -= (int)CScrollManager::Get_Instance()->Get_ScrollY() + 96;
-
-			CTileManager::Get_Instance()->Picking_Tile(ptMouse);
-		}
-	}
 	if (CKeyManager::Get_Instance()->Key_Down('O'))
 	{
-		CTileManager::Get_Instance()->Save_Tile();
 		SaveMapObj();
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down('P'))
 	{
-		CTileManager::Get_Instance()->Load_Tile();
 		LoadMapObj();
 	}
 }
@@ -102,10 +78,8 @@ void CDungeonEditScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 690, 1024, 60));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create(WINCX / 2, 60, 0, 0));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(50, WINCY / 2));
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(LEFT);
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX / 2, 60, 0, 0));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2, 80, 50));
 	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
 }
 
@@ -116,7 +90,7 @@ void CDungeonEditScene::Offset()
 
 void CDungeonEditScene::SaveMapObj()
 {
-	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj2.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(L"../Data/CTutorialMapObj1.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
@@ -129,12 +103,6 @@ void CDungeonEditScene::SaveMapObj()
 	{
 		CMapObj* obj = static_cast<CMapObj*>(mapObj);
 		WriteFile(hFile, obj, sizeof(CMapObj), &dwByte, NULL);
-		
-		if (dynamic_cast<CMapObj*>(mapObj)->Get_MapObjType() == GOLEM_HOLE) {
-			HOLETYPE _type;
-			_type = static_cast<CGolemHole*>(mapObj)->Get_HoleType();
-			WriteFile(hFile, &_type, sizeof(HOLETYPE), &dwByte, NULL);
-		}
 	}
 
 	list<CObject*> protalList = CObjectManager::Get_Instance()->Get_PortalList(); //여기는 골렘 던전만 있다고 가정
@@ -153,7 +121,7 @@ void CDungeonEditScene::SaveMapObj()
 
 void CDungeonEditScene::LoadMapObj()
 {
-	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj2.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(L"../Data/CTutorialMapObj1.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
@@ -184,12 +152,6 @@ void CDungeonEditScene::LoadMapObj()
 			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
 			static_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(_dir);
-		}
-		else if (_MapObj.Get_MapObjType() == GOLEM_HOLE) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemHole>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
-			HOLETYPE _type;
-			bool b = ReadFile(hFile, &_type, sizeof(HOLETYPE), &dwByte, NULL);
-			static_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_HoleType(_type);
 		}
 
 	}

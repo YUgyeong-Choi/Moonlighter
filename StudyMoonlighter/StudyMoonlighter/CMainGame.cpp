@@ -5,7 +5,6 @@
 #include "CObjectManager.h"
 #include "CKeyManager.h"
 #include "CScrollManager.h"
-#include "CTileManager.h"
 
 bool g_bDevmode = false;
 
@@ -43,7 +42,6 @@ void CMainGame::Render()
 
 void CMainGame::Release()
 {
-	CTileManager::Destroy_Instance();
 	CSceneManager::DestroyInstance();
 	CBitManager::DestroyInstance();
 	CObjectManager::DestroyInstance();

@@ -12,7 +12,6 @@
 #include "CScrollWasd.h"
 #include "CGolemDoor.h"
 #include "CScrollRoll.h"
-#include "CGolemHole.h"
 
 CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0)
 {
@@ -78,7 +77,7 @@ void CDungeonScene::Offset()
 void CDungeonScene::Load_Map()
 {
 	CObjectManager::Get_Instance()->Get_Player()->Set_Pos((m_iMapYIndex * m_fMapXSize) + 300, WINCY / 2);
-	HANDLE hFile = CreateFile(L"../Data/SceneMapObj/CTutorialMapObj2.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(pFilePath, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return;
@@ -97,24 +96,18 @@ void CDungeonScene::Load_Map()
 			break;
 
 		if (_MapObj.Get_MapObjType() == COLLISION) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 		}
 		else if (_MapObj.Get_MapObjType() == SCROLLWASD) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
 		}
 		else if (_MapObj.Get_MapObjType() == SCROLLROLL) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
 		}
 		else if (_MapObj.Get_MapObjType() == GOLEM_DOOR) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create((m_iMapYIndex * m_fMapXSize) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
 			static_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(_dir);
-		}
-		else if (_MapObj.Get_MapObjType() == GOLEM_HOLE) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemHole>::Create(_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
-			HOLETYPE _type;
-			bool b = ReadFile(hFile, &_type, sizeof(HOLETYPE), &dwByte, NULL);
-			static_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_HoleType(_type);
 		}
 
 	}

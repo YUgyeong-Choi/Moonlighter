@@ -14,9 +14,9 @@
 
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_iLimitMoveX(0), m_dir(DIR_END)
 {
-	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0, 0);	
-	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj2.dat", 0 ,1);	
-	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/SceneMapObj/CTutorialMapObj1.dat", 0 ,2);	
+	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/CTutorialMapObj1.dat", 0, 0);	
+	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 0 ,1);	
+	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/CTutorialMapObj1.dat", 0 ,2);	
 }
 
 void CTutorialScene::Initialize()

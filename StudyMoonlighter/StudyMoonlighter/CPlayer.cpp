@@ -3,7 +3,6 @@
 #include "CBitManager.h"
 #include "CKeyManager.h"
 #include "CScrollManager.h"
-#include "CTileManager.h"
 #include "CObjectManager.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0)
