@@ -4,7 +4,7 @@ class CDungeonScene : public CScene
 {
 public:
     CDungeonScene();
-    CDungeonScene(const TCHAR* _pFilePath, int _x, int _y);
+    CDungeonScene(const TCHAR* _path1, const TCHAR* _path2, int _x, int _y);
     virtual ~CDungeonScene() { Release(); }
 public:
     void Initialize() override;
@@ -21,6 +21,7 @@ public:
     void Set_MapYIndex(int _y) { m_iMapYIndex = _y; }
 private:
     const TCHAR* pFilePath;
+    const TCHAR* pFilePath2;
     int m_iMapXIndex;
     int m_iMapYIndex;
     bool m_IsLoad;

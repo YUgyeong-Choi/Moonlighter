@@ -59,6 +59,7 @@ int CPlayer::Update()
 			default:
 				break;
 			}
+			CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024 * CObjectManager::Get_Instance()->Get_MapXIndex()) + 150, WINCY / 2);
 			m_eCurState = IDLE;
 			alpha = 255;
 		}

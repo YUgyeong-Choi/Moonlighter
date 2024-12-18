@@ -88,6 +88,21 @@
     <Filter Include="01_Scenes\03_Dungeon">
       <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\02.Monster">
+      <UniqueIdentifier>{ad32bc67-d7c1-4982-b849-7bafbded0b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\02.Monster\Golem">
+      <UniqueIdentifier>{19cee938-fc5a-49b9-abad-7a69c5b3e15b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\TurretDown">
+      <UniqueIdentifier>{6b1349d3-9e89-45ed-bb36-caac5b67f753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\03_Bullet">
+      <UniqueIdentifier>{afef7131-304b-43e1-b9df-6dc034a3bd6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\FileManager">
+      <UniqueIdentifier>{f5486365-06af-4cfe-ba50-594b31a4e036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -186,6 +201,21 @@
     <ClInclude Include="CGolemHole.h">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClInclude>
+    <ClInclude Include="CTurretBroken.h">
+      <Filter>02_Object\02.Monster\Golem\TurretDown</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>02_Object\03_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretDownBullet.h">
+      <Filter>02_Object\02.Monster\Golem\TurretDown</Filter>
+    </ClInclude>
+    <ClInclude Include="CFileManager.h">
+      <Filter>99_Managers\FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>02_Object\02.Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -268,6 +298,21 @@
     </ClCompile>
     <ClCompile Include="CGolemHole.cpp">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretBroken.cpp">
+      <Filter>02_Object\02.Monster\Golem\TurretDown</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>02_Object\03_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretDownBullet.cpp">
+      <Filter>02_Object\02.Monster\Golem\TurretDown</Filter>
+    </ClCompile>
+    <ClCompile Include="CFileManager.cpp">
+      <Filter>99_Managers\FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>02_Object\02.Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

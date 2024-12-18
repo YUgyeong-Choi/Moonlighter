@@ -9,7 +9,7 @@ CCollisionBox::CCollisionBox()
 
 void CCollisionBox::Initialize()
 {
-	m_eOBJID = OBJ_MAPOBJ;
+	m_eOBJID = OBJ_COLLISION;
 	m_mapType = COLLISION;
 
 	m_eRender = RENDER_BACKGROUND;
@@ -27,10 +27,8 @@ void CCollisionBox::Late_Update()
 
 void CCollisionBox::Render(HDC hDC)
 {
-	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
-	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	if (g_bDevmode) {
-		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
+		Hitbox(hDC, m_tRect, 0, 0);
 	}
 }
 

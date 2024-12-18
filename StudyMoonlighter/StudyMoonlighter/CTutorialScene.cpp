@@ -14,13 +14,18 @@
 
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMoveX(0), m_bMapMove(false)
 {
-	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/CTutorialMapObj1.dat", 0, 0);	
-	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 0 ,1);	
-	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 0 ,2);	
+	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/MapObj/Tutorial1", L"../Data/MapMonster/Tutorial1", 0, 0);
+	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/MapObj/Tutorial2", L"../Data/MapMonster/Tutorial2", 0, 0);
+	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/MapObj/Tutorial3", L"../Data/MapMonster/Tutorial3", 0, 0);
 }
 
 void CTutorialScene::Initialize()
 {
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 30, 1024, 60));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 690, 1024, 60));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
+
 	CScrollManager::Get_Instance()->Set_ScrollLock(4000, 760);
 	CScrollManager::Get_Instance()->Set_Scroll(0, 0);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));

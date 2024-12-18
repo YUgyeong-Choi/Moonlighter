@@ -138,17 +138,20 @@
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CBitManager.h" />
+    <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollisionBox.h" />
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CDungeonEditScene.h" />
     <ClInclude Include="CDungeonScene.h" />
     <ClInclude Include="CFieldScene.h" />
+    <ClInclude Include="CFileManager.h" />
     <ClInclude Include="CGolemDoor.h" />
     <ClInclude Include="CGolemHole.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMapObj.h" />
     <ClInclude Include="CMenuScene.h" />
+    <ClInclude Include="CMonster.h" />
     <ClInclude Include="CMyBmp.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CObjectManager.h" />
@@ -159,6 +162,8 @@
     <ClInclude Include="CScrollRoll.h" />
     <ClInclude Include="CScrollWasd.h" />
     <ClInclude Include="CTree1.h" />
+    <ClInclude Include="CTurretBroken.h" />
+    <ClInclude Include="CTurretDownBullet.h" />
     <ClInclude Include="CTutorialScene.h" />
     <ClInclude Include="CVillageScene.h" />
     <ClInclude Include="Define.h" />
@@ -171,17 +176,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBitManager.cpp" />
+    <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollisionBox.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CDungeonEditScene.cpp" />
     <ClCompile Include="CDungeonScene.cpp" />
     <ClCompile Include="CFieldScene.cpp" />
+    <ClCompile Include="CFileManager.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMapObj.cpp" />
     <ClCompile Include="CMenuScene.cpp" />
+    <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CMyBmp.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CObjectManager.cpp" />
@@ -192,6 +200,8 @@
     <ClCompile Include="CScrollRoll.cpp" />
     <ClCompile Include="CScrollWasd.cpp" />
     <ClCompile Include="CTree1.cpp" />
+    <ClCompile Include="CTurretBroken.cpp" />
+    <ClCompile Include="CTurretDownBullet.cpp" />
     <ClCompile Include="CTutorialScene.cpp" />
     <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="pch.cpp">

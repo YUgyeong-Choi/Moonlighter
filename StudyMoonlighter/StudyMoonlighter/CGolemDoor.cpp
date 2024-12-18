@@ -3,7 +3,7 @@
 #include "CObjectManager.h"
 #include "CScrollManager.h"
 
-CGolemDoor::CGolemDoor() : m_bIsOpen(false), m_bAlreadyOpen(false), m_eDir(DIR_END), m_bLoad_Next(false)
+CGolemDoor::CGolemDoor() : m_bIsOpen(false), m_bAlreadyOpen(false), m_bLoad_Next(false)
 {
 }
 

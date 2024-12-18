@@ -22,6 +22,9 @@ public:
 	INFO Get_Info() { return m_tInfo; }
 	void Set_Pos(float _x, float _y) { m_tInfo.fX = _x, m_tInfo.fY = _y, m_originX = _x, m_originY = _y; }
 	void Set_Size(float _x, float _y) { m_tInfo.fCX = _x, m_tInfo.fCY = _y; }
+
+	void Set_DIR(DIRECTION _dir) { m_eDir = _dir; }
+	DIRECTION Get_DIR() { return m_eDir; }
 public:
 	void		Update_Rect();
 	void		Move_Frame();
@@ -29,6 +32,8 @@ protected:
 	INFO		m_tInfo;
 	RECT		m_tRect;
 	OBJID		m_eOBJID;
+	DIRECTION m_eDir;
+	int  iHp;
 
 	float		m_fSpeed;
 	float m_fFixScrollSpeed;

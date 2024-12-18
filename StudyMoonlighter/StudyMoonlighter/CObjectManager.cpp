@@ -20,8 +20,7 @@ int CObjectManager::Update()
 {
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for (auto iter = m_ObjList[i].begin();
-			iter != m_ObjList[i].end(); )
+		for (auto iter = m_ObjList[i].begin();iter != m_ObjList[i].end(); )
 		{
 			int iResult = (*iter)->Update();
 
@@ -56,6 +55,7 @@ void CObjectManager::Late_Update()
 	CCollisionManager::CollisionRectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]);
 	CCollisionManager::CollisionFloor(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_FLOOR]);
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_PORTAL]);
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_MONSTER_BULLET], m_ObjList[OBJ_COLLISION]);
 }
 
 void CObjectManager::Render(HDC hDC)

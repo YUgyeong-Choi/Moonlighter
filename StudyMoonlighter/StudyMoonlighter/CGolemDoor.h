@@ -15,13 +15,10 @@ public:
 
 public:
 	void Set_IsOpened(bool _b) { m_bAlreadyOpen = _b; }
-	void Set_DIR(DIRECTION _dir) { m_eDir = _dir; }
-	DIRECTION Get_DIR() { return m_eDir; }
 	bool Get_Load_Next() { return m_bLoad_Next; }
 private:
 	bool m_bIsOpen;
 	bool m_bAlreadyOpen;
 	bool m_bLoad_Next;
-	DIRECTION m_eDir;
 };
 
