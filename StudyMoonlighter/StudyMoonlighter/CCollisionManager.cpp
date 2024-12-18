@@ -96,11 +96,12 @@ void CCollisionManager::CollisionFloor(list<CObject*> _Dst, list<CObject*> _Src)
         {
             if (CheckRect(Dst, Src, &fX, &fY))
             {
+                //구르는 상태라면 continue
                 if (static_cast<CPlayer*>(Dst)->Get_IsRolling()) {
                     continue;
                 }
-                Dst->OnCollision(Src);
-                Src->OnCollision(Dst);
+
+                //걸어서 충돌했을 때와 낭떨어지 가운데쯤에 있을 때 분리
                 if (fX > fY)
                 {
                     if (Dst->Get_Info().fY < Src->Get_Info().fY)
@@ -114,13 +115,26 @@ void CCollisionManager::CollisionFloor(list<CObject*> _Dst, list<CObject*> _Src)
                 }
                 else
                 {
+                    //좌충돌
                     if (Dst->Get_Info().fX < Src->Get_Info().fX)
                     {
-                        Dst->Set_Pos(Dst->Get_Info().fX - fX - Dst->Get_Speed(), Dst->Get_Info().fY);
+                        if (Dst->Get_Info().fX < Src->Get_Info().fX - (Src->Get_Info().fCX * 0.5f) + 5.f) {
+                            Dst->Set_Pos(Dst->Get_Info().fX - fX - Dst->Get_Speed(), Dst->Get_Info().fY);
+                        }
+                        else {
+                            Dst->OnCollision(Src);
+                            Src->OnCollision(Dst);
+                        }
                     }
                     else
                     {
-                        Dst->Set_Pos(Dst->Get_Info().fX + fX + Dst->Get_Speed(), Dst->Get_Info().fY);
+                        if (Dst->Get_Info().fX > Src->Get_Info().fX + (Src->Get_Info().fCX * 0.5f) - 5.f) {
+                            Dst->Set_Pos(Dst->Get_Info().fX + fX + Dst->Get_Speed(), Dst->Get_Info().fY);
+                        }
+                        else {
+                            Dst->OnCollision(Src);
+                            Src->OnCollision(Dst);
+                        }
                     }
                 }
             }

@@ -29,6 +29,11 @@ public:
 	list<CObject*> Get_FloorList(){ return m_ObjList[OBJ_FLOOR]; }
 	int Get_MonsterSize() { return (int)(m_ObjList[OBJ_MONSTER].size()); }
 
+	void Set_MapIndex(int _x, int _y, DIRECTION _dir) { m_iMapXIndex = _x, m_iMapYIndex =_y, m_dir = _dir; }
+	int Get_MapXIndex() { return m_iMapXIndex; }
+	int Get_MapYIndex() { return m_iMapYIndex; }
+	DIRECTION Get_MapDir() { return m_dir; }
+
 public:
 	static CObjectManager* Get_Instance()
 	{
@@ -50,5 +55,8 @@ private:
 	static CObjectManager* m_pInstance;
 	list<CObject*>		m_ObjList[OBJ_END];
 	list<CObject*>		m_RenderList[RENDER_END];
+	int m_iMapXIndex;
+	int m_iMapYIndex;
+	DIRECTION m_dir;
 };
 

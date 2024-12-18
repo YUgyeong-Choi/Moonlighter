@@ -4,7 +4,7 @@
 
 CObjectManager* CObjectManager::m_pInstance = nullptr;
 
-CObjectManager::CObjectManager()
+CObjectManager::CObjectManager():m_iMapXIndex(0), m_iMapYIndex(0), m_dir(DIR_END)
 {
 }
 

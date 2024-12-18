@@ -24,6 +24,7 @@ void CTutorialScene::Initialize()
 	CScrollManager::Get_Instance()->Set_ScrollLock(4000, 760);
 	CScrollManager::Get_Instance()->Set_Scroll(0, 0);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
+	CObjectManager::Get_Instance()->Set_MapIndex(0, 0, RIGHT);
 	for (auto dungeon : m_TutorialDungeon) {
 		dungeon->Initialize();
 	}
@@ -42,6 +43,7 @@ int CTutorialScene::Update()
 				m_iTutorialIndex--;
 				m_bMapMove = true;
 				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024 * m_iTutorialIndex) + 900, WINCY / 2);
+				CObjectManager::Get_Instance()->Set_MapIndex(m_iTutorialIndex, 0, LEFT);
 				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
 				break;
 			case RIGHT:
@@ -49,6 +51,7 @@ int CTutorialScene::Update()
 				m_iTutorialIndex++;
 				m_bMapMove = true;
 				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024*m_iTutorialIndex) + 150, WINCY / 2);
+				CObjectManager::Get_Instance()->Set_MapIndex(m_iTutorialIndex, 0, RIGHT);
 				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
 				break;
 			case UP:

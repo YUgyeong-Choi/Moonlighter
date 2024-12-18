@@ -5,7 +5,7 @@
 #include "CScrollManager.h"
 #include "CObjectManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), image(nullptr), alpha(255)
 {
 }
 
@@ -41,6 +41,28 @@ int CPlayer::Update()
 {
 	Key_Input();
 	Change_Motion();
+	if (m_eCurState == FALL) {
+		alpha -= 16;
+		if (alpha < 0) {
+			switch (CObjectManager::Get_Instance()->Get_MapDir())
+			{
+			case LEFT:
+				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024 * CObjectManager::Get_Instance()->Get_MapXIndex()) + 900, WINCY / 2);
+				break;
+			case RIGHT:
+				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024 * CObjectManager::Get_Instance()->Get_MapXIndex()) + 150, WINCY / 2);
+				break;
+			case UP:
+				break;
+			case DOWN:
+				break;
+			default:
+				break;
+			}
+			m_eCurState = IDLE;
+			alpha = 255;
+		}
+	}
 	__super::Update_Rect();
 	return 0;
 }
@@ -48,12 +70,14 @@ int CPlayer::Update()
 void CPlayer::Late_Update()
 {
 	Rolling();
-	__super::Move_Frame();
+	if (m_eCurState != FALL) {
+		__super::Move_Frame();
+	}
 }
 
 void CPlayer::Render(HDC hDC)
 {
-	Image* image(nullptr);
+	
 	switch (m_eCurState)
 	{
 	case CPlayer::IDLE:
@@ -119,6 +143,8 @@ void CPlayer::Render(HDC hDC)
 			break;
 		}
 		break;
+	case CPlayer::FALL:
+		break;
 	case CPlayer::ATTACK:
 		break;
 	case CPlayer::HIT:
@@ -136,8 +162,29 @@ void CPlayer::Render(HDC hDC)
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 
-	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+	if (m_eCurState != FALL) {
+		graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+	}
+	else {
+		ImageAttributes imgAttrs;
+		ColorMatrix colorMatrix = {
+			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+		imgAttrs.SetColorMatrix(&colorMatrix);
+		graphics.DrawImage(image,
+				Gdiplus::Rect(
+				(int)m_tRenderRect.left + iScrollX,
+				(int)m_tRenderRect.top + iScrollY,
+				m_tRenderSizeX,
+				m_tRenderSizeY),
+			(int)m_tRenderSizeX* m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
 
+	}
+	
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
@@ -156,87 +203,101 @@ void CPlayer::Release()
 {
 }
 
+void CPlayer::OnCollision(CObject* _obj)
+{
+	if (_obj->Get_OBJID() == OBJ_FLOOR) {
+		m_eCurState = FALL;
+
+	}
+}
+
 void CPlayer::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
-	{
-		m_eCurState = IDLE;
-	}
-	else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll) {
-		m_eCurState = IDLE;
-	}
-	else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll)
-	{
-		if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
-
-			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
-			m_fFixScrollSpeed = diagonalSpeed;
-			m_tInfo.fX += diagonalSpeed; 
-			m_tInfo.fY -= diagonalSpeed; 
-			m_eCurDir = UP_RIGHT;
-		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('A')) {
-			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
-			m_fFixScrollSpeed = diagonalSpeed;
-			m_tInfo.fX -= diagonalSpeed;
-			m_tInfo.fY -= diagonalSpeed;
-			m_eCurDir = UP_LEFT;
-		}
-		else {
-			m_fFixScrollSpeed = m_fSpeed;
-			m_tInfo.fY -= m_fSpeed;
-			m_eCurDir = UP;
-		}
-		m_eCurState = WALK;
-
-	}else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll)
-	{
-		if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
-			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
-			m_fFixScrollSpeed = diagonalSpeed;
-			m_tInfo.fX += diagonalSpeed;
-			m_tInfo.fY += diagonalSpeed;
-			m_eCurDir = DOWN_RIGHT;
-		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('A')) {
-			float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
-			m_fFixScrollSpeed = diagonalSpeed;
-			m_tInfo.fX -= diagonalSpeed;
-			m_tInfo.fY += diagonalSpeed;
-			m_eCurDir = DOWN_LEFT;
-		}
-		else {
-			m_fFixScrollSpeed = m_fSpeed;
-			m_tInfo.fY += m_fSpeed;
-			m_eCurDir = DOWN;
-		}
-		m_eCurState = WALK;
-
-
-	}else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll)
-	{
-		m_fFixScrollSpeed = m_fSpeed;
-		m_tInfo.fX -= m_fSpeed;
-		m_eCurDir = LEFT;
-		m_eCurState = WALK;
-
-	}else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
-	{
-		m_fFixScrollSpeed = m_fSpeed;
-		m_tInfo.fX += m_fSpeed;
-		m_eCurDir = RIGHT;
-		m_eCurState = WALK;
-	}else {
-		if (!m_bIsRoll) { 
+	if (m_eCurState != FALL) {
+		if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
+		{
 			m_eCurState = IDLE;
 		}
-	}
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll) {
+			m_eCurState = IDLE;
+		}
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll)
+		{
+			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 
-	if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
-		if (!m_bIsRoll) {
-			m_bIsRoll = true;
-			m_eCurState = ROLL;
-			m_fSpeed = 5.f;
+				float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
+				m_fFixScrollSpeed = diagonalSpeed;
+				m_tInfo.fX += diagonalSpeed;
+				m_tInfo.fY -= diagonalSpeed;
+				m_eCurDir = UP_RIGHT;
+			}
+			else if (CKeyManager::Get_Instance()->Key_Pressing('A')) {
+				float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
+				m_fFixScrollSpeed = diagonalSpeed;
+				m_tInfo.fX -= diagonalSpeed;
+				m_tInfo.fY -= diagonalSpeed;
+				m_eCurDir = UP_LEFT;
+			}
+			else {
+				m_fFixScrollSpeed = m_fSpeed;
+				m_tInfo.fY -= m_fSpeed;
+				m_eCurDir = UP;
+			}
+			m_eCurState = WALK;
+
+		}
+		else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll)
+		{
+			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
+				float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
+				m_fFixScrollSpeed = diagonalSpeed;
+				m_tInfo.fX += diagonalSpeed;
+				m_tInfo.fY += diagonalSpeed;
+				m_eCurDir = DOWN_RIGHT;
+			}
+			else if (CKeyManager::Get_Instance()->Key_Pressing('A')) {
+				float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
+				m_fFixScrollSpeed = diagonalSpeed;
+				m_tInfo.fX -= diagonalSpeed;
+				m_tInfo.fY += diagonalSpeed;
+				m_eCurDir = DOWN_LEFT;
+			}
+			else {
+				m_fFixScrollSpeed = m_fSpeed;
+				m_tInfo.fY += m_fSpeed;
+				m_eCurDir = DOWN;
+			}
+			m_eCurState = WALK;
+
+
+		}
+		else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll)
+		{
+			m_fFixScrollSpeed = m_fSpeed;
+			m_tInfo.fX -= m_fSpeed;
+			m_eCurDir = LEFT;
+			m_eCurState = WALK;
+
+		}
+		else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
+		{
+			m_fFixScrollSpeed = m_fSpeed;
+			m_tInfo.fX += m_fSpeed;
+			m_eCurDir = RIGHT;
+			m_eCurState = WALK;
+		}
+		else {
+			if (!m_bIsRoll) {
+				m_eCurState = IDLE;
+			}
+		}
+
+		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
+			if (!m_bIsRoll) {
+				m_bIsRoll = true;
+				m_eCurState = ROLL;
+				m_fSpeed = 5.f;
+			}
 		}
 	}
 }
