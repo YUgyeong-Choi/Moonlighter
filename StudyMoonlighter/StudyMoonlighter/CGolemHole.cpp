@@ -18,18 +18,23 @@ int CGolemHole::Update()
 {
 	switch (m_type)
 	{
-	case 0:
+	case HOLE_1:
 		m_tInfo.fCX = 45.f;
 		m_tInfo.fCY = 536.f;
 		m_tRenderSizeX = 84.f;
 		m_tRenderSizeY = 536.f;
 		break;
-	case 1:
+	case HOLE_2:
 		m_tInfo.fCX = 90.f;
 		m_tInfo.fCY = 536.f;
 		m_tRenderSizeX = 168.f;
 		m_tRenderSizeY = 536.f;
 		break;
+	case HOLE_3:
+		m_tInfo.fCX = 90.f;
+		m_tInfo.fCY = 90.f;
+		m_tRenderSizeX = 150.f;
+		m_tRenderSizeY = 150.f;
 	default:
 		break;
 	}
@@ -47,12 +52,14 @@ void CGolemHole::Render(HDC hDC)
 
 	switch (m_type)
 	{
-	case 0:
+	case HOLE_1:
 		image = Image::FromFile(L"../MoonlighterAssets/Map/Tutorial/golem_roll_hole.png");
 		break;
-	case 1:
+	case HOLE_2:
 		image = Image::FromFile(L"../MoonlighterAssets/Map/Tutorial/golem_roll_hole2.png");
 		break;
+	case HOLE_3:
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Tutorial/golem_roll_hole3.png");
 	default:
 		break;
 	}

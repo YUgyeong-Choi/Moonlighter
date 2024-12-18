@@ -52,12 +52,6 @@
     <Filter Include="99_Managers\ScrollManager">
       <UniqueIdentifier>{02188db8-7d13-4944-a6c6-3e5f8e350de3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="99_Managers\TileManager">
-      <UniqueIdentifier>{43a12012-8e8d-4134-baa4-a57b72df61f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="99_Managers\TileManager\Tile">
-      <UniqueIdentifier>{4598ac7d-d002-4e2f-809d-22597b1fbe58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Object\01.Player">
       <UniqueIdentifier>{1e8ebda4-da77-42cd-bf79-b11655ece936}</UniqueIdentifier>
     </Filter>
@@ -153,12 +147,6 @@
     <ClInclude Include="CScrollManager.h">
       <Filter>99_Managers\ScrollManager</Filter>
     </ClInclude>
-    <ClInclude Include="CTileManager.h">
-      <Filter>99_Managers\TileManager</Filter>
-    </ClInclude>
-    <ClInclude Include="CTile.h">
-      <Filter>99_Managers\TileManager\Tile</Filter>
-    </ClInclude>
     <ClInclude Include="CCollisionManager.h">
       <Filter>99_Managers\CollisionManager</Filter>
     </ClInclude>
@@ -196,7 +184,7 @@
       <Filter>02_Object\99.MapObj\Tutorial</Filter>
     </ClInclude>
     <ClInclude Include="CGolemHole.h">
-      <Filter>99_Managers\TileManager\Tile</Filter>
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,12 +230,6 @@
     <ClCompile Include="CScrollManager.cpp">
       <Filter>99_Managers\ScrollManager</Filter>
     </ClCompile>
-    <ClCompile Include="CTileManager.cpp">
-      <Filter>99_Managers\TileManager</Filter>
-    </ClCompile>
-    <ClCompile Include="CTile.cpp">
-      <Filter>99_Managers\TileManager\Tile</Filter>
-    </ClCompile>
     <ClCompile Include="CCollisionManager.cpp">
       <Filter>99_Managers\CollisionManager</Filter>
     </ClCompile>
@@ -285,7 +267,7 @@
       <Filter>02_Object\99.MapObj\Tutorial</Filter>
     </ClCompile>
     <ClCompile Include="CGolemHole.cpp">
-      <Filter>99_Managers\TileManager\Tile</Filter>
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

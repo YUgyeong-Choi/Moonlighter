@@ -11,5 +11,10 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	
+	TUTORIALSCROLL Get_ScrollType() { return m_eTutorialScroll; }
+	void Set_ScrollType(TUTORIALSCROLL _type) { m_eTutorialScroll = _type; }
+private:
+	TUTORIALSCROLL m_eTutorialScroll;
 };
 
