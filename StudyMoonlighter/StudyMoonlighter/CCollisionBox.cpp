@@ -17,9 +17,6 @@ void CCollisionBox::Initialize()
 
 int CCollisionBox::Update()
 {
-	if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
-		m_tInfo.fX = m_originX - CObjectManager::Get_Instance()->Get_MapMoveX();
-	}
 	CObject::Update_Rect();
 	return 0;
 }

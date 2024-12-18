@@ -12,15 +12,17 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 
-CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_iLimitMoveX(0), m_dir(DIR_END)
+CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMoveX(0), m_bMapMove(false)
 {
 	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/CTutorialMapObj1.dat", 0, 0);	
-	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 10 ,10);	
-	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 10 ,10);	
+	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 0 ,1);	
+	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/CTutorialMapObj2.dat", 0 ,2);	
 }
 
 void CTutorialScene::Initialize()
 {
+	CScrollManager::Get_Instance()->Set_ScrollLock(4000, 760);
+	CScrollManager::Get_Instance()->Set_Scroll(0, 0);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 	for (auto dungeon : m_TutorialDungeon) {
 		dungeon->Initialize();
@@ -30,7 +32,6 @@ void CTutorialScene::Initialize()
 
 int CTutorialScene::Update()
 {
-	Key_Input();
 	list<CObject*> protalList = CObjectManager::Get_Instance()->Get_PortalList();
 	for (auto portal : protalList) {
 		if (static_cast<CGolemDoor*>(portal)->Get_Load_Next()) {
@@ -38,23 +39,17 @@ int CTutorialScene::Update()
 			{
 			case LEFT:
 				m_dir = LEFT;
-				m_iLimitMoveX = 0;
 				m_iTutorialIndex--;
-				CObjectManager::Get_Instance()->Get_Player()->Set_Pos(-1024 + 900, WINCY / 2);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(-1);
+				m_bMapMove = true;
+				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024 * m_iTutorialIndex) + 900, WINCY / 2);
 				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
-				CObjectManager::Get_Instance()->Set_IsMapMove(true);
 				break;
 			case RIGHT:
 				m_dir = RIGHT;
-				m_iLimitMoveX = 0;
 				m_iTutorialIndex++;
-				CObjectManager::Get_Instance()->Get_Player()->Set_Pos(1024 + 150, WINCY / 2);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(1);
+				m_bMapMove = true;
+				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024*m_iTutorialIndex) + 150, WINCY / 2);
 				m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
-				CObjectManager::Get_Instance()->Set_IsMapMove(true);
 				break;
 			case UP:
 				break;
@@ -73,7 +68,7 @@ int CTutorialScene::Update()
 
 void CTutorialScene::LateUpdate()
 {
-	MapMove();
+	Offset();
 	for (auto dungeon : m_TutorialDungeon) {
 		dungeon->LateUpdate();
 	}
@@ -101,25 +96,6 @@ void CTutorialScene::Release()
 
 void CTutorialScene::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Pressing(VK_LEFT))
-	{
-		CScrollManager::Get_Instance()->Set_ScrollX(5.f);
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Pressing(VK_RIGHT))
-	{
-		CScrollManager::Get_Instance()->Set_ScrollX(-5.f);
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Pressing(VK_UP))
-	{
-		CScrollManager::Get_Instance()->Set_ScrollY(5.f);
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Pressing(VK_DOWN))
-	{
-		CScrollManager::Get_Instance()->Set_ScrollY(-5.f);
-	}
 }
 
 void CTutorialScene::Create_MapObj()
@@ -128,50 +104,39 @@ void CTutorialScene::Create_MapObj()
 
 void CTutorialScene::Offset()
 {
-}
-
-void CTutorialScene::MapMove()
-{
-	switch (m_dir) {
-	case LEFT:
-		if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
-			m_iLimitMoveX += 16;
-			if (m_iLimitMoveX > 1024) {
-				CObjectManager::Get_Instance()->Set_IsMapMove(false);
-				m_TutorialDungeon[m_iTutorialIndex + 1]->Set_MapXIndex(10);
-				m_TutorialDungeon[m_iTutorialIndex + 1]->Set_MapYIndex(10);
-				CObjectManager::Get_Instance()->Set_XYPosition();
-				CObjectManager::Get_Instance()->Set_MapMoveX(0);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(0);
-			}
-			else {
-				CObjectManager::Get_Instance()->Set_MapMoveX(-m_iLimitMoveX);
+	if (m_bMapMove) {
+		m_iMoveX += 16;
+		if (m_iMoveX > 1024) {
+			m_bMapMove = false;
+			m_iMoveX = 0;
+		}
+		else {
+			switch (m_dir)
+			{
+			case LEFT:
+				CScrollManager::Get_Instance()->Set_ScrollX(16);
+				break;
+			case RIGHT:
+				CScrollManager::Get_Instance()->Set_ScrollX(-16);
+				break;
+			case UP:
+				break;
+			case DOWN:
+				break;
 			}
 		}
-		break;
-	case RIGHT:
-		if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
-			m_iLimitMoveX += 16;
-			if (m_iLimitMoveX > 1024) {
-				CObjectManager::Get_Instance()->Set_IsMapMove(false);
-				m_TutorialDungeon[m_iTutorialIndex-1]->Set_MapXIndex(10);
-				m_TutorialDungeon[m_iTutorialIndex-1]->Set_MapYIndex(10);
-				CObjectManager::Get_Instance()->Set_XYPosition();
-				CObjectManager::Get_Instance()->Set_MapMoveX(0);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapXIndex(0);
-				m_TutorialDungeon[m_iTutorialIndex]->Set_MapYIndex(0);
-			}
-			else {
-				CObjectManager::Get_Instance()->Set_MapMoveX(m_iLimitMoveX);
-			}
-		}
-		break;
-	case UP:
-		break;
-	case DOWN:
-		break;
 	}
+
+	//int		iOffSetminY = 260;
+	//int		iOffSetmaxY = 460;
+
+	//int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
+	//if (iOffSetminY > _copyPlayer->Get_Info().fY + iScrollY)
+	//	CScrollManager::Get_Instance()->Set_ScrollY(_copyPlayer->Get_Speed());
+
+	//if (iOffSetmaxY < _copyPlayer->Get_Info().fY + iScrollY)
+	//	CScrollManager::Get_Instance()->Set_ScrollY(-_copyPlayer->Get_Speed());
 }
 
 

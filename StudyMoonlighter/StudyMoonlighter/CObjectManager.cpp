@@ -4,7 +4,7 @@
 
 CObjectManager* CObjectManager::m_pInstance = nullptr;
 
-CObjectManager::CObjectManager():m_IsMapMove(false), m_iMapMoveX(0)
+CObjectManager::CObjectManager()
 {
 }
 
@@ -89,15 +89,4 @@ void CObjectManager::Delete_ID(OBJID eID)
 		Safe_Delete(pObj);
 
 	m_ObjList[eID].clear();
-}
-
-void CObjectManager::Set_XYPosition()
-{
-	for (size_t i = 0; i < OBJ_END; ++i)
-	{
-		for (auto& pObj : m_ObjList[i])
-		{
-			pObj->Set_Pos(pObj->Get_Info().fX, pObj->Get_Info().fY);
-		}
-	}
 }

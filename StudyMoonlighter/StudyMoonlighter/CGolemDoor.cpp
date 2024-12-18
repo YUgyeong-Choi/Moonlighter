@@ -28,9 +28,6 @@ void CGolemDoor::Initialize()
 
 int CGolemDoor::Update()
 {
-	if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
-		m_tInfo.fX = m_originX - CObjectManager::Get_Instance()->Get_MapMoveX();
-	}
 	m_bLoad_Next = false;
 	if (0 == CObjectManager::Get_Instance()->Get_MonsterSize()) {
 		m_bIsOpen = true;

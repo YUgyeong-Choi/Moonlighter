@@ -23,5 +23,6 @@ private:
     const TCHAR* pFilePath;
     int m_iMapXIndex;
     int m_iMapYIndex;
+    bool m_IsLoad;
 };
 

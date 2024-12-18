@@ -28,11 +28,6 @@ public:
 	list<CObject*> Get_PortalList(){ return m_ObjList[OBJ_PORTAL]; }
 	list<CObject*> Get_FloorList(){ return m_ObjList[OBJ_FLOOR]; }
 	int Get_MonsterSize() { return (int)(m_ObjList[OBJ_MONSTER].size()); }
-	bool Get_IsMapMove() { return m_IsMapMove; }
-	void Set_IsMapMove(bool _b) { m_IsMapMove = _b; }
-	int Get_MapMoveX() { return m_iMapMoveX; }
-	void Set_MapMoveX(int _i) { m_iMapMoveX = _i; }
-	void Set_XYPosition();
 
 public:
 	static CObjectManager* Get_Instance()
@@ -55,7 +50,5 @@ private:
 	static CObjectManager* m_pInstance;
 	list<CObject*>		m_ObjList[OBJ_END];
 	list<CObject*>		m_RenderList[RENDER_END];
-	bool m_IsMapMove;
-	int m_iMapMoveX;
 };
 

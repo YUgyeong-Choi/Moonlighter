@@ -39,9 +39,6 @@ void CPlayer::Initialize()
 
 int CPlayer::Update()
 {
-	if (CObjectManager::Get_Instance()->Get_IsMapMove()) {
-		m_tInfo.fX = m_originX - CObjectManager::Get_Instance()->Get_MapMoveX();
-	}
 	Key_Input();
 	Change_Motion();
 	__super::Update_Rect();
