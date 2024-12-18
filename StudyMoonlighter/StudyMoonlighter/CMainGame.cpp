@@ -8,8 +8,9 @@
 
 bool g_bDevmode = false;
 
-CMainGame::CMainGame():m_hDC(nullptr)
+CMainGame::CMainGame():m_hDC(nullptr), m_dwTime(GetTickCount()), m_iFPS(0)
 {
+	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
 
 void CMainGame::Initialize()
@@ -35,6 +36,19 @@ void CMainGame::LateUpdate()
 
 void CMainGame::Render()
 {
+#pragma region  FPS Ãâ·Â
+	++m_iFPS;
+
+	if (m_dwTime + 1000 < GetTickCount())
+	{
+		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
+
+		SetWindowText(g_hWnd, m_szFPS);
+
+		m_iFPS = 0;
+		m_dwTime = GetTickCount();
+	}
+#pragma endregion
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(L"Back");
 	CSceneManager::GetInstance()->Render(hMemDC);
 	GdiTransparentBlt(m_hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, 1024, 720, SRCCOPY);

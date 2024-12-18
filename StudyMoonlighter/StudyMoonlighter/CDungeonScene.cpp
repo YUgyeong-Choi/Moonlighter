@@ -18,7 +18,7 @@ CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0)
 {
 }
 
-CDungeonScene::CDungeonScene(const TCHAR* _pFilePath, int _x, int _y) 
+CDungeonScene::CDungeonScene(const TCHAR* _pFilePath, int _x, int _y) :m_iMapXIndex(0), m_iMapYIndex(0)
 {
 	pFilePath = _pFilePath;
 	m_iMapXIndex = _x;
@@ -86,7 +86,6 @@ void CDungeonScene::Load_Map()
 	DIRECTION _dir;
 	CMapObj	_MapObj;
 
-	Release();
 
 	while (true)
 	{
@@ -115,9 +114,8 @@ void CDungeonScene::Load_Map()
 			bool b = ReadFile(hFile, &_type, sizeof(HOLETYPE), &dwByte, NULL);
 			dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(_type);
 		}
-
-
 	}
 
 	CloseHandle(hFile);
+	
 }
