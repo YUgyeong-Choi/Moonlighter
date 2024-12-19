@@ -14,8 +14,8 @@ void CTurretBroken::Initialize()
 	m_eOBJID = OBJ_MONSTER;
 	m_MonsterType = TURRETBROKEN;
 
-	m_tInfo.fCX = 72.f;
-	m_tInfo.fCY = 72.f;
+	m_tInfo.fCX = 45.f;
+	m_tInfo.fCY = 45.f;
 
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 10;
@@ -47,16 +47,16 @@ void CTurretBroken::Render(HDC hDC)
 	switch (m_eDir)
 	{
 	case LEFT:
-		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken_left.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken/turret_broken_left.png");
 		break;
 	case RIGHT:
-		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken_right.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken/turret_broken_right.png");
 		break;
 	case UP:
-		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken_up.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken/turret_broken_up.png");
 		break;
 	case DOWN:
-		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken_down.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/turret_broken/turret_broken_down.png");
 		break;
 	}
 	Graphics graphics(hDC);

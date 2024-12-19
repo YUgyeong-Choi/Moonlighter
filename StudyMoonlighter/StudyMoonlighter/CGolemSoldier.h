@@ -1,16 +1,16 @@
 #pragma once
 #include "CMonster.h"
-class CTurretBroken :public CMonster
+class CGolemSoldier :public CMonster
 {
 public:
-    CTurretBroken();
-    virtual ~CTurretBroken() { Release(); }
+    CGolemSoldier();
+    virtual ~CGolemSoldier() { Release(); }
     void Initialize() override;
     int Update() override;
     void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
 private:
-    void Shoot();
+    void Attack();
 };
 

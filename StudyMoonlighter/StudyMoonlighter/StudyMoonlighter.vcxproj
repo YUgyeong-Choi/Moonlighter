@@ -147,6 +147,7 @@
     <ClInclude Include="CFileManager.h" />
     <ClInclude Include="CGolemDoor.h" />
     <ClInclude Include="CGolemHole.h" />
+    <ClInclude Include="CGolemSoldier.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMapObj.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="CTurretBroken.h" />
     <ClInclude Include="CTurretDownBullet.h" />
     <ClInclude Include="CTutorialScene.h" />
+    <ClInclude Include="CUiManager.h" />
     <ClInclude Include="CVillageScene.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
@@ -185,6 +187,7 @@
     <ClCompile Include="CFileManager.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
+    <ClCompile Include="CGolemSoldier.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMapObj.cpp" />
@@ -203,6 +206,7 @@
     <ClCompile Include="CTurretBroken.cpp" />
     <ClCompile Include="CTurretDownBullet.cpp" />
     <ClCompile Include="CTutorialScene.cpp" />
+    <ClCompile Include="CUiManager.cpp" />
     <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

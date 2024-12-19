@@ -118,7 +118,7 @@ void CCollisionManager::CollisionFloor(list<CObject*> _Dst, list<CObject*> _Src)
                     //ÁÂÃæµ¹
                     if (Dst->Get_Info().fX < Src->Get_Info().fX)
                     {
-                        if (Dst->Get_Info().fX < Src->Get_Info().fX - (Src->Get_Info().fCX * 0.5f) + 5.f) {
+                        if (Dst->Get_Info().fX < Src->Get_Info().fX - (Src->Get_Info().fCX * 0.5f) + 3.f) {
                             Dst->Set_Pos(Dst->Get_Info().fX - fX - Dst->Get_Speed(), Dst->Get_Info().fY);
                         }
                         else {
@@ -128,7 +128,7 @@ void CCollisionManager::CollisionFloor(list<CObject*> _Dst, list<CObject*> _Src)
                     }
                     else
                     {
-                        if (Dst->Get_Info().fX > Src->Get_Info().fX + (Src->Get_Info().fCX * 0.5f) - 5.f) {
+                        if (Dst->Get_Info().fX > Src->Get_Info().fX + (Src->Get_Info().fCX * 0.5f) - 3.f) {
                             Dst->Set_Pos(Dst->Get_Info().fX + fX + Dst->Get_Speed(), Dst->Get_Info().fY);
                         }
                         else {

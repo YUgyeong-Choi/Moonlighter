@@ -63,17 +63,17 @@ void CGolemDoor::Render(HDC hDC)
 	switch (m_eDir)
 	{
 	case LEFT:
-		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_left_door.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/door/golem_left_door.png");
 		m_tInfo.fCX = 70.f;
 		m_tInfo.fCY = 50.f;
 		break;
 	case RIGHT:
-		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_right_door.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/door/golem_right_door.png");
 		m_tInfo.fCX = 70.f;
 		m_tInfo.fCY = 50.f;
 		break;
 	case UP:
-		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_up_door.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/door/golem_up_door.png");
 		break;
 	case DOWN:
 		break;

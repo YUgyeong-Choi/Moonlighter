@@ -103,6 +103,12 @@
     <Filter Include="99_Managers\FileManager">
       <UniqueIdentifier>{f5486365-06af-4cfe-ba50-594b31a4e036}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\GolemSoldier">
+      <UniqueIdentifier>{0e7e5df5-193d-48c1-9f84-2a604dd88ab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_Managers\UiManager">
+      <UniqueIdentifier>{51586c86-4e28-472d-9753-bcb82d215f08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,6 +222,12 @@
     <ClInclude Include="CMonster.h">
       <Filter>02_Object\02.Monster</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemSoldier.h">
+      <Filter>02_Object\02.Monster\Golem\GolemSoldier</Filter>
+    </ClInclude>
+    <ClInclude Include="CUiManager.h">
+      <Filter>99_Managers\UiManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -313,6 +325,12 @@
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
       <Filter>02_Object\02.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemSoldier.cpp">
+      <Filter>02_Object\02.Monster\Golem\GolemSoldier</Filter>
+    </ClCompile>
+    <ClCompile Include="CUiManager.cpp">
+      <Filter>99_Managers\UiManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -47,7 +47,7 @@ int CPlayer::Update()
 	Key_Input();
 	Change_Motion();
 	if (m_eCurState == FALL) {
-		alpha -= 16;
+		alpha -= 60;
 		if (alpha < 0) {
 			switch (CObjectManager::Get_Instance()->Get_MapDir())
 			{
@@ -217,6 +217,10 @@ void CPlayer::OnCollision(CObject* _obj)
 	case OBJ_PLAYER:
 		break;
 	case OBJ_MONSTER:
+		if (!m_bIsRoll && m_bCanHit) {
+			m_iAttackedDamage = 5;
+			m_bCanHit = false;
+		}
 		break;
 	case OBJ_MONSTER_BULLET:
 		if (!m_bIsRoll && m_bCanHit) {
@@ -227,7 +231,11 @@ void CPlayer::OnCollision(CObject* _obj)
 	case OBJ_MAPOBJ:
 		break;
 	case OBJ_FLOOR:
-		m_eCurState = FALL;
+		if (m_bCanHit) {
+			m_iAttackedDamage = 5;
+			m_bCanHit = false;
+			m_eCurState = FALL;
+		}
 		break;
 	case OBJ_PORTAL:
 		break;
