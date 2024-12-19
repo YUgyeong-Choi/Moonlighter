@@ -96,6 +96,8 @@ void CTurretDownBullet::Render(HDC hDC)
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
+
+	delete image;
 }
 
 void CTurretDownBullet::Release()

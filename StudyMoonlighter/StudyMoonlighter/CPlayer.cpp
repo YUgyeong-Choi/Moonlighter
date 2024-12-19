@@ -202,6 +202,7 @@ void CPlayer::Render(HDC hDC)
 
 void CPlayer::Release()
 {
+	delete image;
 }
 
 void CPlayer::OnCollision(CObject* _obj)
