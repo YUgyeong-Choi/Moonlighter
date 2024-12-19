@@ -21,7 +21,7 @@ private:
 	void Hit();
 	void Change_Motion();
 	//void Move_Lock();
-	
+	void SoundEffet();
 private:
 	bool m_bIsRoll;
 	bool m_bFalling;

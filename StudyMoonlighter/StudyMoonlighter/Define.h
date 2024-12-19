@@ -19,6 +19,8 @@
 
 extern HWND		g_hWnd;
 extern bool		g_bDevmode;
+extern float    g_fEffectVolume;
+extern float    g_fBackgroundVolume;
 
 enum SCENEID { SC_MENU, SC_TUTORIAL, SC_EDIT, SC_VILLAGE, SC_FIELD, SC_DUNGEON, SC_END };
 enum OBJID {OBJ_PLAYER, OBJ_MONSTER, OBJ_MONSTER_BULLET, OBJ_MAPOBJ, OBJ_FLOOR, OBJ_PORTAL, OBJ_END};
@@ -30,6 +32,8 @@ enum DIRECTION { LEFT, RIGHT, UP, DOWN, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
 
 enum HOLETYPE {HOLE_1, HOLE_2, HOLE_3, HOLE_END};
 enum TUTORIALSCROLL {SCROLL_HOLE, SCROLL_PROJECTILE, SCROLL_ENEMY, SCROLL_END};
+
+enum CHANNELID { SOUND_EFFECT, SOUND_BGM, SOUND_END };
 
 template<typename T>
 void Safe_Delete(T& Temp)

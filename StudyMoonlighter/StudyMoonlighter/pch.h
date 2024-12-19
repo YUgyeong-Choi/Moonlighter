@@ -20,6 +20,14 @@
 #include <string>
 #include <vector>
 
+#include <io.h>
+#include "fmod.h"
+#include "fmod.hpp"
+// Debug 일 때
+#pragma comment(lib, "fmodL_vc.lib")
+// Release 일 때
+//#pragma comment(lib, "fmod_vc.lib")
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC

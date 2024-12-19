@@ -4,6 +4,7 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 #include "CObjectManager.h"
+#include "CSoundManager.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), m_bCanHit(true), m_iAttackedDamage(0)
 {
@@ -29,7 +30,7 @@ void CPlayer::Initialize()
 	
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 9;
-	m_tFrame.dwSpeed = 200;
+	m_tFrame.dwSpeed = 100;
 	m_tFrame.dwTime = GetTickCount64();
 
 	m_tRenderSizeX = 80.f;
@@ -77,6 +78,7 @@ void CPlayer::Late_Update()
 {
 	Rolling();
 	Hit();
+	SoundEffet();
 	if (m_eCurState != FALL) {
 		__super::Move_Frame();
 	}
@@ -457,6 +459,34 @@ void CPlayer::Change_Motion()
 
 		m_ePreState = m_eCurState;
 		m_ePreDir = m_eCurDir;
+	}
+}
+
+void CPlayer::SoundEffet()
+{
+	switch (m_eCurState)
+	{
+	case CPlayer::IDLE:
+		break;
+	case CPlayer::WALK:
+		CSoundManager::Get_Instance()->PlaySound(L"will_step_town_grass.wav", SOUND_EFFECT, g_fEffectVolume-0.3f);
+		break;
+	case CPlayer::ROLL:
+		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f);
+		break;
+	case CPlayer::FALL:
+		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f);
+		break;
+	case CPlayer::ATTACK:
+		break;
+	case CPlayer::HIT:
+		break;
+	case CPlayer::DEAD:
+		break;
+	case CPlayer::STATE_END:
+		break;
+	default:
+		break;
 	}
 }
 

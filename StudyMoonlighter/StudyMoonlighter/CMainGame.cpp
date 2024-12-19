@@ -7,8 +7,11 @@
 #include "CScrollManager.h"
 #include "CFileManager.h"
 #include "CUiManager.h"
+#include "CSoundManager.h"
 
 bool g_bDevmode = false;
+float	g_fEffectVolume(0.5f);
+float	g_fBackgroundVolume(0.1f);
 
 CMainGame::CMainGame():m_hDC(nullptr), m_dwTime(GetTickCount()), m_iFPS(0)
 {
@@ -22,6 +25,7 @@ void CMainGame::Initialize()
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Back/Back.bmp", L"Back");
 
 	CSceneManager::GetInstance()->SetScene(SC_MENU);
+	CSoundManager::Get_Instance()->Initialize();
 
 }
 
@@ -65,5 +69,6 @@ void CMainGame::Release()
 	CScrollManager::Destroy_Instance();
 	CFileManager::DestroyInstance();
 	CUiManager::DestroyInstance();
+	CSoundManager::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

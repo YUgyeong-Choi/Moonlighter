@@ -3,6 +3,7 @@
 #include "CBitManager.h"
 #include "CKeyManager.h"
 #include "CSceneManager.h"
+#include "CSoundManager.h"
 
 CMenuScene::CMenuScene():m_bIsOpen(false), m_iOpenSize(0), m_iOpenTime(0), m_iWidth(0)
 {
@@ -51,6 +52,7 @@ void CMenuScene::Initialize()
 int CMenuScene::Update()
 {
 	if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
+		CSoundManager::Get_Instance()->PlaySound(L"main_menu_door_open.wav", SOUND_EFFECT, g_fEffectVolume);
 		m_bIsOpen = true;
 	}
 
@@ -60,6 +62,8 @@ int CMenuScene::Update()
 			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 		}
 		m_bIsOpen = false;
+		CSoundManager::Get_Instance()->PlaySound(L"main_menu_door_opened_loop.wav", SOUND_EFFECT, g_fEffectVolume);
+		CSoundManager::Get_Instance()->PlayBGM(L"main_menu_screen.wav", g_fBackgroundVolume);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
