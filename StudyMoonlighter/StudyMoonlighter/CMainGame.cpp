@@ -5,6 +5,7 @@
 #include "CObjectManager.h"
 #include "CKeyManager.h"
 #include "CScrollManager.h"
+#include "CFileManager.h"
 
 bool g_bDevmode = false;
 
@@ -61,5 +62,6 @@ void CMainGame::Release()
 	CObjectManager::DestroyInstance();
 	CKeyManager::Destroy_Instance();
 	CScrollManager::Destroy_Instance();
+	CFileManager::DestroyInstance();
 	ReleaseDC(g_hWnd, m_hDC);
 }
