@@ -69,14 +69,14 @@ void CDungeonEditScene::Key_Input()
 
 	if (CKeyManager::Get_Instance()->Key_Down('O'))
 	{
-		CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/Tutorial3.dat");
-		CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/Tutorial3.dat");
+		CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/Tutorial1.dat");
+		CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/Tutorial1.dat");
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down('P'))
 	{
-		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial3.dat", 3);
-		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial3.dat",3);
+		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial1.dat", 3);
+		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial1.dat",3);
 	}
 
 }
@@ -87,31 +87,9 @@ void CDungeonEditScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 690, 1024, 60));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create(WINCX / 2 - 200, 60, 0, 0));
-	dynamic_cast<CScrollRoll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_ScrollType(SCROLL_PROJECTILE);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create(WINCX / 2 + 200, 60, 0, 0));
-	dynamic_cast<CScrollRoll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_ScrollType(SCROLL_ENEMY);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(50, WINCY / 2));
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(LEFT);
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_IsOpened(true);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create(WINCX / 2, 60, 0, 0));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2, 80, 50));
 	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_IsOpened(true);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create(300, 200));
-	dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(HOLE_3);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create(300, 520));
-	dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(HOLE_3);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(300, 110, DOWN));
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(700, 110, DOWN));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(300, 610, UP));
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(700, 610, UP));
 }
 
 void CDungeonEditScene::Offset()
