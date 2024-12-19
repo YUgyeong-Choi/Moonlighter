@@ -25,6 +25,9 @@ public:
 
 	void Set_DIR(DIRECTION _dir) { m_eDir = _dir; }
 	DIRECTION Get_DIR() { return m_eDir; }
+
+	int Get_AttackDamage() { return m_iAttackDamage; }
+
 public:
 	void		Update_Rect();
 	void		Move_Frame();
@@ -33,7 +36,8 @@ protected:
 	RECT		m_tRect;
 	OBJID		m_eOBJID;
 	DIRECTION m_eDir;
-	int  iHp;
+	int  m_iHp;
+	int	 m_iAttackDamage;
 
 	float		m_fSpeed;
 	float m_fFixScrollSpeed;

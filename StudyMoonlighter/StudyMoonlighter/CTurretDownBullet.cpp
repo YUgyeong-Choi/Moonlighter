@@ -17,12 +17,13 @@ void CTurretDownBullet::Initialize()
 
 	m_eRender = RENDER_GAMEOBJECT;
 
-	iHp = 1;
+	m_iHp = 1;
+	m_iAttackDamage = 5;
 }
 
 int CTurretDownBullet::Update()
 {
-	if(iHp <= 0){
+	if(m_iHp <= 0){
 		return OBJ_DEAD;
 	}
 
@@ -106,7 +107,27 @@ void CTurretDownBullet::Release()
 
 void CTurretDownBullet::OnCollision(CObject* _obj)
 {
-	if (dynamic_cast<CMapObj*>(_obj)->Get_MapObjType() == COLLISION) {
-		iHp--;
+	switch (_obj->Get_OBJID())
+	{
+	case OBJ_PLAYER:
+		m_iHp--;
+		break;
+	case OBJ_MONSTER:
+		break;
+	case OBJ_MONSTER_BULLET:
+		break;
+	case OBJ_MAPOBJ:
+		if (dynamic_cast<CMapObj*>(_obj)->Get_MapObjType() == COLLISION) {
+			m_iHp--;
+		}
+		break;
+	case OBJ_FLOOR:
+		break;
+	case OBJ_PORTAL:
+		break;
+	case OBJ_END:
+		break;
+	default:
+		break;
 	}
 }

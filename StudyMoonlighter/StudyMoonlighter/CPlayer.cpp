@@ -5,7 +5,7 @@
 #include "CScrollManager.h"
 #include "CObjectManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), image(nullptr), alpha(255)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), image(nullptr), alpha(255), m_bCanHit(true), m_iAttackedDamage(0)
 {
 }
 
@@ -35,10 +35,15 @@ void CPlayer::Initialize()
 	m_tRenderSizeX = 80.f;
 	m_tRenderSizeY = 80.f;
 	m_eRender = RENDER_GAMEOBJECT;
+
+	m_iHp = 100;
 }
 
 int CPlayer::Update()
 {
+	if (m_iHp <= 0) {
+		//return OBJ_DEAD;
+	}
 	Key_Input();
 	Change_Motion();
 	if (m_eCurState == FALL) {
@@ -71,6 +76,7 @@ int CPlayer::Update()
 void CPlayer::Late_Update()
 {
 	Rolling();
+	Hit();
 	if (m_eCurState != FALL) {
 		__super::Move_Frame();
 	}
@@ -192,7 +198,7 @@ void CPlayer::Render(HDC hDC)
 	}
 
 	TCHAR szBuffer[64];
-	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY);
+	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d. Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
 	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
@@ -206,9 +212,29 @@ void CPlayer::Release()
 
 void CPlayer::OnCollision(CObject* _obj)
 {
-	if (_obj->Get_OBJID() == OBJ_FLOOR) {
+	switch (_obj->Get_OBJID())
+	{
+	case OBJ_PLAYER:
+		break;
+	case OBJ_MONSTER:
+		break;
+	case OBJ_MONSTER_BULLET:
+		if (!m_bIsRoll && m_bCanHit) {
+			m_iAttackedDamage = _obj->Get_AttackDamage();
+			m_bCanHit = false;
+		}
+		break;
+	case OBJ_MAPOBJ:
+		break;
+	case OBJ_FLOOR:
 		m_eCurState = FALL;
-
+		break;
+	case OBJ_PORTAL:
+		break;
+	case OBJ_END:
+		break;
+	default:
+		break;
 	}
 }
 
@@ -357,6 +383,17 @@ void CPlayer::Rolling()
 			m_fRollTime = 25.f;
 			m_fFixScrollSpeed = m_fSpeed;
 			m_fSpeed =3.f;
+		}
+	}
+}
+
+void CPlayer::Hit()
+{
+	if (!m_bCanHit) {
+		m_iHp--;
+		m_iAttackedDamage--;
+		if (m_iAttackedDamage == 0) {
+			m_bCanHit = true;
 		}
 	}
 }

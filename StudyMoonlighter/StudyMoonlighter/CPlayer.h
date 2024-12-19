@@ -18,17 +18,24 @@ public:
 private:
 	void Key_Input();
 	void Rolling();
+	void Hit();
 	void Change_Motion();
 	//void Move_Lock();
 	
 private:
 	bool m_bIsRoll;
+	bool m_bFalling;
 	float m_fRollTime;
+
+	bool m_bCanHit;
+	int m_iAttackedDamage;
+
 	DIRECTION	m_eCurDir;
 	DIRECTION	m_ePreDir;
+
 	STATE               m_eCurState;
 	STATE               m_ePreState;
-	bool m_bFalling;
+	
 	Image* image;
 	float alpha;
 };
