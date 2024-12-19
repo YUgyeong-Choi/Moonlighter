@@ -81,7 +81,7 @@ void CFileManager::Save_MonsterObj(const TCHAR* _pFilePath)
 	MessageBox(g_hWnd, L"Monster Save", L"성공", MB_OK);
 }
 
-void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath)
+void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath, int _y)
 {
 	HANDLE hFile = CreateFile(_pFilePath, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -91,8 +91,6 @@ void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath)
 	DWORD	dwByte(0);
 	CMapObj	_MapObj;
 
-	int _x = CObjectManager::Get_Instance()->Get_MapYIndex();
-
 	while (true)
 	{
 		bool a = ReadFile(hFile, &_MapObj, sizeof(CMapObj), &dwByte, NULL);
@@ -100,35 +98,37 @@ void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath)
 		if (0 == dwByte)
 			break;
 
-		if (_MapObj.Get_MapObjType() == SCROLLWASD) {
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create((1024* _x)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+		if (_MapObj.Get_MapObjType() == COLLISION) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create((1024 * _y) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+		}
+		else if (_MapObj.Get_MapObjType() == SCROLLWASD) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollWasd>::Create((1024* _y)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
 		}
 		else if (_MapObj.Get_MapObjType() == SCROLLROLL) {
 			TUTORIALSCROLL _type;
 			bool b = ReadFile(hFile, &_type, sizeof(TUTORIALSCROLL), &dwByte, NULL);
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create((1024 * _x)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create((1024 * _y)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, 0, 0));
 			static_cast<CScrollRoll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_ScrollType(_type);
 		}
 		else if (_MapObj.Get_MapObjType() == GOLEM_DOOR) {
 			DIRECTION _dir;
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
-			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create((1024 * _x)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create((1024 * _y)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 			CObjectManager::Get_Instance()->Get_LastPortal()->Set_DIR(_dir);
 		}
 		else if (_MapObj.Get_MapObjType() == GOLEM_HOLE) {
 			HOLETYPE _type;
 			bool b = ReadFile(hFile, &_type, sizeof(HOLETYPE), &dwByte, NULL);
-			CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create((1024 * _x)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create((1024 * _y)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 			dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(_type);
 		}
 
 	}
 
 	CloseHandle(hFile);
-	MessageBox(g_hWnd, L"MapObj Load", L"성공", MB_OK);
 }
 
-void CFileManager::Load_MonsterFile(const TCHAR* _pFilePath)
+void CFileManager::Load_MonsterFile(const TCHAR* _pFilePath, int _y)
 {
 	HANDLE hFile = CreateFile(_pFilePath, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -150,11 +150,10 @@ void CFileManager::Load_MonsterFile(const TCHAR* _pFilePath)
 		if (_monsterObj.Get_MonsterType() == TURRETBROKEN) {
 			DIRECTION _dir = _monsterObj.Get_DIR();
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
-			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create((1024 * _x)+_monsterObj.Get_Info().fX, _monsterObj.Get_Info().fY, _dir));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create((1024 * _y)+_monsterObj.Get_Info().fX, _monsterObj.Get_Info().fY, _dir));
 		}
 
 	}
 
 	CloseHandle(hFile);
-	MessageBox(g_hWnd, L"Monster Load", L"성공", MB_OK);
 }

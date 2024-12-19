@@ -80,7 +80,7 @@ void CDungeonScene::Load_Map()
 {
 	if (!m_IsLoad) {
 		m_IsLoad = true;
-		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapObj/Tutorial1");
-		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapMonster/Tutorial1");
+		CFileManager::GetInstance()->Load_MapObjFile(pFilePath2, m_iMapYIndex);
+		CFileManager::GetInstance()->Load_MonsterFile(pFilePath, m_iMapYIndex);
 	}
 }

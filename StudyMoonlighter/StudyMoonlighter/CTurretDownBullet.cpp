@@ -29,29 +29,29 @@ int CTurretDownBullet::Update()
 	switch (m_eDir)
 	{
 	case LEFT:
-		m_tInfo.fCX = 44.f;
-		m_tInfo.fCY = 36.f;
+		m_tInfo.fCX = 10.f;
+		m_tInfo.fCY = 10.f;
 		m_tRenderSizeX = 44.f;
 		m_tRenderSizeY = 36.f;
 		m_tInfo.fX -= 8.f;
 		break;
 	case RIGHT:
-		m_tInfo.fCX = 44.f;
-		m_tInfo.fCY = 36.f;
+		m_tInfo.fCX = 10.f;
+		m_tInfo.fCY = 10.f;
 		m_tRenderSizeX = 44.f;
 		m_tRenderSizeY = 36.f;
 		m_tInfo.fX += 8.f;
 		break;
 	case UP:
-		m_tInfo.fCX = 36.f;
-		m_tInfo.fCY = 44.f;
+		m_tInfo.fCX = 10.f;
+		m_tInfo.fCY = 10.f;
 		m_tRenderSizeX = 36.f;
 		m_tRenderSizeY = 44.f;
 		m_tInfo.fY -= 8.f;
 		break;
 	case DOWN:
-		m_tInfo.fCX = 30.f;
-		m_tInfo.fCY = 30.f;
+		m_tInfo.fCX = 10.f;
+		m_tInfo.fCY = 10.f;
 		m_tRenderSizeX = 36.f;
 		m_tRenderSizeY = 44.f;
 		m_tInfo.fY += 8.f;
@@ -106,5 +106,7 @@ void CTurretDownBullet::Release()
 
 void CTurretDownBullet::OnCollision(CObject* _obj)
 {
-	iHp--;
+	if (dynamic_cast<CMapObj*>(_obj)->Get_MapObjType() == COLLISION) {
+		iHp--;
+	}
 }

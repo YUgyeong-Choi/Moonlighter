@@ -55,7 +55,7 @@ void CObjectManager::Late_Update()
 	CCollisionManager::CollisionRectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]);
 	CCollisionManager::CollisionFloor(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_FLOOR]);
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_PORTAL]);
-	CCollisionManager::CollisionRect(m_ObjList[OBJ_MONSTER_BULLET], m_ObjList[OBJ_COLLISION]);
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_MONSTER_BULLET], m_ObjList[OBJ_MAPOBJ]);
 }
 
 void CObjectManager::Render(HDC hDC)
