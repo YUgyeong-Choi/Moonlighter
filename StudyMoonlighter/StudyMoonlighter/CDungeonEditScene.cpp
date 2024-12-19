@@ -70,14 +70,14 @@ void CDungeonEditScene::Key_Input()
 
 	if (CKeyManager::Get_Instance()->Key_Down('O'))
 	{
-		CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/Tutorial3.dat");
-		CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/Tutorial3.dat");
+		CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/Tutorial4.dat");
+		CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/Tutorial4.dat");
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down('P'))
 	{
-		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial3.dat", 3);
-		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial3.dat",3);
+		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial4.dat", 3);
+		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial4.dat",3);
 	}
 
 }
