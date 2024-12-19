@@ -52,19 +52,19 @@ void CScrollWasd::Late_Update()
 
 void CScrollWasd::Render(HDC hDC)
 {
-	Image image(L"../MoonlighterAssets/Map/Tutorial/Scroll_WASD.png");
+	Image* image = Image::FromFile(L"../MoonlighterAssets/Map/Tutorial/Scroll_WASD.png");
 	Graphics graphics(hDC);
 
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 
-	graphics.DrawImage(&image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
-
+	delete image;
 }
 
 void CScrollWasd::Release()

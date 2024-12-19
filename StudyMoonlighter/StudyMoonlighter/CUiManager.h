@@ -6,6 +6,8 @@ public:
 	CUiManager() { ; }
 	~CUiManager() { ; }
 public:
+	void Render(HDC hDC);
+public:
 	static CUiManager* GetInstance()
 	{
 		if (nullptr == m_pInstance) {

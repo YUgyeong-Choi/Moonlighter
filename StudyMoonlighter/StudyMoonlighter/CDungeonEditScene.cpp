@@ -56,6 +56,7 @@ void CDungeonEditScene::Release()
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_PLAYER);
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+	CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER);
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER_BULLET);
 	CObjectManager::Get_Instance()->RenderListClear();
 }

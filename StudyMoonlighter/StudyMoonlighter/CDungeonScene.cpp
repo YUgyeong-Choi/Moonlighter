@@ -79,6 +79,11 @@ void CDungeonScene::Offset()
 void CDungeonScene::Load_Map()
 {
 	if (!m_IsLoad) {
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER);
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER_BULLET);
+
 		m_IsLoad = true;
 		CFileManager::GetInstance()->Load_MapObjFile(pFilePath2, m_iMapYIndex);
 		CFileManager::GetInstance()->Load_MonsterFile(pFilePath, m_iMapYIndex);

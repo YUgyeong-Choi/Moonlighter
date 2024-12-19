@@ -28,6 +28,8 @@ public:
 
 	int Get_AttackDamage() { return m_iAttackDamage; }
 
+	int Get_Hp() { return m_iHp; }
+
 public:
 	void		Update_Rect();
 	void		Move_Frame();

@@ -11,6 +11,7 @@
 #include "CGolemDoor.h"
 #include "CKeyManager.h"
 #include "CScrollManager.h"
+#include "CUiManager.h"
 
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMoveX(0), m_bMapMove(false)
 {
@@ -85,6 +86,7 @@ void CTutorialScene::Render(HDC hDC)
 		dungeon->Render(hDC);
 	}
 	CObjectManager::Get_Instance()->Render(hDC);
+	CUiManager::GetInstance()->Render(hDC);
 }
 
 void CTutorialScene::Release()

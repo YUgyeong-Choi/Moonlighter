@@ -36,7 +36,6 @@ private:
 	STATE               m_eCurState;
 	STATE               m_ePreState;
 	
-	Image* image;
 	float alpha;
 };
 

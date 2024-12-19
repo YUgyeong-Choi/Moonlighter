@@ -13,6 +13,8 @@ public:
 	void		LateUpdate();
 	void		Render(HDC hDC);
 	void		Release();
+
+	SCENEID Get_SceneID() { return m_eCurScene; }
 public:
 	static CSceneManager* GetInstance()
 	{

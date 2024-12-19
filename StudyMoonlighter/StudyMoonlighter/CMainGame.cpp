@@ -6,6 +6,7 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 #include "CFileManager.h"
+#include "CUiManager.h"
 
 bool g_bDevmode = false;
 
@@ -63,5 +64,6 @@ void CMainGame::Release()
 	CKeyManager::Destroy_Instance();
 	CScrollManager::Destroy_Instance();
 	CFileManager::DestroyInstance();
+	CUiManager::DestroyInstance();
 	ReleaseDC(g_hWnd, m_hDC);
 }

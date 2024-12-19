@@ -5,7 +5,7 @@
 #include "CScrollManager.h"
 #include "CObjectManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), image(nullptr), alpha(255), m_bCanHit(true), m_iAttackedDamage(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), m_bCanHit(true), m_iAttackedDamage(0)
 {
 }
 
@@ -84,7 +84,7 @@ void CPlayer::Late_Update()
 
 void CPlayer::Render(HDC hDC)
 {
-	
+	Image* image(nullptr);
 	switch (m_eCurState)
 	{
 	case CPlayer::IDLE:
@@ -204,6 +204,7 @@ void CPlayer::Render(HDC hDC)
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 10, 10, szBuffer, _tcslen(szBuffer));
 
+	delete image;
 }
 
 void CPlayer::Release()
