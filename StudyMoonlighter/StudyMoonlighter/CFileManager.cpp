@@ -42,6 +42,8 @@ void CFileManager::Save_MapObj(const TCHAR* _pFilePath)
 		CMapObj* obj = static_cast<CMapObj*>(mapObj);
 		WriteFile(hFile, mapObj, sizeof(CMapObj), &dwByte, NULL);
 		WriteFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
+		bool _type = static_cast<CGolemDoor*>(mapObj)->Get_IsOpened();
+		WriteFile(hFile, &_type, sizeof(bool), &dwByte, NULL);
 	}
 
 	list<CObject*> floorList = CObjectManager::Get_Instance()->Get_FloorList(); //이동 관련 (던전)
@@ -115,6 +117,9 @@ void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath, int _y)
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
 			CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create((1024 * _y)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 			CObjectManager::Get_Instance()->Get_LastPortal()->Set_DIR(_dir);
+			bool _type;
+			b = ReadFile(hFile, &_type, sizeof(bool), &dwByte, NULL);
+			static_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_IsOpened(_type);
 		}
 		else if (_MapObj.Get_MapObjType() == GOLEM_HOLE) {
 			HOLETYPE _type;

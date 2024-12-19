@@ -15,8 +15,10 @@ public:
 
 public:
 	void Set_IsOpened(bool _b) { m_bAlreadyOpen = _b; }
+	bool Get_IsOpened() { return m_bAlreadyOpen; }
 	bool Get_Load_Next() { return m_bLoad_Next; }
 private:
+
 	bool m_bIsOpen;
 	bool m_bAlreadyOpen;
 	bool m_bLoad_Next;
