@@ -6,7 +6,7 @@
 #include "CObjectManager.h"
 #include "CSoundManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), m_bCanHit(true), m_iAttackedDamage(0), mbIsAttack(false), m_fComboTime(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0)
 {
 }
 
@@ -38,6 +38,7 @@ void CPlayer::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_iHp = 100;
+	m_iAttackDamage = 10;
 }
 
 int CPlayer::Update()
@@ -217,6 +218,7 @@ void CPlayer::Render(HDC hDC)
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
+		Hitbox(hDC, m_HitBox, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
 
@@ -356,7 +358,7 @@ void CPlayer::Key_Input()
 			mbIsAttack = true;
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
+		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE) && !(m_eCurState == ATTACK)) {
 			if (!m_bIsRoll) {
 				m_bIsRoll = true;
 				m_eCurState = ROLL;
@@ -526,6 +528,26 @@ void CPlayer::SoundEffet()
 void CPlayer::Attack()
 {
 	if (mbIsAttack) {
+		switch (m_eCurDir)
+		{
+		case LEFT:
+			m_HitBox = { (long)m_tInfo.fX - 70,(long)m_tInfo.fY - 50,(long)m_tInfo.fX,(long)m_tInfo.fY + 50 };
+			break;
+		case RIGHT:
+			m_HitBox = { (long)m_tInfo.fX,(long)m_tInfo.fY-50,(long)m_tInfo.fX + 70,(long)m_tInfo.fY + 50 };
+			break;
+		case UP:
+		case UP_LEFT:
+		case UP_RIGHT:
+			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY - 70 };
+			break;
+		case DOWN:
+		case DOWN_LEFT:
+		case DOWN_RIGHT:
+			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY + 70 };
+			break;
+		}
+		
 		if (m_tFrame.iFrameStart == 0) {
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fEffectVolume);
@@ -550,6 +572,7 @@ void CPlayer::Attack()
 		m_tRenderSizeX = 80.f;
 		m_tRenderSizeY = 80.f;
 		m_eCurState = IDLE;
+		m_HitBox = { 0,0,0,0 };
 	}
 
 	mbIsAttack = false;

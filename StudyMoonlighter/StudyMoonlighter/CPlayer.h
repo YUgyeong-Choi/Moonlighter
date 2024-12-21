@@ -13,25 +13,27 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	void OnCollision(CObject* _obj);
+public:
 	bool Get_IsRolling() { return m_bIsRoll; }
-	void		OnCollision(CObject* _obj);
+	RECT* Get_HitBox() { return &m_HitBox; }
+	bool Get_CanHit() { return !m_bIsRoll && m_bCanHit; }
 private:
 	void Key_Input();
 	void Rolling();
 	void Hit();
 	void Change_Motion();
-	//void Move_Lock();
 	void SoundEffet();
 	void Attack();
 private:
 	bool m_bIsRoll;
 	bool m_bFalling;
-	bool mbIsAttack;
-	float m_fComboTime;
 	float m_fRollTime;
 
-	bool m_bCanHit;
-	int m_iAttackedDamage;
+	bool mbIsAttack;
+	float m_fComboTime;
+
+	RECT m_HitBox;
 
 	DIRECTION	m_eCurDir;
 	DIRECTION	m_ePreDir;

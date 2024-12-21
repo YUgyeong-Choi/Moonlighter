@@ -29,6 +29,7 @@ public:
 	int Get_AttackDamage() { return m_iAttackDamage; }
 
 	int Get_Hp() { return m_iHp; }
+	void Set_Hp(int _i) { m_iHp - _i; }
 
 public:
 	void		Update_Rect();
@@ -38,8 +39,12 @@ protected:
 	RECT		m_tRect;
 	OBJID		m_eOBJID;
 	DIRECTION m_eDir;
+
 	int  m_iHp;
 	int	 m_iAttackDamage;
+
+	bool m_bCanHit;
+	int m_iAttackedDamage;
 
 	float		m_fSpeed;
 	float m_fFixScrollSpeed;

@@ -25,13 +25,19 @@ void CTurretBroken::Initialize()
 	m_tRenderSizeX = 72.f;
 	m_tRenderSizeY = 72.f;
 	m_eRender = RENDER_GAMEOBJECT;
+
+	m_iHp = 50;
 }
 
 int CTurretBroken::Update()
 {
+	if (m_iHp <= 0) {
+		return OBJ_DEAD;
+	}
 	if (m_tFrame.iFrameStart == 7) {
 		Shoot();
 	}
+	Hit();
 	__super::Update_Rect();
 	return 0;
 }
@@ -78,7 +84,26 @@ void CTurretBroken::Release()
 {
 }
 
+void CTurretBroken::OnCollision(CObject* _obj)
+{
+	if (_obj->Get_OBJID() == OBJ_PLAYER) {
+		m_bCanHit = false;
+		m_iAttackedDamage = _obj->Get_AttackDamage();
+	}
+}
+
 void CTurretBroken::Shoot()
 {
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, CAbstractFactory<CTurretDownBullet>::Create(m_tInfo.fX, m_tInfo.fY-10, m_eDir));
+}
+
+void CTurretBroken::Hit()
+{
+	if (!m_bCanHit) {
+		m_iHp--;
+		m_iAttackedDamage--;
+		if (m_iAttackedDamage == 0) {
+			m_bCanHit = true;
+		}
+	}
 }

@@ -19,6 +19,23 @@ void CCollisionManager::CollisionRect(list<CObject*> _Dst, list<CObject*> _Src)
         }
     }
 }
+
+void CCollisionManager::CollisionRectWeapon(list<CObject*> _Dst, list<CObject*> _Src)
+{
+    RECT rc{};
+
+    for (auto& Dst : _Dst)
+    {
+        for (auto& Src : _Src)
+        {
+            if (IntersectRect(&rc, static_cast<CPlayer*>(Dst)->Get_HitBox(), Src->Get_Rect()))
+            {
+                Src->OnCollision(Dst);
+            }
+        }
+    }
+}
+
 void CCollisionManager::CollisionCircle(list<CObject*> _Dst, list<CObject*> _Src)
 {
     RECT rc{};
@@ -97,8 +114,10 @@ void CCollisionManager::CollisionRectExMapObj(list<CObject*> _Dst, list<CObject*
         {
             if (CheckRect(Dst, Src, &fX, &fY))
             {
-                if (dynamic_cast<CGolemBreakable*>(Src)->Get_Breakable()) {
-                    return;
+                if (dynamic_cast<CGolemBreakable*>(Src)) {
+                    if (dynamic_cast<CGolemBreakable*>(Src)->Get_Breakable()) {
+                        return;
+                    }
                 }
 
                 Dst->OnCollision(Src);

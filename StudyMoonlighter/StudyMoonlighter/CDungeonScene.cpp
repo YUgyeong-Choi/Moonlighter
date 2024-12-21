@@ -51,7 +51,7 @@ void CDungeonScene::Render(HDC hDC)
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonBackground");
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, (m_iMapYIndex *m_fMapXSize) + iScrollX, (m_iMapXIndex * m_fMapYSize) + iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
+	GdiTransparentBlt(hDC, (m_iMapYIndex *m_fMapXSize) + iScrollX, (m_iMapXIndex * (int)m_fMapYSize) + iScrollY, (int)m_fMapXSize, (int)m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, (int)m_fMapYSize, RGB(0, 0, 0));
 }
 
 void CDungeonScene::Release()

@@ -59,6 +59,7 @@ void CObjectManager::Late_Update()
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_MONSTER_BULLET], m_ObjList[OBJ_MAPOBJ]); //몬스터 총알 경계썬 충돌
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER_BULLET]); //플레이어 몬스터 총알 충돌
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]); //플레이어 몬스터 충돌
+	CCollisionManager::CollisionRectWeapon(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]); //플레이어 몬스터 충돌
 }
 
 void CObjectManager::Render(HDC hDC)
