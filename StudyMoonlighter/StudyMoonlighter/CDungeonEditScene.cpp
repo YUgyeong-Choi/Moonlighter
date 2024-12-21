@@ -8,13 +8,9 @@
 
 //여기 밑에는 지워도 되는 헤더 파일
 #include "CCollisionBox.h"
-#include "CScrollRoll.h"
-#include "CGolemDoor.h"
-#include "CGolemHole.h"
-#include "CTurretBroken.h"
-#include "CScrollWasd.h"
-#include "CPlayer.h"
 #include "CScrollManager.h"
+#include "CGolemBreakable.h"
+#include "CPlayer.h"
 
 CDungeonEditScene::CDungeonEditScene()
 {
@@ -28,7 +24,7 @@ void CDungeonEditScene::Initialize()
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
 	Create_MapObj();
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 }
 
 int CDungeonEditScene::Update()
@@ -76,8 +72,8 @@ void CDungeonEditScene::Key_Input()
 
 	if (CKeyManager::Get_Instance()->Key_Down('P'))
 	{
-		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial4.dat", 3);
-		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial4.dat",3);
+		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial4.dat", 0);
+		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial4.dat",0);
 	}
 
 }
@@ -89,22 +85,21 @@ void CDungeonEditScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CScrollRoll>::Create(WINCX / 2, 60, 0, 0));
-	dynamic_cast<CScrollRoll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_ScrollType(SCROLL_PROJECTILE);
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 100));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 140));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 180));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 220));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 260));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 300));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 340));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 380));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 420));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 460));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 500));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 540));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 580));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 620));
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(50, WINCY / 2));
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(LEFT);
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2));
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create(WINCX/2, 200));
-	dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(HOLE_3);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create(WINCX / 2, 520));
-	dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(HOLE_3);
-
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(WINCX / 2, 110, DOWN));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(WINCX / 2, 610, UP));
 }
 
 void CDungeonEditScene::Offset()

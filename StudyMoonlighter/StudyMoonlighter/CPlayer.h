@@ -22,9 +22,12 @@ private:
 	void Change_Motion();
 	//void Move_Lock();
 	void SoundEffet();
+	void Attack();
 private:
 	bool m_bIsRoll;
 	bool m_bFalling;
+	bool mbIsAttack;
+	float m_fComboTime;
 	float m_fRollTime;
 
 	bool m_bCanHit;
@@ -37,5 +40,7 @@ private:
 	STATE               m_ePreState;
 	
 	float alpha;
+
+	float m_fTimeSinceLastStep = 0.0f;
 };
 

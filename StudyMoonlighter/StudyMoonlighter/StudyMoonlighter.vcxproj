@@ -145,6 +145,7 @@
     <ClInclude Include="CDungeonScene.h" />
     <ClInclude Include="CFieldScene.h" />
     <ClInclude Include="CFileManager.h" />
+    <ClInclude Include="CGolemBreakable.h" />
     <ClInclude Include="CGolemDoor.h" />
     <ClInclude Include="CGolemHole.h" />
     <ClInclude Include="CGolemSoldier.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="CDungeonScene.cpp" />
     <ClCompile Include="CFieldScene.cpp" />
     <ClCompile Include="CFileManager.cpp" />
+    <ClCompile Include="CGolemBreakable.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
     <ClCompile Include="CGolemSoldier.cpp" />

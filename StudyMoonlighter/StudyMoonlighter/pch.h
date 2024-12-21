@@ -19,6 +19,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <time.h>
 
 #include <io.h>
 #include "fmod.h"

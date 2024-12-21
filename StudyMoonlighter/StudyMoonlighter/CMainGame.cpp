@@ -20,6 +20,7 @@ CMainGame::CMainGame():m_hDC(nullptr), m_dwTime(GetTickCount()), m_iFPS(0)
 
 void CMainGame::Initialize()
 {
+	srand((unsigned)time(NULL));
 	m_hDC = GetDC(g_hWnd);
 
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/Back/Back.bmp", L"Back");

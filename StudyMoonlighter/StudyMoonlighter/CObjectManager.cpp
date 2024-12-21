@@ -2,6 +2,7 @@
 #include "CObjectManager.h"
 #include "CCollisionManager.h"
 
+
 CObjectManager* CObjectManager::m_pInstance = nullptr;
 
 CObjectManager::CObjectManager():m_iMapXIndex(0), m_iMapYIndex(0), m_dir(DIR_END)
@@ -52,12 +53,12 @@ void CObjectManager::Late_Update()
 		}
 	}
 
-	CCollisionManager::CollisionRectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]);
-	CCollisionManager::CollisionFloor(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_FLOOR]);
-	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_PORTAL]);
-	CCollisionManager::CollisionRect(m_ObjList[OBJ_MONSTER_BULLET], m_ObjList[OBJ_MAPOBJ]);
-	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER_BULLET]);
-	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
+	CCollisionManager::CollisionRectExMapObj(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]); // 플레이어 물체 충돌
+	CCollisionManager::CollisionFloor(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_FLOOR]); //플레이어 낭떨어지 충돌
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_PORTAL]); //플레이어 포탈 충돌
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_MONSTER_BULLET], m_ObjList[OBJ_MAPOBJ]); //몬스터 총알 경계썬 충돌
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER_BULLET]); //플레이어 몬스터 총알 충돌
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]); //플레이어 몬스터 충돌
 }
 
 void CObjectManager::Render(HDC hDC)

@@ -234,6 +234,9 @@
     <ClInclude Include="CSoundManager.h">
       <Filter>99_Managers\CSoundManager</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemBreakable.h">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -340,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="CSoundManager.cpp">
       <Filter>99_Managers\CSoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemBreakable.cpp">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

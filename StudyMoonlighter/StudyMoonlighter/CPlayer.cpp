@@ -6,7 +6,7 @@
 #include "CObjectManager.h"
 #include "CSoundManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), m_bCanHit(true), m_iAttackedDamage(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), m_bCanHit(true), m_iAttackedDamage(0), mbIsAttack(false), m_fComboTime(0)
 {
 }
 
@@ -46,6 +46,7 @@ int CPlayer::Update()
 		//return OBJ_DEAD;
 	}
 	Key_Input();
+	Attack();
 	Change_Motion();
 	if (m_eCurState == FALL) {
 		alpha -= 60;
@@ -82,6 +83,7 @@ void CPlayer::Late_Update()
 	if (m_eCurState != FALL) {
 		__super::Move_Frame();
 	}
+	
 }
 
 void CPlayer::Render(HDC hDC)
@@ -155,6 +157,25 @@ void CPlayer::Render(HDC hDC)
 	case CPlayer::FALL:
 		break;
 	case CPlayer::ATTACK:
+		switch (m_eCurDir)
+		{
+		case LEFT:
+			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_left.png");
+			break;
+		case RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_right.png");
+			break;
+		case UP:
+		case UP_LEFT:
+		case UP_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_up.png");
+			break;
+		case DOWN:
+		case DOWN_LEFT:
+		case DOWN_RIGHT:
+			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_down.png");
+			break;
+		}
 		break;
 	case CPlayer::HIT:
 		break;
@@ -193,7 +214,7 @@ void CPlayer::Render(HDC hDC)
 			(int)m_tRenderSizeX* m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
 
 	}
-	
+
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
@@ -252,14 +273,14 @@ void CPlayer::OnCollision(CObject* _obj)
 void CPlayer::Key_Input()
 {
 	if (m_eCurState != FALL) {
-		if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
+		if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK))
 		{
 			m_eCurState = IDLE;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll) {
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK)) {
 			m_eCurState = IDLE;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll && !(m_eCurState == ATTACK))
 		{
 			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 
@@ -284,7 +305,7 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK))
 		{
 			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 				float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
@@ -309,7 +330,7 @@ void CPlayer::Key_Input()
 
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll && !(m_eCurState == ATTACK))
 		{
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX -= m_fSpeed;
@@ -317,7 +338,7 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK))
 		{
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX += m_fSpeed;
@@ -325,9 +346,14 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 		}
 		else {
-			if (!m_bIsRoll) {
+			if (!m_bIsRoll && !(m_eCurState == ATTACK)) {
 				m_eCurState = IDLE;
 			}
+		}
+
+		if (CKeyManager::Get_Instance()->Key_Down('K') && !m_bIsRoll) {
+			m_eCurState = ATTACK;
+			mbIsAttack = true;
 		}
 
 		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
@@ -435,12 +461,12 @@ void CPlayer::Change_Motion()
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
-		//case CPlayer::ATTACK:
-		//	m_tFrame.iFrameStart = 0;
-		//	m_tFrame.iFrameEnd = 5;
-		//	m_tFrame.dwSpeed = 200;
-		//	m_tFrame.dwTime = GetTickCount64();
-		//	break;
+		case CPlayer::ATTACK:
+			m_tFrame.iFrameStart = 0;
+			m_tFrame.iFrameEnd = 4;
+			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwTime = GetTickCount64();
+			break;
 
 		//case CPlayer::HIT:
 		//	m_tFrame.iFrameStart = 0;
@@ -469,12 +495,19 @@ void CPlayer::SoundEffet()
 	case CPlayer::IDLE:
 		break;
 	case CPlayer::WALK:
-		CSoundManager::Get_Instance()->PlaySound(L"will_step_town_grass.wav", SOUND_EFFECT, g_fEffectVolume-0.3f);
+		m_fTimeSinceLastStep += 0.1f;
+		if (m_fTimeSinceLastStep >= 2.3) {
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"will_step_town_gravel.wav", SOUND_EFFECT, 0.1f);
+			m_fTimeSinceLastStep = 0;
+		}
 		break;
 	case CPlayer::ROLL:
+		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f);
 		break;
 	case CPlayer::FALL:
+		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f);
 		break;
 	case CPlayer::ATTACK:
@@ -488,6 +521,38 @@ void CPlayer::SoundEffet()
 	default:
 		break;
 	}
+}
+
+void CPlayer::Attack()
+{
+	if (mbIsAttack) {
+		if (m_tFrame.iFrameStart == 0) {
+			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fEffectVolume);
+		}
+		m_tRenderSizeX = 200.f;
+		m_tRenderSizeY = 200.f;
+
+		if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
+			m_tFrame.iFrameEnd = 8;
+			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fEffectVolume);
+		}
+
+		if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
+			m_tFrame.iFrameEnd = 17;
+			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fEffectVolume);
+		}
+	}
+
+	if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
+		m_tRenderSizeX = 80.f;
+		m_tRenderSizeY = 80.f;
+		m_eCurState = IDLE;
+	}
+
+	mbIsAttack = false;
 }
 
 
