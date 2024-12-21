@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CObject.h"
 
-CObject::CObject() :m_pImgKey(nullptr), m_fSpeed(0), m_eRender(RENDER_END), m_tRenderSizeX(0), m_tRenderSizeY(0), m_eOBJID(OBJ_END), m_fFixScrollSpeed(0), m_originX(0), m_originY(0), m_eDir(DIR_END), m_iHp(0), m_iAttackDamage(0), m_bCanHit(true)
+CObject::CObject() :m_pImgKey(nullptr), m_fSpeed(0), m_eRender(RENDER_END), m_tRenderSizeX(0), m_tRenderSizeY(0), m_eOBJID(OBJ_END), m_fFixScrollSpeed(0), m_originX(0), m_originY(0), m_eDir(DIR_END), m_iHp(0), m_iAttackDamage(0), m_bCanHit(true), m_fAttacktedTime(0)
 {
 	ZeroMemory(&m_tFrame, sizeof(FRAME));
 	ZeroMemory(&m_tRect, sizeof(RECT));
@@ -28,6 +28,17 @@ void CObject::Render(HDC hDC)
 
 void CObject::Release()
 {
+}
+
+void CObject::Hit()
+{
+	if (!m_bCanHit) {
+		m_iHp--;
+		m_iAttackedDamage--;
+		if (m_iAttackedDamage <= 0) {
+			m_bCanHit = true;
+		}
+	}
 }
 
 void CObject::Update_Rect()

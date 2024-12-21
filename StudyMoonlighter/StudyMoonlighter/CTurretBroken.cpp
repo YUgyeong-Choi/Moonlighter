@@ -87,23 +87,17 @@ void CTurretBroken::Release()
 void CTurretBroken::OnCollision(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
-		m_bCanHit = false;
-		m_iAttackedDamage = _obj->Get_AttackDamage();
+		if (m_bCanHit) {
+			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+				m_iAttackedDamage = _obj->Get_AttackDamage();
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+			}
+		}
 	}
 }
 
 void CTurretBroken::Shoot()
 {
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, CAbstractFactory<CTurretDownBullet>::Create(m_tInfo.fX, m_tInfo.fY-10, m_eDir));
-}
-
-void CTurretBroken::Hit()
-{
-	if (!m_bCanHit) {
-		m_iHp--;
-		m_iAttackedDamage--;
-		if (m_iAttackedDamage == 0) {
-			m_bCanHit = true;
-		}
-	}
 }

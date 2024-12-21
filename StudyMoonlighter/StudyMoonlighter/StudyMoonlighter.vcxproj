@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
+    <ClInclude Include="CBabySlime.h" />
     <ClInclude Include="CBitManager.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCollisionBox.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBabySlime.cpp" />
     <ClCompile Include="CBitManager.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollisionBox.cpp" />

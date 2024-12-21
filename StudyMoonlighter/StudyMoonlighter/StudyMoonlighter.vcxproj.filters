@@ -112,6 +112,9 @@
     <Filter Include="99_Managers\CSoundManager">
       <UniqueIdentifier>{3815e9ab-98c2-449d-8128-cd4869275c65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\BabySlime">
+      <UniqueIdentifier>{e171535a-ec0f-4641-9a83-e1e2b3ce028a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -237,6 +240,9 @@
     <ClInclude Include="CGolemBreakable.h">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClInclude>
+    <ClInclude Include="CBabySlime.h">
+      <Filter>02_Object\02.Monster\Golem\BabySlime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -346,6 +352,9 @@
     </ClCompile>
     <ClCompile Include="CGolemBreakable.cpp">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClCompile>
+    <ClCompile Include="CBabySlime.cpp">
+      <Filter>02_Object\02.Monster\Golem\BabySlime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

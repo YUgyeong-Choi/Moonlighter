@@ -14,8 +14,8 @@ void CPlayer::Initialize()
 {
 	m_eOBJID = OBJ_PLAYER;
 
-	m_tInfo.fCX = 37.f;
-	m_tInfo.fCY = 54.f;
+	m_tInfo.fCX = 30.f;
+	m_tInfo.fCY = 45.f;
 
 	m_fSpeed = 3.f;
 	m_fFixScrollSpeed = 3.f;
@@ -223,7 +223,7 @@ void CPlayer::Render(HDC hDC)
 	}
 
 	TCHAR szBuffer[64];
-	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d. Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
+	_stprintf_s(szBuffer, _T("Player: Hp=%d"), m_iHp);
 	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
@@ -244,23 +244,32 @@ void CPlayer::OnCollision(CObject* _obj)
 		break;
 	case OBJ_MONSTER:
 		if (!m_bIsRoll && m_bCanHit) {
-			m_iAttackedDamage = 5;
-			m_bCanHit = false;
+			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+				m_iAttackedDamage = 5;
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+			}
 		}
 		break;
 	case OBJ_MONSTER_BULLET:
 		if (!m_bIsRoll && m_bCanHit) {
-			m_iAttackedDamage = _obj->Get_AttackDamage();
-			m_bCanHit = false;
+			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+				m_iAttackedDamage = _obj->Get_AttackDamage();
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+			}
 		}
 		break;
 	case OBJ_MAPOBJ:
 		break;
 	case OBJ_FLOOR:
 		if (m_bCanHit) {
-			m_iAttackedDamage = 5;
-			m_bCanHit = false;
-			m_eCurState = FALL;
+			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+				m_iAttackedDamage = 5;
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+				m_eCurState = FALL;
+			}
 		}
 		break;
 	case OBJ_PORTAL:
@@ -426,16 +435,6 @@ void CPlayer::Rolling()
 	}
 }
 
-void CPlayer::Hit()
-{
-	if (!m_bCanHit) {
-		m_iHp--;
-		m_iAttackedDamage--;
-		if (m_iAttackedDamage == 0) {
-			m_bCanHit = true;
-		}
-	}
-}
 
 void CPlayer::Change_Motion()
 {

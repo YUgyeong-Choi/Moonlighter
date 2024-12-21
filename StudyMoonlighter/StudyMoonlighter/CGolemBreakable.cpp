@@ -10,10 +10,10 @@ void CGolemBreakable::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
 	m_mapType = GOLEM_BROKEN;
-	m_eRender = RENDER_BACKGROUND;
+	m_eRender = RENDER_GAMEOBJECT;
 
-	m_tInfo.fCX = 40.f;
-	m_tInfo.fCY = 40.f;
+	m_tInfo.fCX = 20.f;
+	m_tInfo.fCY = 20.f;
 
 	m_tRenderSizeX = 70.f;
 	m_tRenderSizeY = 70.f;
@@ -74,6 +74,9 @@ void CGolemBreakable::Release()
 void CGolemBreakable::OnCollision(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
+		m_eRender = RENDER_BACKGROUND;
+		m_tInfo.fCX = 0.f;
+		m_tInfo.fCY = 0.f;
 		m_bIsBreak = false;
 	}
 }

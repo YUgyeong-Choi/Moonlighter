@@ -21,7 +21,6 @@ public:
 private:
 	void Key_Input();
 	void Rolling();
-	void Hit();
 	void Change_Motion();
 	void SoundEffet();
 	void Attack();

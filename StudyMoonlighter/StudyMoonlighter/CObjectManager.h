@@ -23,6 +23,7 @@ public:
 	CObject* Get_LastPortal() { return m_ObjList[OBJ_PORTAL].back(); }
 	CObject* Get_LastMapObj() { return m_ObjList[OBJ_MAPOBJ].back(); }
 	CObject* Get_LastFloor() { return m_ObjList[OBJ_FLOOR].back(); }
+	CObject* Get_LastMonster() { return m_ObjList[OBJ_MONSTER].back(); }
 	CObject* Get_Player() { return m_ObjList[OBJ_PLAYER].back(); }
 	list<CObject*> Get_MapObjList(){ return m_ObjList[OBJ_MAPOBJ]; }
 	list<CObject*> Get_PortalList(){ return m_ObjList[OBJ_PORTAL]; }

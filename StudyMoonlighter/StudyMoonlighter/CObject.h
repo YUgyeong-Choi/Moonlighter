@@ -31,6 +31,10 @@ public:
 	int Get_Hp() { return m_iHp; }
 	void Set_Hp(int _i) { m_iHp - _i; }
 
+	void Set_TargetObj(CObject* _obj) { m_targetObj = _obj; }
+
+	void Hit();
+
 public:
 	void		Update_Rect();
 	void		Move_Frame();
@@ -42,12 +46,14 @@ protected:
 
 	int  m_iHp;
 	int	 m_iAttackDamage;
+	float		m_fSpeed;
+	float m_fFixScrollSpeed;
 
 	bool m_bCanHit;
 	int m_iAttackedDamage;
+	float m_fAttacktedTime;
 
-	float		m_fSpeed;
-	float m_fFixScrollSpeed;
+	CObject* m_targetObj;
 
 	//¿ø·¡ ÁÂÇ¥
 	float m_originX;

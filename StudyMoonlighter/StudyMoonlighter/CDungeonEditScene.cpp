@@ -17,6 +17,7 @@
 #include "CScrollRoll.h"
 #include "CGolemHole.h"
 #include "CTurretBroken.h"
+#include "CBabySlime.h"
 
 CDungeonEditScene::CDungeonEditScene()
 {
@@ -25,12 +26,10 @@ CDungeonEditScene::CDungeonEditScene()
 void CDungeonEditScene::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background.bmp", L"DungeonBackground");
-	ADD_BMP(L"../MoonlighterAssets/Tile/CanWalk48.bmp", L"CanWalk");
-	ADD_BMP(L"../MoonlighterAssets/Tile/CantWalk48.bmp", L"CantWalk");
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(150, WINCY / 2));
 	Create_MapObj();
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 }
 
 int CDungeonEditScene::Update()
@@ -107,7 +106,8 @@ void CDungeonEditScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 580));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 620));
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(WINCX/2, 300, UP));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(700, 300));
+	static_cast<CBabySlime*>(CObjectManager::Get_Instance()->Get_LastMonster())->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
 }
 
