@@ -28,7 +28,7 @@ void CCollisionManager::CollisionRectWeapon(list<CObject*> _Dst, list<CObject*> 
     {
         for (auto& Src : _Src)
         {
-            if (IntersectRect(&rc, static_cast<CPlayer*>(Dst)->Get_HitBox(), Src->Get_Rect()))
+            if (IntersectRect(&rc, dynamic_cast<CPlayer*>(Dst)->Get_HitBox(), Src->Get_Rect()))
             {
                 Src->OnCollision(Dst);
             }
@@ -75,8 +75,11 @@ void CCollisionManager::CollisionRectEx(list<CObject*> _Dst, list<CObject*> _Src
         {
             if (CheckRect(Dst, Src, &fX, &fY))
             {
+                if (static_cast<CPlayer*>(Dst)->Get_IsRolling()) {
+                    continue;
+                }
                 Dst->OnCollision(Src);
-                Src->OnCollision(Dst);
+
                 if (fX > fY)
                 {
                     if (Dst->Get_Info().fY < Src->Get_Info().fY)
@@ -115,13 +118,16 @@ void CCollisionManager::CollisionRectExMapObj(list<CObject*> _Dst, list<CObject*
             if (CheckRect(Dst, Src, &fX, &fY))
             {
                 if (dynamic_cast<CGolemBreakable*>(Src)) {
-                    if (dynamic_cast<CGolemBreakable*>(Src)->Get_Breakable()) {
+                    if (!dynamic_cast<CGolemBreakable*>(Src)->Get_Breakable()) {
                         return;
                     }
                 }
+                else {
+                    Dst->OnCollision(Src);
+                    Src->OnCollision(Dst);
+                }
 
-                Dst->OnCollision(Src);
-                Src->OnCollision(Dst);
+
                 if (fX > fY)
                 {
                     if (Dst->Get_Info().fY < Src->Get_Info().fY)

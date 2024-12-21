@@ -531,20 +531,20 @@ void CPlayer::Attack()
 		switch (m_eCurDir)
 		{
 		case LEFT:
-			m_HitBox = { (long)m_tInfo.fX - 70,(long)m_tInfo.fY - 50,(long)m_tInfo.fX,(long)m_tInfo.fY + 50 };
+			m_HitBox = { (long)m_tInfo.fX - 60,(long)m_tInfo.fY - 50,(long)m_tInfo.fX,(long)m_tInfo.fY + 50 };
 			break;
 		case RIGHT:
-			m_HitBox = { (long)m_tInfo.fX,(long)m_tInfo.fY-50,(long)m_tInfo.fX + 70,(long)m_tInfo.fY + 50 };
+			m_HitBox = { (long)m_tInfo.fX,(long)m_tInfo.fY-50,(long)m_tInfo.fX + 60,(long)m_tInfo.fY + 50 };
 			break;
 		case UP:
 		case UP_LEFT:
 		case UP_RIGHT:
-			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY - 70 };
+			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY - 60 ,(long)m_tInfo.fX + 50,(long)m_tInfo.fY  };
 			break;
 		case DOWN:
 		case DOWN_LEFT:
 		case DOWN_RIGHT:
-			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY + 70 };
+			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY + 60 };
 			break;
 		}
 		

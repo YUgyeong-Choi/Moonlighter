@@ -2,7 +2,7 @@
 #include "CGolemBreakable.h"
 #include "CScrollManager.h"
 
-CGolemBreakable::CGolemBreakable():type(0), m_bIsBreak(false)
+CGolemBreakable::CGolemBreakable():type(0), m_bIsBreak(true)
 {
 }
 
@@ -35,7 +35,7 @@ void CGolemBreakable::Render(HDC hDC)
 {
 	Image* image(nullptr);
 
-	if (m_bIsBreak) {
+	if (!m_bIsBreak) {
 		if (type == 0) {
 			image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/breakable/Golem_Camp_BreakVase.png");
 		}
@@ -74,6 +74,6 @@ void CGolemBreakable::Release()
 void CGolemBreakable::OnCollision(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
-		m_bIsBreak = true;
+		m_bIsBreak = false;
 	}
 }

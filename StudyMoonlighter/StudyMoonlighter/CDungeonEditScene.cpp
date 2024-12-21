@@ -5,6 +5,7 @@
 #include "CKeyManager.h"
 #include "CAbstractFactory.h"
 #include "CFileManager.h"
+#include "CUiManager.h"
 
 //여기 밑에는 지워도 되는 헤더 파일
 #include "CCollisionBox.h"
@@ -50,6 +51,7 @@ void CDungeonEditScene::Render(HDC hDC)
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonBackground");
 	GdiTransparentBlt(hDC, 0, 0, (int)m_fMapXSize, (int)m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, (int)m_fMapYSize, RGB(0, 0, 0));
 	CObjectManager::Get_Instance()->Render(hDC);
+	CUiManager::GetInstance()->Render(hDC);
 }
 
 void CDungeonEditScene::Release()
@@ -71,21 +73,41 @@ void CDungeonEditScene::Key_Input()
 
 	if (CKeyManager::Get_Instance()->Key_Down('O'))
 	{
-		CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/Tutorial3.dat");
-		CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/Tutorial3.dat");
+		CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/Tutorial4.dat");
+		CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/Tutorial4.dat");
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down('P'))
 	{
-		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial3.dat", 0);
-		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial3.dat",0);
+		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/Tutorial4.dat", 0);
+		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/Tutorial4.dat",0);
 	}
 
 }
 
 void CDungeonEditScene::Create_MapObj()
 {
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 30, 1024, 60));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 690, 1024, 60));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
 
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 100));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 140));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 180));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 220));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 260));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 300));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 340));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 380));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 420));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 460));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 500));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 540));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 580));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(400, 620));
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create(WINCX/2, 300, UP));
 
 }
 
