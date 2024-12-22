@@ -1,47 +1,45 @@
 #include "pch.h"
-#include "CFieldScene.h"
-#include "CKeyManager.h"
+#include "CGolemBossScene.h"
 #include "CObjectManager.h"
 #include "CPlayer.h"
-#include "CScrollManager.h"
 #include "CBitManager.h"
-#include "CAbstractFactory.h"
-#include "CPortal.h"
+#include "CScrollManager.h"
 #include "CUiManager.h"
+#include "CKeyManager.h"
 
-CFieldScene::CFieldScene()
+CGolemBossScene::CGolemBossScene()
 {
 }
 
-void CFieldScene::Initialize()
+void CGolemBossScene::Initialize()
 {
-	ADD_BMP(L"../MoonlighterAssets/Map/DungeonsEntrance_Base.bmp", L"DungeonField");
-	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1225, 1851);
-	m_fMapXSize = 2400.f;
-	m_fMapYSize = 2048.f;
-	CScrollManager::Get_Instance()->Set_Scroll(-613, -1327);
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background_boss.bmp", L"GolemBossField");
+	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1160, 1182);
+	m_fMapXSize = 2312.f;
+	m_fMapYSize = 1566.f;
+	CScrollManager::Get_Instance()->Set_Scroll(-522, -702);
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
-	
+
 	Create_MapObj();
 }
 
-int CFieldScene::Update()
+int CGolemBossScene::Update()
 {
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
 	return 0;
 }
 
-void CFieldScene::LateUpdate()
+void CGolemBossScene::LateUpdate()
 {
 	Offset();
 	CObjectManager::Get_Instance()->Late_Update();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
-void CFieldScene::Render(HDC hDC)
+void CGolemBossScene::Render(HDC hDC)
 {
-	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"DungeonField");
+	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossField");
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	GdiTransparentBlt(hDC, iScrollX, iScrollY, (int)m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
@@ -49,26 +47,24 @@ void CFieldScene::Render(HDC hDC)
 	CUiManager::GetInstance()->Render(hDC);
 }
 
-void CFieldScene::Release()
+void CGolemBossScene::Release()
 {
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 
-void CFieldScene::Key_Input()
+void CGolemBossScene::Key_Input()
 {
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
 		g_bDevmode = !g_bDevmode;
 	}
 }
 
-void CFieldScene::Create_MapObj()
+void CGolemBossScene::Create_MapObj()
 {
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(700, 940, 80, 30));
-	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(GOLEMBOSS);
 }
 
-void CFieldScene::Offset()
+void CGolemBossScene::Offset()
 {
 	CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
 	int		iOffSetminX = 412;

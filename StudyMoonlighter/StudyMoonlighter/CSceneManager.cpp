@@ -6,6 +6,7 @@
 #include "CDungeonScene.h"
 #include "CTutorialScene.h"
 #include "CDungeonEditScene.h"
+#include "CGolemBossScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -37,6 +38,9 @@ void CSceneManager::SetScene(SCENEID eID)
 			break;
 		case SC_TUTORIAL:
 			m_pScene = new CTutorialScene;
+			break;
+		case SC_GOLEMBOSS:
+			m_pScene = new CGolemBossScene;
 			break;
 		case SC_EDIT:
 			m_pScene = new CDungeonEditScene;

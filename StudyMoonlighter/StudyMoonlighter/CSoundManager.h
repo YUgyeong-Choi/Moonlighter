@@ -29,7 +29,7 @@ public:
 
 public:
 	void PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume, bool ignore);
-	void PlayBGM(const TCHAR* pSoundKey, float fVolume);
+	void PlayBGM(const TCHAR* pSoundKey, float fVolume, bool ignore);
 	void StopSound(CHANNELID eID);
 	void StopAll();
 	void SetChannelVolume(CHANNELID eID, float fVolume);

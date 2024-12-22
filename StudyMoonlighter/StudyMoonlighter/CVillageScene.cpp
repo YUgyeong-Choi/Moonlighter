@@ -10,6 +10,7 @@
 #include "CCollisionBox.h"
 #include "CPortal.h"
 #include "CSoundManager.h"
+#include "CUiManager.h"
 CVillageScene::CVillageScene()
 {
 }
@@ -17,7 +18,7 @@ CVillageScene::CVillageScene()
 void CVillageScene::Initialize()
 {
 	CSoundManager::Get_Instance()->StopAll();
-	CSoundManager::Get_Instance()->PlayBGM(L"rynoka_day_normal.wav", g_fBackgroundVolume);
+	CSoundManager::Get_Instance()->PlayBGM(L"rynoka_day_normal.wav", g_fBackgroundVolume,true);
 	ADD_BMP(L"../MoonlighterAssets/Map/MainVillage.bmp", L"VillageBackground");
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 	CScrollManager::Get_Instance()->Set_Scroll(0, 0);

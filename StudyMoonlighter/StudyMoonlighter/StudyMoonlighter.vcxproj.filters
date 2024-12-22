@@ -37,9 +37,6 @@
     <Filter Include="99_Managers\KeyManager">
       <UniqueIdentifier>{391192d5-4ead-456d-b19d-46e2705b4470}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Scenes\01_Village">
-      <UniqueIdentifier>{992b423e-e629-4d9f-912e-0b6d1de26ae2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Object">
       <UniqueIdentifier>{8d2acc47-fea3-40c0-9e05-cb36344c001c}</UniqueIdentifier>
     </Filter>
@@ -64,12 +61,6 @@
     <Filter Include="02_Object\98.Portal">
       <UniqueIdentifier>{3659e383-a4df-45d9-bbec-8bf4c634e2b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Scenes\02_Field">
-      <UniqueIdentifier>{2bf1846f-8560-48da-8185-69022ff5f8f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01_Scenes\09_Tutorial">
-      <UniqueIdentifier>{d526c212-7185-41fa-a6a9-e2df9e07c150}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Object\99.MapObj\CollisionBox">
       <UniqueIdentifier>{c972b447-475d-4631-a147-31f13326e6af}</UniqueIdentifier>
     </Filter>
@@ -84,9 +75,6 @@
     </Filter>
     <Filter Include="02_Object\99.MapObj\Dungeon1">
       <UniqueIdentifier>{fdb6f8fc-758d-4d68-b0f9-cc19229e597d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01_Scenes\03_Dungeon">
-      <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
     </Filter>
     <Filter Include="02_Object\02.Monster">
       <UniqueIdentifier>{ad32bc67-d7c1-4982-b849-7bafbded0b1c}</UniqueIdentifier>
@@ -114,6 +102,21 @@
     </Filter>
     <Filter Include="02_Object\02.Monster\Golem\BabySlime">
       <UniqueIdentifier>{e171535a-ec0f-4641-9a83-e1e2b3ce028a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\01_Tutorial">
+      <UniqueIdentifier>{d526c212-7185-41fa-a6a9-e2df9e07c150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\02_Village">
+      <UniqueIdentifier>{992b423e-e629-4d9f-912e-0b6d1de26ae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\03_Field">
+      <UniqueIdentifier>{2bf1846f-8560-48da-8185-69022ff5f8f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\04_Dungeon">
+      <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\05_GolemBoss">
+      <UniqueIdentifier>{955d38dd-1c1c-4cf4-b440-7562389afc65}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,7 +160,7 @@
       <Filter>99_Managers\KeyManager</Filter>
     </ClInclude>
     <ClInclude Include="CVillageScene.h">
-      <Filter>01_Scenes\01_Village</Filter>
+      <Filter>01_Scenes\02_Village</Filter>
     </ClInclude>
     <ClInclude Include="CObject.h">
       <Filter>02_Object</Filter>
@@ -181,13 +184,13 @@
       <Filter>02_Object\98.Portal</Filter>
     </ClInclude>
     <ClInclude Include="CFieldScene.h">
-      <Filter>01_Scenes\02_Field</Filter>
+      <Filter>01_Scenes\03_Field</Filter>
     </ClInclude>
     <ClInclude Include="CDungeonScene.h">
-      <Filter>01_Scenes\03_Dungeon</Filter>
+      <Filter>01_Scenes\04_Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="CTutorialScene.h">
-      <Filter>01_Scenes\09_Tutorial</Filter>
+      <Filter>01_Scenes\01_Tutorial</Filter>
     </ClInclude>
     <ClInclude Include="CCollisionBox.h">
       <Filter>02_Object\99.MapObj\CollisionBox</Filter>
@@ -243,6 +246,9 @@
     <ClInclude Include="CBabySlime.h">
       <Filter>02_Object\02.Monster\Golem\BabySlime</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemBossScene.h">
+      <Filter>01_Scenes\05_GolemBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -273,7 +279,7 @@
       <Filter>99_Managers\KeyManager</Filter>
     </ClCompile>
     <ClCompile Include="CVillageScene.cpp">
-      <Filter>01_Scenes\01_Village</Filter>
+      <Filter>01_Scenes\02_Village</Filter>
     </ClCompile>
     <ClCompile Include="CObject.cpp">
       <Filter>02_Object</Filter>
@@ -294,13 +300,13 @@
       <Filter>02_Object\98.Portal</Filter>
     </ClCompile>
     <ClCompile Include="CFieldScene.cpp">
-      <Filter>01_Scenes\02_Field</Filter>
+      <Filter>01_Scenes\03_Field</Filter>
     </ClCompile>
     <ClCompile Include="CDungeonScene.cpp">
-      <Filter>01_Scenes\03_Dungeon</Filter>
+      <Filter>01_Scenes\04_Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="CTutorialScene.cpp">
-      <Filter>01_Scenes\09_Tutorial</Filter>
+      <Filter>01_Scenes\01_Tutorial</Filter>
     </ClCompile>
     <ClCompile Include="CCollisionBox.cpp">
       <Filter>02_Object\99.MapObj\CollisionBox</Filter>
@@ -355,6 +361,9 @@
     </ClCompile>
     <ClCompile Include="CBabySlime.cpp">
       <Filter>02_Object\02.Monster\Golem\BabySlime</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemBossScene.cpp">
+      <Filter>01_Scenes\05_GolemBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -62,8 +62,8 @@ int CMenuScene::Update()
 			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 		}
 		m_bIsOpen = false;
-		CSoundManager::Get_Instance()->PlaySound(L"main_menu_door_opened_loop.wav", SOUND_EFFECT, g_fEffectVolume, true);
-		CSoundManager::Get_Instance()->PlayBGM(L"main_menu_screen.wav", g_fBackgroundVolume);
+		CSoundManager::Get_Instance()->PlaySound(L"main_menu_door_opened_loop.wav", SOUND_EFFECT, g_fEffectVolume, false);
+		CSoundManager::Get_Instance()->PlayBGM(L"main_menu_screen.wav", g_fBackgroundVolume, false);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {

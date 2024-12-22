@@ -223,8 +223,8 @@ void CPlayer::Render(HDC hDC)
 	}
 
 	TCHAR szBuffer[64];
-	_stprintf_s(szBuffer, _T("Player: Hp=%d"), m_iHp);
-	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
+	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d, Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
+	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 10, 10, szBuffer, _tcslen(szBuffer));
