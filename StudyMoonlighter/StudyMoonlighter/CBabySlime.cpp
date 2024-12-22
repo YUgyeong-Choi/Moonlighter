@@ -11,8 +11,8 @@ void CBabySlime::Initialize()
 	m_eOBJID = OBJ_MONSTER;
 	m_MonsterType = BABYSLIME;
 
-	m_tInfo.fCX = 70.f;
-	m_tInfo.fCY = 70.f;
+	m_tInfo.fCX = 15.f;
+	m_tInfo.fCY = 15.f;
 
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 4;
@@ -95,7 +95,7 @@ void CBabySlime::OnCollision(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
 		if (m_bCanHit) {
-			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
 				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();

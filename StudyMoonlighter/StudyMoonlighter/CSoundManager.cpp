@@ -31,7 +31,7 @@ void CSoundManager::Release()
 	m_pSystem->close();
 }
 
-void CSoundManager::PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume)
+void CSoundManager::PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume, bool ignore)
 {
 	map<TCHAR*, FMOD::Sound*>::iterator iter;
 
@@ -45,21 +45,18 @@ void CSoundManager::PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolu
 	if (iter == m_mapSound.end())
 		return;
 
-	FMOD::Sound* _curSound;
-	m_pChannelArr[eID]->getCurrentSound(&_curSound);
-	if (_curSound != iter->second) {
+	if (ignore) {
 		FMOD_BOOL bPlay = FALSE;
 		m_pSystem->playSound(iter->second, 0, FALSE, &m_pChannelArr[eID]);
 		m_pChannelArr[eID]->setVolume(fVolume);
 	}
 	else {
 		bool bIsPlaying = false;
-		if (m_pChannelArr[eID] != nullptr)
-		{
-			m_pChannelArr[eID]->isPlaying(&bIsPlaying);
+		if (m_pChannelArr[eID]->isPlaying(&bIsPlaying)) {
+			FMOD_BOOL bPlay = FALSE;
+			m_pSystem->playSound(iter->second, 0, FALSE, &m_pChannelArr[eID]);
+			m_pChannelArr[eID]->setVolume(fVolume);
 		}
-		if (bIsPlaying)
-			return;
 	}
 
 	m_pSystem->update();
@@ -78,13 +75,6 @@ void CSoundManager::PlayBGM(const TCHAR* pSoundKey, float fVolume)
 	if (iter == m_mapSound.end())
 		return;
 
-	bool bIsPlaying = false;
-	if (m_pChannelArr[SOUND_BGM] != nullptr)
-	{
-		m_pChannelArr[SOUND_BGM]->isPlaying(&bIsPlaying);
-	}
-	if (bIsPlaying)
-		return;
 
 	FMOD_BOOL bPlay = FALSE;
 	m_pSystem->playSound(iter->second, 0, FALSE, &m_pChannelArr[SOUND_BGM]);

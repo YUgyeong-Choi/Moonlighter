@@ -12,8 +12,8 @@ void CGolemBreakable::Initialize()
 	m_mapType = GOLEM_BROKEN;
 	m_eRender = RENDER_GAMEOBJECT;
 
-	m_tInfo.fCX = 20.f;
-	m_tInfo.fCY = 20.f;
+	m_tInfo.fCX = 30.f;
+	m_tInfo.fCY = 30.f;
 
 	m_tRenderSizeX = 70.f;
 	m_tRenderSizeY = 70.f;

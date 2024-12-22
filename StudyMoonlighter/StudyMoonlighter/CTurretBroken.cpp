@@ -88,7 +88,7 @@ void CTurretBroken::OnCollision(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
 		if (m_bCanHit) {
-			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
 				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();

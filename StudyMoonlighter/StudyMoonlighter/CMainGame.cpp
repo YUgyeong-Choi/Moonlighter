@@ -13,7 +13,7 @@ bool g_bDevmode = false;
 float	g_fEffectVolume(0.5f);
 float	g_fBackgroundVolume(0.1f);
 
-CMainGame::CMainGame():m_hDC(nullptr), m_dwTime(GetTickCount()), m_iFPS(0)
+CMainGame::CMainGame():m_hDC(nullptr), m_dwTime(GetTickCount64()), m_iFPS(0)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
@@ -46,14 +46,14 @@ void CMainGame::Render()
 #pragma region  FPS Ãâ·Â
 	++m_iFPS;
 
-	if (m_dwTime + 1000 < GetTickCount())
+	if (m_dwTime + 1000 < GetTickCount64())
 	{
 		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
 
 		SetWindowText(g_hWnd, m_szFPS);
 
 		m_iFPS = 0;
-		m_dwTime = GetTickCount();
+		m_dwTime = GetTickCount64();
 	}
 #pragma endregion
 	HDC		hMemDC = CBitManager::GetInstance()->FindImage(L"Back");

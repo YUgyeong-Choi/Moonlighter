@@ -45,6 +45,7 @@ void CFieldScene::Render(HDC hDC)
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	GdiTransparentBlt(hDC, iScrollX, iScrollY, (int)m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
 	CObjectManager::Get_Instance()->Render(hDC);
+	CUiManager::GetInstance()->Render(hDC);
 }
 
 void CFieldScene::Release()

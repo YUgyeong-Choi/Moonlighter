@@ -12,12 +12,14 @@
 #include "CKeyManager.h"
 #include "CScrollManager.h"
 #include "CUiManager.h"
+#include "CSceneManager.h"
 
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMoveX(0), m_bMapMove(false)
 {
 	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/MapObj/Tutorial1.dat", L"../Data/MapMonster/Tutorial1.dat", 0, 0);
 	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/MapObj/Tutorial2.dat", L"../Data/MapMonster/Tutorial2.dat", 0, 1);
 	m_TutorialDungeon[2] = new CDungeonScene(L"../Data/MapObj/Tutorial3.dat", L"../Data/MapMonster/Tutorial3.dat", 0, 2);
+	m_TutorialDungeon[3] = new CDungeonScene(L"../Data/MapObj/Tutorial4.dat", L"../Data/MapMonster/Tutorial4.dat", 0, 3);
 }
 
 void CTutorialScene::Initialize()
@@ -50,6 +52,11 @@ int CTutorialScene::Update()
 			case RIGHT:
 				m_dir = RIGHT;
 				m_iTutorialIndex++;
+				if (m_iTutorialIndex == 4) {
+					CObjectManager::Get_Instance()->Delete_ALL();
+					CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+					return 0;
+				}
 				m_bMapMove = true;
 				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024*m_iTutorialIndex) + 150, WINCY / 2);
 				CObjectManager::Get_Instance()->Set_MapIndex(m_iTutorialIndex, 0, RIGHT);

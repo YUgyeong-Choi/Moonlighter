@@ -54,6 +54,8 @@ void CObjectManager::Late_Update()
 	}
 
 	CCollisionManager::CollisionRectExMapObj(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]); // 플레이어 물체 충돌
+	CCollisionManager::CollisionRectExMapObj(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_MAPOBJ]); // 몬스터 물체 충돌
+	CCollisionManager::CollisionFloor(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_FLOOR]); //몬스터 낭떨어지 충돌
 	CCollisionManager::CollisionFloor(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_FLOOR]); //플레이어 낭떨어지 충돌
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_PORTAL]); //플레이어 포탈 충돌
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_MONSTER_BULLET], m_ObjList[OBJ_MAPOBJ]); //몬스터 총알 경계썬 충돌
@@ -94,4 +96,16 @@ void CObjectManager::Delete_ID(OBJID eID)
 		Safe_Delete(pObj);
 
 	m_ObjList[eID].clear();
+}
+
+void CObjectManager::Delete_ALL()
+{
+	for (size_t i = 0; i < OBJ_END; ++i)
+	{
+		for (auto& pObj : m_ObjList[i])
+			Safe_Delete(pObj);
+
+		m_ObjList[i].clear();
+	}
+
 }

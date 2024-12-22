@@ -9,6 +9,8 @@
 #include "CCollisionBox.h"
 #include "CScrollWasd.h"
 #include "CGolemDoor.h"
+#include "CBabySlime.h"
+#include "CGolemBreakable.h"
 
 CFileManager* CFileManager::m_pInstance = nullptr;
 
@@ -77,6 +79,10 @@ void CFileManager::Save_MonsterObj(const TCHAR* _pFilePath)
 			WriteFile(hFile, obj, sizeof(CMonster), &dwByte, NULL);
 			WriteFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
 		}
+		else {
+			CMonster* obj = static_cast<CMonster*>(monster);
+			WriteFile(hFile, obj, sizeof(CMonster), &dwByte, NULL);
+		}
 	}
 
 	CloseHandle(hFile);
@@ -127,6 +133,9 @@ void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath, int _y)
 			CObjectManager::Get_Instance()->Add_Object(OBJ_FLOOR, CAbstractFactory<CGolemHole>::Create((1024 * _y)+_MapObj.Get_Info().fX, _MapObj.Get_Info().fY, _MapObj.Get_Info().fCX, _MapObj.Get_Info().fCY));
 			dynamic_cast<CGolemHole*>(CObjectManager::Get_Instance()->Get_LastFloor())->Set_HoleType(_type);
 		}
+		else if (_MapObj.Get_MapObjType() == GOLEM_BROKEN) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create((1024 * _y) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY));
+		}
 
 	}
 
@@ -156,6 +165,10 @@ void CFileManager::Load_MonsterFile(const TCHAR* _pFilePath, int _y)
 			DIRECTION _dir = _monsterObj.Get_DIR();
 			bool b = ReadFile(hFile, &_dir, sizeof(DIRECTION), &dwByte, NULL);
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CTurretBroken>::Create((1024 * _y)+_monsterObj.Get_Info().fX, _monsterObj.Get_Info().fY, _dir));
+		}
+		else if (_monsterObj.Get_MonsterType() == BABYSLIME) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create((1024 * _y) + _monsterObj.Get_Info().fX, _monsterObj.Get_Info().fY));
+			static_cast<CBabySlime*>(CObjectManager::Get_Instance()->Get_LastMonster())->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 		}
 
 	}

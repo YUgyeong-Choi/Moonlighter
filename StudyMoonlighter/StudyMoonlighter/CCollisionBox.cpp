@@ -27,8 +27,12 @@ void CCollisionBox::Late_Update()
 
 void CCollisionBox::Render(HDC hDC)
 {
+
+	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
 	if (g_bDevmode) {
-		Hitbox(hDC, m_tRect, 0, 0);
+		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 	}
 }
 

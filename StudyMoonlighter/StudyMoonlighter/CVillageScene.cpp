@@ -20,6 +20,7 @@ void CVillageScene::Initialize()
 	CSoundManager::Get_Instance()->PlayBGM(L"rynoka_day_normal.wav", g_fBackgroundVolume);
 	ADD_BMP(L"../MoonlighterAssets/Map/MainVillage.bmp", L"VillageBackground");
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
+	CScrollManager::Get_Instance()->Set_Scroll(0, 0);
 	m_fMapXSize = 2602.f;
 	m_fMapYSize = 2134.f;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
@@ -48,6 +49,7 @@ void CVillageScene::Render(HDC hDC)
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 	GdiTransparentBlt(hDC, iScrollX, iScrollY, m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
 	CObjectManager::Get_Instance()->Render(hDC);
+	CUiManager::GetInstance()->Render(hDC);
 }
 
 void CVillageScene::Release()

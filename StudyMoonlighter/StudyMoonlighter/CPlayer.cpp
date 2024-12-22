@@ -6,7 +6,7 @@
 #include "CObjectManager.h"
 #include "CSoundManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false)
 {
 }
 
@@ -244,7 +244,7 @@ void CPlayer::OnCollision(CObject* _obj)
 		break;
 	case OBJ_MONSTER:
 		if (!m_bIsRoll && m_bCanHit) {
-			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
 				m_iAttackedDamage = 5;
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
@@ -253,7 +253,7 @@ void CPlayer::OnCollision(CObject* _obj)
 		break;
 	case OBJ_MONSTER_BULLET:
 		if (!m_bIsRoll && m_bCanHit) {
-			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
 				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
@@ -264,7 +264,7 @@ void CPlayer::OnCollision(CObject* _obj)
 		break;
 	case OBJ_FLOOR:
 		if (m_bCanHit) {
-			if (m_fAttacktedTime + 1000 < GetTickCount64()) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
 				m_iAttackedDamage = 5;
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
@@ -499,17 +499,17 @@ void CPlayer::SoundEffet()
 		m_fTimeSinceLastStep += 0.1f;
 		if (m_fTimeSinceLastStep >= 2.3) {
 			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"will_step_town_gravel.wav", SOUND_EFFECT, 0.1f);
+			CSoundManager::Get_Instance()->PlaySound(L"will_step_town_gravel.wav", SOUND_EFFECT, 0.1f, true);
 			m_fTimeSinceLastStep = 0;
 		}
 		break;
 	case CPlayer::ROLL:
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f);
+		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f, true);
 		break;
 	case CPlayer::FALL:
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f);
+		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f, true);
 		break;
 	case CPlayer::ATTACK:
 		break;
@@ -549,7 +549,7 @@ void CPlayer::Attack()
 		
 		if (m_tFrame.iFrameStart == 0) {
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fEffectVolume);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fEffectVolume, true);
 		}
 		m_tRenderSizeX = 200.f;
 		m_tRenderSizeY = 200.f;
@@ -557,13 +557,13 @@ void CPlayer::Attack()
 		if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
 			m_tFrame.iFrameEnd = 8;
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fEffectVolume);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fEffectVolume, true);
 		}
 
 		if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
 			m_tFrame.iFrameEnd = 17;
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fEffectVolume);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fEffectVolume, true);
 		}
 	}
 
