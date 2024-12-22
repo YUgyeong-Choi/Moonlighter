@@ -207,14 +207,48 @@ void CPlayer::Render(HDC hDC)
 		};
 		imgAttrs.SetColorMatrix(&colorMatrix);
 		graphics.DrawImage(image,
-				Gdiplus::Rect(
+			Gdiplus::Rect(
+				(int)m_tRenderRect.left + iScrollX,
+				(int)m_tRenderRect.top + iScrollY,
+				m_tRenderSizeX,
+				m_tRenderSizeY),
+			(int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
+
+	}
+
+	if (!m_bCanHit) {
+		ImageAttributes imgAttrs;
+		ColorMatrix colorMatrix;
+		if (m_iAttackedDamage % 2 == 0) {
+			colorMatrix = {
+				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
+				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  // Green channel
+				0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // Blue channel
+				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel
+				1.0f, 1.0f, 1.0f, 0.0f, 1.0f   // Set translation to add white color
+			};
+
+		}
+		else {
+			colorMatrix = {
+				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
+				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Green channel (set to 0 to remove green)
+				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Blue channel (set to 0 to remove blue)
+				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel (no change to transparency)
+				1.0f, 0.0f, 0.0f, 0.0f, 1.0f   // Translation to add red color
+			};
+		}
+		imgAttrs.SetColorMatrix(&colorMatrix);
+		graphics.DrawImage(image,
+			Gdiplus::Rect(
 				(int)m_tRenderRect.left + iScrollX,
 				(int)m_tRenderRect.top + iScrollY,
 				m_tRenderSizeX,
 				m_tRenderSizeY),
 			(int)m_tRenderSizeX* m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
-
+	
 	}
+
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
@@ -223,8 +257,8 @@ void CPlayer::Render(HDC hDC)
 	}
 
 	TCHAR szBuffer[64];
-	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d, Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
-	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
+	_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d, Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
+	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 10, 10, szBuffer, _tcslen(szBuffer));

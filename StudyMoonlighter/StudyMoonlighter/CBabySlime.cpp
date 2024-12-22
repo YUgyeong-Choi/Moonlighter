@@ -77,13 +77,6 @@ void CBabySlime::Render(HDC hDC)
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
 
-	TCHAR szBuffer[64];
-	_stprintf_s(szBuffer, _T("Slime: Hp=%d"),  m_iHp);
-	//_stprintf_s(szBuffer, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
-	SetTextColor(hDC, RGB(255, 255, 255));
-	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 300, 10, szBuffer, _tcslen(szBuffer));
-
 	delete image;
 }
 
