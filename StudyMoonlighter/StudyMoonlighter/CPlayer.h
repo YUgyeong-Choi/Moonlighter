@@ -16,7 +16,6 @@ public:
 	void OnCollision(CObject* _obj);
 public:
 	bool Get_IsRolling() { return m_bIsRoll; }
-	RECT* Get_HitBox() { return &m_HitBox; }
 	bool Get_CanHit() { return !m_bIsRoll && m_bCanHit; }
 private:
 	void Key_Input();
@@ -31,8 +30,6 @@ private:
 
 	bool mbIsAttack;
 	float m_fComboTime;
-
-	RECT m_HitBox;
 
 	DIRECTION	m_eCurDir;
 	DIRECTION	m_ePreDir;

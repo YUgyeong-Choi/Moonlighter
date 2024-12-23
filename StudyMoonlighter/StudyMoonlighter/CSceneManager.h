@@ -15,6 +15,7 @@ public:
 	void		Release();
 
 	SCENEID Get_SceneID() { return m_eCurScene; }
+	CScene* Get_Scene() { return m_pScene; }
 public:
 	static CSceneManager* GetInstance()
 	{

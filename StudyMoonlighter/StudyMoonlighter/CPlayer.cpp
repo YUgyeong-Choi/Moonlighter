@@ -5,6 +5,7 @@
 #include "CScrollManager.h"
 #include "CObjectManager.h"
 #include "CSoundManager.h"
+#include "CSceneManager.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false)
 {
@@ -530,11 +531,40 @@ void CPlayer::SoundEffet()
 	case CPlayer::IDLE:
 		break;
 	case CPlayer::WALK:
-		m_fTimeSinceLastStep += 0.1f;
-		if (m_fTimeSinceLastStep >= 2.3) {
-			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"will_step_town_gravel.wav", SOUND_EFFECT, 0.1f, true);
-			m_fTimeSinceLastStep = 0;
+		switch (CSceneManager::GetInstance()->Get_SceneID())
+		{
+		case SC_TUTORIAL:
+			m_fTimeSinceLastStep += 0.1f;
+			if (m_fTimeSinceLastStep >= 2.3) {
+				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
+				m_fTimeSinceLastStep = 0;
+			}
+			break;
+		case SC_VILLAGE:
+			m_fTimeSinceLastStep += 0.1f;
+			if (m_fTimeSinceLastStep >= 2.3) {
+				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"will_step_town_gravel.wav", SOUND_EFFECT, 0.1f, true);
+				m_fTimeSinceLastStep = 0;
+			}
+			break;
+		case SC_FIELD:
+			m_fTimeSinceLastStep += 0.1f;
+			if (m_fTimeSinceLastStep >= 2.3) {
+				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"will_step_town_pavement.wav", SOUND_EFFECT, 0.1f, true);
+				m_fTimeSinceLastStep = 0;
+			}
+			break;
+		case SC_GOLEMBOSS:
+			m_fTimeSinceLastStep += 0.1f;
+			if (m_fTimeSinceLastStep >= 2.3) {
+				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
+				m_fTimeSinceLastStep = 0;
+			}
+			break;
 		}
 		break;
 	case CPlayer::ROLL:
@@ -552,8 +582,6 @@ void CPlayer::SoundEffet()
 	case CPlayer::DEAD:
 		break;
 	case CPlayer::STATE_END:
-		break;
-	default:
 		break;
 	}
 }

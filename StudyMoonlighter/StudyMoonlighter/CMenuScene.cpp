@@ -74,6 +74,10 @@ int CMenuScene::Update()
 		CSceneManager::GetInstance()->SetScene(SC_EDIT);
 	}
 
+	if (CKeyManager::Get_Instance()->Key_Down(VK_F3)) {
+		CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
+	}
+
 	if (m_bIsOpen) {
 		m_iOpenSize += 2;
 	}

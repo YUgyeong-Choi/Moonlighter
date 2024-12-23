@@ -146,10 +146,12 @@
     <ClInclude Include="CDungeonScene.h" />
     <ClInclude Include="CFieldScene.h" />
     <ClInclude Include="CFileManager.h" />
+    <ClInclude Include="CGolemBoss.h" />
     <ClInclude Include="CGolemBossScene.h" />
     <ClInclude Include="CGolemBreakable.h" />
     <ClInclude Include="CGolemDoor.h" />
     <ClInclude Include="CGolemHole.h" />
+    <ClInclude Include="CGolemScroll.h" />
     <ClInclude Include="CGolemSoldier.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
@@ -190,10 +192,12 @@
     <ClCompile Include="CDungeonScene.cpp" />
     <ClCompile Include="CFieldScene.cpp" />
     <ClCompile Include="CFileManager.cpp" />
+    <ClCompile Include="CGolemBoss.cpp" />
     <ClCompile Include="CGolemBossScene.cpp" />
     <ClCompile Include="CGolemBreakable.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
+    <ClCompile Include="CGolemScroll.cpp" />
     <ClCompile Include="CGolemSoldier.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />

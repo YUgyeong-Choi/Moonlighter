@@ -33,6 +33,8 @@ public:
 
 	void Set_TargetObj(CObject* _obj) { m_targetObj = _obj; }
 
+	RECT* Get_HitBox() { return &m_HitBox; }
+
 	void Hit();
 
 public:
@@ -52,6 +54,8 @@ protected:
 	bool m_bCanHit;
 	int m_iAttackedDamage;
 	float m_fAttacktedTime;
+
+	RECT m_HitBox;
 
 	CObject* m_targetObj;
 

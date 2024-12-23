@@ -14,5 +14,12 @@ public:
 	void Key_Input() override;
 	void Create_MapObj() override;
 	void Offset() override;
+	void Set_bWakeup() { m_bWake = true; }
+	bool Get_bBossOffSet() { return m_bBossOffSetTrue; }
+private:
+	void BossOffset();
+private:
+	bool m_bWake;
+	bool m_bBossOffSetTrue;
 };
 
