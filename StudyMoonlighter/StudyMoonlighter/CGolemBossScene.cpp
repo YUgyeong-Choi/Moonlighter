@@ -52,7 +52,7 @@ void CGolemBossScene::Render(HDC hDC)
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossField");
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-	GdiTransparentBlt(hDC, iScrollX, iScrollY, (int)m_fMapXSize, m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, m_fMapYSize, RGB(0, 0, 0));
+	GdiTransparentBlt(hDC, iScrollX, iScrollY, (int)m_fMapXSize, (int)m_fMapYSize, hMemDC, 0, 0, (int)m_fMapXSize, (int)m_fMapYSize, RGB(0, 0, 0));
 
 	Image* image(nullptr);
 	image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_crack.png");

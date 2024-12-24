@@ -211,8 +211,8 @@ void CPlayer::Render(HDC hDC)
 			Gdiplus::Rect(
 				(int)m_tRenderRect.left + iScrollX,
 				(int)m_tRenderRect.top + iScrollY,
-				m_tRenderSizeX,
-				m_tRenderSizeY),
+				(int)m_tRenderSizeX,
+				(int)m_tRenderSizeY),
 			(int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
 
 	}

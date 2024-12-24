@@ -5,8 +5,11 @@
 #include "CSceneManager.h"
 #include "CGolemBossScene.h"
 #include "CSoundManager.h"
+#include "CObjectManager.h"
+#include "CAbstractFactory.h"
+#include "CGolemBossRock.h"
 
-CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false), m_fPatternCool(0)
+CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false), m_fPatternCool(0), m_PatternIndex(0)
 {
 }
 
@@ -28,6 +31,8 @@ void CGolemBoss::Initialize()
 	m_tRenderSizeX = 1024.f;
 	m_tRenderSizeY = 1024.f;
 	m_eRender = RENDER_GAMEOBJECT;
+
+	m_fPatternCool = GetTickCount64();
 }
 
 int CGolemBoss::Update()
@@ -42,15 +47,53 @@ int CGolemBoss::Update()
 		}
 	}
 
-	if (m_fPatternCool + 5000 > GetTickCount64()) {
-		m_eCurPattern = SPAWN;
+	if (m_fPatternCool + 8000 < GetTickCount64()) {
+		m_eCurPattern = m_Pattern.at(m_PatternIndex);
+		m_fPatternCool = GetTickCount64();
+		m_PatternIndex++;
+		if (m_PatternIndex >= m_Pattern.size()) {
+			m_PatternIndex = 0;
+		}
+	}
+
+	switch (m_eCurPattern)
+	{
+	case CGolemBoss::WAKEUP:
+		break;
+	case CGolemBoss::IDLE:
+		break;
+	case CGolemBoss::IDLENOARM:
+		break;
+	case CGolemBoss::WAVE:
+		break;
+	case CGolemBoss::SPAWNCIRCLE:
 		if (16 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart <= 35) {
-			m_HitBox = { (int)m_tInfo.fX-50, (int)m_tInfo.fY + 100, (int)m_tInfo.fX + 100, (int)m_tInfo.fY + 200 };
+			m_HitBox = { (int)m_tInfo.fX - 50, (int)m_tInfo.fY + 100, (int)m_tInfo.fX + 100, (int)m_tInfo.fY + 200 };
+
+			if (m_tFrame.iFrameStart == 20) {
+				SpawnRockCircle();
+			}
 		}
 		else {
 			m_HitBox = { 0,0,0,0 };
 		}
-		m_fPatternCool = GetTickCount64();
+
+		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
+			m_eCurPattern = IDLE;
+		}
+		break;
+	case CGolemBoss::PUNCHARM:
+		break;
+	case CGolemBoss::RECOVERARM:
+		break;
+	case CGolemBoss::SPAWNRANDOM:
+		break;
+	case CGolemBoss::DEATH:
+		break;
+	case CGolemBoss::NONE:
+		break;
+	default:
+		break;
 	}
 
 	Change_Frame();
@@ -77,14 +120,24 @@ void CGolemBoss::Render(HDC hDC)
 	case CGolemBoss::IDLE:
 		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossIdle");
 		break;
-
 	case CGolemBoss::IDLENOARM:
-		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossIdle");
 		break;
-	case CGolemBoss::SPAWN:
+	case CGolemBoss::WAVE:
+		break;
+	case CGolemBoss::SPAWNCIRCLE:
 		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossSpawn");
 		break;
+	case CGolemBoss::PUNCHARM:
+		break;
+	case CGolemBoss::RECOVERARM:
+		break;
+	case CGolemBoss::SPAWNRANDOM:
+		break;
 	case CGolemBoss::DEATH:
+		break;
+	case CGolemBoss::NONE:
+		break;
+	default:
 		break;
 	}
 	
@@ -121,7 +174,6 @@ void CGolemBoss::Change_Frame()
 			m_tFrame.iFrameEnd = 31;
 			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
-
 			break;
 		case CGolemBoss::IDLE:
 			m_tFrame.iFrameStart = 0;
@@ -131,11 +183,18 @@ void CGolemBoss::Change_Frame()
 			break;
 		case CGolemBoss::IDLENOARM:
 			break;
-		case CGolemBoss::SPAWN:
+		case CGolemBoss::WAVE:
+			break;
+		case CGolemBoss::SPAWNCIRCLE:
+		case CGolemBoss::SPAWNRANDOM:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 41;
 			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
+			break;
+		case CGolemBoss::PUNCHARM:
+			break;
+		case CGolemBoss::RECOVERARM:
 			break;
 		case CGolemBoss::DEATH:
 			break;
@@ -147,7 +206,18 @@ void CGolemBoss::Change_Frame()
 
 		m_ePrePattern = m_eCurPattern;
 	}
+}
 
+void CGolemBoss::SpawnRockCircle()
+{
+	float radius = 300.f;
+	int numRocks = 8;
 
+	for (int i = 0; i < numRocks; ++i) {
+		float angle = i *  PI / (numRocks-1); // 각도 계산
+		float x = m_tInfo.fX + radius * cos(angle);
+		float y = m_tInfo.fY + radius * sin(angle);
+ 		CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBossRock>::Create(x, y));
+	}
 
 }

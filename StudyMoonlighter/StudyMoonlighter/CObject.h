@@ -29,7 +29,7 @@ public:
 	int Get_AttackDamage() { return m_iAttackDamage; }
 
 	int Get_Hp() { return m_iHp; }
-	void Set_Hp(int _i) { m_iHp - _i; }
+	void Set_Hp(int _i) { m_iHp -= _i; }
 
 	void Set_TargetObj(CObject* _obj) { m_targetObj = _obj; }
 
@@ -53,7 +53,7 @@ protected:
 
 	bool m_bCanHit;
 	int m_iAttackedDamage;
-	float m_fAttacktedTime;
+	ULONGLONG m_fAttacktedTime;
 
 	RECT m_HitBox;
 

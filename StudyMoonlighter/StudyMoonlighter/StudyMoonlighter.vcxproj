@@ -147,6 +147,7 @@
     <ClInclude Include="CFieldScene.h" />
     <ClInclude Include="CFileManager.h" />
     <ClInclude Include="CGolemBoss.h" />
+    <ClInclude Include="CGolemBossRock.h" />
     <ClInclude Include="CGolemBossScene.h" />
     <ClInclude Include="CGolemBreakable.h" />
     <ClInclude Include="CGolemDoor.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="CFieldScene.cpp" />
     <ClCompile Include="CFileManager.cpp" />
     <ClCompile Include="CGolemBoss.cpp" />
+    <ClCompile Include="CGolemBossRock.cpp" />
     <ClCompile Include="CGolemBossScene.cpp" />
     <ClCompile Include="CGolemBreakable.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />

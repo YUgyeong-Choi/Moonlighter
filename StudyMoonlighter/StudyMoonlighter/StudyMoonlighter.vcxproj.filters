@@ -118,6 +118,9 @@
     <Filter Include="01_Scenes\05_GolemBoss">
       <UniqueIdentifier>{955d38dd-1c1c-4cf4-b440-7562389afc65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\GolemBoss">
+      <UniqueIdentifier>{b97f435a-9a37-40f0-9e8f-40c460f7347e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -249,6 +252,15 @@
     <ClInclude Include="CGolemBossScene.h">
       <Filter>01_Scenes\05_GolemBoss</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemScroll.h">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClInclude>
+    <ClInclude Include="CGolemBoss.h">
+      <Filter>02_Object\02.Monster\Golem\GolemBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="CGolemBossRock.h">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -364,6 +376,15 @@
     </ClCompile>
     <ClCompile Include="CGolemBossScene.cpp">
       <Filter>01_Scenes\05_GolemBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemScroll.cpp">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemBoss.cpp">
+      <Filter>02_Object\02.Monster\Golem\GolemBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemBossRock.cpp">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
