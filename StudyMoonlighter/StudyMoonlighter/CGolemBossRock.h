@@ -17,5 +17,7 @@ private:
 	int type;
 	bool m_bIsBreak;
 	float m_tRemoveTime;
+	int m_iRockY;
+	bool m_bArrive;
 };
 

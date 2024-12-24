@@ -9,6 +9,7 @@
 #include "CGolemBoss.h"
 #include "CAbstractFactory.h"
 #include "CGolemScroll.h"
+#include "CSoundManager.h"
 
 CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false)
 {
@@ -16,13 +17,25 @@ CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false)
 
 void CGolemBossScene::Initialize()
 {
+	CSoundManager::Get_Instance()->StopSound(SOUND_BGM);
+	CSoundManager::Get_Instance()->PlaySound(L"golem_boss_track.wav", SOUND_BGM, g_fBackgroundVolume, true);
+
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background_boss.bmp", L"GolemBossField");
 	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1160, 1182);
 	m_fMapXSize = 2312.f;
 	m_fMapYSize = 1566.f;
 	CScrollManager::Get_Instance()->Set_Scroll(-600, -702);
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
+
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock_shadow.bmp", L"GolemBossRockShadow");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock1.bmp", L"GolemBossRock1");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock2.bmp", L"GolemBossRock2");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock3.bmp", L"GolemBossRock3");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock4.bmp", L"GolemBossRock4");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock5.bmp", L"GolemBossRock5");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock6.bmp", L"GolemBossRock6");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background_boss.bmp", L"GolemBossField");
+
 
 	Create_MapObj();
 }

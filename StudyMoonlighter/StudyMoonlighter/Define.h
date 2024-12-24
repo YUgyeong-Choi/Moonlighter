@@ -110,6 +110,33 @@ static BOOL Hitbox(HDC hDC, RECT tRect, int x, int y)
 	return true;
 }
 
+static BOOL Hitbox(HDC hDC, float left, float top, float right, float bottom, int x, int y)
+{
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
+	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
+	Rectangle(hDC, (int)(left + x), (int)(top + y), (int)(right + x), (int)(bottom + y));
+	SelectObject(hDC, hOldPen);
+	SelectObject(hDC, hOldBrush);
+
+	DeleteObject(hNewPen);
+	return true;
+}
+
+static BOOL Renderbox(HDC hDC, float left, float top, float right, float bottom, int x, int y)
+{
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
+	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
+	Rectangle(hDC, (int)(left + x), (int)(top + y), (int)(right + x), (int)(bottom + y));
+	SelectObject(hDC, hOldPen);
+	SelectObject(hDC, hOldBrush);
+
+	DeleteObject(hNewPen);
+	return true;
+}
+
+
 static BOOL Renderbox(HDC hDC, RECT tRect, int x, int y)
 {
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));

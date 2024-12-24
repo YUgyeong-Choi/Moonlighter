@@ -71,7 +71,15 @@ int CGolemBoss::Update()
 			m_HitBox = { (int)m_tInfo.fX - 50, (int)m_tInfo.fY + 100, (int)m_tInfo.fX + 100, (int)m_tInfo.fY + 200 };
 
 			if (m_tFrame.iFrameStart == 20) {
-				SpawnRockCircle();
+				SpawnRockCircle(300,20);
+			}
+
+			if (m_tFrame.iFrameStart == 25) {
+				SpawnRockCircle(500, 30);
+			}
+
+			if (m_tFrame.iFrameStart == 30) {
+				SpawnRockCircle(700, 40);
 			}
 		}
 		else {
@@ -208,11 +216,8 @@ void CGolemBoss::Change_Frame()
 	}
 }
 
-void CGolemBoss::SpawnRockCircle()
+void CGolemBoss::SpawnRockCircle(float radius, int numRocks)
 {
-	float radius = 300.f;
-	int numRocks = 8;
-
 	for (int i = 0; i < numRocks; ++i) {
 		float angle = i *  PI / (numRocks-1); // 각도 계산
 		float x = m_tInfo.fX + radius * cos(angle);

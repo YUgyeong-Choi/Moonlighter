@@ -16,7 +16,7 @@ public:
     void OnCollision(CObject* _obj);
 private:
     void Change_Frame();
-    void SpawnRockCircle();
+    void SpawnRockCircle(float radius, int numRocks);
 private:
     ULONGLONG m_fPatternCool;
     bool m_IsWake;
