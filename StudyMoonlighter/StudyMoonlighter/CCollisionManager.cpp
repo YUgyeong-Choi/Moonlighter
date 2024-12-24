@@ -128,7 +128,6 @@ void CCollisionManager::CollisionRectExMapObj(list<CObject*> _Dst, list<CObject*
                 }
                 else {
                     Dst->OnCollision(Src);
-                    Src->OnCollision(Dst);
                 }
 
 

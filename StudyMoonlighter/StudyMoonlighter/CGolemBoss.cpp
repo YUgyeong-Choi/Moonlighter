@@ -9,7 +9,7 @@
 #include "CAbstractFactory.h"
 #include "CGolemBossRock.h"
 
-CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false), m_fPatternCool(0), m_PatternIndex(0)
+CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false), m_fPatternCool(0), m_PatternIndex(0), m_preFrame(0)
 {
 }
 
@@ -47,7 +47,7 @@ int CGolemBoss::Update()
 		}
 	}
 
-	if (m_fPatternCool + 8000 < GetTickCount64()) {
+	if (m_fPatternCool + 5000 < GetTickCount64() && m_IsWake) {
 		m_eCurPattern = m_Pattern.at(m_PatternIndex);
 		m_fPatternCool = GetTickCount64();
 		m_PatternIndex++;
@@ -70,15 +70,18 @@ int CGolemBoss::Update()
 		if (16 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart <= 35) {
 			m_HitBox = { (int)m_tInfo.fX - 50, (int)m_tInfo.fY + 100, (int)m_tInfo.fX + 100, (int)m_tInfo.fY + 200 };
 
-			if (m_tFrame.iFrameStart == 20) {
+			if (m_tFrame.iFrameStart == 20 && m_preFrame != 20) {
+				m_preFrame = 20;
 				SpawnRockCircle(300,20);
 			}
 
-			if (m_tFrame.iFrameStart == 25) {
+			if (m_tFrame.iFrameStart == 25 && m_preFrame != 25) {
+				m_preFrame = 25;
 				SpawnRockCircle(500, 30);
 			}
 
-			if (m_tFrame.iFrameStart == 30) {
+			if (m_tFrame.iFrameStart == 30 && m_preFrame != 30) {
+				m_preFrame = 30;
 				SpawnRockCircle(700, 40);
 			}
 		}
@@ -88,6 +91,7 @@ int CGolemBoss::Update()
 
 		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
 			m_eCurPattern = IDLE;
+			m_preFrame = 0;
 		}
 		break;
 	case CGolemBoss::PUNCHARM:

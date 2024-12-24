@@ -28,6 +28,6 @@ private:
     SPAWNCIRCLE, WAVE
     };
     int m_PatternIndex;
-
+    float m_preFrame;
 };
 
