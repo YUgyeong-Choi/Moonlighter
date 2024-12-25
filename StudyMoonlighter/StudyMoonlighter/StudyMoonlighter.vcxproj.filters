@@ -121,6 +121,9 @@
     <Filter Include="02_Object\02.Monster\Golem\GolemBoss">
       <UniqueIdentifier>{b97f435a-9a37-40f0-9e8f-40c460f7347e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\GolemBossPunch">
+      <UniqueIdentifier>{9ba3cf10-32d0-47d4-a073-96392550ebc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -261,6 +264,9 @@
     <ClInclude Include="CGolemBossRock.h">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemPunch.h">
+      <Filter>02_Object\02.Monster\Golem\GolemBossPunch</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -385,6 +391,9 @@
     </ClCompile>
     <ClCompile Include="CGolemBossRock.cpp">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemPunch.cpp">
+      <Filter>02_Object\02.Monster\Golem\GolemBossPunch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

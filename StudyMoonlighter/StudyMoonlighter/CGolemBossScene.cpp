@@ -27,14 +27,16 @@ void CGolemBossScene::Initialize()
 	CScrollManager::Get_Instance()->Set_Scroll(-600, -702);
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock_shadow.bmp", L"GolemBossRockShadow");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock1.bmp", L"GolemBossRock1");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock2.bmp", L"GolemBossRock2");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock3.bmp", L"GolemBossRock3");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock4.bmp", L"GolemBossRock4");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock5.bmp", L"GolemBossRock5");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock6.bmp", L"GolemBossRock6");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_rock_death.bmp", L"GolemBossRockDeath");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock_shadow.bmp", L"GolemBossShadow");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock1.bmp", L"GolemBossRock1");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock2.bmp", L"GolemBossRock2");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock3.bmp", L"GolemBossRock3");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock4.bmp", L"GolemBossRock4");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock5.bmp", L"GolemBossRock5");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock6.bmp", L"GolemBossRock6");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Rock/boss1_rock_death.bmp", L"GolemBossRockDeath");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_punch_down.bmp", L"GolemBossPunchDown");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_punch_up.bmp", L"GolemBossPunchUp");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background_boss.bmp", L"GolemBossField");
 
 

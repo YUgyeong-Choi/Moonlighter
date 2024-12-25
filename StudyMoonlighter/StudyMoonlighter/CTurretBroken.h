@@ -5,6 +5,7 @@ class CTurretBroken :public CMonster
 public:
     CTurretBroken();
     virtual ~CTurretBroken() { Release(); }
+public:
     void Initialize() override;
     int Update() override;
     void Late_Update() override;

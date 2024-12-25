@@ -34,7 +34,7 @@ int CGolemBossRock::Update()
         m_bIsDead = true;
     }
 
-    if (m_tRemoveTime + 15000 < GetTickCount64()) {
+    if (m_tRemoveTime + 10000 < GetTickCount64()) {
         m_bIsDead = true;
     }
     
@@ -68,7 +68,7 @@ void CGolemBossRock::Late_Update()
 void CGolemBossRock::Render(HDC hDC)
 {
     if (!m_bArrive) {
-        HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRockShadow");
+        HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossShadow");
         int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
         int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 

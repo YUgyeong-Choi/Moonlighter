@@ -2,6 +2,7 @@
 #include "CCollisionManager.h"
 #include "CPlayer.h"
 #include "CGolemBreakable.h"
+#include "CGolemPunch.h"
 
 void CCollisionManager::CollisionRect(list<CObject*> _Dst, list<CObject*> _Src)
 {
@@ -82,6 +83,11 @@ void CCollisionManager::CollisionRectEx(list<CObject*> _Dst, list<CObject*> _Src
                 if (static_cast<CPlayer*>(Dst)->Get_IsRolling()) {
                     continue;
                 }
+
+                if (dynamic_cast<CGolemPunch*>(Src)) {
+                    continue;
+                }
+
                 Dst->OnCollision(Src);
 
                 if (fX > fY)

@@ -152,6 +152,7 @@
     <ClInclude Include="CGolemBreakable.h" />
     <ClInclude Include="CGolemDoor.h" />
     <ClInclude Include="CGolemHole.h" />
+    <ClInclude Include="CGolemPunch.h" />
     <ClInclude Include="CGolemScroll.h" />
     <ClInclude Include="CGolemSoldier.h" />
     <ClInclude Include="CKeyManager.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="CGolemBreakable.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
+    <ClCompile Include="CGolemPunch.cpp" />
     <ClCompile Include="CGolemScroll.cpp" />
     <ClCompile Include="CGolemSoldier.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
