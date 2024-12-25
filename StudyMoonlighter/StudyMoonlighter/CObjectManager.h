@@ -30,6 +30,7 @@ public:
 	list<CObject*> Get_PortalList(){ return m_ObjList[OBJ_PORTAL]; }
 	list<CObject*> Get_FloorList(){ return m_ObjList[OBJ_FLOOR]; }
 	list<CObject*> Get_MonsterList(){ return m_ObjList[OBJ_MONSTER]; }
+	list<CObject*> Get_SlimeList(){ return m_ObjList[OBJ_SLIME]; }
 	int Get_MonsterSize() { return (int)(m_ObjList[OBJ_MONSTER].size()); }
 
 	void Set_MapIndex(int _x, int _y, DIRECTION _dir) { m_iMapXIndex = _x, m_iMapYIndex =_y, m_dir = _dir; }

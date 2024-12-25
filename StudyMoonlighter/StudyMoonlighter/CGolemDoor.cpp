@@ -12,8 +12,8 @@ void CGolemDoor::Initialize()
 	m_eOBJID = OBJ_PORTAL;
 	m_mapType = GOLEM_DOOR;
 
-	m_tInfo.fCX = 120.f;
-	m_tInfo.fCY = 164.f;
+	m_tInfo.fCX = 0.f;
+	m_tInfo.fCY = 0.f;
 
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 4;
@@ -66,16 +66,29 @@ void CGolemDoor::Render(HDC hDC)
 		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/door/golem_left_door.png");
 		m_tInfo.fCX = 70.f;
 		m_tInfo.fCY = 50.f;
+		m_tRenderSizeX = 120.f;
+		m_tRenderSizeY = 164.f;
 		break;
 	case RIGHT:
 		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/door/golem_right_door.png");
 		m_tInfo.fCX = 70.f;
 		m_tInfo.fCY = 50.f;
+		m_tRenderSizeX = 120.f;
+		m_tRenderSizeY = 164.f;
 		break;
 	case UP:
 		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/door/golem_up_door.png");
+		m_tInfo.fCX = 50.f;
+		m_tInfo.fCY = 70.f;
+		m_tRenderSizeX = 164.f;
+		m_tRenderSizeY = 120.f;
 		break;
 	case DOWN:
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/door/golem_down_door.png");
+		m_tInfo.fCX = 50.f;
+		m_tInfo.fCY = 70.f;
+		m_tRenderSizeX = 164.f;
+		m_tRenderSizeY = 120.f;
 		break;
 	}
 	

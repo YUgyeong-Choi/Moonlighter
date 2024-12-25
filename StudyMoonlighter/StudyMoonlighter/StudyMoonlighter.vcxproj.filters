@@ -267,6 +267,9 @@
     <ClInclude Include="CGolemPunch.h">
       <Filter>02_Object\02.Monster\Golem\GolemBossPunch</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemSlimePuddle.h">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -394,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="CGolemPunch.cpp">
       <Filter>02_Object\02.Monster\Golem\GolemBossPunch</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemSlimePuddle.cpp">
+      <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

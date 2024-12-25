@@ -11,6 +11,7 @@
 #include "CGolemDoor.h"
 #include "CBabySlime.h"
 #include "CGolemBreakable.h"
+#include "CGolemSlimePuddle.h"
 
 CFileManager* CFileManager::m_pInstance = nullptr;
 
@@ -55,6 +56,13 @@ void CFileManager::Save_MapObj(const TCHAR* _pFilePath)
 		CMapObj* obj = static_cast<CMapObj*>(mapObj);
 		WriteFile(hFile, obj, sizeof(CMapObj), &dwByte, NULL);
 		WriteFile(hFile, &_type, sizeof(HOLETYPE), &dwByte, NULL);
+	}
+
+	list<CObject*> slimeList = CObjectManager::Get_Instance()->Get_SlimeList(); //이동 관련 (던전)
+	for (auto& mapObj : slimeList)
+	{
+		CMapObj* obj = static_cast<CMapObj*>(mapObj);
+		WriteFile(hFile, obj, sizeof(CMapObj), &dwByte, NULL);
 	}
 
 	CloseHandle(hFile);
@@ -135,6 +143,9 @@ void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath, int _y)
 		}
 		else if (_MapObj.Get_MapObjType() == GOLEM_BROKEN) {
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create((1024 * _y) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY));
+		}
+		else if (_MapObj.Get_MapObjType() == SLIME_PUDDLE) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_SLIME, CAbstractFactory<CGolemSlimePuddle>::Create((1024 * _y) + _MapObj.Get_Info().fX, _MapObj.Get_Info().fY));
 		}
 
 	}
