@@ -149,3 +149,16 @@ static BOOL Renderbox(HDC hDC, RECT tRect, int x, int y)
 	DeleteObject(hNewPen);
 	return true;
 }
+
+static BOOL HitCircle(HDC hDC, RECT tRect)
+{
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
+	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
+	Ellipse(hDC, (int)(tRect.left), (int)(tRect.top), (int)(tRect.right), (int)(tRect.bottom));
+	SelectObject(hDC, hOldPen);
+	SelectObject(hDC, hOldBrush);
+
+	DeleteObject(hNewPen);
+	return true;
+}

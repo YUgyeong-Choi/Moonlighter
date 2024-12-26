@@ -19,6 +19,9 @@
 #include "CTurretBroken.h"
 #include "CBabySlime.h"
 #include "CGolemSlimePuddle.h"
+#include "CSlimeHermit.h"
+#include "CGolemSoldier.h"
+#include "CGolemHead.h"
 
 CDungeonEditScene::CDungeonEditScene()
 {
@@ -27,7 +30,6 @@ CDungeonEditScene::CDungeonEditScene()
 void CDungeonEditScene::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background.bmp", L"DungeonBackground");
-	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slime_puddle1.bmp", L"DungeonBackgroundSlime");
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(150, WINCY / 2));
@@ -80,8 +82,8 @@ void CDungeonEditScene::Key_Input()
 
 	if (CKeyManager::Get_Instance()->Key_Down('P'))
 	{
-		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/GolemDungeon0.dat", 0);
-		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/GolemDungeon0.dat",0);
+		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/GolemDungeon1.dat", 0);
+		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/GolemDungeon1.dat",0);
 	}
 
 }
@@ -98,9 +100,9 @@ void CDungeonEditScene::Create_MapObj()
 	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(LEFT);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2));
 	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(WINCX/2,60));
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(UP);
 
+	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemSoldier>::Create(WINCX / 2, WINCY/2));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemHead>::Create(WINCX / 2, WINCY/2));
 }
 
 void CDungeonEditScene::Offset()

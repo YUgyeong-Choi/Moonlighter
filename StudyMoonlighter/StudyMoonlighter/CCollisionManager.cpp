@@ -45,10 +45,6 @@ void CCollisionManager::CollisionCircle(list<CObject*> _Dst, list<CObject*> _Src
     {
         for (auto& Src : _Src)
         {
-            if (static_cast<CPlayer*>(Src)->Get_IsRolling()) {
-                continue;
-            }
-
             if (CheckCircle(Dst, Src))
             {
                 Dst->OnCollision(Src);

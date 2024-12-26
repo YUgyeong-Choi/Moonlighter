@@ -1,10 +1,10 @@
 #pragma once
 #include "CMonster.h"
-class CGolemSoldier :public CMonster
+class CSlimeHermit :public CMonster
 {
 public:
-    CGolemSoldier();
-    virtual ~CGolemSoldier() { Release(); }
+    CSlimeHermit();
+    virtual ~CSlimeHermit() { Release(); }
     void Initialize() override;
     int Update() override;
     void Late_Update() override;

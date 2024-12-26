@@ -1,19 +1,19 @@
 #pragma once
 #include "CMonster.h"
-class CGolemSoldier :public CMonster
+class CGolemHead :public CMonster
 {
 public:
-    CGolemSoldier();
-    virtual ~CGolemSoldier() { Release(); }
+    CGolemHead();
+    virtual ~CGolemHead() { Release(); }
     void Initialize() override;
     int Update() override;
     void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
+    void OnCollision(CObject* _obj);
 private:
-    void Check_PlayerIn();
-private:
-    RECT m_checkCircle;
+    float m_fAngle;
+    int m_AttackCount;
     bool m_IsAttack;
 };
 

@@ -124,6 +124,12 @@
     <Filter Include="02_Object\02.Monster\Golem\GolemBossPunch">
       <UniqueIdentifier>{9ba3cf10-32d0-47d4-a073-96392550ebc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\SlimeHermit">
+      <UniqueIdentifier>{5847d790-1e83-4290-9fbe-9737bf6c0cd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\GolemHead">
+      <UniqueIdentifier>{69823d50-49c4-49cc-b5e5-c2b3b2a89c15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -270,6 +276,12 @@
     <ClInclude Include="CGolemSlimePuddle.h">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClInclude>
+    <ClInclude Include="CSlimeHermit.h">
+      <Filter>02_Object\02.Monster\Golem\SlimeHermit</Filter>
+    </ClInclude>
+    <ClInclude Include="CGolemHead.h">
+      <Filter>02_Object\02.Monster\Golem\GolemHead</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -400,6 +412,12 @@
     </ClCompile>
     <ClCompile Include="CGolemSlimePuddle.cpp">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClCompile>
+    <ClCompile Include="CSlimeHermit.cpp">
+      <Filter>02_Object\02.Monster\Golem\SlimeHermit</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemHead.cpp">
+      <Filter>02_Object\02.Monster\Golem\GolemHead</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

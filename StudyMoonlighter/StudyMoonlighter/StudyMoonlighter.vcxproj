@@ -151,6 +151,7 @@
     <ClInclude Include="CGolemBossScene.h" />
     <ClInclude Include="CGolemBreakable.h" />
     <ClInclude Include="CGolemDoor.h" />
+    <ClInclude Include="CGolemHead.h" />
     <ClInclude Include="CGolemHole.h" />
     <ClInclude Include="CGolemPunch.h" />
     <ClInclude Include="CGolemScroll.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="CScrollManager.h" />
     <ClInclude Include="CScrollRoll.h" />
     <ClInclude Include="CScrollWasd.h" />
+    <ClInclude Include="CSlimeHermit.h" />
     <ClInclude Include="CSoundManager.h" />
     <ClInclude Include="CTree1.h" />
     <ClInclude Include="CTurretBroken.h" />
@@ -200,6 +202,7 @@
     <ClCompile Include="CGolemBossScene.cpp" />
     <ClCompile Include="CGolemBreakable.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
+    <ClCompile Include="CGolemHead.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
     <ClCompile Include="CGolemPunch.cpp" />
     <ClCompile Include="CGolemScroll.cpp" />
@@ -219,6 +222,7 @@
     <ClCompile Include="CScrollManager.cpp" />
     <ClCompile Include="CScrollRoll.cpp" />
     <ClCompile Include="CScrollWasd.cpp" />
+    <ClCompile Include="CSlimeHermit.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
     <ClCompile Include="CTree1.cpp" />
     <ClCompile Include="CTurretBroken.cpp" />
