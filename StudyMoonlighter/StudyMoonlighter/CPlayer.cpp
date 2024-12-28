@@ -256,7 +256,7 @@ void CPlayer::Render(HDC hDC)
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
-		Hitbox(hDC, m_HitBox, iScrollX, iScrollY);
+		Attackbox(hDC, m_HitBox, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
 

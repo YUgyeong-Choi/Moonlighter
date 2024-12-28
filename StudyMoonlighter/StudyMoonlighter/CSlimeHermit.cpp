@@ -5,6 +5,7 @@
 #include "CBitManager.h"
 #include "CCollisionManager.h"
 #include "CSoundManager.h"
+#include "CCollisionManager.h"
 
 CSlimeHermit::CSlimeHermit():m_IsAttack(false)
 {
@@ -18,8 +19,8 @@ void CSlimeHermit::Initialize()
 {
     m_eOBJID = OBJ_MONSTER;
 
-    m_tInfo.fCX = 0.f;
-    m_tInfo.fCY = 0.f;
+    m_tInfo.fCX = 50.f;
+    m_tInfo.fCY = 50.f;
 
     m_tFrame.iFrameStart = 0;
     m_tFrame.iFrameEnd = 2;
@@ -32,15 +33,78 @@ void CSlimeHermit::Initialize()
 
     m_targetObj = CObjectManager::Get_Instance()->Get_Player();
     m_checkCircle = { (int)m_tInfo.fX - 100, (int)m_tInfo.fY - 100,(int)m_tInfo.fX + 100, (int)m_tInfo.fY + 100 };
+
+    m_iHp = 30;
+    m_iMaxHp = m_iHp;
+    m_iAttackDamage = 10;
 }
 
 int CSlimeHermit::Update()
 {
+    if (m_iHp <= 0) {
+        return OBJ_DEAD;
+    }
     if (m_IsAttack) {
+        switch (m_eDir)
+        {
+        case LEFT:
+            if (m_tFrame.iFrameStart == 8) {
+                m_HitBox = { (long)m_tInfo.fX - 150,(long)m_tInfo.fY - 25,(long)m_tInfo.fX,(long)m_tInfo.fY + 25 };
+            }
+
+            if (m_tFrame.iFrameStart == 23) {
+                m_HitBox = { (long)m_tInfo.fX - 100,(long)m_tInfo.fY - 25,(long)m_tInfo.fX,(long)m_tInfo.fY + 25 };
+            }
+
+            if (m_tFrame.iFrameStart == 40) {
+                m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY - 25,(long)m_tInfo.fX,(long)m_tInfo.fY + 25 };
+            }
+            break;
+        case RIGHT:
+            if (m_tFrame.iFrameStart == 8) {
+                m_HitBox = { (long)m_tInfo.fX-20,(long)m_tInfo.fY - 25,(long)m_tInfo.fX+130,(long)m_tInfo.fY + 25 };
+            }
+
+            if (m_tFrame.iFrameStart == 23) {
+                m_HitBox = { (long)m_tInfo.fX-20,(long)m_tInfo.fY - 25,(long)m_tInfo.fX+80,(long)m_tInfo.fY + 25 };
+            }
+
+            if (m_tFrame.iFrameStart == 40) {
+                m_HitBox = { (long)m_tInfo.fX-20,(long)m_tInfo.fY - 25,(long)m_tInfo.fX+30,(long)m_tInfo.fY + 25 };
+            }
+            break;
+        case UP:
+            if (m_tFrame.iFrameStart == 8) {
+                m_HitBox = { (long)m_tInfo.fX - 40,(long)m_tInfo.fY - 150,(long)m_tInfo.fX + 10 ,(long)m_tInfo.fY};
+            }
+
+            if (m_tFrame.iFrameStart == 23) {
+                m_HitBox = { (long)m_tInfo.fX - 40,(long)m_tInfo.fY - 100,(long)m_tInfo.fX + 10 ,(long)m_tInfo.fY };
+            }
+
+            if (m_tFrame.iFrameStart == 40) {
+                m_HitBox = { (long)m_tInfo.fX - 40,(long)m_tInfo.fY - 50,(long)m_tInfo.fX + 10,(long)m_tInfo.fY };
+            }
+            break;
+        case DOWN:
+            if (m_tFrame.iFrameStart == 8) {
+                m_HitBox = { (long)m_tInfo.fX - 40,(long)m_tInfo.fY,(long)m_tInfo.fX+10 ,(long)m_tInfo.fY+150 };
+            }
+
+            if (m_tFrame.iFrameStart == 23) {
+                m_HitBox = { (long)m_tInfo.fX - 40,(long)m_tInfo.fY,(long)m_tInfo.fX + 10 ,(long)m_tInfo.fY + 100 };
+            }
+
+            if (m_tFrame.iFrameStart == 40) {
+                m_HitBox = { (long)m_tInfo.fX - 40,(long)m_tInfo.fY,(long)m_tInfo.fX + 10,(long)m_tInfo.fY+50};
+            }
+            break;
+        }
         if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
             m_IsAttack = false;
             m_tFrame.iFrameEnd = 2;
             m_tFrame.dwSpeed = 200;
+            m_HitBox = { 0,0,0,0 };
         }
     }
 
@@ -51,8 +115,6 @@ int CSlimeHermit::Update()
         if (fabsf(x) < fabsf(y)) {
             if (y < 0) {
                 m_eDir = UP;
-
-
             }
             else {
                 m_eDir = DOWN;
@@ -70,6 +132,7 @@ int CSlimeHermit::Update()
         }
     }
 
+    __super::Update_Rect();
 	return 0;
 }
 
@@ -90,26 +153,31 @@ void CSlimeHermit::Render(HDC hDC)
     {
     case LEFT:
         hMemDC = CBitManager::GetInstance()->FindImage(L"SlimeHermitLeft");
-        GdiTransparentBlt(hDC, (int)m_tInfo.fX - 200 + iScrollX, (int)m_tInfo.fY - 200 + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
+        GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
         break;
     case RIGHT:
         hMemDC = CBitManager::GetInstance()->FindImage(L"SlimeHermitRight");
-        GdiTransparentBlt(hDC, (int)m_tInfo.fX - 200 + iScrollX, (int)m_tInfo.fY - 200 + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
+        GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
         break;
     case UP:
         hMemDC = CBitManager::GetInstance()->FindImage(L"SlimeHermitUp");
-        GdiTransparentBlt(hDC, (int)m_tInfo.fX - 200 + iScrollX, (int)m_tInfo.fY - 200 + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
+        GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
         break;
     case DOWN:
         hMemDC = CBitManager::GetInstance()->FindImage(L"SlimeHermitDown");
-        GdiTransparentBlt(hDC, (int)m_tInfo.fX - 200 + iScrollX, (int)m_tInfo.fY - 200 + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
+        GdiTransparentBlt(hDC, m_tRenderRect.left + iScrollX, m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, m_tFrame.iFrameStart * m_tRenderSizeX, 0, m_tRenderSizeX, m_tRenderSizeY, RGB(255, 255, 255));
         break;
     }
 
+    if (!m_bCanHit) {
+        RenderHpUi(hDC);
+    }
+
     if (g_bDevmode) {
-        Renderbox(hDC, m_tInfo.fX - 200, m_tInfo.fY - 200, m_tInfo.fX + 200, m_tInfo.fY + 200, iScrollX, iScrollY);
-        Renderbox(hDC, m_HitBox, iScrollX, iScrollY);
-        HitCircle(hDC, m_checkCircle);
+        Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
+        Hitbox(hDC, m_tRect, iScrollX, iScrollY);
+        Attackbox(hDC, m_HitBox, iScrollX, iScrollY);
+        DetectCircle(hDC, m_checkCircle);
     }
 }
 
@@ -119,6 +187,19 @@ void CSlimeHermit::Release()
 
 void CSlimeHermit::OnCollision()
 {
+    CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
+
+    if (CCollisionManager::CollisionRectWeapon(_copyPlayer, this)) {
+        if (m_bCanHit) {
+            if (m_fAttacktedTime + 500 < GetTickCount64()) {
+                m_iAttackedDamage = _copyPlayer->Get_AttackDamage();
+                m_bCanHit = false;
+                m_fAttacktedTime = GetTickCount64();
+                CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+            }
+        }
+    }
 }
 
 void CSlimeHermit::Check_PlayerIn()
@@ -134,7 +215,7 @@ void CSlimeHermit::Check_PlayerIn()
     if (fRadius >= fDiagonal) {
         if (!m_IsAttack) {
             m_tFrame.iFrameEnd = 51;
-            m_tFrame.dwSpeed = 100;
+            m_tFrame.dwSpeed = 80;
             m_IsAttack = true;
             CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
             CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_crash.wav", MONSTER_EFFECT, g_fMonsterVolume, true);

@@ -141,7 +141,7 @@ void CBabySlime::OnCollision()
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
 			}
 		}
 	}
