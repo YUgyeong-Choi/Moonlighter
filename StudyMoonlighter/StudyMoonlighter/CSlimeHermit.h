@@ -10,6 +10,7 @@ public:
     void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
+    void OnCollision();
 private:
     void Check_PlayerIn();
 private:

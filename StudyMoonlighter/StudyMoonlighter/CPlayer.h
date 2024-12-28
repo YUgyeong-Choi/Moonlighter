@@ -39,7 +39,5 @@ private:
 	STATE               m_ePreState;
 	
 	float alpha;
-
-	float m_fTimeSinceLastStep = 0.0f;
 };
 

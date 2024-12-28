@@ -12,7 +12,6 @@ public:
     void Render(HDC hDC) override;
     void Release() override;
     void OnCollision();
-private:
-    float m_fTimeSinceLastStep = 0.0f;
+    
 };
 

@@ -4,9 +4,14 @@
 #include "CScrollManager.h"
 #include "CBitManager.h"
 #include "CCollisionManager.h"
+#include "CSoundManager.h"
 
 CSlimeHermit::CSlimeHermit():m_IsAttack(false)
 {
+    ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_down.bmp", L"SlimeHermitDown");
+    ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_left.bmp", L"SlimeHermitLeft");
+    ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_right.bmp", L"SlimeHermitRight");
+    ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_up.bmp", L"SlimeHermitUp");
 }
 
 void CSlimeHermit::Initialize()
@@ -70,6 +75,8 @@ int CSlimeHermit::Update()
 
 void CSlimeHermit::Late_Update()
 {
+    OnCollision();
+    Hit();
     Check_PlayerIn();
     __super::Move_Frame();
 }
@@ -110,6 +117,10 @@ void CSlimeHermit::Release()
 {
 }
 
+void CSlimeHermit::OnCollision()
+{
+}
+
 void CSlimeHermit::Check_PlayerIn()
 {
     CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
@@ -125,6 +136,8 @@ void CSlimeHermit::Check_PlayerIn()
             m_tFrame.iFrameEnd = 51;
             m_tFrame.dwSpeed = 100;
             m_IsAttack = true;
+            CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+            CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_crash.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
         }
     }
 }

@@ -71,5 +71,7 @@ protected:
 	float		m_tRenderSizeX;
 	float		m_tRenderSizeY;
 	RECT		m_tRenderRect;
+
+	float m_fTimeSinceLastStep;
 };
 

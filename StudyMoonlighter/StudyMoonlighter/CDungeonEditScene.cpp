@@ -23,6 +23,7 @@
 #include "CGolemSoldier.h"
 #include "CGolemHead.h"
 #include "CGolemMiniboss.h"
+#include "CSoundManager.h"
 
 CDungeonEditScene::CDungeonEditScene()
 {
@@ -31,11 +32,9 @@ CDungeonEditScene::CDungeonEditScene()
 void CDungeonEditScene::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background.bmp", L"DungeonBackground");
-	//ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_down.bmp", L"SlimeHermitDown");
-	//ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_left.bmp", L"SlimeHermitLeft");
-	//ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_right.bmp", L"SlimeHermitRight");
-	//ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slimehermit/slimehermit_up.bmp", L"SlimeHermitUp");
+
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slime_puddle1.bmp", L"DungeonBackgroundSlime");
+	CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_floor.wav", SOUND_BGM, g_fBackgroundVolume, true);
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(150, WINCY / 2));
@@ -96,40 +95,40 @@ void CDungeonEditScene::Key_Input()
 
 void CDungeonEditScene::Create_MapObj()
 {
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 30, 1024, 60));
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 670, 1024, 60));
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 30, 1024, 60));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX / 2, 670, 1024, 60));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2));
-	//dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2));
+	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_SLIME, CAbstractFactory<CGolemSlimePuddle>::Create(250, 200));
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_SLIME, CAbstractFactory<CGolemSlimePuddle>::Create(700, 500));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_SLIME, CAbstractFactory<CGolemSlimePuddle>::Create(250, 200));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_SLIME, CAbstractFactory<CGolemSlimePuddle>::Create(700, 500));
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(150, 150));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(150, 150));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(300, 150));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(300, 150));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(400, 150));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(400, 150));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(500, 150));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(500, 150));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(150, 500));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(150, 500));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(300, 500));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(300, 500));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(400, 500));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(400, 500));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 
-	//CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(500, 500));
-	//CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(500, 500));
+	CObjectManager::Get_Instance()->Get_LastMonster()->Set_TargetObj(CObjectManager::Get_Instance()->Get_Player());
 }
 
 void CDungeonEditScene::Offset()

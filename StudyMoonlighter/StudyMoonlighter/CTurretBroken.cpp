@@ -4,6 +4,8 @@
 #include "CObjectManager.h"
 #include "CAbstractFactory.h"
 #include "CTurretDownBullet.h"
+#include "CCollisionManager.h"
+#include "CSoundManager.h"
 
 CTurretBroken::CTurretBroken()
 {
@@ -37,13 +39,15 @@ int CTurretBroken::Update()
 	if (m_tFrame.iFrameStart == 7) {
 		Shoot();
 	}
-	Hit();
+
 	__super::Update_Rect();
 	return 0;
 }
 
 void CTurretBroken::Late_Update()
 {
+	OnCollision();
+	Hit();
 	__super::Move_Frame();
 }
 
@@ -84,14 +88,17 @@ void CTurretBroken::Release()
 {
 }
 
-void CTurretBroken::OnCollision(CObject* _obj)
+void CTurretBroken::OnCollision()
 {
-	if (_obj->Get_OBJID() == OBJ_PLAYER) {
+	CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
+	if (CCollisionManager::CollisionRectWeapon(_copyPlayer, this)) {
 		if (m_bCanHit) {
 			if (m_fAttacktedTime + 500 < GetTickCount64()) {
-				m_iAttackedDamage = _obj->Get_AttackDamage();
+				m_iAttackedDamage = _copyPlayer->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
+				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot_impact.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			}
 		}
 	}
@@ -99,5 +106,7 @@ void CTurretBroken::OnCollision(CObject* _obj)
 
 void CTurretBroken::Shoot()
 {
+	CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+	CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, CAbstractFactory<CTurretDownBullet>::Create(m_tInfo.fX, m_tInfo.fY-10, m_eDir));
 }

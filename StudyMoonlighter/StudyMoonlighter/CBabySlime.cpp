@@ -27,6 +27,7 @@ void CBabySlime::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_iHp = 15;
+	m_iMaxHp = m_iHp;
 	m_fSpeed = 1.f;
 }
 
@@ -82,6 +83,41 @@ void CBabySlime::Render(HDC hDC)
 
 	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 
+
+	if (!m_bCanHit) {
+		ImageAttributes imgAttrs;
+		ColorMatrix colorMatrix;
+		if (m_iAttackedDamage % 2 == 0) {
+			colorMatrix = {
+				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
+				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  // Green channel
+				0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // Blue channel
+				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel
+				1.0f, 1.0f, 1.0f, 0.0f, 1.0f   // Set translation to add white color
+			};
+
+		}
+		else {
+			colorMatrix = {
+				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
+				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Green channel (set to 0 to remove green)
+				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Blue channel (set to 0 to remove blue)
+				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel (no change to transparency)
+				1.0f, 0.0f, 0.0f, 0.0f, 1.0f   // Translation to add red color
+			};
+		}
+		imgAttrs.SetColorMatrix(&colorMatrix);
+		graphics.DrawImage(image,
+			Gdiplus::Rect(
+				(int)m_tRenderRect.left + iScrollX,
+				(int)m_tRenderRect.top + iScrollY,
+				m_tRenderSizeX,
+				m_tRenderSizeY),
+			(int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
+
+		RenderHpUi(hDC);
+	}
+
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
@@ -105,7 +141,7 @@ void CBabySlime::OnCollision()
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_slime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			}
 		}
 	}

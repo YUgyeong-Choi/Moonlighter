@@ -12,8 +12,10 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
+	void RenderHpUi(HDC _hDC);
 	MONSTERTYPE Get_MonsterType() { return m_MonsterType; }
 protected:
 	MONSTERTYPE m_MonsterType;
+	int m_iMaxHp;
 };
 
