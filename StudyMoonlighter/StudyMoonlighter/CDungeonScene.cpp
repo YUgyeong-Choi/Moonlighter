@@ -16,11 +16,11 @@
 #include "CFileManager.h"
 
 
-CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0), m_IsLoad(false)
+CDungeonScene::CDungeonScene():m_iMapXIndex(0), m_iMapYIndex(0), m_IsLoad(false), pFilePath(nullptr), pFilePath2(nullptr)
 {
 }
 
-CDungeonScene::CDungeonScene(const TCHAR* _path1, const TCHAR* _path2, int _x, int _y) :m_iMapXIndex(0), m_iMapYIndex(0), m_IsLoad(false)
+CDungeonScene::CDungeonScene(const TCHAR* _path1, const TCHAR* _path2, int _x, int _y) :m_iMapXIndex(0), m_iMapYIndex(0), m_IsLoad(false), pFilePath(nullptr), pFilePath2(nullptr)
 {
 	pFilePath = _path1;
 	pFilePath2 = _path2;
@@ -85,7 +85,14 @@ void CDungeonScene::Load_Map()
 		CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER_BULLET);
 
 		m_IsLoad = true;
-		CFileManager::GetInstance()->Load_MapObjFile(pFilePath2, m_iMapYIndex);
-		CFileManager::GetInstance()->Load_MonsterFile(pFilePath, m_iMapYIndex);
+		CFileManager::GetInstance()->Load_MapObjFile(pFilePath2, m_iMapXIndex, m_iMapYIndex);
+		CFileManager::GetInstance()->Load_MonsterFile(pFilePath, m_iMapXIndex, m_iMapYIndex);
+	}
+	else {
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER);
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER_BULLET);
+		CFileManager::GetInstance()->Load_MapObjFile(pFilePath2, m_iMapXIndex, m_iMapYIndex);
 	}
 }

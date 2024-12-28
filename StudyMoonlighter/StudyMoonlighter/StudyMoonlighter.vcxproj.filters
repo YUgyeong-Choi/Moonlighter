@@ -112,9 +112,6 @@
     <Filter Include="01_Scenes\03_Field">
       <UniqueIdentifier>{2bf1846f-8560-48da-8185-69022ff5f8f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Scenes\04_Dungeon">
-      <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01_Scenes\05_GolemBoss">
       <UniqueIdentifier>{955d38dd-1c1c-4cf4-b440-7562389afc65}</UniqueIdentifier>
     </Filter>
@@ -132,6 +129,12 @@
     </Filter>
     <Filter Include="02_Object\02.Monster\Golem\GolemMiniBoss">
       <UniqueIdentifier>{4f858944-02a6-4d36-897d-f4bff6686a8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\04_GolemDungeon">
+      <UniqueIdentifier>{847aa71a-b332-4ea8-a8a0-735fb5a4ce98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\09_Dungeon">
+      <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +205,7 @@
       <Filter>01_Scenes\03_Field</Filter>
     </ClInclude>
     <ClInclude Include="CDungeonScene.h">
-      <Filter>01_Scenes\04_Dungeon</Filter>
+      <Filter>01_Scenes\09_Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="CTutorialScene.h">
       <Filter>01_Scenes\01_Tutorial</Filter>
@@ -288,6 +291,9 @@
     <ClInclude Include="CGolemMiniboss.h">
       <Filter>02_Object\02.Monster\Golem\GolemMiniBoss</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemDungeon.h">
+      <Filter>01_Scenes\04_GolemDungeon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -342,7 +348,7 @@
       <Filter>01_Scenes\03_Field</Filter>
     </ClCompile>
     <ClCompile Include="CDungeonScene.cpp">
-      <Filter>01_Scenes\04_Dungeon</Filter>
+      <Filter>01_Scenes\09_Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="CTutorialScene.cpp">
       <Filter>01_Scenes\01_Tutorial</Filter>
@@ -427,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="CGolemMiniboss.cpp">
       <Filter>02_Object\02.Monster\Golem\GolemMiniBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemDungeon.cpp">
+      <Filter>01_Scenes\04_GolemDungeon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

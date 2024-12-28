@@ -75,7 +75,7 @@ int CMenuScene::Update()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F3)) {
-		CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
+		CSceneManager::GetInstance()->SetScene(SC_GOLEMDUNGEON);
 	}
 
 	if (m_bIsOpen) {

@@ -1,11 +1,12 @@
 #pragma once
 #include "CScene.h"
 #include "CDungeonScene.h"
-class CTutorialScene :public CScene
+#include "Define.h"
+class CGolemDungeon : public CScene
 {
 public:
-	CTutorialScene();
-	virtual ~CTutorialScene() { Release(); }
+	CGolemDungeon();
+	virtual ~CGolemDungeon() { Release(); }
 public:
 	void Initialize() override;
 	int Update() override;
@@ -16,8 +17,9 @@ public:
 	void Create_MapObj() override;
 	void Offset() override;
 private:
-	CDungeonScene* m_TutorialDungeon[4];
-	int m_iTutorialIndex;
+	CDungeonScene* m_TutorialDungeon[2][4];
+	int m_iTutorialIndeX;
+	int m_iTutorialIndeY;
 	int m_iMove;
 	bool m_bMapMove;
 	DIRECTION m_dir;

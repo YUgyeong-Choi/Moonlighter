@@ -26,6 +26,7 @@ CGolemMiniboss::CGolemMiniboss(): m_eCurPatten(GolemMiniPattern::END), m_ePrePat
 void CGolemMiniboss::Initialize()
 {
     m_eOBJID = OBJ_MONSTER;
+    m_MonsterType = MINIBOSS;
 
     m_tInfo.fCX = 100.f;
     m_tInfo.fCY = 100.f;
@@ -163,7 +164,7 @@ void CGolemMiniboss::Render(HDC hDC)
         HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
         HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
         HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
-        RoundRect(hDC, m_HitBox.left, m_HitBox.top, m_HitBox.right, m_HitBox.bottom,10,10);
+        Ellipse(hDC, m_HitBox.left, m_HitBox.top, m_HitBox.right, m_HitBox.bottom);
 
         SelectObject(hDC, hOldBrush);
         SelectObject(hDC, hOldPen);
@@ -268,7 +269,7 @@ void CGolemMiniboss::RenderHpUi(HDC _hDC)
     COLORREF color = RGB(237, 52, 52);
     HBRUSH hBrush = CreateSolidBrush(color);
     HBRUSH hOldBrush = (HBRUSH)SelectObject(_hDC, hBrush);
-    Rectangle(_hDC, start,650 , start + hpWidth, 665);
+    RoundRect(_hDC, start,650 , start + hpWidth, 665,10,10);
 
     SelectObject(_hDC, hOldBrush);
     SelectObject(_hDC, hOldPen);

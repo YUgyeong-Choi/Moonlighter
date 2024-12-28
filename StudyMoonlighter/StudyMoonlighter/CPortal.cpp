@@ -48,9 +48,6 @@ void CPortal::OnCollision(CObject* _obj)
 		case FIELD:
 			CSceneManager::GetInstance()->SetScene(SC_FIELD);
 			break;
-		case DUNGEON:
-			CSceneManager::GetInstance()->SetScene(SC_DUNGEON);
-			break;
 		case GOLEMBOSS:
 			CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
 		case PORTAL_END:

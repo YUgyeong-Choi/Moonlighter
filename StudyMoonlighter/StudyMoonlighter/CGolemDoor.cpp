@@ -113,6 +113,9 @@ void CGolemDoor::Release()
 void CGolemDoor::OnCollision(CObject* _obj)
 {
 	if (_obj->Get_OBJID() == OBJ_PLAYER) {
-		m_bLoad_Next = true;
+		if (m_bIsOpen) {
+			m_bLoad_Next = true;
+		}
+		
 	}
 }

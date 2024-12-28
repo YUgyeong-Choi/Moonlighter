@@ -151,6 +151,7 @@
     <ClInclude Include="CGolemBossScene.h" />
     <ClInclude Include="CGolemBreakable.h" />
     <ClInclude Include="CGolemDoor.h" />
+    <ClInclude Include="CGolemDungeon.h" />
     <ClInclude Include="CGolemHead.h" />
     <ClInclude Include="CGolemHole.h" />
     <ClInclude Include="CGolemMiniboss.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="CGolemBossScene.cpp" />
     <ClCompile Include="CGolemBreakable.cpp" />
     <ClCompile Include="CGolemDoor.cpp" />
+    <ClCompile Include="CGolemDungeon.cpp" />
     <ClCompile Include="CGolemHead.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
     <ClCompile Include="CGolemMiniboss.cpp" />

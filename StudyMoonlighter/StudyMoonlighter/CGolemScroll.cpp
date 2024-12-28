@@ -10,6 +10,7 @@ CGolemScroll::CGolemScroll() :m_bIsOpen(false), m_bIsFinish(false)
 void CGolemScroll::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
+	m_mapType = DUNGEON_SCROLL;
 
 	m_tInfo.fCX = 0.f;
 	m_tInfo.fCY = 0.f;

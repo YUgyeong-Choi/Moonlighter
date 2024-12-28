@@ -14,7 +14,7 @@
 #include "CUiManager.h"
 #include "CSceneManager.h"
 
-CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMoveX(0), m_bMapMove(false)
+CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMove(0), m_bMapMove(false)
 {
 	m_TutorialDungeon[0] = new CDungeonScene(L"../Data/MapObj/Tutorial1.dat", L"../Data/MapMonster/Tutorial1.dat", 0, 0);
 	m_TutorialDungeon[1] = new CDungeonScene(L"../Data/MapObj/Tutorial2.dat", L"../Data/MapMonster/Tutorial2.dat", 0, 1);
@@ -54,7 +54,7 @@ int CTutorialScene::Update()
 				m_iTutorialIndex++;
 				if (m_iTutorialIndex == 4) {
 					CObjectManager::Get_Instance()->Delete_ALL();
-					CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+					CSceneManager::GetInstance()->SetScene(SC_MENU);
 					return 0;
 				}
 				m_bMapMove = true;
@@ -103,6 +103,7 @@ void CTutorialScene::Release()
 	}
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+	CObjectManager::Get_Instance()->Delete_ID(OBJ_PLAYER);
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 
@@ -117,10 +118,10 @@ void CTutorialScene::Create_MapObj()
 void CTutorialScene::Offset()
 {
 	if (m_bMapMove) {
-		m_iMoveX += 16;
-		if (m_iMoveX > 1024) {
+		m_iMove += 16;
+		if (m_iMove > 1024) {
 			m_bMapMove = false;
-			m_iMoveX = 0;
+			m_iMove = 0;
 		}
 		else {
 			switch (m_dir)
@@ -138,17 +139,6 @@ void CTutorialScene::Offset()
 			}
 		}
 	}
-
-	//int		iOffSetminY = 260;
-	//int		iOffSetmaxY = 460;
-
-	//int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-
-	//if (iOffSetminY > _copyPlayer->Get_Info().fY + iScrollY)
-	//	CScrollManager::Get_Instance()->Set_ScrollY(_copyPlayer->Get_Speed());
-
-	//if (iOffSetmaxY < _copyPlayer->Get_Info().fY + iScrollY)
-	//	CScrollManager::Get_Instance()->Set_ScrollY(-_copyPlayer->Get_Speed());
 }
 
 

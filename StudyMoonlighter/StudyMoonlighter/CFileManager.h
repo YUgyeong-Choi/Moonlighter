@@ -8,8 +8,8 @@ public:
 public:
 	static void Save_MapObj(const TCHAR* _pFilePath);
 	static void Save_MonsterObj(const TCHAR* _pFilePath);
-	static void Load_MapObjFile(const TCHAR* _pFilePath, int _y);
-	static void Load_MonsterFile(const TCHAR* _pFilePath, int _y);
+	static void Load_MapObjFile(const TCHAR* _pFilePath, int _x, int _y);
+	static void Load_MonsterFile(const TCHAR* _pFilePath, int _x, int _y);
 public:
 	static CFileManager* GetInstance()
 	{
