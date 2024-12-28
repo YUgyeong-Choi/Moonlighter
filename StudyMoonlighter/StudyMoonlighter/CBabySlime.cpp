@@ -26,6 +26,8 @@ void CBabySlime::Initialize()
 	m_tRenderSizeY = 70.f;
 	m_eRender = RENDER_GAMEOBJECT;
 
+	m_targetObj = CObjectManager::Get_Instance()->Get_Player();
+
 	m_iHp = 15;
 	m_iMaxHp = m_iHp;
 	m_fSpeed = 1.f;

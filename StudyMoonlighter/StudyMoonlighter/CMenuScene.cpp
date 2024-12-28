@@ -5,7 +5,7 @@
 #include "CSceneManager.h"
 #include "CSoundManager.h"
 
-CMenuScene::CMenuScene():m_bIsOpen(false), m_iOpenSize(0), m_iOpenTime(0), m_iWidth(0)
+CMenuScene::CMenuScene():m_bIsOpen(false), m_iOpenSize(0), m_iOpenTime(0), m_iWidth(0), m_bMainGame(true)
 {
 }
 
@@ -57,17 +57,20 @@ int CMenuScene::Update()
 	}
 
 	if (m_iOpenSize >= 350) {
+		Key_Input();
 		if (CKeyManager::Get_Instance()->Key_Down(VK_RETURN))
 		{
-			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+			if (m_bMainGame) {
+				CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+			}
+			else {
+				CSceneManager::GetInstance()->SetScene(SC_TUTORIAL);
+			}
+			
 		}
 		m_bIsOpen = false;
 		CSoundManager::Get_Instance()->PlaySound(L"main_menu_door_opened_loop.wav", SOUND_EFFECT, g_fEffectVolume, false);
 		CSoundManager::Get_Instance()->PlayBGM(L"main_menu_screen.wav", g_fBackgroundVolume, false);
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
-		CSceneManager::GetInstance()->SetScene(SC_TUTORIAL);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F2)) {
@@ -110,6 +113,50 @@ void CMenuScene::Render(HDC hDC)
 	hMemDC = CBitManager::GetInstance()->FindImage(szImageName2);
 	GdiTransparentBlt(hDC, 0, 0, WINCX, WINCY, hMemDC, 0, 0, 640, 360, RGB(255, 255, 255));
 
+	HFONT hFont2 = CreateFont(
+		50, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+	);
+
+	HFONT hFont1 = CreateFont(
+		60, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+	);
+
+	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
+
+	if (m_bMainGame) {
+		TCHAR szMainGame[64];
+		_stprintf_s(szMainGame, _T("@ Main Game @"));
+		TextOut(hDC, WINCX / 2 - 150, 400, szMainGame, _tcslen(szMainGame));
+
+		HFONT tempFont = (HFONT)SelectObject(hDC, hFont2);
+		TCHAR szTutorial[64];
+		_stprintf_s(szTutorial, _T("Tutorial"));
+		TextOut(hDC, WINCX / 2 - 60, 480, szTutorial, _tcslen(szTutorial));
+		DeleteObject(tempFont);
+	}
+	else {
+		TCHAR szTutorial[64];
+		_stprintf_s(szTutorial, _T("@ Tutorial @"));
+		TextOut(hDC, WINCX / 2 - 120, 480, szTutorial, _tcslen(szTutorial));
+
+		HFONT tempFont = (HFONT)SelectObject(hDC, hFont2);
+		TCHAR szMainGame[64];
+		_stprintf_s(szMainGame, _T("Main Game"));
+		TextOut(hDC, WINCX / 2 - 80, 400, szMainGame, _tcslen(szMainGame));
+		DeleteObject(tempFont);
+	}
+
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+
+	SelectObject(hDC, OldFont);
+	DeleteObject(hFont2);
+	DeleteObject(hFont1);
+
 	hMemDC = CBitManager::GetInstance()->FindImage(L"GameLogo_2"); 
 	GdiTransparentBlt(hDC, 0 - m_iOpenSize, 0, WINCX/2, WINCY, hMemDC, 0, 0, 320, 362, RGB(0, 0, 0));
 
@@ -117,7 +164,7 @@ void CMenuScene::Render(HDC hDC)
 	GdiTransparentBlt(hDC, WINCX / 2 + m_iOpenSize, 0, WINCX / 2, WINCY, hMemDC, 0, 0, 320, 362, RGB(255, 255, 255));
 
 	hMemDC = CBitManager::GetInstance()->FindImage(L"GameLogo_1");
-	GdiTransparentBlt(hDC, WINCX / 2 - 110, 100, 220, 180, hMemDC, 0, 0, 172, 140, RGB(255, 255, 255));
+	GdiTransparentBlt(hDC, WINCX / 2 - 150, 80, 300, 250, hMemDC, 0, 0, 172, 140, RGB(255, 255, 255));
 }
 
 void CMenuScene::Release()
@@ -126,6 +173,13 @@ void CMenuScene::Release()
 
 void CMenuScene::Key_Input()
 {
+	if (CKeyManager::Get_Instance()->Key_Down('S')) {
+		m_bMainGame = false;
+	}
+
+	if (CKeyManager::Get_Instance()->Key_Down('W')) {
+		m_bMainGame = true;
+	}
 }
 
 void CMenuScene::Create_MapObj()
