@@ -21,5 +21,6 @@ private:
 private:
 	bool m_bWake;
 	bool m_bBossOffSetTrue;
+	bool m_bScrollOpen;
 };
 

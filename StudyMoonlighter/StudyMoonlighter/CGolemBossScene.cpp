@@ -11,7 +11,7 @@
 #include "CGolemScroll.h"
 #include "CSoundManager.h"
 
-CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false)
+CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false), m_bScrollOpen(false)
 {
 }
 
@@ -46,7 +46,11 @@ void CGolemBossScene::Initialize()
 int CGolemBossScene::Update()
 {
 	if (m_bBossOffSetTrue) {
-		CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(1176, 700));
+		if (!m_bScrollOpen) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(1176, 700));
+			m_bScrollOpen = true;
+		}
+		
 	}
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
