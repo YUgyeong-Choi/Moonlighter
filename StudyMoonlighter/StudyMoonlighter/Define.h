@@ -112,12 +112,12 @@ static BOOL Hitbox(HDC hDC, RECT tRect, int x, int y)
 	return true;
 }
 
-static BOOL Attackbox(HDC hDC, RECT tRect, int x, int y)
+static BOOL Attackbox(HDC hDC, RECT tRect)
 {
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, GetStockObject(HOLLOW_BRUSH));
 	HPEN hNewPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 0));
 	HPEN hOldPen = (HPEN)SelectObject(hDC, hNewPen);
-	Rectangle(hDC, (int)(tRect.left + x), (int)(tRect.top + y), (int)(tRect.right + x), (int)(tRect.bottom + y));
+	Rectangle(hDC, tRect.left, tRect.top, tRect.right, tRect.bottom);
 	SelectObject(hDC, hOldPen);
 	SelectObject(hDC, hOldBrush);
 

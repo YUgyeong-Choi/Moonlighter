@@ -11,6 +11,7 @@ public:
     void Render(HDC hDC) override;
     void Release() override;
     void OnCollision(CObject* _obj);
+    void OnCollision();
 private:
     float m_fAngle;
     int m_AttackCount;

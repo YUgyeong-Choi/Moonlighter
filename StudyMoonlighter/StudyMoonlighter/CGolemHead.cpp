@@ -4,7 +4,7 @@
 #include "CScrollManager.h"
 #include "CBitManager.h"
 #include "CCollisionManager.h"
-
+#include "CSoundManager.h"
 
 CGolemHead::CGolemHead():m_AttackCount(0), m_IsAttack(false), m_fAngle(0)
 {
@@ -14,8 +14,8 @@ void CGolemHead::Initialize()
 {
     m_eOBJID = OBJ_MONSTER;
 
-    m_tInfo.fCX = 10.f;
-    m_tInfo.fCY = 10.f;
+    m_tInfo.fCX = 50.f;
+    m_tInfo.fCY = 50.f;
     m_fSpeed = 8.f;
 
     m_tFrame.iFrameStart = 0;
@@ -30,11 +30,17 @@ void CGolemHead::Initialize()
     m_targetObj = CObjectManager::Get_Instance()->Get_Player();
 
     m_AttackCount = 2;
+
+    m_iHp = 10;
+    m_iMaxHp = m_iHp;
+    m_iAttackDamage = 10;
 }
 
 int CGolemHead::Update()
 {
-
+    if (m_iHp <= 0) {
+        return OBJ_DEAD;
+    }
     if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd && !m_IsAttack) {
         m_AttackCount--;
         if (m_AttackCount == 0) {
@@ -54,6 +60,8 @@ int CGolemHead::Update()
 
             m_IsAttack = true;
             m_tFrame.iFrameEnd = 4;
+            CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+            CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_roll.wav", MONSTER_EFFECT, g_fMonsterVolume+0.1f, true);
         }
     }
 
@@ -83,16 +91,14 @@ int CGolemHead::Update()
             }
         }
     }
-
-
-
-
     __super::Update_Rect();
 	return 0;
 }
 
 void CGolemHead::Late_Update()
 {
+    Hit();
+    OnCollision();
     __super::Move_Frame();
 }
 
@@ -141,10 +147,43 @@ void CGolemHead::Render(HDC hDC)
 
     graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 
+    if (!m_bCanHit) {
+        ImageAttributes imgAttrs;
+        ColorMatrix colorMatrix;
+        if (m_iAttackedDamage % 2 == 0) {
+            colorMatrix = {
+                1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
+                0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  // Green channel
+                0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // Blue channel
+                0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel
+                1.0f, 1.0f, 1.0f, 0.0f, 1.0f   // Set translation to add white color
+            };
+
+        }
+        else {
+            colorMatrix = {
+                1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
+                0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Green channel (set to 0 to remove green)
+                0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Blue channel (set to 0 to remove blue)
+                0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel (no change to transparency)
+                1.0f, 0.0f, 0.0f, 0.0f, 1.0f   // Translation to add red color
+            };
+        }
+        imgAttrs.SetColorMatrix(&colorMatrix);
+        graphics.DrawImage(image,
+            Gdiplus::Rect(
+                (int)m_tRenderRect.left + iScrollX,
+                (int)m_tRenderRect.top + iScrollY,
+                m_tRenderSizeX,
+                m_tRenderSizeY),
+            (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
+
+        RenderHpUi(hDC);
+    }
 
     if (g_bDevmode) {
         Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
-        Renderbox(hDC, m_HitBox, iScrollX, iScrollY);
+        Hitbox(hDC, m_tRect, iScrollX, iScrollY);
         //HitCircle(hDC, m_checkCircle);
     }
     delete image;
@@ -163,5 +202,22 @@ void CGolemHead::OnCollision(CObject* _obj)
             m_tFrame.iFrameEnd = 11;
         }
 
+    }
+}
+
+void CGolemHead::OnCollision()
+{
+    CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
+
+    if (CCollisionManager::CollisionRectWeapon(_copyPlayer, this)) {
+        if (m_bCanHit) {
+            if (m_fAttacktedTime + 500 < GetTickCount64()) {
+                m_iAttackedDamage = _copyPlayer->Get_AttackDamage();
+                m_bCanHit = false;
+                m_fAttacktedTime = GetTickCount64();
+                CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+            }
+        }
     }
 }
