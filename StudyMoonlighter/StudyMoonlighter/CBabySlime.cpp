@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "CBabySlime.h"
 #include "CScrollManager.h"
+#include "CSoundManager.h"
+#include "CObjectManager.h"
+#include "CCollisionManager.h"
 
 CBabySlime::CBabySlime()
 {
@@ -32,6 +35,12 @@ int CBabySlime::Update()
 	if (m_iHp <= 0) {
 		return OBJ_DEAD;
 	}
+	m_fTimeSinceLastStep += 0.1f;
+	if (m_fTimeSinceLastStep >= 5) {
+		CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+		CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_slime_attack.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+		m_fTimeSinceLastStep = 0;
+	}
 
 	float   fWidth(0.f), fHeight(0.f), fDiagonal(0.f), fRadian(0.f), m_fAngle(0.f);
 
@@ -57,6 +66,7 @@ int CBabySlime::Update()
 
 void CBabySlime::Late_Update()
 {
+	OnCollision();
 	Hit();
 	__super::Move_Frame();
 }
@@ -84,14 +94,18 @@ void CBabySlime::Release()
 {
 }
 
-void CBabySlime::OnCollision(CObject* _obj)
+void CBabySlime::OnCollision()
 {
-	if (_obj->Get_OBJID() == OBJ_PLAYER) {
+	CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
+	
+	if (CCollisionManager::CollisionRectWeapon(_copyPlayer, this)){
 		if (m_bCanHit) {
 			if (m_fAttacktedTime + 500 < GetTickCount64()) {
-				m_iAttackedDamage = _obj->Get_AttackDamage();
+				m_iAttackedDamage = _copyPlayer->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
+				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_slime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			}
 		}
 	}

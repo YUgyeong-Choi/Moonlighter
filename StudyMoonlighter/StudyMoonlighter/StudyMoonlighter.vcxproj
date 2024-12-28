@@ -153,6 +153,7 @@
     <ClInclude Include="CGolemDoor.h" />
     <ClInclude Include="CGolemHead.h" />
     <ClInclude Include="CGolemHole.h" />
+    <ClInclude Include="CGolemMiniboss.h" />
     <ClInclude Include="CGolemPunch.h" />
     <ClInclude Include="CGolemScroll.h" />
     <ClInclude Include="CGolemSlimePuddle.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="CGolemDoor.cpp" />
     <ClCompile Include="CGolemHead.cpp" />
     <ClCompile Include="CGolemHole.cpp" />
+    <ClCompile Include="CGolemMiniboss.cpp" />
     <ClCompile Include="CGolemPunch.cpp" />
     <ClCompile Include="CGolemScroll.cpp" />
     <ClCompile Include="CGolemSlimePuddle.cpp" />

@@ -7,7 +7,7 @@
 #include "CSoundManager.h"
 #include "CSceneManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false)
 {
 }
 
@@ -50,6 +50,9 @@ int CPlayer::Update()
 	Key_Input();
 	Attack();
 	Change_Motion();
+	if (m_bOnslime) {
+		m_fSpeed = 1.5f;
+	}
 	if (m_eCurState == FALL) {
 		alpha -= 60;
 		if (alpha < 0) {
@@ -307,6 +310,9 @@ void CPlayer::OnCollision(CObject* _obj)
 			}
 		}
 		break;
+	case OBJ_SLIME:
+		m_bOnslime = true;
+		break;
 	case OBJ_PORTAL:
 		break;
 	case OBJ_END:
@@ -404,6 +410,7 @@ void CPlayer::Key_Input()
 
 		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE) && !(m_eCurState == ATTACK)) {
 			if (!m_bIsRoll) {
+				m_bOnslime = false;
 				m_bIsRoll = true;
 				m_eCurState = ROLL;
 				m_fSpeed = 5.f;
@@ -559,14 +566,42 @@ void CPlayer::SoundEffet()
 			break;
 		case SC_GOLEMBOSS:
 			m_fTimeSinceLastStep += 0.1f;
-			if (m_fTimeSinceLastStep >= 2.3) {
-				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
-				m_fTimeSinceLastStep = 0;
+			if (m_bOnslime) {
+				if (m_fTimeSinceLastStep >= 4.6) {
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_dungeon_slime.wav", SOUND_EFFECT, 0.1f, true);
+					m_fTimeSinceLastStep = 0;
+				}
+			}
+			else {
+				if (m_fTimeSinceLastStep >= 2.3) {
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
+					m_fTimeSinceLastStep = 0;
+				}
+			}
+			break;
+		case SC_EDIT:
+			m_fTimeSinceLastStep += 0.1f;
+			if (m_bOnslime) {
+				if (m_fTimeSinceLastStep >= 4.6) {
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_dungeon_slime.wav", SOUND_EFFECT, 0.1f, true);
+					m_fTimeSinceLastStep = 0;
+				}
+			}
+			else {
+				if (m_fTimeSinceLastStep >= 4.6) {
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
+					m_fTimeSinceLastStep = 0;
+				}
 			}
 			break;
 		}
+
 		break;
+
 	case CPlayer::ROLL:
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f, true);

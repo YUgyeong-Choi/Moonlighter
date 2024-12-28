@@ -29,6 +29,7 @@ private:
 	float m_fRollTime;
 
 	bool mbIsAttack;
+	bool m_bOnslime;
 	float m_fComboTime;
 
 	DIRECTION	m_eCurDir;

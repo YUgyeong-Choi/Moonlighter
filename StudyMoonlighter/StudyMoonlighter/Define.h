@@ -23,6 +23,8 @@ extern HWND		g_hWnd;
 extern bool		g_bDevmode;
 extern float    g_fEffectVolume;
 extern float    g_fBackgroundVolume;
+extern float    g_fPlayerVolume;
+extern float    g_fMonsterVolume;
 
 enum SCENEID { SC_MENU, SC_TUTORIAL, SC_EDIT, SC_VILLAGE, SC_FIELD, SC_DUNGEON, SC_GOLEMBOSS, SC_END };
 enum PORTALTYPE { VILLAGE, FIELD, DUNGEON,GOLEMBOSS, PORTAL_END };

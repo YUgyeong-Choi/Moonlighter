@@ -130,6 +130,9 @@
     <Filter Include="02_Object\02.Monster\Golem\GolemHead">
       <UniqueIdentifier>{69823d50-49c4-49cc-b5e5-c2b3b2a89c15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\02.Monster\Golem\GolemMiniBoss">
+      <UniqueIdentifier>{4f858944-02a6-4d36-897d-f4bff6686a8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -282,6 +285,9 @@
     <ClInclude Include="CGolemHead.h">
       <Filter>02_Object\02.Monster\Golem\GolemHead</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemMiniboss.h">
+      <Filter>02_Object\02.Monster\Golem\GolemMiniBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -418,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="CGolemHead.cpp">
       <Filter>02_Object\02.Monster\Golem\GolemHead</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemMiniboss.cpp">
+      <Filter>02_Object\02.Monster\Golem\GolemMiniBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

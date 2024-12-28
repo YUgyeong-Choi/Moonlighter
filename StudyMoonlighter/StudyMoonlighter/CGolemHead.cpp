@@ -14,9 +14,9 @@ void CGolemHead::Initialize()
 {
     m_eOBJID = OBJ_MONSTER;
 
-    m_tInfo.fCX = 0.f;
-    m_tInfo.fCY = 0.f;
-    m_fSpeed = 5.f;
+    m_tInfo.fCX = 10.f;
+    m_tInfo.fCY = 10.f;
+    m_fSpeed = 8.f;
 
     m_tFrame.iFrameStart = 0;
     m_tFrame.iFrameEnd = 11;

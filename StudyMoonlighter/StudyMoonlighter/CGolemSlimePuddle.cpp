@@ -12,8 +12,8 @@ void CGolemSlimePuddle::Initialize()
 	m_eOBJID = OBJ_SLIME;
 	m_mapType = SLIME_PUDDLE;
 
-	m_tInfo.fCX = 0.f;
-	m_tInfo.fCY = 0.f;
+	m_tInfo.fCX = 200.f;
+	m_tInfo.fCY = 100.f;
 
 	m_tRenderSizeX = 400.f;
 	m_tRenderSizeY = 400.f;

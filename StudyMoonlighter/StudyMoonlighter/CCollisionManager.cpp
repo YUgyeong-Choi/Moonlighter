@@ -113,6 +113,17 @@ void CCollisionManager::CollisionRectEx(list<CObject*> _Dst, list<CObject*> _Src
     }
 }
 
+
+bool CCollisionManager::CollisionRectWeapon(CObject* _Dst, CObject* _Src)
+{
+    RECT rc{};
+    if (IntersectRect(&rc, _Dst->Get_HitBox(), _Src->Get_Rect()))
+    {
+        return true;
+    }
+    return false;
+}
+
 void CCollisionManager::CollisionRectExMapObj(list<CObject*> _Dst, list<CObject*> _Src)
 {
     float fX(0.f), fY(0.f);

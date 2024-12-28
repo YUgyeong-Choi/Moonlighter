@@ -1,18 +1,14 @@
 #pragma once
 #include "CMonster.h"
-class CBabySlime :public CMonster
+class CGolemMiniboss :public CMonster
 {
 public:
-    CBabySlime();
-    virtual ~CBabySlime() { Release(); }
-public:
+    CGolemMiniboss();
+    virtual ~CGolemMiniboss() { Release(); }
     void Initialize() override;
     int Update() override;
     void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
-    void OnCollision();
-private:
-    float m_fTimeSinceLastStep = 0.0f;
 };
 
