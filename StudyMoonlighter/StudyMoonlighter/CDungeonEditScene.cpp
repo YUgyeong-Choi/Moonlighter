@@ -24,6 +24,7 @@
 #include "CGolemHead.h"
 #include "CGolemMiniboss.h"
 #include "CSoundManager.h"
+#include "CGolemScroll.h"
 
 CDungeonEditScene::CDungeonEditScene()
 {
@@ -100,15 +101,12 @@ void CDungeonEditScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(30, WINCY / 2, 60, 720));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(994, WINCY / 2, 60, 720));
 
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(WINCX/2, 500));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(50, WINCY / 2));
 	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(LEFT);
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CGolemDoor>::Create(980, WINCY / 2));
-	dynamic_cast<CGolemDoor*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_DIR(RIGHT);
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemSoldier>::Create(WINCX / 2, WINCY / 2));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemHead>::Create(700, 100));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemHead>::Create(700, 600));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemMiniboss>::Create(WINCX / 2, WINCY / 2));
 }
 
 void CDungeonEditScene::Offset()

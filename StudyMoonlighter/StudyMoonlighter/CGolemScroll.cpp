@@ -37,34 +37,31 @@ int CGolemScroll::Update()
 
 void CGolemScroll::Late_Update()
 {
-	if (static_cast<CGolemBossScene*>(CSceneManager::GetInstance()->Get_Scene())->Get_bBossOffSet()) {
-		if (!m_bIsOpen) {
-			if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
-			{
-				++m_tFrame.iFrameStart;
+	if (!m_bIsOpen) {
+		if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
+		{
+			++m_tFrame.iFrameStart;
 
-				if (m_tFrame.iFrameStart > m_tFrame.iFrameEnd) {
-					m_tFrame.iFrameStart = m_tFrame.iFrameEnd;
-					m_bIsOpen = true;
-				}
-
-				m_tFrame.dwTime = GetTickCount64();
+			if (m_tFrame.iFrameStart > m_tFrame.iFrameEnd) {
+				m_tFrame.iFrameStart = m_tFrame.iFrameEnd;
+				m_bIsOpen = true;
 			}
-		}
-		else {
-			if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
-			{
-				--m_tFrame.iFrameStart;
 
-				if (m_tFrame.iFrameStart < 0) {
-					m_bIsFinish = true;
-				}
-
-				m_tFrame.dwTime = GetTickCount64();
-			}
+			m_tFrame.dwTime = GetTickCount64();
 		}
 	}
+	else {
+		if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
+		{
+			--m_tFrame.iFrameStart;
 
+			if (m_tFrame.iFrameStart < 0) {
+				m_bIsFinish = true;
+			}
+
+			m_tFrame.dwTime = GetTickCount64();
+		}
+	}
 }
 
 void CGolemScroll::Render(HDC hDC)

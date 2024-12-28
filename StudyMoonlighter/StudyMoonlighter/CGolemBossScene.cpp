@@ -45,6 +45,9 @@ void CGolemBossScene::Initialize()
 
 int CGolemBossScene::Update()
 {
+	if (m_bBossOffSetTrue) {
+		CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(1176, 700));
+	}
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
 	return 0;
@@ -96,7 +99,6 @@ void CGolemBossScene::Key_Input()
 void CGolemBossScene::Create_MapObj()
 {
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemBoss>::Create(1176, 500));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(1176, 700));
 }
 
 void CGolemBossScene::Offset()
@@ -144,7 +146,7 @@ void CGolemBossScene::BossOffset()
 	}
 		
 
-	int		iOffSetminY = 260;
+	int		iOffSetminY = 260; 
 	int		iOffSetmaxY = 460;
 
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
