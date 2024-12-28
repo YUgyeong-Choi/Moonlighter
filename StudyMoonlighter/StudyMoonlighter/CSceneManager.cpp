@@ -8,6 +8,7 @@
 #include "CDungeonEditScene.h"
 #include "CGolemBossScene.h"
 #include "CGolemDungeon.h"
+#include "CAnimationScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -45,6 +46,9 @@ void CSceneManager::SetScene(SCENEID eID)
 			break;
 		case SC_EDIT:
 			m_pScene = new CDungeonEditScene;
+			break;
+		case SC_ANIM:
+			m_pScene = new CAnimationScene;
 			break;
 		}
 

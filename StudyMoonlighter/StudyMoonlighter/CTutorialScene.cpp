@@ -13,6 +13,7 @@
 #include "CScrollManager.h"
 #include "CUiManager.h"
 #include "CSceneManager.h"
+#include "CSoundManager.h"
 
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMove(0), m_bMapMove(false)
 {
@@ -24,6 +25,8 @@ CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMove(0
 
 void CTutorialScene::Initialize()
 {
+	CSoundManager::Get_Instance()->StopAll();
+	CSoundManager::Get_Instance()->PlayBGM(L"golem_dungeon_floor.wav", g_fBackgroundVolume, true);
 	CScrollManager::Get_Instance()->Set_ScrollLock(4000, 760);
 	CScrollManager::Get_Instance()->Set_Scroll(0, 0);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
@@ -54,7 +57,7 @@ int CTutorialScene::Update()
 				m_iTutorialIndex++;
 				if (m_iTutorialIndex == 4) {
 					CObjectManager::Get_Instance()->Delete_ALL();
-					CSceneManager::GetInstance()->SetScene(SC_MENU);
+					CSceneManager::GetInstance()->SetScene(SC_ANIM);
 					return 0;
 				}
 				m_bMapMove = true;

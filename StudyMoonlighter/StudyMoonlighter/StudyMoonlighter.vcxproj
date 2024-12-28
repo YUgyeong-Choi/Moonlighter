@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
+    <ClInclude Include="CAnimationScene.h" />
     <ClInclude Include="CBabySlime.h" />
     <ClInclude Include="CBitManager.h" />
     <ClInclude Include="CBullet.h" />
@@ -181,6 +182,8 @@
     <ClInclude Include="CTutorialScene.h" />
     <ClInclude Include="CUiManager.h" />
     <ClInclude Include="CVillageScene.h" />
+    <ClInclude Include="CVisitor.h" />
+    <ClInclude Include="CVisitorMale.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -190,6 +193,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAnimationScene.cpp" />
     <ClCompile Include="CBabySlime.cpp" />
     <ClCompile Include="CBitManager.cpp" />
     <ClCompile Include="CBullet.cpp" />
@@ -234,6 +238,8 @@
     <ClCompile Include="CTutorialScene.cpp" />
     <ClCompile Include="CUiManager.cpp" />
     <ClCompile Include="CVillageScene.cpp" />
+    <ClCompile Include="CVisitor.cpp" />
+    <ClCompile Include="CVisitorMale.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

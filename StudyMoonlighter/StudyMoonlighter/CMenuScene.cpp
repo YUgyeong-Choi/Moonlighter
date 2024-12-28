@@ -73,6 +73,10 @@ int CMenuScene::Update()
 		CSoundManager::Get_Instance()->PlayBGM(L"main_menu_screen.wav", g_fBackgroundVolume, false);
 	}
 
+	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
+		CSceneManager::GetInstance()->SetScene(SC_ANIM);
+	}
+
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F2)) {
 		CSceneManager::GetInstance()->SetScene(SC_EDIT);
 	}

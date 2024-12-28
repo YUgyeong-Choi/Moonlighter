@@ -136,6 +136,12 @@
     <Filter Include="01_Scenes\09_Dungeon">
       <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Scenes\06_AnimationScene">
+      <UniqueIdentifier>{3e9aa369-0d48-4c25-a84b-c8e243bbea11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\04_Visitor">
+      <UniqueIdentifier>{d0e44318-11cd-44fc-96e5-497411929b67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -294,6 +300,15 @@
     <ClInclude Include="CGolemDungeon.h">
       <Filter>01_Scenes\04_GolemDungeon</Filter>
     </ClInclude>
+    <ClInclude Include="CAnimationScene.h">
+      <Filter>01_Scenes\06_AnimationScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitorMale.h">
+      <Filter>02_Object\04_Visitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitor.h">
+      <Filter>02_Object\04_Visitor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -436,6 +451,15 @@
     </ClCompile>
     <ClCompile Include="CGolemDungeon.cpp">
       <Filter>01_Scenes\04_GolemDungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimationScene.cpp">
+      <Filter>01_Scenes\06_AnimationScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitorMale.cpp">
+      <Filter>02_Object\04_Visitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitor.cpp">
+      <Filter>02_Object\04_Visitor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

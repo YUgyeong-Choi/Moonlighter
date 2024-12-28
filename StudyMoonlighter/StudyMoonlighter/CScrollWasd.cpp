@@ -3,6 +3,7 @@
 #include "CBitManager.h"
 #include "CScrollManager.h"
 #include "CObjectManager.h"
+#include "CSoundManager.h"
 
 CScrollWasd::CScrollWasd():m_bIsOpen(false)
 {
@@ -43,6 +44,7 @@ void CScrollWasd::Late_Update()
 			if (m_tFrame.iFrameStart > m_tFrame.iFrameEnd) {
 				m_tFrame.iFrameStart = m_tFrame.iFrameEnd;
 				m_bIsOpen = true;
+				CSoundManager::Get_Instance()->PlaySound(L"tutorial_scroll.wav", SOUND_EFFECT, g_fEffectVolume, true);
 			}
 
 			m_tFrame.dwTime = GetTickCount64();
