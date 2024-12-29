@@ -39,5 +39,7 @@ private:
 	STATE               m_ePreState;
 	
 	float alpha;
+
+	bool m_bInvenOpen;
 };
 

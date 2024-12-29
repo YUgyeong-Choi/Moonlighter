@@ -6,8 +6,9 @@
 #include "CObjectManager.h"
 #include "CSoundManager.h"
 #include "CSceneManager.h"
+#include "CUiManager.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false)
 {
 }
 
@@ -266,8 +267,8 @@ void CPlayer::Render(HDC hDC)
 	_stprintf_s(szScroll, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 10, 10, szPlayer, _tcslen(szPlayer));
-	TextOut(hDC, 10, 20, szScroll, _tcslen(szScroll));
+	TextOut(hDC, 300, 10, szPlayer, _tcslen(szPlayer));
+	TextOut(hDC, 300, 25, szScroll, _tcslen(szScroll));
 
 	delete image;
 }
@@ -327,14 +328,14 @@ void CPlayer::OnCollision(CObject* _obj)
 void CPlayer::Key_Input()
 {
 	if (m_eCurState != FALL) {
-		if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK))
+		if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
 		{
 			m_eCurState = IDLE;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK)) {
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
 			m_eCurState = IDLE;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll && !(m_eCurState == ATTACK))
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
 		{
 			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 
@@ -359,7 +360,7 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK))
+		else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
 		{
 			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 				float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
@@ -384,7 +385,7 @@ void CPlayer::Key_Input()
 
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll && !(m_eCurState == ATTACK))
+		else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
 		{
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX -= m_fSpeed;
@@ -392,7 +393,7 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK))
+		else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
 		{
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX += m_fSpeed;
@@ -400,22 +401,32 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 		}
 		else {
-			if (!m_bIsRoll && !(m_eCurState == ATTACK)) {
+			if (!m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
 				m_eCurState = IDLE;
 			}
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down('K') && !m_bIsRoll) {
+		if (CKeyManager::Get_Instance()->Key_Down('K') && !m_bIsRoll && !m_bInvenOpen) {
 			m_eCurState = ATTACK;
 			mbIsAttack = true;
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE) && !(m_eCurState == ATTACK)) {
+		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE) && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
 			if (!m_bIsRoll) {
 				m_bOnslime = false;
 				m_bIsRoll = true;
 				m_eCurState = ROLL;
 				m_fSpeed = 5.f;
+			}
+		}
+
+		if (CKeyManager::Get_Instance()->Key_Down('I')) {
+			m_bInvenOpen = !m_bInvenOpen;
+			if (m_bInvenOpen) {
+				CUiManager::GetInstance()->Set_UiType(UI_INVEN);
+			}
+			else {
+				CUiManager::GetInstance()->Set_UiType(UI_END);
 			}
 		}
 	}
