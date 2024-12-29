@@ -160,6 +160,7 @@
     <ClInclude Include="CGolemScroll.h" />
     <ClInclude Include="CGolemSlimePuddle.h" />
     <ClInclude Include="CGolemSoldier.h" />
+    <ClInclude Include="CInventory.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMapObj.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="CVisitorMale.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="InventorySlot.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="CSceneManager.h" />
@@ -216,6 +218,7 @@
     <ClCompile Include="CGolemScroll.cpp" />
     <ClCompile Include="CGolemSlimePuddle.cpp" />
     <ClCompile Include="CGolemSoldier.cpp" />
+    <ClCompile Include="CInventory.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMapObj.cpp" />
@@ -240,6 +243,7 @@
     <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="CVisitor.cpp" />
     <ClCompile Include="CVisitorMale.cpp" />
+    <ClCompile Include="InventorySlot.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

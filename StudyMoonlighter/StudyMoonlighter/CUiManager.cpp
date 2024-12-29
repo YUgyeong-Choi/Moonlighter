@@ -4,6 +4,11 @@
 #include "CSceneManager.h"
 CUiManager* CUiManager::m_pInstance = nullptr;
 
+void CUiManager::Update()
+{
+	m_Inven->Update();
+}
+
 void CUiManager::Render(HDC hDC)
 {
 	if (m_eCurUi == UI_END) {
@@ -110,6 +115,8 @@ void CUiManager::Inven_Ui(HDC hDC)
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Inventory_base.png");
 	graphics.DrawImage(image, 50, 50, 0, 0, 1038, 548, UnitPixel);
+
+	m_Inven->Render(hDC);
 
 	delete image;
 }

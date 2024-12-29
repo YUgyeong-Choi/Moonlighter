@@ -99,6 +99,15 @@ typedef struct tagInfo
 
 }INFO;
 
+typedef struct tagItem {
+	int itemId;
+	string itemName;
+	int num;
+	int maxNum;
+	TCHAR* pImageUrl;
+	//나중에 적정 가격 추가해도 됨
+}ITEM;
+
 
 static BOOL Hitbox(HDC hDC, RECT tRect, int x, int y)
 {

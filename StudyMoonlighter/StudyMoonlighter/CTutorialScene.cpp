@@ -77,6 +77,7 @@ int CTutorialScene::Update()
 		dungeon->Update();
 	}
 	CObjectManager::Get_Instance()->Update();
+	CUiManager::GetInstance()->Update();
     return 0;
 }
 
