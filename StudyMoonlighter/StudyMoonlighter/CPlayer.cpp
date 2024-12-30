@@ -7,6 +7,7 @@
 #include "CSoundManager.h"
 #include "CSceneManager.h"
 #include "CUiManager.h"
+#include "CInventory.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false)
 {
@@ -424,11 +425,22 @@ void CPlayer::Key_Input()
 			m_bInvenOpen = !m_bInvenOpen;
 			if (m_bInvenOpen) {
 				CUiManager::GetInstance()->Set_UiType(UI_INVEN);
+				static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
 			}
 			else {
 				CUiManager::GetInstance()->Set_UiType(UI_END);
 			}
 		}
+	}
+
+	if (CKeyManager::Get_Instance()->Key_Down('1')) {
+		static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(WHETSTONE);
+	}
+	if (CKeyManager::Get_Instance()->Key_Down('2')) {
+		static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(TEETHSTONE);
+	}
+	if (CKeyManager::Get_Instance()->Key_Down('3')) {
+		static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(BROKENSWORD);
 	}
 }
 

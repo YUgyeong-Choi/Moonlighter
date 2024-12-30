@@ -47,6 +47,7 @@ int CDungeonEditScene::Update()
 {
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
+	CUiManager::GetInstance()->Update();
     return 0;
 }
 

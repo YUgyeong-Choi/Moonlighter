@@ -161,6 +161,7 @@
     <ClInclude Include="CGolemSlimePuddle.h" />
     <ClInclude Include="CGolemSoldier.h" />
     <ClInclude Include="CInventory.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMapObj.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="CGolemSlimePuddle.cpp" />
     <ClCompile Include="CGolemSoldier.cpp" />
     <ClCompile Include="CInventory.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMapObj.cpp" />

@@ -145,6 +145,9 @@
     <Filter Include="02_Object\05_Inventory">
       <UniqueIdentifier>{2e85cbd0-85ac-4089-a270-71f4c1bc7e30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\06.Item">
+      <UniqueIdentifier>{8669a6d4-4e96-47e1-868a-825dead34ad6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -318,6 +321,9 @@
     <ClInclude Include="CInventory.h">
       <Filter>02_Object\05_Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>02_Object\06.Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -475,6 +481,9 @@
     </ClCompile>
     <ClCompile Include="CInventory.cpp">
       <Filter>02_Object\05_Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>02_Object\06.Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

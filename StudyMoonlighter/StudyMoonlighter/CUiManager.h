@@ -6,11 +6,13 @@ class CUiManager
 {
 public:
 	CUiManager():m_eCurUi(UI_END){ m_Inven = new CInventory; }
-	~CUiManager() { ; }
+	~CUiManager() { Safe_Delete<CInventory*>(m_Inven); }
 public:
 	void Update();
 	void Render(HDC hDC);
 	void Set_UiType(UITYPE _type) { m_eCurUi = _type; }
+	UITYPE Get_UiType() { return m_eCurUi; }
+	CInventory* Get_Inven() { return m_Inven; }
 public:
 	static CUiManager* GetInstance()
 	{
