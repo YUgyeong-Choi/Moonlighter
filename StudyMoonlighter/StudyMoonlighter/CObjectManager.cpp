@@ -64,6 +64,7 @@ void CObjectManager::Late_Update()
 	CCollisionManager::CollisionRectWeapon(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_PLAYER]); //몬스터 무기 플레이어 충돌
 	CCollisionManager::CollisionRectWeapon(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]); //플레이어 무기 부숴지는거 충돌
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_SLIME]);
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
 }
 
 void CObjectManager::Render(HDC hDC)

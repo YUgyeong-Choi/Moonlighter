@@ -67,12 +67,6 @@ void CDungeonEditScene::Render(HDC hDC)
 
 void CDungeonEditScene::Release()
 {
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_PLAYER);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER_BULLET);
-	CObjectManager::Get_Instance()->RenderListClear();
 }
 
 void CDungeonEditScene::Key_Input()
@@ -119,6 +113,10 @@ void CDungeonEditScene::Create_MapObj()
 	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(550, 200));
 	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(600, 200));
 	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(650, 200));
+	
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(WINCX/2,WINCY/2));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(WINCX/2-100,WINCY/2-100));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(WINCX/2+100,WINCY/2+100));
 }
 
 void CDungeonEditScene::Offset()

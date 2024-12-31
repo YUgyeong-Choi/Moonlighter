@@ -4,6 +4,8 @@
 #include "CSoundManager.h"
 #include "CObjectManager.h"
 #include "CCollisionManager.h"
+#include "CAbstractFactory.h"
+#include "CItem.h"
 
 CBabySlime::CBabySlime()
 {
@@ -36,6 +38,8 @@ void CBabySlime::Initialize()
 int CBabySlime::Update()
 {
 	if (m_iHp <= 0) {
+		CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(RICHJELLY);
 		return OBJ_DEAD;
 	}
 	m_fTimeSinceLastStep += 0.1f;
