@@ -14,6 +14,10 @@ public:
 	void Set_PortalType(PORTALTYPE _type) { m_ePortalType = _type; }
 	void		OnCollision(CObject* _obj);
 private:
+	void KeyInput();
+private:
 	PORTALTYPE m_ePortalType;
+	bool m_bEnter;
+	bool m_bCollision;
 };
 
