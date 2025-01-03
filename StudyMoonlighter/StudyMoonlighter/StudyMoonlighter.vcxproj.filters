@@ -318,6 +318,15 @@
     <ClInclude Include="CItem.h">
       <Filter>02_Object\06.Item</Filter>
     </ClInclude>
+    <ClInclude Include="CInventory.h">
+      <Filter>02_Object\05_Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="CInvenSlot.h">
+      <Filter>02_Object\05_Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpecialSlot.h">
+      <Filter>02_Object\05_Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -472,6 +481,15 @@
     </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>02_Object\06.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventory.cpp">
+      <Filter>02_Object\05_Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="CInvenSlot.cpp">
+      <Filter>02_Object\05_Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpecialSlot.cpp">
+      <Filter>02_Object\05_Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

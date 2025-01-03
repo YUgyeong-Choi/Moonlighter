@@ -4,8 +4,15 @@
 #include "CSceneManager.h"
 CUiManager* CUiManager::m_pInstance = nullptr;
 
+void CUiManager::Initialize()
+{
+	m_Inven = new CInventory();
+	m_Inven->Initialize();
+}
+
 void CUiManager::Update()
 {
+	m_Inven->Update();
 }
 
 void CUiManager::Render(HDC hDC)
@@ -89,6 +96,11 @@ void CUiManager::Render(HDC hDC)
 	delete image;
 }
 
+void CUiManager::Release()
+{
+	Safe_Delete<CInventory*>(m_Inven);
+}
+
 void CUiManager::Dungeon_Ui(HDC hDC)
 {
 	Image* image(nullptr);
@@ -115,6 +127,6 @@ void CUiManager::Inven_Ui(HDC hDC)
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Inventory_base.png");
 	graphics.DrawImage(image, 100, 100, 0, 0, 1038, 548, UnitPixel);
 
-
+	m_Inven->Render(hDC);
 	delete image;
 }

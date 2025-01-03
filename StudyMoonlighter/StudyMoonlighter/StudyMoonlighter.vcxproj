@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CAnimationScene.h" />
+    <ClInclude Include="CSpecialSlot.h" />
     <ClInclude Include="CBabySlime.h" />
     <ClInclude Include="CBitManager.h" />
     <ClInclude Include="CBullet.h" />
@@ -160,6 +161,8 @@
     <ClInclude Include="CGolemScroll.h" />
     <ClInclude Include="CGolemSlimePuddle.h" />
     <ClInclude Include="CGolemSoldier.h" />
+    <ClInclude Include="CInvenSlot.h" />
+    <ClInclude Include="CInventory.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CKeyManager.h" />
     <ClInclude Include="CMainGame.h" />
@@ -195,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAnimationScene.cpp" />
+    <ClCompile Include="CSpecialSlot.cpp" />
     <ClCompile Include="CBabySlime.cpp" />
     <ClCompile Include="CBitManager.cpp" />
     <ClCompile Include="CBullet.cpp" />
@@ -217,6 +221,8 @@
     <ClCompile Include="CGolemScroll.cpp" />
     <ClCompile Include="CGolemSlimePuddle.cpp" />
     <ClCompile Include="CGolemSoldier.cpp" />
+    <ClCompile Include="CInvenSlot.cpp" />
+    <ClCompile Include="CInventory.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
     <ClCompile Include="CMainGame.cpp" />

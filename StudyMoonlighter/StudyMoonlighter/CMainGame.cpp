@@ -29,7 +29,7 @@ void CMainGame::Initialize()
 
 	CSceneManager::GetInstance()->SetScene(SC_MENU);
 	CSoundManager::Get_Instance()->Initialize();
-
+	CUiManager::GetInstance()->Initialize();
 }
 
 void CMainGame::Update()
@@ -71,6 +71,7 @@ void CMainGame::Release()
 	CKeyManager::Destroy_Instance();
 	CScrollManager::Destroy_Instance();
 	CFileManager::DestroyInstance();
+	CUiManager::GetInstance()->Release();
 	CUiManager::DestroyInstance();
 	CSoundManager::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
