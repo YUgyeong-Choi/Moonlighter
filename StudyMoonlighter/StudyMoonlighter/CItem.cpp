@@ -4,7 +4,7 @@
 #include "CObjectManager.h"
 #include "CCollisionManager.h"
 
-CItem::CItem():m_type(ITEM_END)
+CItem::CItem():m_type(ITEM_END), m_outfitType(OUTFIT_END)
 {
 }
 

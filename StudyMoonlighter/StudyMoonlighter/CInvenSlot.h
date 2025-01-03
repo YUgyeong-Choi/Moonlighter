@@ -16,7 +16,8 @@ public:
 	ITEM Get_Item() { return item; }
 	void Set_Item(ITEM _item) { item = _item; }
 	void Item_Init();
-	void Set_ItemNum() { item.num++; }
+	void Add_ItemNum() { item.num++; }
+	void Sub_ItemNum() { item.num--; }
 	void Set_ItemType(ITEMTYPE _item);
 protected:
 	int rowIndex;

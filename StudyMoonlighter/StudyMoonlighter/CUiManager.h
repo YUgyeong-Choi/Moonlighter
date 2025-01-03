@@ -13,6 +13,7 @@ public:
 	void Release();
 	void Set_UiType(UITYPE _type) { m_eCurUi = _type; }
 	UITYPE Get_UiType() { return m_eCurUi; }
+	CInventory* Get_Inven() { return m_Inven; }
 public:
 	static CUiManager* GetInstance()
 	{

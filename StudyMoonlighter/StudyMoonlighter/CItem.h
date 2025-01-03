@@ -19,6 +19,7 @@ private:
 	void OnCollision();
 private:
 	ITEMTYPE m_type;
+	OUTFITTYPE m_outfitType;
 	const TCHAR* pImageUrl;
 };
 

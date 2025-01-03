@@ -43,25 +43,38 @@ void CInvenSlot::Render(HDC hDC)
 	if (item.itemId != ITEM_END) {
 		image = Image::FromFile(item.pImageUrl);
 		if (rowIndex == 0) {
-			graphics.DrawImage(image, 164 + (columnIndex * 71), 130 + (rowIndex * 72), 0, 0, 48, 48, UnitPixel);
+			graphics.DrawImage(image, 172 + (columnIndex * 57), 160 , 0, 0, 48, 48, UnitPixel);
 		}
 		else {
-			graphics.DrawImage(image, 164 + (columnIndex * 71), 144 + (rowIndex * 72), 0, 0, 48, 48, UnitPixel);
+			graphics.DrawImage(image, 172 + (columnIndex * 57), 230 + ((rowIndex-1) * 57), 0, 0, 48, 48, UnitPixel);
 		}
-	}
 
-	if (item.num != 0) {
 		TCHAR szItemNum[64];
 		_stprintf_s(szItemNum, _T("%d"), item.num);
 		SetTextColor(hDC, RGB(0, 0, 0));
 		SetBkMode(hDC, TRANSPARENT);
+
+		HFONT hFont1 = CreateFont(
+			25, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+			DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+			DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+		);
+
+
+		HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
+
+
 		if (rowIndex == 0) {
-			TextOut(hDC, 193 + (columnIndex * 71), 173 + (rowIndex * 72), szItemNum, _tcslen(szItemNum));
+			TextOut(hDC, 210 + (columnIndex * 57), 187, szItemNum, _tcslen(szItemNum));
 		}
 		else {
-			TextOut(hDC, 193 + (columnIndex * 71), 186 + (rowIndex * 72), szItemNum, _tcslen(szItemNum));
+			TextOut(hDC, 210 + (columnIndex * 57), 255 + ((rowIndex-1) * 57), szItemNum, _tcslen(szItemNum));
 		}
+		SelectObject(hDC, OldFont);
+		DeleteObject(hFont1);
 	}
+
+
 	delete image;
 }
 
