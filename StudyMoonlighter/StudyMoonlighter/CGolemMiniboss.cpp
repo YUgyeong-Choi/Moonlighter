@@ -5,7 +5,9 @@
 #include "CBitManager.h"
 #include "CCollisionManager.h"
 #include "CSoundManager.h"
-
+#include "CGolemScroll.h"
+#include "CAbstractFactory.h"
+#include "CItem.h"
 
 CGolemMiniboss::CGolemMiniboss(): m_eCurPatten(GolemMiniPattern::END), m_ePrePatten(GolemMiniPattern::END), m_iAttackTick(0), m_iAttackMaze(0), m_IsAttack(false), m_radius(0)
 {
@@ -46,14 +48,21 @@ void CGolemMiniboss::Initialize()
     m_eCurPatten = IDLE;
     m_iAttackMaze = 3;
 
-    m_iHp = 30;
+    m_iHp = 300;
     m_iMaxHp= m_iHp; 
-    m_iAttackDamage = 10;
+    m_iAttackDamage = 23;
+
+    CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(WINCX / 2, 500));
+    static_cast<CGolemScroll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_Text(L"중간 보스");
 }
 
 int CGolemMiniboss::Update()
 {
     if (m_iHp <= 0) {
+        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX-10, m_tInfo.fY));
+        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(WATERSPHERE);
+        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX+10, m_tInfo.fY));
+        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(HARDENEDSTEEL);
         return OBJ_DEAD;
     }
     m_iAttackTick++;

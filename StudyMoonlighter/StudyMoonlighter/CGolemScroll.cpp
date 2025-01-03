@@ -83,7 +83,7 @@ void CGolemScroll::Render(HDC hDC)
 	);
 	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
 
-	TextOut(hDC, m_tInfo.fX-45, m_tInfo.fY + 50, text, wcslen(text));
+	TextOut(hDC, 467, 550, text, wcslen(text));
 
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);

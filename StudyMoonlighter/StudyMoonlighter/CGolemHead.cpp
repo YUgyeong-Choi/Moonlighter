@@ -5,6 +5,8 @@
 #include "CBitManager.h"
 #include "CCollisionManager.h"
 #include "CSoundManager.h"
+#include "CItem.h"
+#include "CAbstractFactory.h"
 
 CGolemHead::CGolemHead():m_AttackCount(0), m_IsAttack(false), m_fAngle(0)
 {
@@ -31,14 +33,16 @@ void CGolemHead::Initialize()
 
     m_AttackCount = 2;
 
-    m_iHp = 10;
+    m_iHp = 150;
     m_iMaxHp = m_iHp;
-    m_iAttackDamage = 10;
+    m_iAttackDamage = 21;
 }
 
 int CGolemHead::Update()
 {
     if (m_iHp <= 0) {
+        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(TEETHSTONE);
         return OBJ_DEAD;
     }
     if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd && !m_IsAttack) {

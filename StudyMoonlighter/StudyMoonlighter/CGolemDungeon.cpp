@@ -6,6 +6,7 @@
 #include "CUiManager.h"
 #include "CAbstractFactory.h"
 #include "CPlayer.h"
+#include "CGolemScroll.h"
 
 CGolemDungeon::CGolemDungeon():m_iTutorialIndeX(0), m_iTutorialIndeY(0), m_dir(DIR_END), m_iMove(0), m_bMapMove(false)
 {
@@ -40,6 +41,7 @@ void CGolemDungeon::Initialize()
 	}
 
 	m_TutorialDungeon[m_iTutorialIndeX][m_iTutorialIndeY]->Load_Map();
+	Create_MapObj();
 }
 
 int CGolemDungeon::Update()
@@ -141,6 +143,8 @@ void CGolemDungeon::Key_Input()
 
 void CGolemDungeon::Create_MapObj()
 {
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create((1024 * m_iTutorialIndeY) + WINCX / 2, (720 * m_iTutorialIndeX) + 500));
+	static_cast<CGolemScroll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_Text(L"°ñ·½ ´øÀü");
 }
 
 void CGolemDungeon::Offset()

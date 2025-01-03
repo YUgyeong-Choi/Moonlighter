@@ -6,6 +6,8 @@
 #include "CCollisionManager.h"
 #include "CSoundManager.h"
 #include "CCollisionManager.h"
+#include "CItem.h"
+#include "CAbstractFactory.h"
 
 CSlimeHermit::CSlimeHermit():m_IsAttack(false)
 {
@@ -34,14 +36,16 @@ void CSlimeHermit::Initialize()
     m_targetObj = CObjectManager::Get_Instance()->Get_Player();
     m_checkCircle = { (int)m_tInfo.fX - 100, (int)m_tInfo.fY - 100,(int)m_tInfo.fX + 100, (int)m_tInfo.fY + 100 };
 
-    m_iHp = 30;
+    m_iHp = 100;
     m_iMaxHp = m_iHp;
-    m_iAttackDamage = 10;
+    m_iAttackDamage = 17;
 }
 
 int CSlimeHermit::Update()
 {
     if (m_iHp <= 0) {
+        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(WHETSTONE);
         return OBJ_DEAD;
     }
     if (m_IsAttack) {

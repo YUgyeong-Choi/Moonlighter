@@ -30,7 +30,8 @@ void CBabySlime::Initialize()
 
 	m_targetObj = CObjectManager::Get_Instance()->Get_Player();
 
-	m_iHp = 15;
+	m_iHp = 25;
+	m_iAttackDamage = 12;
 	m_iMaxHp = m_iHp;
 	m_fSpeed = 1.f;
 }

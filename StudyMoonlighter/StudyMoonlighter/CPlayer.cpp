@@ -41,7 +41,7 @@ void CPlayer::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_iHp = 100;
-	m_iAttackDamage = 10;
+	m_iAttackDamage = 25;
 }
 
 int CPlayer::Update()

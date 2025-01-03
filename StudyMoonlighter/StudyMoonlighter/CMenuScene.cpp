@@ -75,7 +75,7 @@ int CMenuScene::Update()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F3)) {
-		CSceneManager::GetInstance()->SetScene(SC_GOLEMDUNGEON);
+		CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 	}
 
 	if (m_bIsOpen) {

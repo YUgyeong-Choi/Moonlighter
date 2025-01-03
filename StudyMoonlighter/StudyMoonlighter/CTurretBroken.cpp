@@ -6,6 +6,7 @@
 #include "CTurretDownBullet.h"
 #include "CCollisionManager.h"
 #include "CSoundManager.h"
+#include "CItem.h"
 
 CTurretBroken::CTurretBroken()
 {
@@ -29,12 +30,15 @@ void CTurretBroken::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_iHp = 50;
+	m_iAttackDamage = 12;
 	m_iMaxHp = m_iHp;
 }
 
 int CTurretBroken::Update()
 {
 	if (m_iHp <= 0) {
+		CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+		static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(IRONBAR);
 		return OBJ_DEAD;
 	}
 	if (m_tFrame.iFrameStart == 7) {
