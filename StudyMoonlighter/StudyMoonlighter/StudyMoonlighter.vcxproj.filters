@@ -148,6 +148,9 @@
     <Filter Include="02_Object\06.Item">
       <UniqueIdentifier>{8669a6d4-4e96-47e1-868a-825dead34ad6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01_Scenes\07_Shop">
+      <UniqueIdentifier>{77cd86c5-93fa-44bc-8ef3-aa9b84f2ca56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -327,6 +330,9 @@
     <ClInclude Include="CSpecialSlot.h">
       <Filter>02_Object\05_Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="CShopScene.h">
+      <Filter>01_Scenes\07_Shop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -490,6 +496,9 @@
     </ClCompile>
     <ClCompile Include="CSpecialSlot.cpp">
       <Filter>02_Object\05_Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="CShopScene.cpp">
+      <Filter>01_Scenes\07_Shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

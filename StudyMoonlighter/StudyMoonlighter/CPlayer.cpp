@@ -9,7 +9,7 @@
 #include "CUiManager.h"
 #include "CItem.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0)
 {
 }
 
@@ -41,6 +41,7 @@ void CPlayer::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_iHp = 100;
+	m_iMaxHp = m_iHp;
 	m_iAttackDamage = 25;
 }
 
@@ -512,14 +513,14 @@ void CPlayer::Change_Motion()
 		case CPlayer::IDLE:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 9;
-			m_tFrame.dwSpeed = 200;
+			m_tFrame.dwSpeed = 300;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
 		case CPlayer::WALK:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 7;
-			m_tFrame.dwSpeed = 200;
+			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CPlayer::ROLL:

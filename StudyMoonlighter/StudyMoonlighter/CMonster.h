@@ -16,6 +16,5 @@ public:
 	MONSTERTYPE Get_MonsterType() { return m_MonsterType; }
 protected:
 	MONSTERTYPE m_MonsterType;
-	int m_iMaxHp;
 };
 

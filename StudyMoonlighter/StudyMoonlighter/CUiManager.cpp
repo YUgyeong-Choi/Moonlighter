@@ -2,6 +2,7 @@
 #include "CUiManager.h"
 #include "CObjectManager.h"
 #include "CSceneManager.h"
+#include "CPlayer.h"
 CUiManager* CUiManager::m_pInstance = nullptr;
 
 void CUiManager::Initialize()
@@ -79,7 +80,7 @@ void CUiManager::Render(HDC hDC)
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/HealthBar_Base.png");
 	graphics.DrawImage(image, 115, 22, 0, 0, 146, 44, UnitPixel);
 
-	int hpWidth =  (132 * CObjectManager::Get_Instance()->Get_Player()->Get_Hp()) / 100;
+	int hpWidth =  (132 * CObjectManager::Get_Instance()->Get_Player()->Get_Hp()) / CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp();
 	COLORREF color = RGB(237, 52, 52);
 
 	HBRUSH hBrush = CreateSolidBrush(color);
@@ -92,6 +93,35 @@ void CUiManager::Render(HDC hDC)
 	SelectObject(hDC, hOldPen);
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
+
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+
+	HFONT hFont1 = CreateFont(
+		25, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+	);
+
+	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
+
+	TCHAR szHpBar[64];
+	_stprintf_s(szHpBar, _T("%d/%d"), CObjectManager::Get_Instance()->Get_Player()->Get_Hp(), CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp());
+
+	RECT rect = { 160, 50, 260, 70 }; 
+	DrawText(hDC, szHpBar, _tcslen(szHpBar), &rect, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+
+	TCHAR szMoney[64];
+	_stprintf_s(szMoney, _T("%d"), static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Get_Money());
+
+	RECT rect2 = { 20, 90, 70, 110 };
+	DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+
+	SelectObject(hDC, OldFont);
+	DeleteObject(hFont1);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Coin.png");
+	graphics.DrawImage(image, 10, 95, 0, 0, 18, 18, UnitPixel);
 
 	delete image;
 }
@@ -107,10 +137,10 @@ void CUiManager::Dungeon_Ui(HDC hDC)
 	Graphics graphics(hDC);
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
-	graphics.DrawImage(image, 920, 550, 0, 0, 70, 70, UnitPixel);
+	graphics.DrawImage(image, 920, 570, 0, 0, 70, 70, UnitPixel);
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Bag_Pendant.png");
-	graphics.DrawImage(image, 920, 550, 0, 0, 70, 70, UnitPixel);
+	graphics.DrawImage(image, 920, 570, 0, 0, 70, 70, UnitPixel);
 
 	delete image;
 }

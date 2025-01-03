@@ -2,7 +2,7 @@
 #include "CMonster.h"
 #include "CScrollManager.h"
 
-CMonster::CMonster():m_MonsterType(MONSTER_END), m_iMaxHp(0)
+CMonster::CMonster():m_MonsterType(MONSTER_END)
 {
 }
 

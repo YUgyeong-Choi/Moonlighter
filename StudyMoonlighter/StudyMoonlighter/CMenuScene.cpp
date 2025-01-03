@@ -74,6 +74,10 @@ int CMenuScene::Update()
 		CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 	}
 
+	if (CKeyManager::Get_Instance()->Key_Down(VK_F3)) {
+		CSceneManager::GetInstance()->SetScene(SC_SHOP);
+	}
+
 	if (m_bIsOpen) {
 		m_iOpenSize += 2;
 	}
@@ -111,7 +115,6 @@ void CMenuScene::Render(HDC hDC)
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
 	);
-
 
 	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
 

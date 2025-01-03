@@ -29,6 +29,7 @@ public:
 	int Get_AttackDamage() { return m_iAttackDamage; }
 
 	int Get_Hp() { return m_iHp; }
+	int Get_MaxHp() { return m_iMaxHp; }
 	void Set_Hp(int _i) { m_iHp -= _i; }
 
 	void Set_TargetObj(CObject* _obj) { m_targetObj = _obj; }
@@ -47,6 +48,7 @@ protected:
 	DIRECTION m_eDir;
 
 	int  m_iHp;
+	int m_iMaxHp;
 	int	 m_iAttackDamage;
 	float		m_fSpeed;
 	float m_fFixScrollSpeed;

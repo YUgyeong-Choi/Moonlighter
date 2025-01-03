@@ -9,6 +9,7 @@
 #include "CGolemBossScene.h"
 #include "CGolemDungeon.h"
 #include "CAnimationScene.h"
+#include "CShopScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -49,6 +50,9 @@ void CSceneManager::SetScene(SCENEID eID)
 			break;
 		case SC_ANIM:
 			m_pScene = new CAnimationScene;
+			break;
+		case SC_SHOP:
+			m_pScene = new CShopScene;
 			break;
 		}
 

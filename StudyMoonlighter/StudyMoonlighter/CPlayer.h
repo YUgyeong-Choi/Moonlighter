@@ -17,6 +17,7 @@ public:
 public:
 	bool Get_IsRolling() { return m_bIsRoll; }
 	bool Get_CanHit() { return !m_bIsRoll && m_bCanHit; }
+	int Get_Money() { return m_iMoney; }
 private:
 	void Key_Input();
 	void Rolling();
@@ -24,6 +25,8 @@ private:
 	void SoundEffet();
 	void Attack();
 private:
+	int m_iMoney;
+
 	bool m_bIsRoll;
 	bool m_bFalling;
 	float m_fRollTime;
