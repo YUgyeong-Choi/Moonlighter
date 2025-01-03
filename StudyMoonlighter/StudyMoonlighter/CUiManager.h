@@ -1,18 +1,16 @@
 #pragma once
 #include "Define.h"
-#include "CInventory.h"
 
 class CUiManager
 {
 public:
-	CUiManager():m_eCurUi(UI_END){ m_Inven = new CInventory; }
-	~CUiManager() { Safe_Delete<CInventory*>(m_Inven); }
+	CUiManager() :m_eCurUi(UI_END) { ; }
+	~CUiManager() {; }
 public:
 	void Update();
 	void Render(HDC hDC);
 	void Set_UiType(UITYPE _type) { m_eCurUi = _type; }
 	UITYPE Get_UiType() { return m_eCurUi; }
-	CInventory* Get_Inven() { return m_Inven; }
 public:
 	static CUiManager* GetInstance()
 	{
@@ -36,6 +34,5 @@ private:
 
 private:
 	static CUiManager* m_pInstance;
-	CInventory* m_Inven;
 	UITYPE m_eCurUi;
 };

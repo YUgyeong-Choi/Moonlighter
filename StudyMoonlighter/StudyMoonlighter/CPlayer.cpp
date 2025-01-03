@@ -7,7 +7,6 @@
 #include "CSoundManager.h"
 #include "CSceneManager.h"
 #include "CUiManager.h"
-#include "CInventory.h"
 #include "CItem.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false)
@@ -321,7 +320,7 @@ void CPlayer::OnCollision(CObject* _obj)
 	case OBJ_PORTAL:
 		break;
 	case OBJ_ITEM:
-		static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(static_cast<CItem*>(_obj)->Get_ItemType());
+		//static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(static_cast<CItem*>(_obj)->Get_ItemType());
 		break;
 	case OBJ_END:
 		break;
@@ -429,7 +428,7 @@ void CPlayer::Key_Input()
 			m_bInvenOpen = !m_bInvenOpen;
 			if (m_bInvenOpen) {
 				CUiManager::GetInstance()->Set_UiType(UI_INVEN);
-				static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+				//static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
 			}
 			else {
 				CUiManager::GetInstance()->Set_UiType(UI_END);

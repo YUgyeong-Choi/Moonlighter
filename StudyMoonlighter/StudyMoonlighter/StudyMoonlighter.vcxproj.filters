@@ -315,12 +315,6 @@
     <ClInclude Include="CVisitor.h">
       <Filter>02_Object\04_Visitor</Filter>
     </ClInclude>
-    <ClInclude Include="InventorySlot.h">
-      <Filter>02_Object\05_Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="CInventory.h">
-      <Filter>02_Object\05_Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="CItem.h">
       <Filter>02_Object\06.Item</Filter>
     </ClInclude>
@@ -475,12 +469,6 @@
     </ClCompile>
     <ClCompile Include="CVisitor.cpp">
       <Filter>02_Object\04_Visitor</Filter>
-    </ClCompile>
-    <ClCompile Include="InventorySlot.cpp">
-      <Filter>02_Object\05_Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="CInventory.cpp">
-      <Filter>02_Object\05_Inventory</Filter>
     </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>02_Object\06.Item</Filter>
