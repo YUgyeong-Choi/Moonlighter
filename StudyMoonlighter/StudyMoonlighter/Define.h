@@ -103,7 +103,7 @@ typedef struct tagInfo
 
 typedef struct tagItem {
 	ITEMTYPE itemId;
-	string itemName;
+	const TCHAR* itemName;
 	int num;
 	int maxNum;
 	const TCHAR* pImageUrl;

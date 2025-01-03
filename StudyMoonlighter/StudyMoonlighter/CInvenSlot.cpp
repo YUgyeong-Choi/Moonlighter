@@ -93,7 +93,7 @@ void CInvenSlot::Set_ItemType(ITEMTYPE _item)
 	{
 	case BROKENSWORD:
 		item.itemId = BROKENSWORD;
-		item.itemName = "BrokenSword";
+		item.itemName = L"BrokenSword";
 		item.maxNum = 5;
 		item.num = 1;
 		item.pImageUrl = L"../MoonlighterAssets/Items/0_BrokenSword.png";
@@ -102,42 +102,42 @@ void CInvenSlot::Set_ItemType(ITEMTYPE _item)
 		break;
 	case HARDENEDSTEEL:
 		item.itemId = HARDENEDSTEEL;
-		item.itemName = "HardenedSteel";
+		item.itemName = L"HardenedSteel";
 		item.maxNum = 5;
 		item.num = 1;
 		item.pImageUrl = L"../MoonlighterAssets/Items/2_HardenedSteel.png";
 		break;
 	case IRONBAR:
 		item.itemId = IRONBAR;
-		item.itemName = "IronBar";
+		item.itemName = L"IronBar";
 		item.maxNum = 10;
 		item.num = 1;
 		item.pImageUrl = L"../MoonlighterAssets/Items/3_IronBar.png";
 		break;
 	case RICHJELLY:
 		item.itemId = RICHJELLY;
-		item.itemName = "RichJelly";
+		item.itemName = L"RichJelly";
 		item.maxNum = 10;
 		item.num = 1;
 		item.pImageUrl = L"../MoonlighterAssets/Items/4_RichJelly.png";
 		break;
 	case TEETHSTONE:
 		item.itemId = TEETHSTONE;
-		item.itemName = "TeethStone";
+		item.itemName = L"TeethStone";
 		item.maxNum = 10;
 		item.num = 1;
 		item.pImageUrl = L"../MoonlighterAssets/Items/5_TeethStone.png";
 		break;
 	case WATERSPHERE:
 		item.itemId = WATERSPHERE;
-		item.itemName = "WaterSphere";
+		item.itemName = L"WaterSphere";
 		item.maxNum = 10;
 		item.num = 1;
 		item.pImageUrl = L"../MoonlighterAssets/Items/6_WaterSphere.png";
 		break;
 	case WHETSTONE:
 		item.itemId = WHETSTONE;
-		item.itemName = "Whetstone";
+		item.itemName = L"Whetstone";
 		item.maxNum = 10;
 		item.num = 1;
 		item.pImageUrl = L"../MoonlighterAssets/Items/7_Whetstone.png";

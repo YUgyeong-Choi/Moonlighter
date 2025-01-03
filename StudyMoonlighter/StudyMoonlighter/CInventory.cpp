@@ -181,6 +181,16 @@ void CInventory::Render(HDC hDC)
         DeleteObject(hFont1);
     }
 
+    if (inventory[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
+        image = Image::FromFile(L"../MoonlighterAssets/Ui/GUI_ItemNameLabel.png");
+        graphics.DrawImage(image, WINCX/2-155, 550, 0, 0, 310, 34, UnitPixel);
+        RECT rect = { WINCX / 2 - 155 , 550,  WINCX / 2 - 155 + 310, 584 };
+
+        TCHAR szItemName[64];
+        _stprintf_s(szItemName, _T("%s"), inventory[rowIndex][columnIndex]->Get_Item().itemName);
+        DrawText(hDC, szItemName, _tcslen(szItemName), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+    }
+
     delete image;
 }
 
