@@ -27,9 +27,9 @@ void CGolemDungeon::Initialize()
 	m_iTutorialIndeX = 1;
 	m_iTutorialIndeY = 1;
 
-	CScrollManager::Get_Instance()->Set_ScrollLock(4000, 760);
+	CScrollManager::Get_Instance()->Set_ScrollLock(4096, 1440);
 	CScrollManager::Get_Instance()->Set_Scroll(-1024, -720);
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create((1024 * m_iTutorialIndeY) +WINCX / 2, (720 * m_iTutorialIndeX) + WINCY / 2));
+	CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024 * m_iTutorialIndeY) + WINCX / 2, (720 * m_iTutorialIndeX) + WINCY / 2);
 	CObjectManager::Get_Instance()->Set_MapIndex(1, 1, DOWN);
 	for (auto& row : m_TutorialDungeon) {
 		for (auto& dungeon : row) {

@@ -1,10 +1,17 @@
 #include "pch.h"
 #include "CVisitorMale.h"
 #include "CScrollManager.h"
+#include "CKeyManager.h"
+#include "CSceneManager.h"
 
-CVisitorMale::CVisitorMale():m_bXArrive(false), m_bYArrive(false), charIndex(0), tick(0)
+CVisitorMale::CVisitorMale():m_bXArrive(false), m_bYArrive(false), charIndex(0), tick(0), cnt(0), talkFinish(false)
 {
-	_stprintf_s(text, _T("안녕하세요"));
+	_stprintf_s(text[0], _T("튜토리얼을 하느라 수고했네,,,"));
+	_stprintf_s(text[1], _T("이제 게임을 시작할 때가 되었구나"));
+	_stprintf_s(text[2], _T("던전에서 전리품을 얻고"));
+	_stprintf_s(text[3], _T("상점에서 물건을 팔아"));
+	_stprintf_s(text[4], _T("** 부자 ** 가 되어라"));
+	_stprintf_s(text[5], _T("행운을 빌겠네"));
 	_stprintf_s(name, _T("Zenon"));
 }
 
@@ -36,9 +43,12 @@ int CVisitorMale::Update()
 
 	if (tick > 10) {
 		if (m_bYArrive && m_bXArrive) {
-			if (charIndex < _tcslen(text)) {
+			if (charIndex < _tcslen(text[cnt])) {
 				charIndex++;
 				tick = 0;
+			}
+			else {
+				talkFinish = true;
 			}
 		}
 
@@ -48,7 +58,7 @@ int CVisitorMale::Update()
 	}
 	TarGetPosition();
 	Change_Motion();
-	
+	KeyInput();
 	__super::Update_Rect();
 	return 0;
 }
@@ -111,10 +121,13 @@ void CVisitorMale::Render(HDC hDC)
 
 	if (m_bXArrive && m_bYArrive) {
 		image = Image::FromFile(L"../MoonlighterAssets/Ui/talk.png");
-		graphics.DrawImage(image, 120, 120, 0 , 0, 600, 200, UnitPixel);
+		graphics.DrawImage(image, 170, 500, 0 , 0, 600, 200, UnitPixel);
 
 		image = Image::FromFile(L"../MoonlighterAssets/Ui/grandpa.png");
-		graphics.DrawImage(image, 135, 140, 0, 0, 180, 170, UnitPixel);
+		graphics.DrawImage(image, 185, 520, 0, 0, 180, 170, UnitPixel);
+
+		image = Image::FromFile(L"../MoonlighterAssets/Ui/button_K.png");
+		graphics.DrawImage(image, 700, 630, 0, 0, 64, 64, UnitPixel);
 
 		HFONT hFont = CreateFont(
 			30,                 
@@ -136,11 +149,12 @@ void CVisitorMale::Render(HDC hDC)
 
 		SetTextColor(hDC, RGB(62, 44, 8));
 		SetBkMode(hDC, TRANSPARENT);
-		TextOut(hDC, 350, 150, name, _tcslen(name));
+		TextOut(hDC, 400, 530, name, _tcslen(name));
 
 		SetTextColor(hDC, RGB(130, 114, 86));
 		SetBkMode(hDC, TRANSPARENT);
-		TextOut(hDC, 350, 180, text, charIndex);
+		
+		TextOut(hDC, 400, 570, text[cnt], charIndex);
 
 		DeleteObject(hFont);
 		SelectObject(hDC, OldFont);
@@ -195,5 +209,19 @@ void CVisitorMale::Change_Motion()
 			break;
 		}
 		m_ePrePattern = m_eCurPattern;
+	}
+}
+
+void CVisitorMale::KeyInput()
+{
+	if (CKeyManager::Get_Instance()->Key_Down('K')) {
+		if (talkFinish) {
+			cnt++;
+			talkFinish = false;
+			charIndex = 0;
+			if (cnt == 5) {
+				CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+			}
+		}
 	}
 }

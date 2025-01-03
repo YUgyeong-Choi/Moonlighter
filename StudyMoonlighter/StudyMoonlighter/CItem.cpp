@@ -16,8 +16,8 @@ void CItem::Initialize()
 	m_tInfo.fCX = 10;
 	m_tInfo.fCY = 10;
 
-	m_tRenderSizeX = 60;
-	m_tRenderSizeY = 60;
+	m_tRenderSizeX = 48;
+	m_tRenderSizeY = 48;
 
 	m_fSpeed = 1;
 	m_iHp = 1;

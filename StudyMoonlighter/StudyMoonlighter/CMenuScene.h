@@ -19,6 +19,5 @@ private:
 	int m_iOpenTime;
 	int m_iOpenSize;
 	int m_iWidth;
-	bool m_bMainGame;
 };
 

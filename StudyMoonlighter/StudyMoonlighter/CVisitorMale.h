@@ -14,12 +14,16 @@ public:
 	void TarGetPosition();
 private:
 	void Change_Motion();
+	void KeyInput();
+private:
 	bool m_bYArrive;
 	bool m_bXArrive;
 	int charIndex;
 	int tick;
-	TCHAR text[64];
+	TCHAR text[6][64];
 	TCHAR name[64];
 	
+	int cnt;
+	bool talkFinish;
 };
 

@@ -32,7 +32,6 @@ void CAnimationScene::Initialize()
 
 int CAnimationScene::Update()
 {
-	Key_Input();
 	if (m_tPortalFrame.iFrameStart == m_tPortalFrame.iFrameEnd) {
 		m_bPortalFinish = true;
 	}
@@ -75,20 +74,6 @@ void CAnimationScene::Release()
 
 void CAnimationScene::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Pressing('W')){
-		CScrollManager::Get_Instance()->Set_ScrollY(2);
-	}
-	if (CKeyManager::Get_Instance()->Key_Pressing('S')) {
-		CScrollManager::Get_Instance()->Set_ScrollY(-2);
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Pressing('A')) {
-		CScrollManager::Get_Instance()->Set_ScrollX(2);
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
-		CScrollManager::Get_Instance()->Set_ScrollX(-2);
-	}
 }
 
 void CAnimationScene::Create_MapObj()

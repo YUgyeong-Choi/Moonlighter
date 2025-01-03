@@ -14,6 +14,8 @@
 #include "CUiManager.h"
 #include "CSceneManager.h"
 #include "CSoundManager.h"
+#include "CGolemScroll.h"
+
 
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMove(0), m_bMapMove(false)
 {
@@ -27,7 +29,7 @@ void CTutorialScene::Initialize()
 {
 	CSoundManager::Get_Instance()->StopAll();
 	CSoundManager::Get_Instance()->PlayBGM(L"golem_dungeon_floor.wav", g_fBackgroundVolume, true);
-	CScrollManager::Get_Instance()->Set_ScrollLock(4000, 760);
+	CScrollManager::Get_Instance()->Set_ScrollLock(4096, 720);
 	CScrollManager::Get_Instance()->Set_Scroll(0, 0);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 	CObjectManager::Get_Instance()->Set_MapIndex(0, 0, RIGHT);
@@ -35,6 +37,8 @@ void CTutorialScene::Initialize()
 		dungeon->Initialize();
 	}
 	m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
+
+	Create_MapObj();
 }
 
 int CTutorialScene::Update()
@@ -105,9 +109,7 @@ void CTutorialScene::Release()
 	for (auto dungeon : m_TutorialDungeon) {
 		Safe_Delete<CDungeonScene*>(dungeon);
 	}
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_PLAYER);
+	CObjectManager::Get_Instance()->Delete_ALL();
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 
@@ -117,6 +119,8 @@ void CTutorialScene::Key_Input()
 
 void CTutorialScene::Create_MapObj()
 {
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(WINCX / 2, 500));
+	static_cast<CGolemScroll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_Text(L"Æ©Åä¸®¾ó");
 }
 
 void CTutorialScene::Offset()

@@ -7,6 +7,7 @@ CGolemScroll::CGolemScroll() :m_bIsOpen(false), m_bIsFinish(false)
 {
 }
 
+
 void CGolemScroll::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
@@ -74,6 +75,21 @@ void CGolemScroll::Render(HDC hDC)
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 
 	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+
+	HFONT hFont1 = CreateFont(
+		30, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+	);
+	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
+
+	TextOut(hDC, m_tInfo.fX-45, m_tInfo.fY + 50, text, wcslen(text));
+
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+
+	SelectObject(hDC, OldFont);
+	DeleteObject(hFont1);
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);

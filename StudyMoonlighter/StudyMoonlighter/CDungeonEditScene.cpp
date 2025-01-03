@@ -76,17 +76,17 @@ void CDungeonEditScene::Key_Input()
 		g_bDevmode = !g_bDevmode;
 	}
 
-	if (CKeyManager::Get_Instance()->Key_Down('O'))
-	{
-		CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/GolemDungeon2.dat");
-		CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/GolemDungeon2.dat");
-	}
+	//if (CKeyManager::Get_Instance()->Key_Down('O'))
+	//{
+	//	CFileManager::GetInstance()->Save_MapObj(L"../Data/MapMonster/GolemDungeon2.dat");
+	//	CFileManager::GetInstance()->Save_MonsterObj(L"../Data/MapObj/GolemDungeon2.dat");
+	//}
 
-	if (CKeyManager::Get_Instance()->Key_Down('P'))
-	{
-		CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/GolemDungeon2.dat", 0,0);
-		CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/GolemDungeon2.dat",0,0);
-	}
+	//if (CKeyManager::Get_Instance()->Key_Down('P'))
+	//{
+	//	CFileManager::GetInstance()->Load_MapObjFile(L"../Data/MapMonster/GolemDungeon2.dat", 0,0);
+	//	CFileManager::GetInstance()->Load_MonsterFile(L"../Data/MapObj/GolemDungeon2.dat",0,0);
+	//}
 
 }
 
@@ -113,10 +113,6 @@ void CDungeonEditScene::Create_MapObj()
 	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(550, 200));
 	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(600, 200));
 	//CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable>::Create(650, 200));
-	
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(WINCX/2,WINCY/2));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(WINCX/2-100,WINCY/2-100));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(WINCX/2+100,WINCY/2+100));
 }
 
 void CDungeonEditScene::Offset()
