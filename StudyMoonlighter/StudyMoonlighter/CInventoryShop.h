@@ -1,5 +1,6 @@
 #pragma once
 #include "CInvenSlot.h"
+#include "Define.h"
 class CInventoryShop
 {
 public:
@@ -17,8 +18,10 @@ public:
 
 private:
 	vector<vector<CInvenSlot*>> inventory;
+	vector<vector<CInvenSlot*>> sellSlots;
 	int rowIndex;
 	int columnIndex;
 	ITEM _pickUpItem;
+	bool m_IsInven;
 };
 

@@ -34,6 +34,7 @@ void CUiManager::Initialize()
 	m_Inven->Copy_Inven(inventory);
 
 	m_InvenShop = new CInventoryShop();
+	m_InvenShop->Initialize();
 	m_InvenShop->Copy_Inven(inventory);
 }
 
@@ -168,6 +169,7 @@ void CUiManager::Release()
 		}
 	}
 	Safe_Delete<CInventory*>(m_Inven);
+	Safe_Delete<CInventoryShop*>(m_InvenShop);
 }
 
 void CUiManager::Dungeon_Ui(HDC hDC)
