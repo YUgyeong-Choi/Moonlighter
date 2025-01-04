@@ -6,6 +6,9 @@
 #include "CKeyManager.h"
 #include "CAbstractFactory.h"
 
+#include "CPlayer.h"
+#include "CObjectManager.h"
+
 CAnimationScene::CAnimationScene():m_bPortalFinish(false), m_pGrandpa(nullptr)
 {
 	ZeroMemory(&m_tPortalFrame, sizeof(FRAME));
@@ -22,12 +25,13 @@ void CAnimationScene::Initialize()
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 
 	m_tPortalFrame.iFrameStart = 0;
-	m_tPortalFrame.iFrameEnd = 37;
+	m_tPortalFrame.iFrameEnd = 34;
 	m_tPortalFrame.dwSpeed = 150;
 	m_tPortalFrame.dwTime = GetTickCount64();
 
 	Create_MapObj();
 	m_pGrandpa = CAbstractFactory<CVisitorMale>::Create(1200, 1200);
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
 }
 
 int CAnimationScene::Update()
@@ -69,6 +73,7 @@ void CAnimationScene::Render(HDC hDC)
 
 void CAnimationScene::Release()
 {
+
 	Safe_Delete<CObject*>(m_pGrandpa);
 }
 

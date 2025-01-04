@@ -46,7 +46,6 @@ void CMenuScene::Initialize()
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/Main_menu_2_14.bmp", L"MainMenu_2_14");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/Main_menu_2_15.bmp", L"MainMenu_2_15");
 	CBitManager::GetInstance()->InsertBmp(L"../MoonlighterAssets/StartMenu/Main_menu_2_16.bmp", L"MainMenu_2_16");
-	
 }
 
 int CMenuScene::Update()
@@ -71,7 +70,7 @@ int CMenuScene::Update()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
-		CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+		CSceneManager::GetInstance()->SetScene(SC_ANIM);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F3)) {

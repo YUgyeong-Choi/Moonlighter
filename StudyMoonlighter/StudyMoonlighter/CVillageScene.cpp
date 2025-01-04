@@ -4,6 +4,7 @@
 #include "CAbstractFactory.h"
 #include "CObjectManager.h"
 #include "CPlayer.h"
+#include "CShopPlayer.h"
 #include "CScrollManager.h"
 #include "CKeyManager.h"
 #include "CTree1.h"
@@ -20,8 +21,20 @@ void CVillageScene::Initialize()
 	CSoundManager::Get_Instance()->StopAll();
 	CSoundManager::Get_Instance()->PlayBGM(L"rynoka_day_normal.wav", g_fBackgroundVolume,true);
 	ADD_BMP(L"../MoonlighterAssets/Map/MainVillage.bmp", L"VillageBackground");
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
-	CScrollManager::Get_Instance()->Set_Scroll(-1470, -279);
+	if (CShopPlayer* _player = dynamic_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		int hp = _player->Get_Hp();
+		int money = _player->Get_Money();
+		int maxHp = _player->Get_MaxHp();
+		CObjectManager::Get_Instance()->Delete_ID(OBJ_PLAYER);
+		CObjectManager::Get_Instance()->RenderListClear();
+		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(1600, 585));
+		CScrollManager::Get_Instance()->Set_Scroll(-1139, -291);
+		static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_State(hp, money, maxHp);
+	}
+	else {
+		CObjectManager::Get_Instance()->Get_Player()->Set_Pos(2040, 646);
+		CScrollManager::Get_Instance()->Set_Scroll(-1470, -279);
+	}
 	m_fMapXSize = 2602.f;
 	m_fMapYSize = 2134.f;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);

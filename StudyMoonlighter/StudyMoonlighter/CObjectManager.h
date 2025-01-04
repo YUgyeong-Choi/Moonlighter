@@ -14,6 +14,7 @@ public:
 
 	void		Delete_ID(OBJID eID);
 	void		Delete_ALL();
+	void		Delete_ALLNotPlayer();
 	void		RenderListClear()
 	{
 		for (size_t i = 0; i < RENDER_END; ++i)

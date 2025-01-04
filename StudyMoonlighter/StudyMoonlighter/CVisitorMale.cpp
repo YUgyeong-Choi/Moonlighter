@@ -41,7 +41,7 @@ int CVisitorMale::Update()
 {
 	tick++;
 
-	if (tick > 10) {
+	if (tick > 6) {
 		if (m_bYArrive && m_bXArrive) {
 			if (charIndex < _tcslen(text[cnt])) {
 				charIndex++;

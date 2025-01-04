@@ -19,5 +19,6 @@ private:
 	PORTALTYPE m_ePortalType;
 	bool m_bEnter;
 	bool m_bCollision;
+	int alpha;
 };
 

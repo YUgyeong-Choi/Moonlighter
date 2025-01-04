@@ -9,8 +9,10 @@
 #include "CShopPlayer.h"
 #include "CUiManager.h"
 #include "CCollisionBox.h"
+#include "CPortal.h"
+#include "CCollisionManager.h"
 
-CShopScene::CShopScene():m_bShop(true)
+CShopScene::CShopScene():m_bShop(true), m_Active(false)
 {
 }
 
@@ -46,6 +48,8 @@ int CShopScene::Update()
 
 void CShopScene::LateUpdate()
 {
+	m_Active = false;
+	OnCollision();
 	CheckOffset();
 	CObjectManager::Get_Instance()->Late_Update();
 }
@@ -72,15 +76,30 @@ void CShopScene::Render(HDC hDC)
 	
 	CObjectManager::Get_Instance()->Render(hDC);
 
-	image = Image::FromFile(L"../MoonlighterAssets/Map/Shop/up_door.png");
-	graphics.DrawImage(image, 515 + iScrollX, 360+iScrollY, 0, 0, 108, 96, UnitPixel);
+	//m_AddUiCheck = { 450 + iScrollX , 310 + iScrollY, 650 + iScrollX, 510 + iScrollY };
+	m_AddUiCheck = { 450 , 310, 650 , 510  };
+
+	if (m_Active) {
+		image = Image::FromFile(L"../MoonlighterAssets/Map/Shop/up_door.png");
+		graphics.DrawImage(image, 513 + iScrollX, 360 + iScrollY, 0, 0, 108, 96, UnitPixel);
+	}
 
 	CUiManager::GetInstance()->Render(hDC);
 	delete image;
+
+	if (g_bDevmode) {
+		if (m_Active) {
+			Hitbox(hDC, m_AddUiCheck, iScrollX, iScrollY);
+		}
+
+	}
 }
 
 void CShopScene::Release()
 {
+	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
+	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+	CObjectManager::Get_Instance()->RenderListClear();
 }
 
 void CShopScene::Key_Input()
@@ -108,6 +127,9 @@ void CShopScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(400, 230, 10, 250));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(750, 230, 10, 250));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(570, 80, 350, 10));
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(565, 760, 80, 40));
+	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(VILLAGE);
 }
 
 void CShopScene::Offset()
@@ -131,5 +153,14 @@ void CShopScene::CheckOffset()
 	}
 	else {
 		m_bShop = true;
+	}
+}
+
+void CShopScene::OnCollision()
+{
+	RECT rc{};
+	if (IntersectRect(&rc, &m_AddUiCheck, CObjectManager::Get_Instance()->Get_Player()->Get_Rect()))
+	{
+		m_Active = true;
 	}
 }

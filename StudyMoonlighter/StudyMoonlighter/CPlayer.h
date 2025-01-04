@@ -18,12 +18,14 @@ public:
 	bool Get_IsRolling() { return m_bIsRoll; }
 	bool Get_CanHit() { return !m_bIsRoll && m_bCanHit; }
 	int Get_Money() { return m_iMoney; }
+	void Set_State(int hp, int money, int maxHp);
 private:
 	void Key_Input();
 	void Rolling();
 	void Change_Motion();
 	void SoundEffet();
 	void Attack();
+	
 private:
 	int m_iMoney;
 

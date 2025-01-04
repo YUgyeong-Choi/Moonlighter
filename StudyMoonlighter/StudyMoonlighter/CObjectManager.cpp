@@ -111,3 +111,16 @@ void CObjectManager::Delete_ALL()
 	}
 
 }
+
+void CObjectManager::Delete_ALLNotPlayer()
+{
+	for (size_t i = 1; i < OBJ_END; ++i)
+	{
+		for (auto& pObj : m_ObjList[i])
+			Safe_Delete(pObj);
+
+		m_ObjList[i].clear();
+	}
+
+	RenderListClear();
+}

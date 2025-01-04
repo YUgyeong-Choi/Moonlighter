@@ -3,8 +3,10 @@
 #include "CScrollManager.h"
 #include "CSceneManager.h"
 #include "CKeyManager.h"
+#include "CSoundManager.h"
+#include "CObjectManager.h"
 
-CPortal::CPortal():m_ePortalType(PORTAL_END), m_bEnter(false), m_bCollision(false)
+CPortal::CPortal():m_ePortalType(PORTAL_END), m_bEnter(false), m_bCollision(false), alpha(0)
 {
 }
 
@@ -17,6 +19,9 @@ void CPortal::Initialize()
 
 int CPortal::Update()
 {
+	if (m_bEnter) {
+		alpha += 5;
+	}
 	KeyInput();
 	__super::Update_Rect();
 	return 0;
@@ -58,6 +63,26 @@ void CPortal::Render(HDC hDC)
 		
 		delete image;
 	}
+
+	if (m_bEnter) {
+		Image* image(nullptr);
+		Graphics graphics(hDC);
+		image = Image::FromFile(L"../MoonlighterAssets/Back/Back.png");
+		ImageAttributes imgAttr;
+		ColorMatrix cm = {
+		1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		imgAttr.SetColorMatrix(&cm);
+		graphics.DrawImage(image,Gdiplus::Rect(0,0,1024,720),0,0,1024,720,UnitPixel, &imgAttr);
+
+		delete image;
+	}
+
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 	}
@@ -73,7 +98,10 @@ void CPortal::OnCollision(CObject* _obj)
 		switch (m_ePortalType)
 		{
 		case VILLAGE:
-			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+			if (m_bEnter && alpha == 255) {
+				CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+			}
+			m_bCollision = true;
 			break;
 		case FIELD:
 			CSceneManager::GetInstance()->SetScene(SC_FIELD);
@@ -85,13 +113,13 @@ void CPortal::OnCollision(CObject* _obj)
 			}
 			break;
 		case SHOP:
-			if (m_bEnter) {
+			if (m_bEnter && alpha==255) {
 				CSceneManager::GetInstance()->SetScene(SC_SHOP);
 			}
 			m_bCollision = true;
 			break;
 		case DUNGEON:
-			if (m_bEnter) {
+			if (m_bEnter && alpha == 255) {
 				CSceneManager::GetInstance()->SetScene(SC_GOLEMDUNGEON);
 			}
 			m_bCollision = true;
@@ -106,6 +134,9 @@ void CPortal::KeyInput()
 {
 	if (CKeyManager::Get_Instance()->Key_Down('J')) {
 		m_bEnter = true;
-		
+		m_eRender = RENDER_UI;
+		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+		CSoundManager::Get_Instance()->PlaySound(L"shop_door_opening.wav", SOUND_EFFECT, g_fEffectVolume, false);
 	}
 }
+
