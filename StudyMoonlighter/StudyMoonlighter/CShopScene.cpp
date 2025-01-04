@@ -46,6 +46,7 @@ int CShopScene::Update()
 
 void CShopScene::LateUpdate()
 {
+	CheckOffset();
 	CObjectManager::Get_Instance()->Late_Update();
 }
 
@@ -68,9 +69,14 @@ void CShopScene::Render(HDC hDC)
 	Graphics graphics(hDC);
 	graphics.DrawImage(image, WINCX/2-339 + iScrollX, iScrollY, 0, 0, 678, 868, UnitPixel);
 
-	delete image;
+	
 	CObjectManager::Get_Instance()->Render(hDC);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Map/Shop/up_door.png");
+	graphics.DrawImage(image, 515 + iScrollX, 360+iScrollY, 0, 0, 108, 96, UnitPixel);
+
 	CUiManager::GetInstance()->Render(hDC);
+	delete image;
 }
 
 void CShopScene::Release()
@@ -115,5 +121,15 @@ void CShopScene::Offset()
 		if (CScrollManager::Get_Instance()->Get_ScrollY() != 100) {
 			CScrollManager::Get_Instance()->Set_ScrollY(5);
 		}
+	}
+}
+
+void CShopScene::CheckOffset()
+{
+	if (CObjectManager::Get_Instance()->Get_Player()->Get_Info().fY < 400) {
+		m_bShop = false;
+	}
+	else {
+		m_bShop = true;
 	}
 }

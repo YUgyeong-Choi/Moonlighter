@@ -15,6 +15,8 @@ public:
 	void Create_MapObj() override;
 	void Offset() override;
 private:
+	void CheckOffset();
+private:
 	float offSetShopX;
 	float offSetShopY;
 	float offSetHomeX;
