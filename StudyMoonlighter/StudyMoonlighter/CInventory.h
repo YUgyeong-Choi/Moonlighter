@@ -14,10 +14,9 @@ public:
 	void Render(HDC hDC);
 	void Release();
 	void KeyInput();
-	void AddItem(ITEMTYPE _item);
+	void Copy_Inven(vector<vector<CInvenSlot*>>& _inventory);
 	void InitXY() { rowIndex = 0; columnIndex = 0; }
-private:
-	bool FindItem(ITEMTYPE _item);
+
 private:
 	vector<vector<CInvenSlot*>> inventory;
 	int rowIndex;

@@ -101,7 +101,7 @@ void CShowCase::KeyInput()
 		_shopPlayer->Set_Inven();
 		if (_shopPlayer->Get_Inven()) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVENSHOP);
-			static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+			//static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
 		}
 		else {
 			CUiManager::GetInstance()->Set_UiType(UI_END);

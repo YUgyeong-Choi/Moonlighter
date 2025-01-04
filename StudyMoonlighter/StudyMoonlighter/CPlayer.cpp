@@ -321,7 +321,7 @@ void CPlayer::OnCollision(CObject* _obj)
 	case OBJ_PORTAL:
 		break;
 	case OBJ_ITEM:
-		static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(static_cast<CItem*>(_obj)->Get_ItemType());
+		CUiManager::GetInstance()->AddItem(static_cast<CItem*>(_obj)->Get_ItemType());
 		break;
 	case OBJ_END:
 		break;
@@ -437,10 +437,10 @@ void CPlayer::Key_Input()
 		}
 
 		if (CKeyManager::Get_Instance()->Key_Down('1')) {
-			static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(RICHJELLY);
+			CUiManager::GetInstance()->AddItem(RICHJELLY);
 		}
 		if (CKeyManager::Get_Instance()->Key_Down('2')) {
-			static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->AddItem(IRONBAR);
+			CUiManager::GetInstance()->AddItem(IRONBAR);
 		}
 	}
 }

@@ -12,6 +12,7 @@ public:
 	void Render(HDC hDC);
 	void Release();
 	void Set_UiType(UITYPE _type) { m_eCurUi = _type; }
+	void AddItem(ITEMTYPE _item);
 	UITYPE Get_UiType() { return m_eCurUi; }
 	CInventory* Get_Inven() { return m_Inven; }
 public:
@@ -35,8 +36,10 @@ private:
 	void Inven_Ui(HDC hDC);
 	void Shop_Ui(HDC hDC);
 
+	bool FindItem(ITEMTYPE _item);
 private:
 	static CUiManager* m_pInstance;
+	vector<vector<CInvenSlot*>> inventory;
 	UITYPE m_eCurUi;
 	CInventory* m_Inven;
 };

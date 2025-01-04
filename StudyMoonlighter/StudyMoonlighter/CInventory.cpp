@@ -7,27 +7,6 @@
 CInventory::CInventory() :rowIndex(0), columnIndex(0)
 {
     _pickUpItem.itemId = ITEM_END;
-
-    inventory.resize(4);
-    for (int i = 0; i < 4; ++i) {
-        inventory[i].resize(7);
-        for (int j = 0; j < 7; ++j) {
-            inventory[i][j] = nullptr;
-        }
-    }
-
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 5; ++j) {
-            inventory[i][j] = new CInvenSlot(i, j);
-        }
-    }
-
-    inventory[1][5] = new CSpecialSlot(HELMET);
-    inventory[2][5] = new CSpecialSlot(ARMOR);
-    inventory[3][5] = new CSpecialSlot(BOOTS);
-    inventory[0][5] = new CSpecialSlot(WEAPON1);
-    inventory[0][6] = new CSpecialSlot(WEAPON2);
-    inventory[2][6] = new CSpecialSlot(POTION);
 }
 
 void CInventory::Initialize()
@@ -195,11 +174,7 @@ void CInventory::Render(HDC hDC)
 
 void CInventory::Release()
 {
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 7; ++j) {
-            Safe_Delete<CInvenSlot*>(inventory[i][j]);
-        }
-    }
+
 }
 
 void CInventory::KeyInput()
@@ -291,34 +266,8 @@ void CInventory::KeyInput()
     }
 }
 
-void CInventory::AddItem(ITEMTYPE _item)
+void CInventory::Copy_Inven(vector<vector<CInvenSlot*>>& _inventory)
 {
-    if (FindItem(_item)) {
-        return;
-    }
-    else {
-        for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 5; ++j) {
-                if (inventory[i][j]->Get_Item().itemId == ITEM_END) {
-                    inventory[i][j]->Set_ItemType(_item);
-                    return;
-                }
-            }
-        }
-    }
+    inventory = _inventory;
 }
 
-bool CInventory::FindItem(ITEMTYPE _item)
-{
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 5; ++j) {
-            if (_item == inventory[i][j]->Get_Item().itemId) {
-                if (inventory[i][j]->Get_Item().maxNum > inventory[i][j]->Get_Item().num) {
-                    inventory[i][j]->Add_ItemNum();
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}

@@ -29,6 +29,7 @@ int CFieldScene::Update()
 {
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
+
 	return 0;
 }
 
