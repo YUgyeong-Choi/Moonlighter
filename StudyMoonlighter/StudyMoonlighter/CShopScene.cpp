@@ -36,6 +36,7 @@ void CShopScene::Initialize()
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 
 	Create_MapObj();
+	CUiManager::GetInstance()->Get_InvenShop()->Set_Showcase();
 }
 
 int CShopScene::Update()
@@ -124,10 +125,10 @@ void CShopScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(750, 230, 10, 250));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(570, 80, 350, 10));
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450,650));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(400,650));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(400,600));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450,600));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450, 600));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(400, 650));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450, 650));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(565, 760, 80, 40));
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(VILLAGE);

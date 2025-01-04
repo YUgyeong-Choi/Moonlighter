@@ -1,5 +1,6 @@
 #pragma once
 #include "CInvenSlot.h"
+#include "CObject.h"
 #include "Define.h"
 class CInventoryShop
 {
@@ -14,11 +15,12 @@ public:
 	void Release();
 	void KeyInput();
 	void Copy_Inven(vector<vector<CInvenSlot*>>& _inventory);
-	void InitXY() { rowIndex = 0; columnIndex = 0; }
-
+	void InitXY() { rowIndex = 0; columnIndex = 0; m_IsInven= true;}
+	void Set_Showcase();
 private:
 	vector<vector<CInvenSlot*>> inventory;
 	vector<vector<CInvenSlot*>> sellSlots;
+	vector<CObject*> m_ShowCase;
 	int rowIndex;
 	int columnIndex;
 	ITEM _pickUpItem;

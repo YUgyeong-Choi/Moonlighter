@@ -18,7 +18,7 @@ public:
 	void Release() override;
 	void Set_State(int hp, int money, int maxHp);
 	int Get_Money() { return m_iMoney; }
-	void Set_Inven() { m_bInvenOpen = !m_bInvenOpen; }
+	void Set_Inven(bool _b) { m_bInvenOpen = _b; }
 	bool Get_Inven() { return m_bInvenOpen; }
 private:
 	void Key_Input();

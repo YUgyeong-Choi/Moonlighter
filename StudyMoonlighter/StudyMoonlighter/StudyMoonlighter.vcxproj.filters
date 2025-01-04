@@ -154,6 +154,9 @@
     <Filter Include="02_Object\07_Shop">
       <UniqueIdentifier>{61a5a2fc-4eab-47c7-ac2c-5332a9182252}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\05_Inventory\Slot">
+      <UniqueIdentifier>{c8cc07c6-efac-4843-bd0b-19a77b9629f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -327,12 +330,6 @@
     <ClInclude Include="CInventory.h">
       <Filter>02_Object\05_Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="CInvenSlot.h">
-      <Filter>02_Object\05_Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="CSpecialSlot.h">
-      <Filter>02_Object\05_Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="CShopScene.h">
       <Filter>01_Scenes\07_Shop</Filter>
     </ClInclude>
@@ -345,8 +342,17 @@
     <ClInclude Include="CInventoryShop.h">
       <Filter>02_Object\05_Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="CInvenSlot.h">
+      <Filter>02_Object\05_Inventory\Slot</Filter>
+    </ClInclude>
     <ClInclude Include="CPriceSlot.h">
-      <Filter>02_Object\05_Inventory</Filter>
+      <Filter>02_Object\05_Inventory\Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="CSellSlot.h">
+      <Filter>02_Object\05_Inventory\Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpecialSlot.h">
+      <Filter>02_Object\05_Inventory\Slot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -506,12 +512,6 @@
     <ClCompile Include="CInventory.cpp">
       <Filter>02_Object\05_Inventory</Filter>
     </ClCompile>
-    <ClCompile Include="CInvenSlot.cpp">
-      <Filter>02_Object\05_Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="CSpecialSlot.cpp">
-      <Filter>02_Object\05_Inventory</Filter>
-    </ClCompile>
     <ClCompile Include="CShopScene.cpp">
       <Filter>01_Scenes\07_Shop</Filter>
     </ClCompile>
@@ -524,8 +524,17 @@
     <ClCompile Include="CInventoryShop.cpp">
       <Filter>02_Object\05_Inventory</Filter>
     </ClCompile>
+    <ClCompile Include="CInvenSlot.cpp">
+      <Filter>02_Object\05_Inventory\Slot</Filter>
+    </ClCompile>
     <ClCompile Include="CPriceSlot.cpp">
-      <Filter>02_Object\05_Inventory</Filter>
+      <Filter>02_Object\05_Inventory\Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="CSellSlot.cpp">
+      <Filter>02_Object\05_Inventory\Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpecialSlot.cpp">
+      <Filter>02_Object\05_Inventory\Slot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

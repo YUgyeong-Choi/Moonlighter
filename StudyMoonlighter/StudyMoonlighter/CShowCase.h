@@ -11,6 +11,8 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	void Set_Item(ITEM _item) { m_sellItem = _item; }
+	void Set_InitItem() { m_sellItem.itemId = ITEM_END; }
 private:
 	void OnCollision();
 	void KeyInput();

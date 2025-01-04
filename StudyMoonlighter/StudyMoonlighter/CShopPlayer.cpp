@@ -246,7 +246,7 @@ void CShopPlayer::Key_Input()
 		m_bInvenOpen = !m_bInvenOpen;
 		if (m_bInvenOpen) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVEN);
-			//static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+			static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
 		}
 		else {
 			CUiManager::GetInstance()->Set_UiType(UI_END);

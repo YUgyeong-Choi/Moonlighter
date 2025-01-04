@@ -5,7 +5,7 @@
 #include "CKeyManager.h"
 #include "CShopPlayer.h"
 #include "CUiManager.h"
-#include "CInventory.h"
+#include "CInventoryShop.h"
 
 CShowCase::CShowCase():m_bActive(false)
 {
@@ -21,7 +21,7 @@ void CShowCase::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tRenderSizeX = 48;
 	m_tRenderSizeY = 64;
-	m_HitBox = { (int)m_tInfo.fX - 40,(int)m_tInfo.fY - 40,(int)m_tInfo.fX + 40,(int)m_tInfo.fY + 40 };
+	m_HitBox = { 350, 540, 500, 710 };
 }
 
 int CShowCase::Update()
@@ -73,6 +73,11 @@ void CShowCase::Render(HDC hDC)
 
 	}
 
+	if (m_sellItem.itemId != ITEM_END) {
+		image = Image::FromFile(m_sellItem.pImageUrl);
+		graphics.DrawImage(image, (int)m_tInfo.fX-24 + iScrollX, (int)m_tInfo.fY-34 + iScrollY, 0, 0, 48, 48, UnitPixel);
+	}
+
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
@@ -99,14 +104,16 @@ void CShowCase::KeyInput()
 	CObject* _player = CObjectManager::Get_Instance()->Get_Player();
 	CShopPlayer* _shopPlayer = static_cast<CShopPlayer*>(_player);
 
-	if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'J')&&m_bActive) {
-		_shopPlayer->Set_Inven();
-		if (_shopPlayer->Get_Inven()) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_UI,'J')&&m_bActive) {
+		_shopPlayer->Set_Inven(true);
+		if (CUiManager::GetInstance()->Get_UiType() != UI_INVENSHOP) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVENSHOP);
-			//static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+			static_cast<CInventoryShop*>(CUiManager::GetInstance()->Get_InvenShop())->InitXY();
 		}
-		else {
-			CUiManager::GetInstance()->Set_UiType(UI_END);
-		}
+	}
+
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_UI, 'L') && m_bActive) {
+		_shopPlayer->Set_Inven(false);
+		CUiManager::GetInstance()->Set_UiType(UI_END);
 	}
 }

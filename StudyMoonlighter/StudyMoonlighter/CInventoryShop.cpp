@@ -3,6 +3,9 @@
 #include "CUiManager.h"
 #include "CKeyManager.h"
 #include "CPriceSlot.h"
+#include "CSellSlot.h"
+#include "CObjectManager.h"
+#include "CShowCase.h"
 
 CInventoryShop::CInventoryShop() :rowIndex(0), columnIndex(0), m_IsInven(true)
 {
@@ -18,27 +21,25 @@ void CInventoryShop::Initialize()
             sellSlots[i][j] = nullptr;
         }
     }
-    sellSlots[0][0] = new CInvenSlot();
-    sellSlots[0][1] = new CInvenSlot();
-    sellSlots[2][0] = new CInvenSlot();
-    sellSlots[2][1] = new CInvenSlot();
-    sellSlots[1][0] = new CPriceSlot();
-    sellSlots[1][1] = new CPriceSlot();
-    sellSlots[3][0] = new CPriceSlot();
-    sellSlots[3][1] = new CPriceSlot();
+
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 2; j++)
         {
             if (i == 0 || i == 2)
             {
-                sellSlots[i][j] = new CInvenSlot();
+                sellSlots[i][j] = new CSellSlot(i,j);
             }
             else if (i == 1 || i == 3)
             {
-                sellSlots[i][j] = new CPriceSlot();
+                sellSlots[i][j] = new CPriceSlot(i, j);
             }
         }
+    }
+
+    m_ShowCase.resize(4);
+    for (int i = 0; i <4; ++i) {
+        m_ShowCase[i]= nullptr;
     }
 }
 
@@ -58,6 +59,14 @@ void CInventoryShop::Render(HDC hDC)
         for (int j = 0; j < 5; ++j) {
             if (inventory[i][j] != nullptr) {
                 inventory[i][j]->Render(hDC);
+            }
+        }
+    }
+
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            if (sellSlots[i][j] != nullptr) {
+                sellSlots[i][j]->Render(hDC);
             }
         }
     }
@@ -136,48 +145,33 @@ void CInventoryShop::Render(HDC hDC)
             graphics.DrawImage(image, 514 + (columnIndex * 200), 100 + (rowIndex * 100), 0, 0, 170, 80, UnitPixel);
         }
 
-        //if (_pickUpItem.itemId != ITEM_END) {
-        //    image = Image::FromFile(L"../MoonlighterAssets/Ui/selector_circle.png");
-        //    if (rowIndex == 0) {
-        //        graphics.DrawImage(image, 168 + (columnIndex * 57), 162 - 65, 0, 0, 64, 64, UnitPixel);
-        //    }
-        //    else {
-        //        graphics.DrawImage(image, 168 + (columnIndex * 57), 232 + ((rowIndex - 1) * 57) - 65, 0, 0, 64, 64, UnitPixel);
-        //    }
+        if ((rowIndex == 0 || rowIndex == 2) && _pickUpItem.itemId != ITEM_END) {
+            image = Image::FromFile(L"../MoonlighterAssets/Ui/selector_circle.png");
+            graphics.DrawImage(image, 567 + (columnIndex * 200), 70 + (rowIndex * 100), 0, 0, 64, 64, UnitPixel);
 
-        //    image = Image::FromFile(_pickUpItem.pImageUrl);
-        //    if (rowIndex == 0) {
-        //        graphics.DrawImage(image, 173 + (columnIndex * 57), 162 - 60, 0, 0, 48, 48, UnitPixel);
-        //    }
-        //    else {
-        //        graphics.DrawImage(image, 173 + (columnIndex * 57), 232 + ((rowIndex - 1) * 57) - 60, 0, 0, 48, 48, UnitPixel);
-        //    }
+            image = Image::FromFile(_pickUpItem.pImageUrl);
+            graphics.DrawImage(image, 573 + (columnIndex * 200), 75 + (rowIndex * 100), 0, 0, 48, 48, UnitPixel);
 
-        //    HFONT hFont1 = CreateFont(
-        //        25, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
-        //        DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-        //        DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
-        //    );
-        //    SetTextColor(hDC, RGB(0, 0, 0));
-        //    SetBkMode(hDC, TRANSPARENT);
+            HFONT hFont1 = CreateFont(
+                25, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+                DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+                DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+            );
+            SetTextColor(hDC, RGB(0, 0, 0));
+            SetBkMode(hDC, TRANSPARENT);
 
-        //    HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
+            HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
 
-        //    TCHAR szItemNum[64];
-        //    _stprintf_s(szItemNum, _T("%d"), _pickUpItem.num);
+            TCHAR szItemNum[64];
+            _stprintf_s(szItemNum, _T("%d"), _pickUpItem.num);
 
-        //    if (rowIndex == 0) {
-        //        TextOut(hDC, 213 + (columnIndex * 57), 162 - 35, szItemNum, _tcslen(szItemNum));
-        //    }
-        //    else {
-        //        TextOut(hDC, 213 + (columnIndex * 57), 229 - 35 + ((rowIndex - 1) * 56), szItemNum, _tcslen(szItemNum));
-        //    }
+            TextOut(hDC, 613 + (columnIndex * 200), 90 + (rowIndex * 100), szItemNum, _tcslen(szItemNum));
 
-        //    SelectObject(hDC, OldFont);
-        //    DeleteObject(hFont1);
-        //}
+            SelectObject(hDC, OldFont);
+            DeleteObject(hFont1);
+        }
 
-        //if (inventory[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
+        //if (sell[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
         //    image = Image::FromFile(L"../MoonlighterAssets/Ui/GUI_ItemNameLabel.png");
         //    graphics.DrawImage(image, WINCX / 2 - 155, 550, 0, 0, 310, 34, UnitPixel);
         //    RECT rect = { WINCX / 2 - 155 , 550,  WINCX / 2 - 155 + 310, 584 };
@@ -248,6 +242,37 @@ void CInventoryShop::KeyInput()
                     }
                 }
             }
+
+            if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'J')) {
+                if (_pickUpItem.itemId == ITEM_END) {
+                    _pickUpItem = inventory[rowIndex][columnIndex]->Get_Item();
+                    _pickUpItem.num = 1;
+                    inventory[rowIndex][columnIndex]->Sub_ItemNum();
+
+                    if (inventory[rowIndex][columnIndex]->Get_Item().num == 0) {
+                        inventory[rowIndex][columnIndex]->Item_Init();
+                    }
+                }
+                else if (_pickUpItem.itemId == inventory[rowIndex][columnIndex]->Get_Item().itemId) {
+                    if (_pickUpItem.num != _pickUpItem.maxNum) {
+                        _pickUpItem.num++;
+                        inventory[rowIndex][columnIndex]->Sub_ItemNum();
+
+                        if (inventory[rowIndex][columnIndex]->Get_Item().num == 0) {
+                            inventory[rowIndex][columnIndex]->Item_Init();
+                        }
+                    }
+                }
+                else if (_pickUpItem.itemId != ITEM_END && inventory[rowIndex][columnIndex]->Get_Item().itemId == ITEM_END) {
+                    inventory[rowIndex][columnIndex]->Set_Item(_pickUpItem);
+                    _pickUpItem.itemId = ITEM_END;
+                }
+                else if (_pickUpItem.itemId != ITEM_END && inventory[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
+                    ITEM temp = _pickUpItem;
+                    _pickUpItem = inventory[rowIndex][columnIndex]->Get_Item();
+                    inventory[rowIndex][columnIndex]->Set_Item(temp);
+                }
+            }
         }
         else {
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'W')) {
@@ -266,24 +291,15 @@ void CInventoryShop::KeyInput()
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'S')) {
                 rowIndex++;
-                if (_pickUpItem.itemId != ITEM_END) {
-                    rowIndex++;
-                }
 
                 if (rowIndex > 3) {
                     rowIndex = 0;
                 }
 
                 if (dynamic_cast<CPriceSlot*>(sellSlots[rowIndex][columnIndex])) {
-                    if (rowIndex == 3) {
-                        if (sellSlots[0][columnIndex]->Get_Item().itemId == ITEM_END) {
-                            rowIndex = 0;
-                        }
-                    }
-                    else {
-                        if (sellSlots[rowIndex + 1][columnIndex]->Get_Item().itemId == ITEM_END) {
-                            rowIndex++;
-                        }
+                    if (sellSlots[rowIndex -1][columnIndex]->Get_Item().itemId == ITEM_END) {
+                        rowIndex++;
+                        if (rowIndex == 4) rowIndex = 0;
                     }
 
                 }
@@ -304,6 +320,87 @@ void CInventoryShop::KeyInput()
                     columnIndex = 0;
                 }
             }
+
+            if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'J')) {
+                if (dynamic_cast<CSellSlot*>(sellSlots[rowIndex][columnIndex])) {
+                    if (_pickUpItem.itemId == ITEM_END) {
+                        _pickUpItem = sellSlots[rowIndex][columnIndex]->Get_Item();
+                        _pickUpItem.num = 1;
+                        sellSlots[rowIndex][columnIndex]->Sub_ItemNum();
+
+                        if (sellSlots[rowIndex][columnIndex]->Get_Item().num == 0) {
+                            sellSlots[rowIndex][columnIndex]->Item_Init();
+                            if (rowIndex == 0 && columnIndex == 0) {
+                                static_cast<CShowCase*>(m_ShowCase[0])->Set_InitItem();
+                            }
+                            else if (rowIndex == 0 && columnIndex == 1) {
+                                static_cast<CShowCase*>(m_ShowCase[1])->Set_InitItem();
+                            }
+                            else if (rowIndex == 2 && columnIndex == 0) {
+                                static_cast<CShowCase*>(m_ShowCase[2])->Set_InitItem();
+                            }
+                            else if (rowIndex == 2 && columnIndex == 1) {
+                                static_cast<CShowCase*>(m_ShowCase[3])->Set_InitItem();
+                            }
+                        }
+                    }
+                    else if (_pickUpItem.itemId == sellSlots[rowIndex][columnIndex]->Get_Item().itemId) {
+                        if (_pickUpItem.num != _pickUpItem.maxNum) {
+                            _pickUpItem.num++;
+                            sellSlots[rowIndex][columnIndex]->Sub_ItemNum();
+
+                            if (sellSlots[rowIndex][columnIndex]->Get_Item().num == 0) {
+                                sellSlots[rowIndex][columnIndex]->Item_Init();
+                                if (rowIndex == 0 && columnIndex == 0) {
+                                    static_cast<CShowCase*>(m_ShowCase[0])->Set_InitItem();
+                                }
+                                else if (rowIndex == 0 && columnIndex == 1) {
+                                    static_cast<CShowCase*>(m_ShowCase[1])->Set_InitItem();
+                                }
+                                else if (rowIndex == 2 && columnIndex == 0) {
+                                    static_cast<CShowCase*>(m_ShowCase[2])->Set_InitItem();
+                                }
+                                else if (rowIndex == 2 && columnIndex == 1) {
+                                    static_cast<CShowCase*>(m_ShowCase[3])->Set_InitItem();
+                                }
+                            }
+                        }
+                    }
+                    else if (_pickUpItem.itemId != ITEM_END && sellSlots[rowIndex][columnIndex]->Get_Item().itemId == ITEM_END) {
+                        sellSlots[rowIndex][columnIndex]->Set_Item(_pickUpItem);
+                        if (rowIndex == 0 && columnIndex == 0) {
+                            static_cast<CShowCase*>(m_ShowCase[0])->Set_Item(_pickUpItem);
+                        }
+                        else if (rowIndex == 0 && columnIndex == 1) {
+                            static_cast<CShowCase*>(m_ShowCase[1])->Set_Item(_pickUpItem);
+                        }
+                        else if (rowIndex == 2 && columnIndex == 0) {
+                            static_cast<CShowCase*>(m_ShowCase[2])->Set_Item(_pickUpItem);
+                        }
+                        else if (rowIndex == 2 && columnIndex == 1) {
+                            static_cast<CShowCase*>(m_ShowCase[3])->Set_Item(_pickUpItem);
+                        }
+                        _pickUpItem.itemId = ITEM_END;
+                    }
+                    else if (_pickUpItem.itemId != ITEM_END && sellSlots[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
+                        ITEM temp = _pickUpItem;
+                        _pickUpItem = sellSlots[rowIndex][columnIndex]->Get_Item();
+                        sellSlots[rowIndex][columnIndex]->Set_Item(temp);
+                        if (rowIndex == 0 && columnIndex == 0) {
+                            static_cast<CShowCase*>(m_ShowCase[0])->Set_Item(temp);
+                        }
+                        else if (rowIndex == 0 && columnIndex == 1) {
+                            static_cast<CShowCase*>(m_ShowCase[1])->Set_Item(temp);
+                        }
+                        else if (rowIndex == 2 && columnIndex == 0) {
+                            static_cast<CShowCase*>(m_ShowCase[2])->Set_Item(temp);
+                        }
+                        else if (rowIndex == 2 && columnIndex == 1) {
+                            static_cast<CShowCase*>(m_ShowCase[3])->Set_Item(temp);
+                        }
+                    }
+                }
+            }
         }
 
     }
@@ -312,4 +409,16 @@ void CInventoryShop::KeyInput()
 void CInventoryShop::Copy_Inven(vector<vector<CInvenSlot*>>& _inventory)
 {
     inventory = _inventory;
+}
+
+void CInventoryShop::Set_Showcase()
+{
+    list<CObject*> mapObjList = CObjectManager::Get_Instance()->Get_MapObjList();
+    int i = 0;
+    for (auto& obj : mapObjList) {
+        if (dynamic_cast<CShowCase*>(obj)) {
+            m_ShowCase[i] = obj;
+            i++;
+        }
+    }
 }

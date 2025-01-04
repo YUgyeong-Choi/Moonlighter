@@ -16,6 +16,7 @@ public:
 	void AddItem(ITEMTYPE _item);
 	UITYPE Get_UiType() { return m_eCurUi; }
 	CInventory* Get_Inven() { return m_Inven; }
+	CInventoryShop* Get_InvenShop() { return m_InvenShop; }
 public:
 	static CUiManager* GetInstance()
 	{

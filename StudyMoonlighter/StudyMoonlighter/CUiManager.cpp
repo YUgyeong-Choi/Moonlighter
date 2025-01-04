@@ -30,6 +30,13 @@ void CUiManager::Initialize()
 	inventory[0][6] = new CSpecialSlot(WEAPON2);
 	inventory[2][6] = new CSpecialSlot(POTION);
 
+	AddItem(RICHJELLY);
+	AddItem(RICHJELLY);
+	AddItem(IRONBAR);
+	AddItem(IRONBAR);
+	AddItem(WATERSPHERE);
+	AddItem(WATERSPHERE);
+
 	m_Inven = new CInventory();
 	m_Inven->Copy_Inven(inventory);
 
