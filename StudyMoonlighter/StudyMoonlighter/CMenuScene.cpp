@@ -4,6 +4,9 @@
 #include "CKeyManager.h"
 #include "CSceneManager.h"
 #include "CSoundManager.h"
+#include "CAbstractFactory.h"
+#include "CObjectManager.h"
+#include "CShopPlayer.h"
 
 CMenuScene::CMenuScene():m_bIsOpen(false), m_iOpenSize(0), m_iOpenTime(0), m_iWidth(0)
 {
@@ -74,6 +77,7 @@ int CMenuScene::Update()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(VK_F3)) {
+		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
 		CSceneManager::GetInstance()->SetScene(SC_SHOP);
 	}
 

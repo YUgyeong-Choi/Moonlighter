@@ -11,8 +11,9 @@
 #include "CCollisionBox.h"
 #include "CPortal.h"
 #include "CCollisionManager.h"
+#include "CShowCase.h"
 
-CShopScene::CShopScene():m_bShop(true), m_Active(false)
+CShopScene::CShopScene():m_bShop(true), m_Active(false),offSetShopX(0),offSetShopY(0)
 {
 }
 
@@ -76,7 +77,6 @@ void CShopScene::Render(HDC hDC)
 	
 	CObjectManager::Get_Instance()->Render(hDC);
 
-	//m_AddUiCheck = { 450 + iScrollX , 310 + iScrollY, 650 + iScrollX, 510 + iScrollY };
 	m_AddUiCheck = { 450 , 310, 650 , 510  };
 
 	if (m_Active) {
@@ -127,6 +127,11 @@ void CShopScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(400, 230, 10, 250));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(750, 230, 10, 250));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(570, 80, 350, 10));
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450,650));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(400,650));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(400,600));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450,600));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(565, 760, 80, 40));
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(VILLAGE);

@@ -28,7 +28,6 @@ CInventory::CInventory() :rowIndex(0), columnIndex(0)
     inventory[0][5] = new CSpecialSlot(WEAPON1);
     inventory[0][6] = new CSpecialSlot(WEAPON2);
     inventory[2][6] = new CSpecialSlot(POTION);
-    
 }
 
 void CInventory::Initialize()

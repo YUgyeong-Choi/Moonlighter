@@ -140,6 +140,7 @@
     <ClInclude Include="CAnimationScene.h" />
     <ClInclude Include="CShopPlayer.h" />
     <ClInclude Include="CShopScene.h" />
+    <ClInclude Include="CShowCase.h" />
     <ClInclude Include="CSpecialSlot.h" />
     <ClInclude Include="CBabySlime.h" />
     <ClInclude Include="CBitManager.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="CAnimationScene.cpp" />
     <ClCompile Include="CShopPlayer.cpp" />
     <ClCompile Include="CShopScene.cpp" />
+    <ClCompile Include="CShowCase.cpp" />
     <ClCompile Include="CSpecialSlot.cpp" />
     <ClCompile Include="CBabySlime.cpp" />
     <ClCompile Include="CBitManager.cpp" />

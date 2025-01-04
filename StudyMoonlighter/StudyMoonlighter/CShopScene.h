@@ -20,8 +20,6 @@ private:
 private:
 	float offSetShopX;
 	float offSetShopY;
-	float offSetHomeX;
-	float offSetHomeY;
 	bool m_bShop;
 	RECT m_AddUiCheck;
 	bool m_Active;

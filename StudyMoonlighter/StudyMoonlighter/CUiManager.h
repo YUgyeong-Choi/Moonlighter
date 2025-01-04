@@ -32,10 +32,7 @@ public:
 	}
 private:
 	void Dungeon_Ui(HDC hDC);
-	void Village_Ui(HDC hDC);
 	void Inven_Ui(HDC hDC);
-
-	void Basic_Ui(HDC hDC);
 	void Shop_Ui(HDC hDC);
 
 private:

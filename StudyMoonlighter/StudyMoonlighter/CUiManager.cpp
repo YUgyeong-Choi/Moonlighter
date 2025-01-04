@@ -58,6 +58,7 @@ void CUiManager::Render(HDC hDC)
 	case UI_INVENCHEST:
 		break;
 	case UI_INVENSHOP:
+		Shop_Ui(hDC);
 		break;
 	case UI_END:
 		break;
@@ -152,10 +153,6 @@ void CUiManager::Dungeon_Ui(HDC hDC)
 	delete image;
 }
 
-void CUiManager::Village_Ui(HDC hDC)
-{
-}
-
 void CUiManager::Inven_Ui(HDC hDC)
 {
 	Image* image(nullptr);
@@ -163,6 +160,24 @@ void CUiManager::Inven_Ui(HDC hDC)
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Inventory_base.png");
 	graphics.DrawImage(image, 100, 100, 0, 0, 1038, 548, UnitPixel);
+
+	m_Inven->Render(hDC);
+	delete image;
+}
+
+void CUiManager::Shop_Ui(HDC hDC)
+{
+	Image* image(nullptr);
+	Graphics graphics(hDC);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Bag_paperbase.png");
+	graphics.DrawImage(image, 100, 100, 0, 0, 385, 435, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Showcase_base.png");
+	graphics.DrawImage(image, 500, 120, 0, 0, 198, 190, UnitPixel);
+	graphics.DrawImage(image, 700, 120, 0, 0, 198, 190, UnitPixel);
+	graphics.DrawImage(image, 500, 320, 0, 0, 198, 190, UnitPixel);
+	graphics.DrawImage(image, 700, 320, 0, 0, 198, 190, UnitPixel);
 
 	m_Inven->Render(hDC);
 	delete image;

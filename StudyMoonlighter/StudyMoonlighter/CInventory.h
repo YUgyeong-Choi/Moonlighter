@@ -14,7 +14,6 @@ public:
 	void Render(HDC hDC);
 	void Release();
 	void KeyInput();
-
 	void AddItem(ITEMTYPE _item);
 	void InitXY() { rowIndex = 0; columnIndex = 0; }
 private:
