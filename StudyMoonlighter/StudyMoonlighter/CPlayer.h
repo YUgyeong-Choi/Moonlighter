@@ -2,7 +2,7 @@
 #include "CObject.h"
 class CPlayer :public CObject
 {
-public:
+private:
 	enum STATE { IDLE, WALK, ROLL, FALL, ATTACK, HIT, DEAD, STATE_END };
 public:
 	CPlayer();

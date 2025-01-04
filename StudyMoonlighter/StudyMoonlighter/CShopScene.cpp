@@ -8,6 +8,7 @@
 #include "CKeyManager.h"
 #include "CShopPlayer.h"
 #include "CUiManager.h"
+#include "CCollisionBox.h"
 
 CShopScene::CShopScene():m_bShop(true)
 {
@@ -30,6 +31,8 @@ void CShopScene::Initialize()
 	m_fMapXSize = WINCX;
 	m_fMapYSize = 1440;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
+
+	Create_MapObj();
 }
 
 int CShopScene::Update()
@@ -79,10 +82,26 @@ void CShopScene::Key_Input()
 	if (CKeyManager::Get_Instance()->Key_Down('1')) {
 		m_bShop = !m_bShop;
 	}
+
+	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
+		g_bDevmode = !g_bDevmode;
+	}
 }
 
 void CShopScene::Create_MapObj()
 {
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(WINCX/2, 760, 500, 10));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(280, 600, 10, 300));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(750, 600, 10, 300));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(415, 450, 250, 10));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(670, 450, 150, 10));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(540, 390, 10, 120));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(600, 390, 10, 120));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(670, 340, 130, 10));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(470, 340, 130, 10));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(400, 230, 10, 250));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(750, 230, 10, 250));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(570, 80, 350, 10));
 }
 
 void CShopScene::Offset()

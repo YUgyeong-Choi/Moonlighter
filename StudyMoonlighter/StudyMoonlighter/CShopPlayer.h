@@ -5,6 +5,8 @@
 
 class CShopPlayer :public CObject
 {
+private:
+	enum STATE { IDLE, WALK, ROLL, STATE_END };
 public:
 	CShopPlayer();
 	virtual ~CShopPlayer() { Release(); }
@@ -17,6 +19,21 @@ public:
 	void Set_State(int hp, int money, int maxHp);
 	int Get_Money() { return m_iMoney; }
 private:
+	void Key_Input();
+	void Rolling();
+	void Change_Motion();
+	void SoundEffet();
+private:
+	float m_fRollTime;
 	int m_iMoney;
+
+	DIRECTION	m_eCurDir;
+	DIRECTION	m_ePreDir;
+
+	STATE               m_eCurState;
+	STATE               m_ePreState;
+
+	bool m_bIsRoll;
+	bool m_bInvenOpen;
 };
 
