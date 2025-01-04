@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CAnimationScene.h" />
+    <ClInclude Include="CShopPlayer.h" />
     <ClInclude Include="CShopScene.h" />
     <ClInclude Include="CSpecialSlot.h" />
     <ClInclude Include="CBabySlime.h" />
@@ -199,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAnimationScene.cpp" />
+    <ClCompile Include="CShopPlayer.cpp" />
     <ClCompile Include="CShopScene.cpp" />
     <ClCompile Include="CSpecialSlot.cpp" />
     <ClCompile Include="CBabySlime.cpp" />

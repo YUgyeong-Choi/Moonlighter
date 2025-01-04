@@ -6,6 +6,8 @@
 #include "CPlayer.h"
 #include "CScrollManager.h"
 #include "CKeyManager.h"
+#include "CShopPlayer.h"
+#include "CUiManager.h"
 
 CShopScene::CShopScene():m_bShop(true)
 {
@@ -15,7 +17,15 @@ void CShopScene::Initialize()
 {
 	CSoundManager::Get_Instance()->StopAll();
 	CSoundManager::Get_Instance()->PlayBGM(L"shop_day_open.wav", g_fBackgroundVolume, true);
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(564, 704));
+	
+	int hp = CObjectManager::Get_Instance()->Get_Player()->Get_Hp();
+	int money = static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Get_Money();
+	int maxHp = CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp();
+	CObjectManager::Get_Instance()->Delete_ID(OBJ_PLAYER);
+	CObjectManager::Get_Instance()->RenderListClear();
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CShopPlayer>::Create(564, 704));
+	static_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_State(hp, money, maxHp);
+
 	CScrollManager::Get_Instance()->Set_Scroll(0, -260);
 	m_fMapXSize = WINCX;
 	m_fMapYSize = 1440;
@@ -27,6 +37,7 @@ int CShopScene::Update()
 	Key_Input();
 	Offset();
 	CObjectManager::Get_Instance()->Update();
+	CUiManager::GetInstance()->Update();
 	return 0;
 }
 
@@ -56,6 +67,7 @@ void CShopScene::Render(HDC hDC)
 
 	delete image;
 	CObjectManager::Get_Instance()->Render(hDC);
+	CUiManager::GetInstance()->Render(hDC);
 }
 
 void CShopScene::Release()

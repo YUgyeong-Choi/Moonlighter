@@ -333,6 +333,9 @@
     <ClInclude Include="CShopScene.h">
       <Filter>01_Scenes\07_Shop</Filter>
     </ClInclude>
+    <ClInclude Include="CShopPlayer.h">
+      <Filter>02_Object\01.Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -499,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="CShopScene.cpp">
       <Filter>01_Scenes\07_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="CShopPlayer.cpp">
+      <Filter>02_Object\01.Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

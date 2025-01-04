@@ -3,6 +3,7 @@
 #include "CObjectManager.h"
 #include "CSceneManager.h"
 #include "CPlayer.h"
+#include "CShopPlayer.h"
 CUiManager* CUiManager::m_pInstance = nullptr;
 
 void CUiManager::Initialize()
@@ -27,13 +28,13 @@ void CUiManager::Render(HDC hDC)
 		case SC_TUTORIAL:
 		case SC_EDIT:
 		case SC_GOLEMDUNGEON:
+		case SC_GOLEMBOSS:
 			m_eCurUi = UI_DUNGEON;
 			break;
 		case SC_VILLAGE:
-			break;
 		case SC_FIELD:
 			break;
-		case SC_GOLEMBOSS:
+		case SC_SHOP:
 			break;
 		case SC_ANIM:
 			break;
@@ -112,10 +113,16 @@ void CUiManager::Render(HDC hDC)
 	DrawText(hDC, szHpBar, _tcslen(szHpBar), &rect, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
 
 	TCHAR szMoney[64];
-	_stprintf_s(szMoney, _T("%d"), static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Get_Money());
-
-	RECT rect2 = { 20, 90, 70, 110 };
-	DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+	if (CPlayer* _player = dynamic_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
+		RECT rect2 = { 20, 90, 70, 110 };
+		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+	}
+	else if (CShopPlayer* _player = dynamic_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
+		RECT rect2 = { 20, 90, 70, 110 };
+		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+	}
 
 	SelectObject(hDC, OldFont);
 	DeleteObject(hFont1);

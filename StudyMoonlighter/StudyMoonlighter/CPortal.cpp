@@ -73,31 +73,28 @@ void CPortal::OnCollision(CObject* _obj)
 		switch (m_ePortalType)
 		{
 		case VILLAGE:
-			m_bEnter = true;
-			if (m_bEnter) {
-				CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
-			}
+			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 			break;
 		case FIELD:
-			m_bEnter = true;
-			if (m_bEnter) {
-				CSceneManager::GetInstance()->SetScene(SC_FIELD);
-			}
+			CSceneManager::GetInstance()->SetScene(SC_FIELD);
 			break;
 		case GOLEMBOSS:
 			m_bEnter = true;
 			if (m_bEnter) {
 				CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
 			}
-			
-		case PORTAL_END:
+			break;
+		case SHOP:
+			if (m_bEnter) {
+				CSceneManager::GetInstance()->SetScene(SC_SHOP);
+			}
+			m_bCollision = true;
 			break;
 		case DUNGEON:
 			if (m_bEnter) {
 				CSceneManager::GetInstance()->SetScene(SC_GOLEMDUNGEON);
 			}
 			m_bCollision = true;
-
 			break;
 		default:
 			break;
@@ -109,5 +106,6 @@ void CPortal::KeyInput()
 {
 	if (CKeyManager::Get_Instance()->Key_Down('J')) {
 		m_bEnter = true;
+		
 	}
 }
