@@ -150,7 +150,7 @@ void CPortal::OnCollision(CObject* _obj)
 
 void CPortal::KeyInput()
 {
-	if (CKeyManager::Get_Instance()->Key_Down('J') && m_bCollision) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_SIGN,'J') && m_bCollision) {
 		m_bEnter = true;
 		m_eRender = RENDER_UI;
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);

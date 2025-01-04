@@ -53,13 +53,13 @@ void CMenuScene::Initialize()
 
 int CMenuScene::Update()
 {
-	if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE)) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_SPACE)) {
 		CSoundManager::Get_Instance()->PlaySound(L"main_menu_door_open.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		m_bIsOpen = true;
 	}
 
 	if (m_iOpenSize >= 350) {
-		if (CKeyManager::Get_Instance()->Key_Down(VK_RETURN))
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE,VK_RETURN))
 		{
 			CSceneManager::GetInstance()->SetScene(SC_TUTORIAL);
 		}
@@ -68,15 +68,15 @@ int CMenuScene::Update()
 		CSoundManager::Get_Instance()->PlayBGM(L"main_menu_screen.wav", g_fBackgroundVolume, false);
 	}
 
-	if (CKeyManager::Get_Instance()->Key_Down(VK_F2)) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F2)) {
 		CSceneManager::GetInstance()->SetScene(SC_EDIT);
 	}
 
-	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F1)) {
 		CSceneManager::GetInstance()->SetScene(SC_ANIM);
 	}
 
-	if (CKeyManager::Get_Instance()->Key_Down(VK_F3)) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F3)) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
 		CSceneManager::GetInstance()->SetScene(SC_SHOP);
 	}

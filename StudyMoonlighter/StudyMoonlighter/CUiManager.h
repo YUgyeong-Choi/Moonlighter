@@ -1,6 +1,7 @@
 #pragma once
 #include "Define.h"
 #include "CInventory.h"
+#include "CInventoryShop.h"
 class CUiManager
 {
 public:
@@ -42,4 +43,5 @@ private:
 	vector<vector<CInvenSlot*>> inventory;
 	UITYPE m_eCurUi;
 	CInventory* m_Inven;
+	CInventoryShop* m_InvenShop;
 };

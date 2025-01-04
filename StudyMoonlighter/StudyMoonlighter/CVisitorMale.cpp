@@ -214,7 +214,7 @@ void CVisitorMale::Change_Motion()
 
 void CVisitorMale::KeyInput()
 {
-	if (CKeyManager::Get_Instance()->Key_Down('K')) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_TALK, 'K')) {
 		if (talkFinish) {
 			cnt++;
 			talkFinish = false;

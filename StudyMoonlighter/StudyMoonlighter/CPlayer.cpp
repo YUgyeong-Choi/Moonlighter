@@ -411,12 +411,12 @@ void CPlayer::Key_Input()
 			}
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down('K') && !m_bIsRoll && !m_bInvenOpen) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_ATTACK,'K') && !m_bIsRoll && !m_bInvenOpen) {
 			m_eCurState = ATTACK;
 			mbIsAttack = true;
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE) && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MOVE,VK_SPACE) && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
 			if (!m_bIsRoll) {
 				m_bOnslime = false;
 				m_bIsRoll = true;
@@ -425,7 +425,7 @@ void CPlayer::Key_Input()
 			}
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down('I')) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'I')) {
 			m_bInvenOpen = !m_bInvenOpen;
 			if (m_bInvenOpen) {
 				CUiManager::GetInstance()->Set_UiType(UI_INVEN);
@@ -434,13 +434,6 @@ void CPlayer::Key_Input()
 			else {
 				CUiManager::GetInstance()->Set_UiType(UI_END);
 			}
-		}
-
-		if (CKeyManager::Get_Instance()->Key_Down('1')) {
-			CUiManager::GetInstance()->AddItem(RICHJELLY);
-		}
-		if (CKeyManager::Get_Instance()->Key_Down('2')) {
-			CUiManager::GetInstance()->AddItem(IRONBAR);
 		}
 	}
 }

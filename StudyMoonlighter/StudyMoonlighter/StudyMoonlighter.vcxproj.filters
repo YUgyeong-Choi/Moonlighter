@@ -342,6 +342,9 @@
     <ClInclude Include="CShowCase.h">
       <Filter>02_Object\07_Shop</Filter>
     </ClInclude>
+    <ClInclude Include="CInventoryShop.h">
+      <Filter>02_Object\05_Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -514,6 +517,9 @@
     </ClCompile>
     <ClCompile Include="CShowCase.cpp">
       <Filter>02_Object\07_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventoryShop.cpp">
+      <Filter>02_Object\05_Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

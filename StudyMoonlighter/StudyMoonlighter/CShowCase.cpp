@@ -9,6 +9,7 @@
 
 CShowCase::CShowCase():m_bActive(false)
 {
+	m_sellItem.itemId = ITEM_END;
 }
 
 void CShowCase::Initialize()
@@ -89,6 +90,7 @@ void CShowCase::OnCollision()
 	if (IntersectRect(&rc, &m_HitBox, CObjectManager::Get_Instance()->Get_Player()->Get_Rect()))
 	{
 		m_bActive = true;
+
 	}
 }
 
@@ -97,7 +99,7 @@ void CShowCase::KeyInput()
 	CObject* _player = CObjectManager::Get_Instance()->Get_Player();
 	CShopPlayer* _shopPlayer = static_cast<CShopPlayer*>(_player);
 
-	if (CKeyManager::Get_Instance()->Key_Down('J')&&m_bActive) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'J')&&m_bActive) {
 		_shopPlayer->Set_Inven();
 		if (_shopPlayer->Get_Inven()) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVENSHOP);

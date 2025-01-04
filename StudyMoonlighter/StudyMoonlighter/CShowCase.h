@@ -16,5 +16,6 @@ private:
 	void KeyInput();
 private:
 	bool m_bActive;
+	ITEM m_sellItem;
 };
 

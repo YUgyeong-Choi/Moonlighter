@@ -32,11 +32,15 @@ void CUiManager::Initialize()
 
 	m_Inven = new CInventory();
 	m_Inven->Copy_Inven(inventory);
+
+	m_InvenShop = new CInventoryShop();
+	m_InvenShop->Copy_Inven(inventory);
 }
 
 void CUiManager::Update()
 {
 	m_Inven->Update();
+	m_InvenShop->Update();
 }
 
 void CUiManager::Render(HDC hDC)
@@ -205,7 +209,7 @@ void CUiManager::Shop_Ui(HDC hDC)
 	graphics.DrawImage(image, 500, 320, 0, 0, 198, 190, UnitPixel);
 	graphics.DrawImage(image, 700, 320, 0, 0, 198, 190, UnitPixel);
 
-	//m_Inven->Render(hDC);
+	m_InvenShop->Render(hDC);
 	delete image;
 }
 

@@ -46,7 +46,7 @@ int CVillageScene::Update()
 {
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
-
+	CUiManager::GetInstance()->Update();
 	return 0;
 }
 
@@ -76,7 +76,7 @@ void CVillageScene::Release()
 
 void CVillageScene::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE,VK_F1)) {
 		g_bDevmode = !g_bDevmode;
 	}
 }

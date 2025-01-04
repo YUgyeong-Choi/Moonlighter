@@ -104,11 +104,7 @@ void CShopScene::Release()
 
 void CShopScene::Key_Input()
 {
-	if (CKeyManager::Get_Instance()->Key_Down('1')) {
-		m_bShop = !m_bShop;
-	}
-
-	if (CKeyManager::Get_Instance()->Key_Down(VK_F1)) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE,VK_F1)) {
 		g_bDevmode = !g_bDevmode;
 	}
 }

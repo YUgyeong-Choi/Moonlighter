@@ -234,7 +234,7 @@ void CShopPlayer::Key_Input()
 	}
 
 
-	if (CKeyManager::Get_Instance()->Key_Down(VK_SPACE) && !m_bInvenOpen) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MOVE,VK_SPACE) && !m_bInvenOpen) {
 		if (!m_bIsRoll) {
 			m_bIsRoll = true;
 			m_eCurState = ROLL;
@@ -242,7 +242,7 @@ void CShopPlayer::Key_Input()
 		}
 	}
 
-	if (CKeyManager::Get_Instance()->Key_Down('I')) {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'I')) {
 		m_bInvenOpen = !m_bInvenOpen;
 		if (m_bInvenOpen) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVEN);
@@ -252,6 +252,7 @@ void CShopPlayer::Key_Input()
 			CUiManager::GetInstance()->Set_UiType(UI_END);
 		}
 	}
+
 }
 
 void CShopPlayer::Rolling()

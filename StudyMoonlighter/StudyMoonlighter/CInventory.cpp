@@ -180,7 +180,7 @@ void CInventory::Release()
 void CInventory::KeyInput()
 {
     if (CUiManager::GetInstance()->Get_UiType() == UI_INVEN) {
-        if (CKeyManager::Get_Instance()->Key_Down('W')) {
+        if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'W')) {
             rowIndex--;
             if (rowIndex == 1 && columnIndex == 6) {
                 columnIndex--;;
@@ -195,7 +195,7 @@ void CInventory::KeyInput()
             }
         }
 
-        if (CKeyManager::Get_Instance()->Key_Down('S')) {
+        if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'S')) {
             rowIndex++;
 
             if (columnIndex == 6) {
@@ -206,7 +206,7 @@ void CInventory::KeyInput()
             }
         }
 
-        if (CKeyManager::Get_Instance()->Key_Down('A')) {
+        if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'A')) {
             columnIndex--;
             if (rowIndex == 1 && columnIndex == -1) {
                 columnIndex = 5;
@@ -219,7 +219,7 @@ void CInventory::KeyInput()
             }
         }
 
-        if (CKeyManager::Get_Instance()->Key_Down('D')) {
+        if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'D')) {
             columnIndex++;
             if (rowIndex == 3 && columnIndex == 6) {
                 columnIndex = 0;
@@ -233,7 +233,7 @@ void CInventory::KeyInput()
             }
         }
 
-        if (CKeyManager::Get_Instance()->Key_Down('J')) {
+        if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'J')) {
             if (_pickUpItem.itemId == ITEM_END) {
                 _pickUpItem = inventory[rowIndex][columnIndex]->Get_Item();
                 _pickUpItem.num = 1;
