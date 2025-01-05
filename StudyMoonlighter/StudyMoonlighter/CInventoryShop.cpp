@@ -22,6 +22,7 @@ void CInventoryShop::Initialize()
         }
     }
 
+    int num = 0;
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 2; j++)
@@ -32,7 +33,8 @@ void CInventoryShop::Initialize()
             }
             else if (i == 1 || i == 3)
             {
-                sellSlots[i][j] = new CPriceSlot(i, j);
+                sellSlots[i][j] = new CPriceSlot(i, j, num);
+                num++;
             }
         }
     }
@@ -45,7 +47,14 @@ void CInventoryShop::Initialize()
 
 int CInventoryShop::Update()
 {
-	KeyInput();
+    KeyInput();
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            if (sellSlots[i][j] != nullptr) {
+                sellSlots[i][j]->Update();
+            }
+        }
+    }
 	return 0;
 }
 
@@ -324,6 +333,9 @@ void CInventoryShop::KeyInput()
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'J')) {
                 if (dynamic_cast<CSellSlot*>(sellSlots[rowIndex][columnIndex])) {
                     if (_pickUpItem.itemId == ITEM_END) {
+                        if (sellSlots[rowIndex][columnIndex]->Get_Item().num == 0) {
+                            return;
+                        }
                         _pickUpItem = sellSlots[rowIndex][columnIndex]->Get_Item();
                         _pickUpItem.num = 1;
                         sellSlots[rowIndex][columnIndex]->Sub_ItemNum();
@@ -332,6 +344,7 @@ void CInventoryShop::KeyInput()
                         if (sellSlots[rowIndex][columnIndex]->Get_Item().num == 0) {
                             sellSlots[rowIndex][columnIndex]->Item_Init();
                             sellSlots[rowIndex + 1][columnIndex]->Item_Init();
+                            static_cast<CPriceSlot*>(sellSlots[rowIndex + 1][columnIndex])->Init_Price();
                             if (rowIndex == 0 && columnIndex == 0) {
                                 static_cast<CShowCase*>(m_ShowCase[0])->Set_InitItem();
                             }
@@ -355,6 +368,7 @@ void CInventoryShop::KeyInput()
                             if (sellSlots[rowIndex][columnIndex]->Get_Item().num == 0) {
                                 sellSlots[rowIndex][columnIndex]->Item_Init();
                                 sellSlots[rowIndex + 1][columnIndex]->Item_Init();
+                                static_cast<CPriceSlot*>(sellSlots[rowIndex + 1][columnIndex])->Init_Price();
                                 if (rowIndex == 0 && columnIndex == 0) {
                                     static_cast<CShowCase*>(m_ShowCase[0])->Set_InitItem();
                                 }
@@ -373,6 +387,7 @@ void CInventoryShop::KeyInput()
                     else if (_pickUpItem.itemId != ITEM_END && sellSlots[rowIndex][columnIndex]->Get_Item().itemId == ITEM_END) {
                         sellSlots[rowIndex][columnIndex]->Set_Item(_pickUpItem);
                         sellSlots[rowIndex + 1][columnIndex]->Set_Item(_pickUpItem);
+                        static_cast<CPriceSlot*>(sellSlots[rowIndex + 1][columnIndex])->Init_Price();
                         if (rowIndex == 0 && columnIndex == 0) {
                             static_cast<CShowCase*>(m_ShowCase[0])->Set_Item(_pickUpItem);
                         }
@@ -392,6 +407,7 @@ void CInventoryShop::KeyInput()
                         _pickUpItem = sellSlots[rowIndex][columnIndex]->Get_Item();
                         sellSlots[rowIndex][columnIndex]->Set_Item(temp);
                         sellSlots[rowIndex + 1][columnIndex]->Set_Item(temp);
+                        static_cast<CPriceSlot*>(sellSlots[rowIndex + 1][columnIndex])->Init_Price();
                         if (rowIndex == 0 && columnIndex == 0) {
                             static_cast<CShowCase*>(m_ShowCase[0])->Set_Item(temp);
                         }
@@ -408,6 +424,7 @@ void CInventoryShop::KeyInput()
                 }
                 else {
                     m_IsPriceTime = true;
+                    static_cast<CPriceSlot*>(sellSlots[rowIndex][columnIndex])->Init_Index();
                 }
             }
         }

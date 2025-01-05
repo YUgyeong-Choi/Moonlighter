@@ -17,6 +17,8 @@ public:
 	void Copy_Inven(vector<vector<CInvenSlot*>>& _inventory);
 	void InitXY() { rowIndex = 0; columnIndex = 0; m_IsInven= true;}
 	void Set_Showcase();
+	void Off_IsPriceTime() { m_IsPriceTime = false; }
+	bool Get_IsPriceTime() { return m_IsPriceTime; }
 private:
 	vector<vector<CInvenSlot*>> inventory;
 	vector<vector<CInvenSlot*>> sellSlots;
