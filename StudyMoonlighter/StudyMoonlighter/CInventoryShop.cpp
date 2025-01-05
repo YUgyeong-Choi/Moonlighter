@@ -7,7 +7,7 @@
 #include "CObjectManager.h"
 #include "CShowCase.h"
 
-CInventoryShop::CInventoryShop() :rowIndex(0), columnIndex(0), m_IsInven(true)
+CInventoryShop::CInventoryShop() :rowIndex(0), columnIndex(0), m_IsInven(true), m_IsPriceTime(false)
 {
 	_pickUpItem.itemId = ITEM_END;
 }
@@ -200,7 +200,7 @@ void CInventoryShop::Release()
 void CInventoryShop::KeyInput()
 {
     if (CUiManager::GetInstance()->Get_UiType() == UI_INVENSHOP) {
-        if (m_IsInven) {
+        if (m_IsInven && !m_IsPriceTime) {
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'W')) {
                 rowIndex--;
 
@@ -274,7 +274,7 @@ void CInventoryShop::KeyInput()
                 }
             }
         }
-        else {
+        else if(!m_IsInven && !m_IsPriceTime){
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'W')) {
                 rowIndex--;
 
@@ -327,9 +327,11 @@ void CInventoryShop::KeyInput()
                         _pickUpItem = sellSlots[rowIndex][columnIndex]->Get_Item();
                         _pickUpItem.num = 1;
                         sellSlots[rowIndex][columnIndex]->Sub_ItemNum();
+                        sellSlots[rowIndex+1][columnIndex]->Sub_ItemNum();
 
                         if (sellSlots[rowIndex][columnIndex]->Get_Item().num == 0) {
                             sellSlots[rowIndex][columnIndex]->Item_Init();
+                            sellSlots[rowIndex + 1][columnIndex]->Item_Init();
                             if (rowIndex == 0 && columnIndex == 0) {
                                 static_cast<CShowCase*>(m_ShowCase[0])->Set_InitItem();
                             }
@@ -348,9 +350,11 @@ void CInventoryShop::KeyInput()
                         if (_pickUpItem.num != _pickUpItem.maxNum) {
                             _pickUpItem.num++;
                             sellSlots[rowIndex][columnIndex]->Sub_ItemNum();
+                            sellSlots[rowIndex + 1][columnIndex]->Sub_ItemNum();
 
                             if (sellSlots[rowIndex][columnIndex]->Get_Item().num == 0) {
                                 sellSlots[rowIndex][columnIndex]->Item_Init();
+                                sellSlots[rowIndex + 1][columnIndex]->Item_Init();
                                 if (rowIndex == 0 && columnIndex == 0) {
                                     static_cast<CShowCase*>(m_ShowCase[0])->Set_InitItem();
                                 }
@@ -368,6 +372,7 @@ void CInventoryShop::KeyInput()
                     }
                     else if (_pickUpItem.itemId != ITEM_END && sellSlots[rowIndex][columnIndex]->Get_Item().itemId == ITEM_END) {
                         sellSlots[rowIndex][columnIndex]->Set_Item(_pickUpItem);
+                        sellSlots[rowIndex + 1][columnIndex]->Set_Item(_pickUpItem);
                         if (rowIndex == 0 && columnIndex == 0) {
                             static_cast<CShowCase*>(m_ShowCase[0])->Set_Item(_pickUpItem);
                         }
@@ -386,6 +391,7 @@ void CInventoryShop::KeyInput()
                         ITEM temp = _pickUpItem;
                         _pickUpItem = sellSlots[rowIndex][columnIndex]->Get_Item();
                         sellSlots[rowIndex][columnIndex]->Set_Item(temp);
+                        sellSlots[rowIndex + 1][columnIndex]->Set_Item(temp);
                         if (rowIndex == 0 && columnIndex == 0) {
                             static_cast<CShowCase*>(m_ShowCase[0])->Set_Item(temp);
                         }
@@ -399,6 +405,9 @@ void CInventoryShop::KeyInput()
                             static_cast<CShowCase*>(m_ShowCase[3])->Set_Item(temp);
                         }
                     }
+                }
+                else {
+                    m_IsPriceTime = true;
                 }
             }
         }

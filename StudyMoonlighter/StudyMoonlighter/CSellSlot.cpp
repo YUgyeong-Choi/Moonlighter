@@ -19,8 +19,6 @@ void CSellSlot::Render(HDC hDC)
 {
 	Image* image(nullptr);
 	Graphics graphics(hDC);
-	image = Image::FromFile(L"../MoonlighterAssets/Ui/Bag_slot_Outline.png");
-	graphics.DrawImage(image, 573 + (columnIndex * 200), 136 + (rowIndex * 100), 0, 0, 64, 64, UnitPixel);
 
 	if (item.itemId != ITEM_END) {
 		image = Image::FromFile(item.pImageUrl);
@@ -28,7 +26,7 @@ void CSellSlot::Render(HDC hDC)
 
 		TCHAR szItemNum[64];
 		_stprintf_s(szItemNum, _T("%d"), item.num);
-		SetTextColor(hDC, RGB(0, 0, 0));
+		SetTextColor(hDC, RGB(255, 255, 255));
 		SetBkMode(hDC, TRANSPARENT);
 
 		HFONT hFont1 = CreateFont(

@@ -19,5 +19,8 @@ private:
 private:
 	bool m_bActive;
 	ITEM m_sellItem;
+	int m_iItemMove;
+	int y;
+	int tick;
 };
 

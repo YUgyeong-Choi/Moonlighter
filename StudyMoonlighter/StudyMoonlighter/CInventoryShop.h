@@ -25,5 +25,6 @@ private:
 	int columnIndex;
 	ITEM _pickUpItem;
 	bool m_IsInven;
+	bool m_IsPriceTime;
 };
 

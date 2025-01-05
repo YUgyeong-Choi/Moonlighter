@@ -7,7 +7,7 @@
 #include "CUiManager.h"
 #include "CInventoryShop.h"
 
-CShowCase::CShowCase():m_bActive(false)
+CShowCase::CShowCase():m_bActive(false), m_iItemMove(0), y(1), tick(0)
 {
 	m_sellItem.itemId = ITEM_END;
 }
@@ -26,6 +26,16 @@ void CShowCase::Initialize()
 
 int CShowCase::Update()
 {
+	tick++;
+	if (tick > 10) {
+		m_iItemMove += y;
+		if (m_iItemMove > 5 || m_iItemMove < 0) {
+			y *= -1;
+		}
+		tick = 0;
+	}
+
+
 	KeyInput();
 	__super::Update_Rect();
 	return 0;
@@ -75,7 +85,7 @@ void CShowCase::Render(HDC hDC)
 
 	if (m_sellItem.itemId != ITEM_END) {
 		image = Image::FromFile(m_sellItem.pImageUrl);
-		graphics.DrawImage(image, (int)m_tInfo.fX-24 + iScrollX, (int)m_tInfo.fY-34 + iScrollY, 0, 0, 48, 48, UnitPixel);
+		graphics.DrawImage(image, (int)m_tInfo.fX-24 + iScrollX, (int)m_tInfo.fY-45+ m_iItemMove + iScrollY, 0, 0, 48, 48, UnitPixel);
 	}
 
 	if (g_bDevmode) {
