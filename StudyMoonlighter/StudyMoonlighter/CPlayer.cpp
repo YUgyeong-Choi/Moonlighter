@@ -9,7 +9,7 @@
 #include "CUiManager.h"
 #include "CItem.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false), m_SelectFirstWeapon(true)
 {
 }
 
@@ -205,25 +205,95 @@ void CPlayer::Render(HDC hDC)
 	case CPlayer::FALL:
 		break;
 	case CPlayer::ATTACK:
-		switch (m_eCurDir)
-		{
-		case LEFT:
-			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_left.png");
-			break;
-		case RIGHT:
-			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_right.png");
-			break;
-		case UP:
-		case UP_LEFT:
-		case UP_RIGHT:
-			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_up.png");
-			break;
-		case DOWN:
-		case DOWN_LEFT:
-		case DOWN_RIGHT:
-			image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_down.png");
-			break;
+		if (m_SelectFirstWeapon) {
+			if (CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+				switch (m_eCurDir)
+				{
+				case LEFT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_left.png");
+					break;
+				case RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_right.png");
+					break;
+				case UP:
+				case UP_LEFT:
+				case UP_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_up.png");
+					break;
+				case DOWN:
+				case DOWN_LEFT:
+				case DOWN_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_down.png");
+					break;
+				}
+			}
+			else if (CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+				switch (m_eCurDir)
+				{
+				case LEFT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_left.png");
+					break;
+				case RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_right.png");
+					break;
+				case UP:
+				case UP_LEFT:
+				case UP_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_up.png");
+					break;
+				case DOWN:
+				case DOWN_LEFT:
+				case DOWN_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_down.png");
+					break;
+				}
+			}
 		}
+		else {
+			if (CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+				switch (m_eCurDir)
+				{
+				case LEFT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_left.png");
+					break;
+				case RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_right.png");
+					break;
+				case UP:
+				case UP_LEFT:
+				case UP_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_up.png");
+					break;
+				case DOWN:
+				case DOWN_LEFT:
+				case DOWN_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/ShortSword/will_shortsword_down.png");
+					break;
+				}
+			}
+			else if (CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+				switch (m_eCurDir)
+				{
+				case LEFT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_left.png");
+					break;
+				case RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_right.png");
+					break;
+				case UP:
+				case UP_LEFT:
+				case UP_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_up.png");
+					break;
+				case DOWN:
+				case DOWN_LEFT:
+				case DOWN_RIGHT:
+					image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/will_bow_down.png");
+					break;
+				}
+			}
+		}
+
 		break;
 	case CPlayer::HIT:
 		break;
@@ -453,8 +523,19 @@ void CPlayer::Key_Input()
 		}
 
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_ATTACK,'K') && !m_bIsRoll && !m_bInvenOpen && !m_bUsePendant) {
-			m_eCurState = ATTACK;
-			mbIsAttack = true;
+			if (m_SelectFirstWeapon) {
+				if (CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId != ITEM_END) {
+					m_eCurState = ATTACK;
+					mbIsAttack = true;
+				}
+			}
+			else {
+				if (CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId != ITEM_END) {
+					m_eCurState = ATTACK;
+					mbIsAttack = true;
+				}
+			}
+
 		}
 
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_MOVE,VK_SPACE) && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant) {
@@ -483,6 +564,10 @@ void CPlayer::Key_Input()
 			if (CSceneManager::GetInstance()->Get_SceneID() == SC_GOLEMDUNGEON || CSceneManager::GetInstance()->Get_SceneID() == SC_EDIT) {
 				m_bUsePendant = true;
 			}
+		}
+
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, 'Z') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+			m_SelectFirstWeapon = !m_SelectFirstWeapon;
 		}
 	}
 }
@@ -574,9 +659,21 @@ void CPlayer::Change_Motion()
 			break;
 
 		case CPlayer::ATTACK:
+			if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+				m_tFrame.iFrameEnd = 4;
+			}
+			if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+				m_tFrame.iFrameEnd = 4;
+			}
+			if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+				m_tFrame.iFrameEnd = 10;
+			}
+			if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+				m_tFrame.iFrameEnd = 10;
+			}
+
 			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 4;
-			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwSpeed = 150;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
@@ -692,6 +789,41 @@ void CPlayer::SoundEffet()
 		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 		break;
 	case CPlayer::ATTACK:
+		if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+			if (m_tFrame.iFrameStart == 3) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+			if (m_tFrame.iFrameStart == 7) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+		}
+
+		if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+			if (m_tFrame.iFrameStart == 3) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+			if (m_tFrame.iFrameStart == 7) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+		}
+
+		if (m_SelectFirstWeapon&& CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+			if (m_tFrame.iFrameStart == 2) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+		}
+		if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+			if (m_tFrame.iFrameStart == 2) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+		}
+
 		break;
 	case CPlayer::HIT:
 		break;
@@ -704,46 +836,100 @@ void CPlayer::SoundEffet()
 
 void CPlayer::Attack()
 {
-	if (mbIsAttack) {
-		switch (m_eCurDir)
-		{
-		case LEFT:
-			m_HitBox = { (long)m_tInfo.fX - 60,(long)m_tInfo.fY - 50,(long)m_tInfo.fX,(long)m_tInfo.fY + 50 };
-			break;
-		case RIGHT:
-			m_HitBox = { (long)m_tInfo.fX,(long)m_tInfo.fY-50,(long)m_tInfo.fX + 60,(long)m_tInfo.fY + 50 };
-			break;
-		case UP:
-		case UP_LEFT:
-		case UP_RIGHT:
-			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY - 60 ,(long)m_tInfo.fX + 50,(long)m_tInfo.fY  };
-			break;
-		case DOWN:
-		case DOWN_LEFT:
-		case DOWN_RIGHT:
-			m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY + 60 };
-			break;
-		}
-		
-		if (m_tFrame.iFrameStart == 0) {
-			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
-		}
-		m_tRenderSizeX = 200.f;
-		m_tRenderSizeY = 200.f;
+	if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+		if (mbIsAttack) {
+			switch (m_eCurDir)
+			{
+			case LEFT:
+				m_HitBox = { (long)m_tInfo.fX - 60,(long)m_tInfo.fY - 50,(long)m_tInfo.fX,(long)m_tInfo.fY + 50 };
+				break;
+			case RIGHT:
+				m_HitBox = { (long)m_tInfo.fX,(long)m_tInfo.fY - 50,(long)m_tInfo.fX + 60,(long)m_tInfo.fY + 50 };
+				break;
+			case UP:
+			case UP_LEFT:
+			case UP_RIGHT:
+				m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY - 60 ,(long)m_tInfo.fX + 50,(long)m_tInfo.fY };
+				break;
+			case DOWN:
+			case DOWN_LEFT:
+			case DOWN_RIGHT:
+				m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY + 60 };
+				break;
+			}
 
-		if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
-			m_tFrame.iFrameEnd = 8;
-			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
-		}
+			m_tRenderSizeX = 200.f;
+			m_tRenderSizeY = 200.f;
+			if (m_tFrame.iFrameStart == 0) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
 
-		if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
-			m_tFrame.iFrameEnd = 17;
-			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+
+			if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
+				m_tFrame.iFrameEnd = 8;
+			}
+
+			if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
+				m_tFrame.iFrameEnd = 17;
+			}
 		}
 	}
+
+	if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+		if (mbIsAttack) {
+			switch (m_eCurDir)
+			{
+			case LEFT:
+				m_HitBox = { (long)m_tInfo.fX - 60,(long)m_tInfo.fY - 50,(long)m_tInfo.fX,(long)m_tInfo.fY + 50 };
+				break;
+			case RIGHT:
+				m_HitBox = { (long)m_tInfo.fX,(long)m_tInfo.fY - 50,(long)m_tInfo.fX + 60,(long)m_tInfo.fY + 50 };
+				break;
+			case UP:
+			case UP_LEFT:
+			case UP_RIGHT:
+				m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY - 60 ,(long)m_tInfo.fX + 50,(long)m_tInfo.fY };
+				break;
+			case DOWN:
+			case DOWN_LEFT:
+			case DOWN_RIGHT:
+				m_HitBox = { (long)m_tInfo.fX - 50,(long)m_tInfo.fY,(long)m_tInfo.fX + 50,(long)m_tInfo.fY + 60 };
+				break;
+			}
+			if (m_tFrame.iFrameStart == 0) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+
+			m_tRenderSizeX = 200.f;
+			m_tRenderSizeY = 200.f;
+
+			if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
+				m_tFrame.iFrameEnd = 8;
+			}
+
+			if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
+				m_tFrame.iFrameEnd = 17;
+			}
+		}
+	}
+
+	if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+		if (mbIsAttack) {
+			m_tRenderSizeX = 200.f;
+			m_tRenderSizeY = 200.f;
+		}
+	}
+
+	if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+		if (mbIsAttack) {
+			m_tRenderSizeX = 200.f;
+			m_tRenderSizeY = 200.f;
+		}
+	}
+
+
 
 	if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
 		m_tRenderSizeX = 80.f;

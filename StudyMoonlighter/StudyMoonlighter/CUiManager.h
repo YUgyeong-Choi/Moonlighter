@@ -17,6 +17,8 @@ public:
 	UITYPE Get_UiType() { return m_eCurUi; }
 	CInventory* Get_Inven() { return m_Inven; }
 	CInventoryShop* Get_InvenShop() { return m_InvenShop; }
+	CInvenSlot* Get_Wepon1() { return inventory[0][5]; }
+	CInvenSlot* Get_Wepon2() { return inventory[0][6]; }
 public:
 	static CUiManager* GetInstance()
 	{

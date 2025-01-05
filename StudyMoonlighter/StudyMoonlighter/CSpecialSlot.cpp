@@ -48,6 +48,35 @@ void CSpecialSlot::Render(HDC hDC)
 	default:
 		break;
 	}
+
+	if (item.itemId != ITEM_END) {
+		switch (m_OutfitType)
+		{
+		case HELMET:
+			break;
+		case ARMOR:
+			break;
+		case BOOTS:
+			break;
+		case WEAPON1:
+			image = Image::FromFile(item.pImageUrl);
+			graphics.DrawImage(image, 598, 160, 0, 0, 48, 48, UnitPixel);
+			break;
+		case WEAPON2:
+			image = Image::FromFile(item.pImageUrl);
+			graphics.DrawImage(image, 737, 160, 0, 0, 48, 48, UnitPixel);
+			break;
+		case POTION:
+			break;
+		case OUTFIT_ITEM:
+			break;
+		case OUTFIT_END:
+			break;
+		default:
+			break;
+		}
+	}
+
 	delete image;
 }
 

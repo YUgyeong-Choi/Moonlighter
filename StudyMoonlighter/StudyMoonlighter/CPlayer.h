@@ -51,5 +51,7 @@ private:
 	bool m_bInvenOpen;
 	bool m_NoRenderPlayer;
 	FRAME m_PandentFrame;
+
+	bool m_SelectFirstWeapon;
 };
 

@@ -150,6 +150,22 @@ void CInvenSlot::Set_ItemType(ITEMTYPE _item)
 		item.price = 300;
 		item.pImageUrl = L"../MoonlighterAssets/Items/7_Whetstone.png";
 		break;
+	case SWORD:
+		item.itemId = SWORD;
+		item.itemName = L"Sword";
+		item.maxNum = 1;
+		item.num = 1;
+		item.price = 300;
+		item.pImageUrl = L"../MoonlighterAssets/Items/train_big_sword.png";
+		break;
+	case BOW:
+		item.itemId = BOW;
+		item.itemName = L"Bow";
+		item.maxNum = 1;
+		item.num = 1;
+		item.price = 300;
+		item.pImageUrl = L"../MoonlighterAssets/Items/hunter_bow.png";
+		break;
 	case ITEM_END:
 		break;
 	default:
