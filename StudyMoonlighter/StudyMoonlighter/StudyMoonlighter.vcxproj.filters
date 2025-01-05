@@ -354,6 +354,9 @@
     <ClInclude Include="CSpecialSlot.h">
       <Filter>02_Object\05_Inventory\Slot</Filter>
     </ClInclude>
+    <ClInclude Include="CShopTable.h">
+      <Filter>02_Object\07_Shop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -535,6 +538,9 @@
     </ClCompile>
     <ClCompile Include="CSpecialSlot.cpp">
       <Filter>02_Object\05_Inventory\Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="CShopTable.cpp">
+      <Filter>02_Object\07_Shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

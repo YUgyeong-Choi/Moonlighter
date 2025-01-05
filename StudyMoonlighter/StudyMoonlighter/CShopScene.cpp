@@ -12,6 +12,7 @@
 #include "CPortal.h"
 #include "CCollisionManager.h"
 #include "CShowCase.h"
+#include "CShopTable.h"
 
 CShopScene::CShopScene():m_bShop(true), m_Active(false),offSetShopX(0),offSetShopY(0)
 {
@@ -125,10 +126,12 @@ void CShopScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(750, 230, 10, 250));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(570, 80, 350, 10));
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(400,600));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450, 600));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(400, 650));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(450, 650));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380,600));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(430, 600));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380, 650));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(430, 650));
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopTable>::Create(630, 580));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(565, 760, 80, 40));
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(VILLAGE);
