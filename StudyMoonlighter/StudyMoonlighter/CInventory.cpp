@@ -3,6 +3,7 @@
 #include "CKeyManager.h"
 #include "CUiManager.h"
 #include "CSpecialSlot.h"
+#include "CSoundManager.h"
 
 CInventory::CInventory() :rowIndex(0), columnIndex(0)
 {
@@ -193,6 +194,8 @@ void CInventory::KeyInput()
             if (rowIndex < 0) {
                 rowIndex = 3;
             }
+            CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+            CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
         }
 
         if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'S')) {
@@ -204,6 +207,8 @@ void CInventory::KeyInput()
             if (rowIndex > 3) {
                 rowIndex = 0;
             }
+            CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+            CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
         }
 
         if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'A')) {
@@ -217,6 +222,8 @@ void CInventory::KeyInput()
             if (columnIndex < 0) {
                 columnIndex = 6;
             }
+            CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+            CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
         }
 
         if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'D')) {
@@ -231,6 +238,8 @@ void CInventory::KeyInput()
             if (columnIndex > 6) {
                 columnIndex = 0;
             }
+            CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+            CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
         }
 
         if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'J')) {
@@ -242,6 +251,8 @@ void CInventory::KeyInput()
                 if (inventory[rowIndex][columnIndex]->Get_Item().num == 0) {
                     inventory[rowIndex][columnIndex]->Item_Init();
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
             else if (_pickUpItem.itemId == inventory[rowIndex][columnIndex]->Get_Item().itemId) {
                 if (_pickUpItem.num != _pickUpItem.maxNum) {
@@ -251,16 +262,22 @@ void CInventory::KeyInput()
                     if (inventory[rowIndex][columnIndex]->Get_Item().num == 0) {
                         inventory[rowIndex][columnIndex]->Item_Init();
                     }
+                    CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                    CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
                 }
             }
             else if (_pickUpItem.itemId != ITEM_END && inventory[rowIndex][columnIndex]->Get_Item().itemId == ITEM_END) {
                 inventory[rowIndex][columnIndex]->Set_Item(_pickUpItem);
                 _pickUpItem.itemId = ITEM_END;
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_drop.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
             else if (_pickUpItem.itemId != ITEM_END && inventory[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
                 ITEM temp= _pickUpItem;
                 _pickUpItem = inventory[rowIndex][columnIndex]->Get_Item();
                 inventory[rowIndex][columnIndex]->Set_Item(temp);
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
         }
     }

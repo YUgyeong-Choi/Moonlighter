@@ -5,6 +5,7 @@
 #include "CKeyManager.h"
 #include "CUiManager.h"
 #include "CInventory.h"
+#include "CSoundManager.h"
 
 CShopPlayer::CShopPlayer():m_iMoney(0), m_eCurState(STATE_END), m_ePreState(STATE_END), m_bIsRoll(false), m_bInvenOpen(false)
 {
@@ -39,6 +40,7 @@ int CShopPlayer::Update()
 {
 	Key_Input();
 	Change_Motion();
+	SoundEffet();
 	__super::Update_Rect();
     return 0;
 }
@@ -247,6 +249,8 @@ void CShopPlayer::Key_Input()
 		if (m_bInvenOpen) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVEN);
 			static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"gui_inventory_open.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 		else {
 			CUiManager::GetInstance()->Set_UiType(UI_END);
@@ -308,7 +312,7 @@ void CShopPlayer::Rolling()
 			m_bIsRoll = false;
 			m_fRollTime = 25.f;
 			m_fFixScrollSpeed = m_fSpeed;
-			m_fSpeed = 3.f;
+			m_fSpeed = 4.f;
 		}
 	}
 }
@@ -347,4 +351,21 @@ void CShopPlayer::Change_Motion()
 
 void CShopPlayer::SoundEffet()
 {
+	switch (m_eCurState)
+	{
+	case CShopPlayer::IDLE:
+		break;
+	case CShopPlayer::WALK:
+		m_fTimeSinceLastStep += 0.1f;
+		if (m_fTimeSinceLastStep >= 2.3) {
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"will_step_town_wood2.wav", SOUND_EFFECT, g_fPlayerVolume, true);
+			m_fTimeSinceLastStep = 0;
+		}
+		break;
+	case CShopPlayer::ROLL:
+		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fPlayerVolume, true);
+		break;
+	}
 }

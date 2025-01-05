@@ -4,6 +4,7 @@
 #include "CShopScene.h"
 #include "CScrollManager.h"
 #include "CObjectManager.h"
+#include "CSoundManager.h"
 #include "CKeyManager.h"
 
 CShopSign::CShopSign():m_bActive(false)
@@ -101,5 +102,7 @@ void CShopSign::Key_Input()
 {
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_SHOPOPEN, 'J')&& m_bActive) {
 		dynamic_cast<CShopScene*>(CSceneManager::GetInstance()->Get_Scene())->Set_ShopOpen();
+		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+		CSoundManager::Get_Instance()->PlaySound(L"gui_press_button.wav", SOUND_EFFECT, g_fEffectVolume, true);
 	}
 }

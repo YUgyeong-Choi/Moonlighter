@@ -2,6 +2,7 @@
 #include "CShopTable.h"
 #include "CScrollManager.h"
 #include "CObjectManager.h"
+#include "CSoundManager.h"
 
 CShopTable::CShopTable()
 {

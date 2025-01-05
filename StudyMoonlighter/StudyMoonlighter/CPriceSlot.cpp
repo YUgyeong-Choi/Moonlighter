@@ -2,6 +2,7 @@
 #include "CPriceSlot.h"
 #include "CKeyManager.h"
 #include "CUiManager.h"
+#include "CSoundManager.h"
 
 CPriceSlot::CPriceSlot() : m_iPrice(0), key_type(KEY_END), m_iPriceIndex(0), m_bActive(false)
 {
@@ -144,6 +145,8 @@ void CPriceSlot::Key_Input()
 			if (m_iPriceIndex < 0) {
 				m_iPriceIndex = 0;
 			}
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 	}
 
@@ -153,6 +156,8 @@ void CPriceSlot::Key_Input()
 			if (m_iPriceIndex > 5) {
 				m_iPriceIndex = 5;
 			}
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 	}
 
@@ -162,6 +167,8 @@ void CPriceSlot::Key_Input()
 			if (m_OnePrice[m_iPriceIndex] > 9) {
 				m_OnePrice[m_iPriceIndex] = 9;
 			}
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 	}
 
@@ -171,6 +178,8 @@ void CPriceSlot::Key_Input()
 			if (m_OnePrice[m_iPriceIndex] < 0) {
 				m_OnePrice[m_iPriceIndex] = 0;
 			}
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 	}
 
@@ -179,6 +188,8 @@ void CPriceSlot::Key_Input()
 		if (CUiManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
 			CUiManager::GetInstance()->Get_InvenShop()->Off_IsPriceTime();
 			m_bActive = false;
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 	}
 }

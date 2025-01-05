@@ -43,5 +43,6 @@ protected:
 	ITEMSTATE m_itemState;
 	FRAME m_itemFrame;
 	bool m_AddMoney;
+	bool m_sound;
 };
 

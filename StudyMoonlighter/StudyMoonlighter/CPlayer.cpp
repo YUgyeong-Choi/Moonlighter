@@ -430,6 +430,8 @@ void CPlayer::Key_Input()
 			if (m_bInvenOpen) {
 				CUiManager::GetInstance()->Set_UiType(UI_INVEN);
 				static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"gui_inventory_open.wav", SOUND_EFFECT, g_fEffectVolume, true);
 			}
 			else {
 				CUiManager::GetInstance()->Set_UiType(UI_END);
@@ -571,7 +573,7 @@ void CPlayer::SoundEffet()
 			m_fTimeSinceLastStep += 0.1f;
 			if (m_fTimeSinceLastStep >= 2.3) {
 				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"will_step_town_gravel.wav", SOUND_EFFECT, 0.1f, true);
+				CSoundManager::Get_Instance()->PlaySound(L"will_step_town_gravel.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 				m_fTimeSinceLastStep = 0;
 			}
 			break;
@@ -579,7 +581,7 @@ void CPlayer::SoundEffet()
 			m_fTimeSinceLastStep += 0.1f;
 			if (m_fTimeSinceLastStep >= 2.3) {
 				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"will_step_town_pavement.wav", SOUND_EFFECT, 0.1f, true);
+				CSoundManager::Get_Instance()->PlaySound(L"will_step_town_pavement.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 				m_fTimeSinceLastStep = 0;
 			}
 			break;
@@ -588,14 +590,14 @@ void CPlayer::SoundEffet()
 			if (m_bOnslime) {
 				if (m_fTimeSinceLastStep >= 4.6) {
 					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-					CSoundManager::Get_Instance()->PlaySound(L"will_step_dungeon_slime.wav", SOUND_EFFECT, 0.1f, true);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_dungeon_slime.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 					m_fTimeSinceLastStep = 0;
 				}
 			}
 			else {
 				if (m_fTimeSinceLastStep >= 2.3) {
 					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-					CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 					m_fTimeSinceLastStep = 0;
 				}
 			}
@@ -605,14 +607,14 @@ void CPlayer::SoundEffet()
 			if (m_bOnslime) {
 				if (m_fTimeSinceLastStep >= 4.6) {
 					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-					CSoundManager::Get_Instance()->PlaySound(L"will_step_dungeon_slime.wav", SOUND_EFFECT, 0.1f, true);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_dungeon_slime.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 					m_fTimeSinceLastStep = 0;
 				}
 			}
 			else {
 				if (m_fTimeSinceLastStep >= 4.6) {
 					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-					CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 					m_fTimeSinceLastStep = 0;
 				}
 			}
@@ -623,11 +625,11 @@ void CPlayer::SoundEffet()
 
 	case CPlayer::ROLL:
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f, true);
+		CSoundManager::Get_Instance()->PlaySound(L"will_roll.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 		break;
 	case CPlayer::FALL:
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fEffectVolume - 0.3f, true);
+		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 		break;
 	case CPlayer::ATTACK:
 		break;
@@ -665,7 +667,7 @@ void CPlayer::Attack()
 		
 		if (m_tFrame.iFrameStart == 0) {
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fEffectVolume, true);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing1.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 		}
 		m_tRenderSizeX = 200.f;
 		m_tRenderSizeY = 200.f;
@@ -673,13 +675,13 @@ void CPlayer::Attack()
 		if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
 			m_tFrame.iFrameEnd = 8;
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fEffectVolume, true);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 		}
 
 		if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
 			m_tFrame.iFrameEnd = 17;
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fEffectVolume, true);
+			CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 		}
 	}
 

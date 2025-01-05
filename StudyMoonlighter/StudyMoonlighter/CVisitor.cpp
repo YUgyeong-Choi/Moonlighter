@@ -5,9 +5,10 @@
 #include "CShopPlayer.h"
 #include "CUiManager.h"
 #include "CSceneManager.h"
+#include "CSoundManager.h"
 #include "CShopScene.h"
 
-CVisitor::CVisitor():m_eCurPattern(CVisitor::END), m_ePrePattern(CVisitor::END), m_fSellX(0), m_fSellY(0), m_fCounterX(0), m_fCounterY(0), m_bSellXY(false), tick(0), m_itemState(ITEMSTATE_END), m_itemTalk(false), m_bTableXY(false), m_fBeforeCounterX(0), m_fBeforeCounterY(0), m_bBeforeTableXY(false), m_AddMoney(false), m_SellFinish(false)
+CVisitor::CVisitor():m_eCurPattern(CVisitor::END), m_ePrePattern(CVisitor::END), m_fSellX(0), m_fSellY(0), m_fCounterX(0), m_fCounterY(0), m_bSellXY(false), tick(0), m_itemState(ITEMSTATE_END), m_itemTalk(false), m_bTableXY(false), m_fBeforeCounterX(0), m_fBeforeCounterY(0), m_bBeforeTableXY(false), m_AddMoney(false), m_SellFinish(false), m_sound(false)
 {
 }
 
@@ -60,6 +61,29 @@ int CVisitor::Update()
 		if (m_itemFrame.iFrameStart == m_itemFrame.iFrameEnd) {
 			m_bBeforeTableXY = true;
 			m_eCurPattern = CVisitor::WALK;
+			if (!m_sound) {
+				switch (m_itemState)
+				{
+				case CVisitor::CHEAP:
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"visitor_talk_too_cheap.wav", SOUND_EFFECT, g_fEffectVolume, true);
+					break;
+				case CVisitor::GOOD:
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"visitor_talk_cheap.wav", SOUND_EFFECT, g_fEffectVolume, true);
+					break;
+				case CVisitor::BAD:
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"visitor_talk_expensive.wav", SOUND_EFFECT, g_fEffectVolume, true);
+					break;
+				case CVisitor::ITEMSTATE_END:
+					break;
+				default:
+					break;
+				}
+				m_sound = true;
+			}
+
 		}
 	}
 
@@ -136,6 +160,8 @@ void CVisitor::OnCollision(CObject* _obj)
 			static_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Money(m_item.num * price);
 			m_AddMoney = true;
 			m_SellFinish = true;
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"shop_item_sold.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 	}
 }

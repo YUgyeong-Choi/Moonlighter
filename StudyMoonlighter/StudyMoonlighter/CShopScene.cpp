@@ -88,6 +88,8 @@ int CShopScene::Update()
 						break;
 					}
 					m_CanNpcSpawn[i] = true;
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"shop_visitor_enters_shop_bell.wav", SOUND_EFFECT, g_fEffectVolume, true);
 					break;
 				}
 			}

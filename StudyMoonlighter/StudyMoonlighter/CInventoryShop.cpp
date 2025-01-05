@@ -6,6 +6,7 @@
 #include "CSellSlot.h"
 #include "CObjectManager.h"
 #include "CShowCase.h"
+#include "CSoundManager.h"
 
 CInventoryShop::CInventoryShop() :rowIndex(0), columnIndex(0), m_IsInven(true), m_IsPriceTime(false)
 {
@@ -216,6 +217,8 @@ void CInventoryShop::KeyInput()
                 if (rowIndex < 0) {
                     rowIndex = 3;
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'S')) {
@@ -224,6 +227,8 @@ void CInventoryShop::KeyInput()
                 if (rowIndex > 3) {
                     rowIndex = 0;
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'A')) {
@@ -237,6 +242,8 @@ void CInventoryShop::KeyInput()
                         }
                     }
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'D')) {
@@ -250,6 +257,8 @@ void CInventoryShop::KeyInput()
                         }
                     }
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'J')) {
@@ -261,6 +270,8 @@ void CInventoryShop::KeyInput()
                     if (inventory[rowIndex][columnIndex]->Get_Item().num == 0) {
                         inventory[rowIndex][columnIndex]->Item_Init();
                     }
+                    CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                    CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
                 }
                 else if (_pickUpItem.itemId == inventory[rowIndex][columnIndex]->Get_Item().itemId) {
                     if (_pickUpItem.num != _pickUpItem.maxNum) {
@@ -270,16 +281,22 @@ void CInventoryShop::KeyInput()
                         if (inventory[rowIndex][columnIndex]->Get_Item().num == 0) {
                             inventory[rowIndex][columnIndex]->Item_Init();
                         }
+                        CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                        CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
                     }
                 }
                 else if (_pickUpItem.itemId != ITEM_END && inventory[rowIndex][columnIndex]->Get_Item().itemId == ITEM_END) {
                     inventory[rowIndex][columnIndex]->Set_Item(_pickUpItem);
                     _pickUpItem.itemId = ITEM_END;
+                    CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                    CSoundManager::Get_Instance()->PlaySound(L"gui_selector_drop.wav", SOUND_EFFECT, g_fEffectVolume, true);
                 }
                 else if (_pickUpItem.itemId != ITEM_END && inventory[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
                     ITEM temp = _pickUpItem;
                     _pickUpItem = inventory[rowIndex][columnIndex]->Get_Item();
                     inventory[rowIndex][columnIndex]->Set_Item(temp);
+                    CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                    CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
                 }
             }
         }
@@ -296,6 +313,8 @@ void CInventoryShop::KeyInput()
                         rowIndex--;
                     }
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'S')) {
@@ -310,8 +329,9 @@ void CInventoryShop::KeyInput()
                         rowIndex++;
                         if (rowIndex == 4) rowIndex = 0;
                     }
-
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'A')) {
@@ -320,6 +340,8 @@ void CInventoryShop::KeyInput()
                     m_IsInven = true;
                     columnIndex = 4;
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'D')) {
@@ -328,6 +350,8 @@ void CInventoryShop::KeyInput()
                     m_IsInven = true;
                     columnIndex = 0;
                 }
+                CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);
             }
 
             if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN, 'J')) {
@@ -358,6 +382,8 @@ void CInventoryShop::KeyInput()
                                 static_cast<CShowCase*>(m_ShowCase[3])->Set_InitItem();
                             }
                         }
+                        CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                        CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
                     }
                     else if (_pickUpItem.itemId == sellSlots[rowIndex][columnIndex]->Get_Item().itemId) {
                         if (_pickUpItem.num != _pickUpItem.maxNum) {
@@ -382,6 +408,8 @@ void CInventoryShop::KeyInput()
                                     static_cast<CShowCase*>(m_ShowCase[3])->Set_InitItem();
                                 }
                             }
+                            CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                            CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
                         }
                     }
                     else if (_pickUpItem.itemId != ITEM_END && sellSlots[rowIndex][columnIndex]->Get_Item().itemId == ITEM_END) {
@@ -401,6 +429,8 @@ void CInventoryShop::KeyInput()
                             static_cast<CShowCase*>(m_ShowCase[3])->Set_Item(_pickUpItem);
                         }
                         _pickUpItem.itemId = ITEM_END;
+                        CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                        CSoundManager::Get_Instance()->PlaySound(L"gui_selector_drop.wav", SOUND_EFFECT, g_fEffectVolume, true);
                     }
                     else if (_pickUpItem.itemId != ITEM_END && sellSlots[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
                         ITEM temp = _pickUpItem;
@@ -420,6 +450,8 @@ void CInventoryShop::KeyInput()
                         else if (rowIndex == 2 && columnIndex == 1) {
                             static_cast<CShowCase*>(m_ShowCase[3])->Set_Item(temp);
                         }
+                        CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+                        CSoundManager::Get_Instance()->PlaySound(L"gui_selector_pick.wav", SOUND_EFFECT, g_fEffectVolume, true);
                     }
                 }
                 else {
