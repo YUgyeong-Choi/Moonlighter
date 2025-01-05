@@ -449,6 +449,39 @@ void CInventoryShop::Set_Showcase()
     }
 }
 
+void CInventoryShop::Set_InitSlot(int _index)
+{
+    switch (_index)
+    {
+    case 0:
+        sellSlots[0][0]->Item_Init();
+        sellSlots[1][0]->Item_Init();
+        static_cast<CPriceSlot*>(sellSlots[1][0])->Init_Price();
+        static_cast<CShowCase*>(m_ShowCase[0])->Set_InitItem();
+        break;
+    case 1:
+        sellSlots[0][1]->Item_Init();
+        sellSlots[1][1]->Item_Init();
+        static_cast<CPriceSlot*>(sellSlots[1][1])->Init_Price();
+        static_cast<CShowCase*>(m_ShowCase[1])->Set_InitItem();
+        break;
+    case 2:
+        sellSlots[2][0]->Item_Init();
+        sellSlots[3][0]->Item_Init();
+        static_cast<CPriceSlot*>(sellSlots[3][0])->Init_Price();
+        static_cast<CShowCase*>(m_ShowCase[2])->Set_InitItem();
+        break;
+    case 3:
+        sellSlots[2][1]->Item_Init();
+        sellSlots[3][1]->Item_Init();
+        static_cast<CPriceSlot*>(sellSlots[3][1])->Init_Price();
+        static_cast<CShowCase*>(m_ShowCase[3])->Set_InitItem();
+        break;
+    default:
+        break;
+    }
+}
+
 vector<ITEM> CInventoryShop::Get_PriceSlotITEM()
 {
     vector<ITEM> _vecITem;

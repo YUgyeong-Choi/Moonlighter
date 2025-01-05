@@ -3,6 +3,9 @@
 #include "CScrollManager.h"
 #include "CObjectManager.h"
 #include "CShopPlayer.h"
+#include "CUiManager.h"
+#include "CSceneManager.h"
+#include "CShopScene.h"
 
 CVisitor::CVisitor():m_eCurPattern(CVisitor::END), m_ePrePattern(CVisitor::END), m_fSellX(0), m_fSellY(0), m_fCounterX(0), m_fCounterY(0), m_bSellXY(false), tick(0), m_itemState(ITEMSTATE_END), m_itemTalk(false), m_bTableXY(false), m_fBeforeCounterX(0), m_fBeforeCounterY(0), m_bBeforeTableXY(false), m_AddMoney(false), m_SellFinish(false)
 {
@@ -48,6 +51,8 @@ int CVisitor::Update()
 		if (tick > 330) {
 			m_itemTalk = true;
 			m_itemFrame.dwTime = GetTickCount64();
+			CUiManager::GetInstance()->Get_InvenShop()->Set_InitSlot(m_index);
+			static_cast<CShopScene*>(CSceneManager::GetInstance()->Get_Scene())->Set_NpcCanSpawn(m_index);
 		}
 	}
 
@@ -135,8 +140,9 @@ void CVisitor::OnCollision(CObject* _obj)
 	}
 }
 
-void CVisitor::Set_Init(float _outx, float _outy, float _x, float _y, ITEM _item, int _price)
+void CVisitor::Set_Init(int index, float _outx, float _outy, float _x, float _y, ITEM _item, int _price)
 {
+	m_index = index;
 	m_fSellX = _x; 
 	m_fSellY = _y; 
 	m_item = _item;
@@ -164,12 +170,12 @@ void CVisitor::Set_Init(float _outx, float _outy, float _x, float _y, ITEM _item
 	case CVisitor::GOOD:
 		m_itemFrame.iFrameStart = 0;
 		m_itemFrame.iFrameEnd = 1;
-		m_itemFrame.dwSpeed = 300;
+		m_itemFrame.dwSpeed = 500;
 		break;
 	case CVisitor::BAD:
 		m_itemFrame.iFrameStart = 0;
 		m_itemFrame.iFrameEnd = 6;
-		m_itemFrame.dwSpeed = 100;
+		m_itemFrame.dwSpeed = 150;
 		break;
 	case CVisitor::ITEMSTATE_END:
 		break;

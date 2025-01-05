@@ -85,6 +85,7 @@ void CInvenSlot::Release()
 void CInvenSlot::Item_Init()
 {
 	item.itemId = ITEM_END;
+	item.num = 0;
 }
 
 void CInvenSlot::Set_ItemType(ITEMTYPE _item)

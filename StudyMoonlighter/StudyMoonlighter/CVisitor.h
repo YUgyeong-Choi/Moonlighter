@@ -16,11 +16,12 @@ public:
 	virtual void Release() override;
 	virtual void Change_Motion();
 	virtual void OnCollision(CObject* _obj);
-	void Set_Init(float _outx, float _outy, float _x, float _y, ITEM _item, int _price);
+	void Set_Init(int index, float _outx, float _outy, float _x, float _y, ITEM _item, int _price);
 	void Move_Npc();
 
 	void Render_Talk(HDC hDC);
 protected:
+	int m_index;
 	Pattern m_eCurPattern;
 	Pattern m_ePrePattern;
 	float m_fOutX;

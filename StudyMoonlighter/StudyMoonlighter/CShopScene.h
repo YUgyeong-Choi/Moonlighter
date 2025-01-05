@@ -16,6 +16,7 @@ public:
 	void Offset() override;
 	void Set_ShopOpen() { m_bShopOpen = !m_bShopOpen; }
 	bool Get_ShopOpen() { return m_bShopOpen; }
+	void Set_NpcCanSpawn(int _i) { m_CanNpcSpawn[_i] = false; }
 private:
 	void CheckOffset();
 	void OnCollision();
