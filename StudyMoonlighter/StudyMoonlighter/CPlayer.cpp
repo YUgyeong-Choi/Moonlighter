@@ -480,7 +480,7 @@ void CPlayer::Key_Input()
 		}
 
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, 'L') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
-			if (CSceneManager::GetInstance()->Get_SceneID() == SC_GOLEMDUNGEON) {
+			if (CSceneManager::GetInstance()->Get_SceneID() == SC_GOLEMDUNGEON || CSceneManager::GetInstance()->Get_SceneID() == SC_EDIT) {
 				m_bUsePendant = true;
 			}
 		}
@@ -490,6 +490,7 @@ void CPlayer::Key_Input()
 void CPlayer::Rolling()
 {
 	if (m_bIsRoll) {
+		m_bOnslime = false;
 		float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
 		switch (m_eCurDir)
 		{

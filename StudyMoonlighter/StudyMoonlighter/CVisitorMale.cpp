@@ -11,7 +11,7 @@ CVisitorMale::CVisitorMale():m_bXArrive(false), m_bYArrive(false), charIndex(0),
 	_stprintf_s(text[1], _T("이제 게임을 시작할 때가 되었구나"));
 	_stprintf_s(text[2], _T("던전에서 전리품을 얻고"));
 	_stprintf_s(text[3], _T("상점에서 물건을 팔아"));
-	_stprintf_s(text[4], _T("** 부자 ** 가 되어라"));
+	_stprintf_s(text[4], _T("강해지거라"));
 	_stprintf_s(text[5], _T("행운을 빌겠네"));
 	_stprintf_s(name, _T("Zenon"));
 }

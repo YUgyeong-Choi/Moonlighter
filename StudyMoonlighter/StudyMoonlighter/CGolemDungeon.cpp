@@ -148,6 +148,8 @@ void CGolemDungeon::Release()
 	}
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
 	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+	CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER);
+	CObjectManager::Get_Instance()->Delete_ID(OBJ_SLIME);
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 

@@ -52,8 +52,7 @@ int CVisitor::Update()
 		if (tick > 330) {
 			m_itemTalk = true;
 			m_itemFrame.dwTime = GetTickCount64();
-			CUiManager::GetInstance()->Get_InvenShop()->Set_InitSlot(m_index);
-			static_cast<CShopScene*>(CSceneManager::GetInstance()->Get_Scene())->Set_NpcCanSpawn(m_index);
+
 		}
 	}
 
@@ -82,6 +81,14 @@ int CVisitor::Update()
 					break;
 				}
 				m_sound = true;
+
+				if (m_itemState == BAD) {
+					m_SellFinish = true;
+				}
+				else {
+					CUiManager::GetInstance()->Get_InvenShop()->Set_InitSlot(m_index);
+				}
+				static_cast<CShopScene*>(CSceneManager::GetInstance()->Get_Scene())->Set_NpcCanSpawn(m_index);
 			}
 
 		}

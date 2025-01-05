@@ -79,7 +79,7 @@ void CGolemBreakable::OnCollision(CObject* _obj)
 		m_tInfo.fCX = 0.f;
 		m_tInfo.fCY = 0.f;
 		m_bIsBreak = false;
-		CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-		CSoundManager::Get_Instance()->PlaySound(L"breakable_break.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.3f, true);
+		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+		CSoundManager::Get_Instance()->PlaySound(L"breakable_break.wav", SOUND_EFFECT, g_fMonsterVolume, true);
 	}
 }

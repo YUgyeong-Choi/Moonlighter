@@ -23,6 +23,8 @@ void CUiManager::Initialize()
 		}
 	}
 
+	AddItem(RICHJELLY);
+
 	inventory[1][5] = new CSpecialSlot(HELMET);
 	inventory[2][5] = new CSpecialSlot(ARMOR);
 	inventory[3][5] = new CSpecialSlot(BOOTS);
@@ -52,7 +54,6 @@ void CUiManager::Render(HDC hDC)
 		{
 		case SC_MENU:
 			break;
-		case SC_TUTORIAL:
 		case SC_EDIT:
 		case SC_GOLEMDUNGEON:
 			m_eCurUi = UI_DUNGEON;
@@ -60,6 +61,7 @@ void CUiManager::Render(HDC hDC)
 		case SC_VILLAGE:
 		case SC_FIELD:
 		case SC_GOLEMBOSS:
+		case SC_TUTORIAL:
 			break;
 		case SC_SHOP:
 			break;
