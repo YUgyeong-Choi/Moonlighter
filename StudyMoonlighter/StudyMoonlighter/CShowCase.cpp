@@ -21,7 +21,7 @@ void CShowCase::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tRenderSizeX = 48;
 	m_tRenderSizeY = 64;
-	m_HitBox = { 350, 540, 500, 710 };
+	m_HitBox = { 330, 540, 480, 710 };
 }
 
 int CShowCase::Update()
@@ -64,7 +64,7 @@ void CShowCase::Render(HDC hDC)
 		HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
 		HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 		HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
-		RoundRect(hDC, 450 + iScrollX + 20, 640 - 70 + iScrollY,450 + 140 + iScrollX, 640 - 20 + iScrollY, 30, 30);
+		RoundRect(hDC, 430 + iScrollX + 20, 640 - 70 + iScrollY,430 + 140 + iScrollX, 640 - 20 + iScrollY, 30, 30);
 
 		SelectObject(hDC, hOldBrush);
 		SelectObject(hDC, hOldPen);
@@ -74,12 +74,12 @@ void CShowCase::Render(HDC hDC)
 		Image* image(nullptr);
 		Graphics graphics(hDC);
 		image = Image::FromFile(L"../MoonlighterAssets/Ui/button_J.png");
-		graphics.DrawImage(image, (int)450 + iScrollX + 15, (int)640 - 75 + iScrollY, 0, 0, 64, 64, UnitPixel);
+		graphics.DrawImage(image, (int)430 + iScrollX + 15, (int)640 - 75 + iScrollY, 0, 0, 64, 64, UnitPixel);
 
 		SetTextColor(hDC, RGB(0, 0, 0));
 		TCHAR szEnter[64];
 		_stprintf_s(szEnter, _T("¹èÄ¡"));
-		TextOut(hDC, (int)450 + iScrollX + 80, (int)640 - 55 + iScrollY, szEnter, _tcslen(szEnter));
+		TextOut(hDC, (int)430 + iScrollX + 80, (int)640 - 55 + iScrollY, szEnter, _tcslen(szEnter));
 
 	}
 

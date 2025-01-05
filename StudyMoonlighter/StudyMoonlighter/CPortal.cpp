@@ -153,8 +153,10 @@ void CPortal::KeyInput()
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_SIGN,'J') && m_bCollision) {
 		m_bEnter = true;
 		m_eRender = RENDER_UI;
-		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-		CSoundManager::Get_Instance()->PlaySound(L"shop_door_opening.wav", SOUND_EFFECT, g_fEffectVolume, false);
+		if (m_ePortalType == SHOP) {
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"shop_door_opening.wav", SOUND_EFFECT, g_fEffectVolume, false);
+		}
 	}
 }
 

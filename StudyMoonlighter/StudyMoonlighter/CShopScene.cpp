@@ -13,8 +13,9 @@
 #include "CCollisionManager.h"
 #include "CShowCase.h"
 #include "CShopTable.h"
+#include "CShopSign.h"
 
-CShopScene::CShopScene():m_bShop(true), m_Active(false),offSetShopX(0),offSetShopY(0)
+CShopScene::CShopScene():m_bShop(true), m_Active(false),offSetShopX(0),offSetShopY(0), m_bShopOpen(false), tick(0)
 {
 }
 
@@ -38,10 +39,21 @@ void CShopScene::Initialize()
 
 	Create_MapObj();
 	CUiManager::GetInstance()->Get_InvenShop()->Set_Showcase();
+	list<CObject*> mapObjList = CObjectManager::Get_Instance()->Get_MapObjList();
+
 }
 
 int CShopScene::Update()
 {
+
+
+	tick++;
+	if (m_bShopOpen) {
+		if (tick > 100) {
+			
+			tick = 0;
+		}
+	}
 	Key_Input();
 	Offset();
 	CObjectManager::Get_Instance()->Update();
@@ -132,6 +144,8 @@ void CShopScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(430, 650));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopTable>::Create(630, 580));
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopSign>::Create(500, 200));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(565, 760, 80, 40));
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(VILLAGE);

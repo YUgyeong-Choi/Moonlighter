@@ -14,6 +14,8 @@ public:
 	void Key_Input() override;
 	void Create_MapObj() override;
 	void Offset() override;
+	void Set_ShopOpen() { m_bShopOpen = !m_bShopOpen; }
+	bool Get_ShopOpen() { return m_bShopOpen; }
 private:
 	void CheckOffset();
 	void OnCollision();
@@ -23,5 +25,7 @@ private:
 	bool m_bShop;
 	RECT m_AddUiCheck;
 	bool m_Active;
+	bool m_bShopOpen;
+	int tick;
 };
 

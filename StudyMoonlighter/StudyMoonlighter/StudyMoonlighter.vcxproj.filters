@@ -357,6 +357,9 @@
     <ClInclude Include="CShopTable.h">
       <Filter>02_Object\07_Shop</Filter>
     </ClInclude>
+    <ClInclude Include="CShopSign.h">
+      <Filter>02_Object\07_Shop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -540,6 +543,9 @@
       <Filter>02_Object\05_Inventory\Slot</Filter>
     </ClCompile>
     <ClCompile Include="CShopTable.cpp">
+      <Filter>02_Object\07_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="CShopSign.cpp">
       <Filter>02_Object\07_Shop</Filter>
     </ClCompile>
   </ItemGroup>
