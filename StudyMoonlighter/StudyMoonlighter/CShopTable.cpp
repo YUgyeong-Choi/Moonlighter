@@ -3,7 +3,7 @@
 #include "CScrollManager.h"
 #include "CObjectManager.h"
 
-CShopTable::CShopTable():m_bActive(false)
+CShopTable::CShopTable()
 {
 }
 
@@ -15,7 +15,7 @@ void CShopTable::Initialize()
 	m_tInfo.fCY = 60;
 	m_tRenderSizeX = 200;
 	m_tRenderSizeY = 74;
-	m_HitBox = { 610, 530, 670, 600 };
+	m_HitBox = { 610, 600, 670, 630 };
 }
 
 int CShopTable::Update()
@@ -26,8 +26,6 @@ int CShopTable::Update()
 
 void CShopTable::Late_Update()
 {
-	m_bActive = false;
-	OnCollision();
 }
 
 void CShopTable::Render(HDC hDC)
@@ -42,31 +40,6 @@ void CShopTable::Render(HDC hDC)
 	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX +15, (int)m_tRenderRect.top + iScrollY, 0, 0, 52, 46, UnitPixel);
 	delete image;
 
-	if (m_bActive) {
-		COLORREF color = RGB(234, 221, 187);
-
-		HBRUSH hBrush = CreateSolidBrush(color);
-		HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
-		HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
-		HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
-		RoundRect(hDC, m_tInfo.fX + iScrollX + 20, m_tInfo.fY - 70 + iScrollY, m_tInfo.fX + 140 + iScrollX, m_tInfo.fY - 20 + iScrollY, 30, 30);
-
-		SelectObject(hDC, hOldBrush);
-		SelectObject(hDC, hOldPen);
-		DeleteObject(hBrush);
-		DeleteObject(hPen);
-
-		Image* image(nullptr);
-		Graphics graphics(hDC);
-		image = Image::FromFile(L"../MoonlighterAssets/Ui/button_J.png");
-		graphics.DrawImage(image, (int)m_tInfo.fX + iScrollX + 15, (int)m_tInfo.fY - 75 + iScrollY, 0, 0, 64, 64, UnitPixel);
-
-		SetTextColor(hDC, RGB(0, 0, 0));
-		TCHAR szEnter[64];
-		_stprintf_s(szEnter, _T("°è»ê"));
-		TextOut(hDC, (int)m_tInfo.fX + iScrollX + 80, (int)m_tInfo.fY - 55 + iScrollY, szEnter, _tcslen(szEnter));
-	}
-
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
@@ -78,11 +51,14 @@ void CShopTable::Release()
 {
 }
 
-void CShopTable::OnCollision()
+void CShopTable::OnCollision(CObject* _obj)
 {
 	RECT rc;
-	CObject* _player = CObjectManager::Get_Instance()->Get_Player();
-	if (IntersectRect(&rc, _player->Get_Rect(), &m_HitBox)) {
-		m_bActive = true;
+	list<CObject*> _npclist = CObjectManager::Get_Instance()->Get_NpcList();
+	for (auto& _npc : _npclist) {
+		if (IntersectRect(&rc, &m_HitBox, _npc->Get_Rect()))
+		{
+			_npc->OnCollision(this);
+		}
 	}
 }

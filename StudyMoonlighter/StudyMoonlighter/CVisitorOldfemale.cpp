@@ -56,7 +56,7 @@ void CVisitorOldfemale::Render(HDC hDC)
 
 	delete image;
 
-	if (m_bSellXY) {
+	if (m_bSellXY && !m_bBeforeTableXY) {
 		Render_Talk(hDC);
 	}
 

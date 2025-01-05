@@ -70,19 +70,19 @@ int CShopScene::Update()
 					{
 					case 0:
 						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorIrish>::Create(564, 720));
-						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430,530, m_showcaseItem[i], m_showcasePrice[i]);
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(564, 720, 430,530, m_showcaseItem[i], m_showcasePrice[i]);
 						break;
 					case 1:
 						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorMerchantfemale>::Create(564, 720));
-						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430, 580, m_showcaseItem[i], m_showcasePrice[i]);
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(564, 720, 430, 580, m_showcaseItem[i], m_showcasePrice[i]);
 						break;
 					case 2:
 						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorMerchantmale>::Create(564, 720));
-						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430, 630, m_showcaseItem[i], m_showcasePrice[i]);
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(564, 720, 430, 630, m_showcaseItem[i], m_showcasePrice[i]);
 						break;
 					case 3:
 						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorOldfemale>::Create(564, 720));
-						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430, 680, m_showcaseItem[i], m_showcasePrice[i]);
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(564, 720, 430, 680, m_showcaseItem[i], m_showcasePrice[i]);
 						break;
 					default:
 						break;

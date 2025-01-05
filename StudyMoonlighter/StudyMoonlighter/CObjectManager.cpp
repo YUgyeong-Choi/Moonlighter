@@ -65,7 +65,7 @@ void CObjectManager::Late_Update()
 	CCollisionManager::CollisionRectWeapon(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MAPOBJ]); //플레이어 무기 부숴지는거 충돌
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_SLIME]);
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_ITEM]);
-	CCollisionManager::CollisionRect(m_ObjList[OBJ_NPC], m_ObjList[OBJ_MAPOBJ]);
+	CCollisionManager::CollisionRectExMapObj(m_ObjList[OBJ_NPC], m_ObjList[OBJ_MAPOBJ]);
 }
 
 void CObjectManager::Render(HDC hDC)

@@ -56,7 +56,7 @@ void CVisitorIrish::Render(HDC hDC)
 
 	delete image;
 
-	if (m_bSellXY) {
+	if (m_bSellXY && !m_bBeforeTableXY && !m_bTableXY) {
 		Render_Talk(hDC);
 	}
 
