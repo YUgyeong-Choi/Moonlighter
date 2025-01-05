@@ -2,6 +2,7 @@
 #include "CVisitorMale.h"
 #include "CScrollManager.h"
 #include "CKeyManager.h"
+#include "CSoundManager.h"
 #include "CSceneManager.h"
 
 CVisitorMale::CVisitorMale():m_bXArrive(false), m_bYArrive(false), charIndex(0), tick(0), cnt(0), talkFinish(false)
@@ -222,6 +223,8 @@ void CVisitorMale::KeyInput()
 			if (cnt == 5) {
 				CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 			}
+			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"gui_press_button.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}
 	}
 }

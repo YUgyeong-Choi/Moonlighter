@@ -17,7 +17,7 @@ CGolemSoldier::CGolemSoldier()
 void CGolemSoldier::Initialize()
 {
     m_eOBJID = OBJ_MONSTER;
-
+    m_MonsterType = GOLEM_SOLIDER;
     m_tInfo.fCX = 30.f;
     m_tInfo.fCY = 50.f;
     m_fSpeed = 0.5f;

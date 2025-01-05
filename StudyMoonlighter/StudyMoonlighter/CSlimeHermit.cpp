@@ -20,7 +20,7 @@ CSlimeHermit::CSlimeHermit():m_IsAttack(false)
 void CSlimeHermit::Initialize()
 {
     m_eOBJID = OBJ_MONSTER;
-
+    m_MonsterType = SLIME_HERMIT;
     m_tInfo.fCX = 50.f;
     m_tInfo.fCY = 50.f;
 

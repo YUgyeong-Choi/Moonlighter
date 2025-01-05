@@ -15,6 +15,7 @@ CGolemHead::CGolemHead():m_AttackCount(0), m_IsAttack(false), m_fAngle(0)
 void CGolemHead::Initialize()
 {
     m_eOBJID = OBJ_MONSTER;
+    m_MonsterType = GOLEM_HEAD;
 
     m_tInfo.fCX = 50.f;
     m_tInfo.fCY = 50.f;

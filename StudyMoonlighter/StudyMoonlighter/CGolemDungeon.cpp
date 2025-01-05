@@ -7,6 +7,9 @@
 #include "CAbstractFactory.h"
 #include "CPlayer.h"
 #include "CGolemScroll.h"
+#include "CSoundManager.h"
+#include "CBitManager.h"
+#include "CKeyManager.h"
 
 CGolemDungeon::CGolemDungeon():m_iTutorialIndeX(0), m_iTutorialIndeY(0), m_dir(DIR_END), m_iMove(0), m_bMapMove(false)
 {
@@ -25,6 +28,10 @@ CGolemDungeon::CGolemDungeon():m_iTutorialIndeX(0), m_iTutorialIndeY(0), m_dir(D
 
 void CGolemDungeon::Initialize()
 {
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slime_puddle1.bmp", L"DungeonBackgroundSlime");
+	CSoundManager::Get_Instance()->StopAll();
+	CSoundManager::Get_Instance()->PlayBGM(L"golem_dungeon_floor.wav", g_fBackgroundVolume, true);
+
 	m_iTutorialIndeX = 1;
 	m_iTutorialIndeY = 1;
 
@@ -46,6 +53,7 @@ void CGolemDungeon::Initialize()
 
 int CGolemDungeon::Update()
 {
+	Key_Input();
 	list<CObject*> protalList = CObjectManager::Get_Instance()->Get_PortalList();
 	for (auto portal : protalList) {
 		if (static_cast<CGolemDoor*>(portal)->Get_Load_Next()) {
@@ -66,6 +74,11 @@ int CGolemDungeon::Update()
 				CObjectManager::Get_Instance()->Get_Player()->Set_Pos((1024 * m_iTutorialIndeY) + 150, (720 * m_iTutorialIndeX) + WINCY / 2);
 				CObjectManager::Get_Instance()->Set_MapIndex(m_iTutorialIndeX, m_iTutorialIndeY, RIGHT);
 				m_TutorialDungeon[m_iTutorialIndeX][m_iTutorialIndeY]->Load_Map();
+
+				if (m_iTutorialIndeX == 1 && m_iTutorialIndeY == 3) {
+					CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create((1024 * m_iTutorialIndeY) + WINCX / 2, (720 * m_iTutorialIndeX) + 500));
+					static_cast<CGolemScroll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_Text(L"중간 보스");
+				}
 				break;
 			case UP:
 				m_dir = UP;
@@ -95,6 +108,7 @@ int CGolemDungeon::Update()
 		}
 	}
 	CObjectManager::Get_Instance()->Update();
+	CUiManager::GetInstance()->Update();
 	return 0;
 }
 
@@ -139,6 +153,9 @@ void CGolemDungeon::Release()
 
 void CGolemDungeon::Key_Input()
 {
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F1)) {
+		g_bDevmode = !g_bDevmode;
+	}
 }
 
 void CGolemDungeon::Create_MapObj()

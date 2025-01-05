@@ -51,9 +51,6 @@ void CGolemMiniboss::Initialize()
     m_iHp = 300;
     m_iMaxHp= m_iHp; 
     m_iAttackDamage = 23;
-
-    CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(WINCX / 2, 500));
-    static_cast<CGolemScroll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_Text(L"중간 보스");
 }
 
 int CGolemMiniboss::Update()
@@ -173,7 +170,7 @@ void CGolemMiniboss::Render(HDC hDC)
         HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
         HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
         HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
-        Ellipse(hDC, m_HitBox.left, m_HitBox.top, m_HitBox.right, m_HitBox.bottom);
+        Ellipse(hDC, m_HitBox.left+ iScrollX, m_HitBox.top+ iScrollY, m_HitBox.right+ iScrollX, m_HitBox.bottom+ iScrollY);
 
         SelectObject(hDC, hOldBrush);
         SelectObject(hDC, hOldPen);
@@ -350,6 +347,7 @@ void CGolemMiniboss::Change_Motion()
 
 void CGolemMiniboss::SwordAttack()
 {
+
     switch (m_eDir)
     {
     case LEFT:

@@ -9,7 +9,7 @@
 #include "CUiManager.h"
 #include "CItem.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false)
 {
 }
 
@@ -36,6 +36,11 @@ void CPlayer::Initialize()
 	m_tFrame.dwSpeed = 100;
 	m_tFrame.dwTime = GetTickCount64();
 
+	m_PandentFrame.iFrameStart = 0;
+	m_PandentFrame.iFrameEnd = 18;
+	m_PandentFrame.dwSpeed = 100;
+	m_PandentFrame.dwTime = GetTickCount64();
+
 	m_tRenderSizeX = 80.f;
 	m_tRenderSizeY = 80.f;
 	m_eRender = RENDER_GAMEOBJECT;
@@ -47,6 +52,17 @@ void CPlayer::Initialize()
 
 int CPlayer::Update()
 {
+	if (m_bUsePendant) {
+		if (m_PandentFrame.iFrameStart == 10) {
+			m_NoRenderPlayer = true;
+		}
+		if (m_PandentFrame.iFrameStart == m_PandentFrame.iFrameEnd) {
+			CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
+			m_bUsePendant = false;
+			m_NoRenderPlayer = false;
+			m_PandentFrame.iFrameStart = 0;
+		}
+	}
 	if (m_iHp <= 0) {
 		//return OBJ_DEAD;
 	}
@@ -92,10 +108,34 @@ void CPlayer::Late_Update()
 		__super::Move_Frame();
 	}
 	
+	if (m_bUsePendant) {
+		if (m_PandentFrame.dwTime + m_PandentFrame.dwSpeed < GetTickCount64())
+		{
+			++m_PandentFrame.iFrameStart;
+
+			if (m_PandentFrame.iFrameStart > m_PandentFrame.iFrameEnd)
+				m_PandentFrame.iFrameStart = 0;
+
+			m_PandentFrame.dwTime = GetTickCount64();
+		}
+	}
 }
 
 void CPlayer::Render(HDC hDC)
 {
+	Graphics graphics(hDC);
+
+	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+
+	if (m_NoRenderPlayer) {
+		Image* image;
+		image = Image::FromFile(L"../MoonlighterAssets/Player/Pendant/will_pandent.png");
+		graphics.DrawImage(image, (int)m_tInfo.fX - 90 + iScrollX, (int)m_tInfo.fY - 50 + iScrollY, (int)180 * m_PandentFrame.iFrameStart, 0, (int)180, (int)100, UnitPixel);
+		delete image;
+		return;
+	}
+
 	Image* image(nullptr);
 	switch (m_eCurState)
 	{
@@ -195,11 +235,6 @@ void CPlayer::Render(HDC hDC)
 		break;
 	}
 
-	Graphics graphics(hDC);
-
-	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
-	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-
 	if (m_eCurState != FALL) {
 		graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 	}
@@ -256,6 +291,12 @@ void CPlayer::Render(HDC hDC)
 	
 	}
 
+	if (m_bUsePendant && !m_NoRenderPlayer) {
+		Image* image;
+		image = Image::FromFile(L"../MoonlighterAssets/Player/Pendant/will_pandent.png");
+		graphics.DrawImage(image, (int)m_tInfo.fX - 90 + iScrollX, (int)m_tInfo.fY - 50 + iScrollY, (int)180 * m_PandentFrame.iFrameStart, 0, (int)180, (int)100, UnitPixel);
+		delete image;
+	}
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
@@ -333,14 +374,14 @@ void CPlayer::OnCollision(CObject* _obj)
 void CPlayer::Key_Input()
 {
 	if (m_eCurState != FALL) {
-		if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
+		if (CKeyManager::Get_Instance()->Key_Pressing('A') && CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant)
 		{
 			m_eCurState = IDLE;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant) {
 			m_eCurState = IDLE;
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('W') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant)
 		{
 			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 
@@ -365,7 +406,7 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('S') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant)
 		{
 			if (CKeyManager::Get_Instance()->Key_Pressing('D')) {
 				float diagonalSpeed = m_fSpeed / (float)sqrt(2.0f);
@@ -390,7 +431,7 @@ void CPlayer::Key_Input()
 
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('A') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant)
 		{
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX -= m_fSpeed;
@@ -398,7 +439,7 @@ void CPlayer::Key_Input()
 			m_eCurState = WALK;
 
 		}
-		else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen)
+		else if (CKeyManager::Get_Instance()->Key_Pressing('D') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant)
 		{
 			m_fFixScrollSpeed = m_fSpeed;
 			m_tInfo.fX += m_fSpeed;
@@ -411,12 +452,12 @@ void CPlayer::Key_Input()
 			}
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down(KEY_ATTACK,'K') && !m_bIsRoll && !m_bInvenOpen) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_ATTACK,'K') && !m_bIsRoll && !m_bInvenOpen && !m_bUsePendant) {
 			m_eCurState = ATTACK;
 			mbIsAttack = true;
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down(KEY_MOVE,VK_SPACE) && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MOVE,VK_SPACE) && !(m_eCurState == ATTACK) && !m_bInvenOpen && !m_bUsePendant) {
 			if (!m_bIsRoll) {
 				m_bOnslime = false;
 				m_bIsRoll = true;
@@ -425,7 +466,7 @@ void CPlayer::Key_Input()
 			}
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'I')) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_INVEN,'I') && !m_bIsRoll && !(m_eCurState == ATTACK)  && !m_bUsePendant) {
 			m_bInvenOpen = !m_bInvenOpen;
 			if (m_bInvenOpen) {
 				CUiManager::GetInstance()->Set_UiType(UI_INVEN);
@@ -435,6 +476,12 @@ void CPlayer::Key_Input()
 			}
 			else {
 				CUiManager::GetInstance()->Set_UiType(UI_END);
+			}
+		}
+
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, 'L') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+			if (CSceneManager::GetInstance()->Get_SceneID() == SC_GOLEMDUNGEON) {
+				m_bUsePendant = true;
 			}
 		}
 	}
@@ -562,12 +609,24 @@ void CPlayer::SoundEffet()
 		switch (CSceneManager::GetInstance()->Get_SceneID())
 		{
 		case SC_TUTORIAL:
-			m_fTimeSinceLastStep += 0.1f;
-			if (m_fTimeSinceLastStep >= 2.3) {
-				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, 0.1f, true);
-				m_fTimeSinceLastStep = 0;
+		case SC_GOLEMDUNGEON:
+			if (m_bOnslime) {
+				m_fTimeSinceLastStep += 0.1f;
+				if (m_fTimeSinceLastStep >= 2.3) {
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_dungeon_slime.wav", SOUND_EFFECT, g_fPlayerVolume, true);
+					m_fTimeSinceLastStep = 0;
+				}
 			}
+			else {
+				m_fTimeSinceLastStep += 0.1f;
+				if (m_fTimeSinceLastStep >= 2.3) {
+					CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"will_step_golem_dungeon.wav", SOUND_EFFECT, g_fPlayerVolume, true);
+					m_fTimeSinceLastStep = 0;
+				}
+			}
+
 			break;
 		case SC_VILLAGE:
 			m_fTimeSinceLastStep += 0.1f;

@@ -33,6 +33,7 @@ private:
 
 	bool m_bIsRoll;
 	bool m_bFalling;
+	bool m_bUsePendant;
 	float m_fRollTime;
 
 	bool mbIsAttack;
@@ -48,5 +49,7 @@ private:
 	float alpha;
 
 	bool m_bInvenOpen;
+	bool m_NoRenderPlayer;
+	FRAME m_PandentFrame;
 };
 
