@@ -19,5 +19,6 @@ private:
 	int m_iRockY;
 	bool m_bArrive;
 	bool m_bIsDead;
+	int m_iRandom;
 };
 

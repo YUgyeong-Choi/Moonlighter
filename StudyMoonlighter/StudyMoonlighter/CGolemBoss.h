@@ -24,7 +24,7 @@ private:
     GolemBossPattern m_eCurPattern;
     GolemBossPattern m_ePrePattern;
     vector<GolemBossPattern> m_Pattern = {
-    IDLE,SPAWNRANDOM, IDLE, WAVE, WAVE,WAVE,IDLE, IDLE, PUNCHARM, WAVE,WAVE,WAVE, SPAWNRANDOM, IDLE, WAVE,WAVE,WAVE,
+    IDLE,IDLE,SPAWNCIRCLE, IDLE, WAVE, WAVE,WAVE,IDLE, IDLE, PUNCHARM, WAVE,WAVE,WAVE, SPAWNRANDOM, IDLE, WAVE,WAVE,WAVE,
     SPAWNCIRCLE, WAVE,WAVE,WAVE,IDLE
     };
     int m_PatternIndex;

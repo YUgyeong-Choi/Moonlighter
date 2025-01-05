@@ -372,7 +372,7 @@ void CPlayer::Render(HDC hDC)
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
-		Attackbox(hDC, m_HitBox);
+		Attackbox(hDC, m_HitBox, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
 
@@ -536,6 +536,7 @@ void CPlayer::Key_Input()
 				if (CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId != ITEM_END) {
 					m_eCurState = ATTACK;
 					mbIsAttack = true;
+					m_ArrowSpawn = false;
 				}
 			}
 
@@ -678,7 +679,7 @@ void CPlayer::Change_Motion()
 			}
 
 			m_tFrame.iFrameStart = 0;
-			m_tFrame.dwSpeed = 150;
+			m_tFrame.dwSpeed = 70;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 

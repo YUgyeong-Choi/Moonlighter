@@ -109,6 +109,7 @@ int CGolemDungeon::Update()
 	}
 	CObjectManager::Get_Instance()->Update();
 	CUiManager::GetInstance()->Update();
+	CUiManager::GetInstance()->Update();
 	return 0;
 }
 

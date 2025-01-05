@@ -198,7 +198,7 @@ void CGolemSoldier::Render(HDC hDC)
     if (g_bDevmode) {
         Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
         Hitbox(hDC, m_tRect, iScrollX, iScrollY);
-        Attackbox(hDC, m_HitBox);
+        Attackbox(hDC, m_HitBox, iScrollX, iScrollY);
         DetectCircle(hDC, m_checkCircle);
     }
 }

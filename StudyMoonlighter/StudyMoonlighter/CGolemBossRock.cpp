@@ -3,7 +3,7 @@
 #include "CScrollManager.h"
 #include "CBitManager.h"
 
-CGolemBossRock::CGolemBossRock():m_iRockY(0), m_bArrive(false), m_bIsDead(false)
+CGolemBossRock::CGolemBossRock():m_iRockY(0), m_bArrive(false), m_bIsDead(false), m_iRandom(0)
 {
 }
 
@@ -26,6 +26,7 @@ void CGolemBossRock::Initialize()
     m_tRenderSizeY = 64;
 
     m_iHp = 20;
+    m_iRandom = rand()%6;
 }
 
 int CGolemBossRock::Update()
@@ -80,6 +81,30 @@ void CGolemBossRock::Render(HDC hDC)
 
     if (m_tRemoveTime + 1000 < GetTickCount64() && !m_bIsDead) {
         HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRock1");
+        switch (m_iRandom)
+        {
+        case 0:
+            hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRock1");
+            break;
+        case 1:
+            hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRock2");
+            break;
+        case 2:
+            hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRock3");
+            break;
+        case 3:
+            hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRock4");
+            break;
+        case 4:
+            hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRock5");
+            break;
+        case 5:
+            hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRock6");
+            break;
+        default:
+            break;
+        }
+        
         int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
         int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 

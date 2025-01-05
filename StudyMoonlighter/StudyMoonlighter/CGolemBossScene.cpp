@@ -17,6 +17,8 @@ CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false), m_b
 
 void CGolemBossScene::Initialize()
 {
+	CUiManager::GetInstance()->AddItem(SWORD);
+	CUiManager::GetInstance()->AddItem(BOW);
 	CSoundManager::Get_Instance()->StopSound(SOUND_BGM);
 	CSoundManager::Get_Instance()->PlaySound(L"golem_boss_track.wav", SOUND_BGM, g_fBackgroundVolume, true);
 
@@ -55,6 +57,7 @@ int CGolemBossScene::Update()
 	}
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
+	CUiManager::GetInstance()->Update();
 	return 0;
 }
 
