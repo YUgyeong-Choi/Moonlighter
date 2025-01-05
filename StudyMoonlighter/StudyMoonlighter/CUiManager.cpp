@@ -30,13 +30,6 @@ void CUiManager::Initialize()
 	inventory[0][6] = new CSpecialSlot(WEAPON2);
 	inventory[2][6] = new CSpecialSlot(POTION);
 
-	AddItem(RICHJELLY);
-	AddItem(RICHJELLY);
-	AddItem(IRONBAR);
-	AddItem(IRONBAR);
-	AddItem(WATERSPHERE);
-	AddItem(WATERSPHERE);
-
 	m_Inven = new CInventory();
 	m_Inven->Copy_Inven(inventory);
 
@@ -62,11 +55,11 @@ void CUiManager::Render(HDC hDC)
 		case SC_TUTORIAL:
 		case SC_EDIT:
 		case SC_GOLEMDUNGEON:
-		case SC_GOLEMBOSS:
 			m_eCurUi = UI_DUNGEON;
 			break;
 		case SC_VILLAGE:
 		case SC_FIELD:
+		case SC_GOLEMBOSS:
 			break;
 		case SC_SHOP:
 			break;

@@ -39,6 +39,7 @@ void CVillageScene::Initialize()
 	m_fMapYSize = 2134.f;
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 
+	CUiManager::GetInstance()->Set_UiType(UI_END);
 	Create_MapObj();
 }
 

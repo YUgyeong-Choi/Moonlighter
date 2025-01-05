@@ -48,6 +48,9 @@ int CGolemBossScene::Update()
 	if (m_bBossOffSetTrue) {
 		if (!m_bScrollOpen) {
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(1176, 700));
+			static_cast<CGolemScroll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_Text(L"°ñ·½¿Õ");
+			static_cast<CGolemScroll*>(CObjectManager::Get_Instance()->Get_LastMapObj())->Set_TextPos(540, 540);
+
 			m_bScrollOpen = true;
 		}
 		

@@ -25,7 +25,8 @@ void CGolemScroll::Initialize()
 	m_tRenderSizeY = 104.f;
 
 	m_eRender = RENDER_GAMEOBJECT;
-
+	textX = 467;
+	textY = 550;
 }
 
 int CGolemScroll::Update()
@@ -83,7 +84,7 @@ void CGolemScroll::Render(HDC hDC)
 	);
 	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
 
-	TextOut(hDC, 467, 550, text, wcslen(text));
+	TextOut(hDC, textX, textY, text, wcslen(text));
 
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
