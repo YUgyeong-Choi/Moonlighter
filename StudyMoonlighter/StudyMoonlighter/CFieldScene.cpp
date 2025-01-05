@@ -16,10 +16,10 @@ CFieldScene::CFieldScene()
 void CFieldScene::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/DungeonsEntrance_Base.bmp", L"DungeonField");
-	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1225, 1851);
+	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1225, 1300);
 	m_fMapXSize = 2400.f;
 	m_fMapYSize = 2048.f;
-	CScrollManager::Get_Instance()->Set_Scroll(-613, -1327);
+	CScrollManager::Get_Instance()->Set_Scroll(-613, -960);
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 	
 	Create_MapObj();

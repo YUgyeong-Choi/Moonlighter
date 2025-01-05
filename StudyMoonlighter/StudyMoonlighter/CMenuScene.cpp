@@ -82,7 +82,14 @@ int CMenuScene::Update()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F4)) {
+		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
+		static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1160, 1182);
 		CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
+	}
+
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F5)) {
+		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
+		CSceneManager::GetInstance()->SetScene(SC_FIELD);
 	}
 
 	if (m_bIsOpen) {

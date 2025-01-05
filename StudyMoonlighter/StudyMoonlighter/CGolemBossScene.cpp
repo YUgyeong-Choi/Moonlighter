@@ -20,8 +20,6 @@ void CGolemBossScene::Initialize()
 	CSoundManager::Get_Instance()->StopSound(SOUND_BGM);
 	CSoundManager::Get_Instance()->PlaySound(L"golem_boss_track.wav", SOUND_BGM, g_fBackgroundVolume, true);
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
-	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1160, 1182);
 	m_fMapXSize = 2312.f;
 	m_fMapYSize = 1566.f;
 	CScrollManager::Get_Instance()->Set_Scroll(-600, -702);
