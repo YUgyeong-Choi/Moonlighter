@@ -19,6 +19,8 @@ public:
 	void Set_Showcase();
 	void Off_IsPriceTime() { m_IsPriceTime = false; }
 	bool Get_IsPriceTime() { return m_IsPriceTime; }
+	vector<ITEM> Get_PriceSlotITEM();
+	vector<int> Get_PriceSlotPrice();
 private:
 	vector<vector<CInvenSlot*>> inventory;
 	vector<vector<CInvenSlot*>> sellSlots;

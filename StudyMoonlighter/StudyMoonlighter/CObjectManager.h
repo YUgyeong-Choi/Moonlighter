@@ -26,15 +26,17 @@ public:
 	CObject* Get_LastMapObj() { return m_ObjList[OBJ_MAPOBJ].back(); }
 	CObject* Get_LastFloor() { return m_ObjList[OBJ_FLOOR].back(); }
 	CObject* Get_LastMonster() { return m_ObjList[OBJ_MONSTER].back(); }
+	CObject* Get_LastItem() { return m_ObjList[OBJ_ITEM].back(); }
+	CObject* Get_LastNPC() { return m_ObjList[OBJ_NPC].back(); }
 	CObject* Get_Player() { return m_ObjList[OBJ_PLAYER].back(); }
 	CObject* Get_FrontPlayer() { return m_ObjList[OBJ_PLAYER].front(); }
-	CObject* Get_LastItem() { return m_ObjList[OBJ_ITEM].back(); }
 	list<CObject*> Get_MapObjList(){ return m_ObjList[OBJ_MAPOBJ]; }
 	list<CObject*> Get_PortalList(){ return m_ObjList[OBJ_PORTAL]; }
 	list<CObject*> Get_FloorList(){ return m_ObjList[OBJ_FLOOR]; }
 	list<CObject*> Get_MonsterList(){ return m_ObjList[OBJ_MONSTER]; }
 	list<CObject*> Get_SlimeList(){ return m_ObjList[OBJ_SLIME]; }
 	list<CObject*> Get_PlayerList() { return m_ObjList[OBJ_PLAYER]; }
+	list<CObject*> Get_NpcList() { return m_ObjList[OBJ_NPC]; }
 	int Get_MonsterSize() { return (int)(m_ObjList[OBJ_MONSTER].size()); }
 
 	void Set_MapIndex(int _x, int _y, DIRECTION _dir) { m_iMapXIndex = _x, m_iMapYIndex =_y, m_dir = _dir; }

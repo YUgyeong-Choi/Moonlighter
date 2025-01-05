@@ -15,13 +15,13 @@ CShowCase::CShowCase():m_bActive(false), m_iItemMove(0), y(1), tick(0)
 void CShowCase::Initialize()
 {
 	m_eOBJID = OBJ_MAPOBJ;
-	m_tInfo.fCX = 48;
-	m_tInfo.fCY = 64;
+	m_tInfo.fCX = 35;
+	m_tInfo.fCY = 30;
 
 	m_eRender = RENDER_GAMEOBJECT;
 	m_tRenderSizeX = 48;
 	m_tRenderSizeY = 64;
-	m_HitBox = { 330, 540, 480, 710 };
+	m_HitBox = { 330, 540, 430, 710 };
 }
 
 int CShowCase::Update()
@@ -64,7 +64,7 @@ void CShowCase::Render(HDC hDC)
 		HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
 		HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 		HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
-		RoundRect(hDC, 430 + iScrollX + 20, 640 - 70 + iScrollY,430 + 140 + iScrollX, 640 - 20 + iScrollY, 30, 30);
+		RoundRect(hDC, 380 + iScrollX + 20, 640 - 70 + iScrollY, 380 + 140 + iScrollX, 640 - 20 + iScrollY, 30, 30);
 
 		SelectObject(hDC, hOldBrush);
 		SelectObject(hDC, hOldPen);
@@ -74,12 +74,12 @@ void CShowCase::Render(HDC hDC)
 		Image* image(nullptr);
 		Graphics graphics(hDC);
 		image = Image::FromFile(L"../MoonlighterAssets/Ui/button_J.png");
-		graphics.DrawImage(image, (int)430 + iScrollX + 15, (int)640 - 75 + iScrollY, 0, 0, 64, 64, UnitPixel);
+		graphics.DrawImage(image, (int)380 + iScrollX + 15, (int)640 - 75 + iScrollY, 0, 0, 64, 64, UnitPixel);
 
 		SetTextColor(hDC, RGB(0, 0, 0));
 		TCHAR szEnter[64];
 		_stprintf_s(szEnter, _T("¹èÄ¡"));
-		TextOut(hDC, (int)430 + iScrollX + 80, (int)640 - 55 + iScrollY, szEnter, _tcslen(szEnter));
+		TextOut(hDC, (int)380 + iScrollX + 80, (int)640 - 55 + iScrollY, szEnter, _tcslen(szEnter));
 
 	}
 
@@ -105,8 +105,16 @@ void CShowCase::OnCollision()
 	if (IntersectRect(&rc, &m_HitBox, CObjectManager::Get_Instance()->Get_Player()->Get_Rect()))
 	{
 		m_bActive = true;
-
 	}
+
+	list<CObject*> _npclist = CObjectManager::Get_Instance()->Get_NpcList();
+	for (auto& _npc : _npclist) {
+		if (IntersectRect(&rc, &m_HitBox, _npc->Get_Rect()))
+		{
+			_npc->OnCollision(this);
+		}
+	}
+
 }
 
 void CShowCase::KeyInput()

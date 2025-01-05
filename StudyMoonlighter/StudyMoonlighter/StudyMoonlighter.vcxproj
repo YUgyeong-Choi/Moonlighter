@@ -195,7 +195,11 @@
     <ClInclude Include="CUiManager.h" />
     <ClInclude Include="CVillageScene.h" />
     <ClInclude Include="CVisitor.h" />
+    <ClInclude Include="CVisitorIrish.h" />
     <ClInclude Include="CVisitorMale.h" />
+    <ClInclude Include="CVisitorMerchantfemale.h" />
+    <ClInclude Include="CVisitorMerchantmale.h" />
+    <ClInclude Include="CVisitorOldfemale.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -263,7 +267,11 @@
     <ClCompile Include="CUiManager.cpp" />
     <ClCompile Include="CVillageScene.cpp" />
     <ClCompile Include="CVisitor.cpp" />
+    <ClCompile Include="CVisitorIrish.cpp" />
     <ClCompile Include="CVisitorMale.cpp" />
+    <ClCompile Include="CVisitorMerchantfemale.cpp" />
+    <ClCompile Include="CVisitorMerchantmale.cpp" />
+    <ClCompile Include="CVisitorOldfemale.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

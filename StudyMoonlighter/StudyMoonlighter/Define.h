@@ -108,6 +108,7 @@ typedef struct tagItem {
 	const TCHAR* itemName;
 	int num;
 	int maxNum;
+	int price;
 	const TCHAR* pImageUrl;
 }ITEM;
 

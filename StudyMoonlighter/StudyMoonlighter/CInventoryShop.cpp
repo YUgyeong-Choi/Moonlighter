@@ -448,3 +448,41 @@ void CInventoryShop::Set_Showcase()
         }
     }
 }
+
+vector<ITEM> CInventoryShop::Get_PriceSlotITEM()
+{
+    vector<ITEM> _vecITem;
+    _vecITem.resize(4);
+    int num = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            if (i == 1 || i == 3)
+            {
+                _vecITem[num] = sellSlots[i][j]->Get_Item();
+                num++;
+            }
+        }
+    }
+    return _vecITem;
+}
+
+vector<int> CInventoryShop::Get_PriceSlotPrice()
+{
+    vector<int> _vecITem;
+    _vecITem.resize(4);
+    int num = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            if (i == 1 || i == 3)
+            {
+                _vecITem[num] = static_cast<CPriceSlot*>(sellSlots[i][j])->Get_Price();
+                num++;
+            }
+        }
+    }
+    return _vecITem;
+}

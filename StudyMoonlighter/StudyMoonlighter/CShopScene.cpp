@@ -15,6 +15,11 @@
 #include "CShopTable.h"
 #include "CShopSign.h"
 
+#include "CVisitorIrish.h"
+#include "CVisitorMerchantfemale.h"
+#include "CVisitorMerchantmale.h"
+#include "CVisitorOldfemale.h"
+
 CShopScene::CShopScene():m_bShop(true), m_Active(false),offSetShopX(0),offSetShopY(0), m_bShopOpen(false), tick(0)
 {
 }
@@ -41,16 +46,51 @@ void CShopScene::Initialize()
 	CUiManager::GetInstance()->Get_InvenShop()->Set_Showcase();
 	list<CObject*> mapObjList = CObjectManager::Get_Instance()->Get_MapObjList();
 
+	m_showcaseItem.resize(4);
+	m_showcasePrice.resize(4);
+	m_CanNpcSpawn.resize(4);
+	for (int i = 0; i < 4; ++i) {
+		m_showcaseItem[i].itemId = ITEM_END;
+		m_showcasePrice[i] = 0;
+		m_CanNpcSpawn[i] = false;
+	}
 }
 
 int CShopScene::Update()
 {
-
+	m_showcaseItem = CUiManager::GetInstance()->Get_InvenShop()->Get_PriceSlotITEM();
+	m_showcasePrice = CUiManager::GetInstance()->Get_InvenShop()->Get_PriceSlotPrice();
 
 	tick++;
 	if (m_bShopOpen) {
-		if (tick > 100) {
-			
+		if (tick > 500) {
+			for (int i = 0; i < 4; ++i) {
+				if ((m_showcaseItem[i].itemId != ITEM_END) && !m_CanNpcSpawn[i]) {
+					switch (i)
+					{
+					case 0:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorIrish>::Create(564, 720));
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430,530, m_showcaseItem[i], m_showcasePrice[i]);
+						break;
+					case 1:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorMerchantfemale>::Create(564, 720));
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430, 580, m_showcaseItem[i], m_showcasePrice[i]);
+						break;
+					case 2:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorMerchantmale>::Create(564, 720));
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430, 630, m_showcaseItem[i], m_showcasePrice[i]);
+						break;
+					case 3:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory< CVisitorOldfemale>::Create(564, 720));
+						static_cast<CVisitor*>(CObjectManager::Get_Instance()->Get_LastNPC())->Set_Init(430, 680, m_showcaseItem[i], m_showcasePrice[i]);
+						break;
+					default:
+						break;
+					}
+					m_CanNpcSpawn[i] = true;
+					break;
+				}
+			}
 			tick = 0;
 		}
 	}
@@ -138,10 +178,10 @@ void CShopScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(750, 230, 10, 250));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCollisionBox>::Create(570, 80, 350, 10));
 
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380,600));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(430, 600));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380, 650));
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(430, 650));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380,530));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380, 580));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380, 630));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380, 680));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopTable>::Create(630, 580));
 

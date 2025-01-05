@@ -27,5 +27,8 @@ private:
 	bool m_Active;
 	bool m_bShopOpen;
 	int tick;
+	vector<ITEM> m_showcaseItem;
+	vector<int> m_showcasePrice;
+	vector<bool> m_CanNpcSpawn;
 };
 

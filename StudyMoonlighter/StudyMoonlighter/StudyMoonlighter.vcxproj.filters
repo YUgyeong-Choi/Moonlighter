@@ -157,6 +157,12 @@
     <Filter Include="02_Object\05_Inventory\Slot">
       <UniqueIdentifier>{c8cc07c6-efac-4843-bd0b-19a77b9629f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\04_Visitor\anim">
+      <UniqueIdentifier>{23e0b044-1d20-4ffb-aeb5-1d8f6ee34ea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\04_Visitor\visitors">
+      <UniqueIdentifier>{c312a7a3-1f47-4419-8de6-5454c0c5166d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -318,9 +324,6 @@
     <ClInclude Include="CAnimationScene.h">
       <Filter>01_Scenes\06_AnimationScene</Filter>
     </ClInclude>
-    <ClInclude Include="CVisitorMale.h">
-      <Filter>02_Object\04_Visitor</Filter>
-    </ClInclude>
     <ClInclude Include="CVisitor.h">
       <Filter>02_Object\04_Visitor</Filter>
     </ClInclude>
@@ -359,6 +362,21 @@
     </ClInclude>
     <ClInclude Include="CShopSign.h">
       <Filter>02_Object\07_Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitorMale.h">
+      <Filter>02_Object\04_Visitor\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitorIrish.h">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitorOldfemale.h">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitorMerchantfemale.h">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitorMerchantmale.h">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -506,9 +524,6 @@
     <ClCompile Include="CAnimationScene.cpp">
       <Filter>01_Scenes\06_AnimationScene</Filter>
     </ClCompile>
-    <ClCompile Include="CVisitorMale.cpp">
-      <Filter>02_Object\04_Visitor</Filter>
-    </ClCompile>
     <ClCompile Include="CVisitor.cpp">
       <Filter>02_Object\04_Visitor</Filter>
     </ClCompile>
@@ -547,6 +562,21 @@
     </ClCompile>
     <ClCompile Include="CShopSign.cpp">
       <Filter>02_Object\07_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitorMale.cpp">
+      <Filter>02_Object\04_Visitor\anim</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitorIrish.cpp">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitorOldfemale.cpp">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitorMerchantmale.cpp">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitorMerchantfemale.cpp">
+      <Filter>02_Object\04_Visitor\visitors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

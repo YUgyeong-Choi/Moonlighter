@@ -14,6 +14,7 @@ public:
 	void Release();
 	void Init_Index() { m_iPriceIndex = 5; m_bActive = true; }
 	void Init_Price();
+	int Get_Price() { return m_iPrice; }
 private:
 	void Calc_Price();
 	void Key_Input();

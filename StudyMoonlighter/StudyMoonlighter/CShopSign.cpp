@@ -57,7 +57,7 @@ void CShopSign::Render(HDC hDC)
 		HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
 		HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 		HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
-		RoundRect(hDC, m_tInfo.fX + iScrollX + 20, m_tInfo.fY - 70 + iScrollY, m_tInfo.fX + 160 + iScrollX, m_tInfo.fY - 20 + iScrollY, 30, 30);
+		RoundRect(hDC, m_tInfo.fX + iScrollX + 20 - 80, m_tInfo.fY - 70 + iScrollY, m_tInfo.fX + 160 + iScrollX - 80, m_tInfo.fY - 20 + iScrollY, 30, 30);
 
 		SelectObject(hDC, hOldBrush);
 		SelectObject(hDC, hOldPen);
@@ -67,12 +67,12 @@ void CShopSign::Render(HDC hDC)
 		Image* image(nullptr);
 		Graphics graphics(hDC);
 		image = Image::FromFile(L"../MoonlighterAssets/Ui/button_J.png");
-		graphics.DrawImage(image, (int)m_tInfo.fX + iScrollX + 15, (int)m_tInfo.fY - 75 + iScrollY, 0, 0, 64, 64, UnitPixel);
+		graphics.DrawImage(image, (int)m_tInfo.fX + iScrollX + 15 - 80, (int)m_tInfo.fY - 75 + iScrollY, 0, 0, 64, 64, UnitPixel);
 
 		SetTextColor(hDC, RGB(0, 0, 0));
 		TCHAR szEnter[64];
 		_stprintf_s(szEnter, _T("상점 관리"));
-		TextOut(hDC, (int)m_tInfo.fX + iScrollX + 80, (int)m_tInfo.fY - 55 + iScrollY, szEnter, _tcslen(szEnter));
+		TextOut(hDC, (int)m_tInfo.fX + iScrollX + 80 - 80, (int)m_tInfo.fY - 55 + iScrollY, szEnter, _tcslen(szEnter));
 	}
 
 	delete image;
