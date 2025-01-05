@@ -21,6 +21,7 @@ public:
 	void Set_State(int hp, int money, int maxHp);
 	void Set_Inven() { m_bInvenOpen = !m_bInvenOpen; }
 	bool Get_Inven() { return m_bInvenOpen; }
+	bool Get_FirstWeapon() { return m_SelectFirstWeapon; }
 private:
 	void Key_Input();
 	void Rolling();
@@ -53,5 +54,6 @@ private:
 	FRAME m_PandentFrame;
 
 	bool m_SelectFirstWeapon;
+	bool m_ArrowSpawn;
 };
 

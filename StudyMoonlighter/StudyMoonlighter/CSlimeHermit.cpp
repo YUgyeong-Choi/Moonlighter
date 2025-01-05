@@ -206,6 +206,19 @@ void CSlimeHermit::OnCollision()
     }
 }
 
+void CSlimeHermit::OnCollision(CObject* _obj)
+{
+    if (_obj->Get_OBJID() == OBJ_PLAYER_ARROW) {
+        if (m_bCanHit) {
+            if (m_fAttacktedTime + 500 < GetTickCount64()) {
+                m_iAttackedDamage = _obj->Get_AttackDamage();
+                m_bCanHit = false;
+                m_fAttacktedTime = GetTickCount64();
+            }
+        }
+    }
+}
+
 void CSlimeHermit::Check_PlayerIn()
 {
     CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();

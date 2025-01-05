@@ -378,6 +378,9 @@
     <ClInclude Include="CVisitorMerchantmale.h">
       <Filter>02_Object\04_Visitor\visitors</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerArrow.h">
+      <Filter>02_Object\01.Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -577,6 +580,9 @@
     </ClCompile>
     <ClCompile Include="CVisitorMerchantfemale.cpp">
       <Filter>02_Object\04_Visitor\visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerArrow.cpp">
+      <Filter>02_Object\01.Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

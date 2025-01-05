@@ -8,8 +8,10 @@
 #include "CSceneManager.h"
 #include "CUiManager.h"
 #include "CItem.h"
+#include "CAbstractFactory.h"
+#include "CPlayerArrow.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false), m_SelectFirstWeapon(true)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false), m_SelectFirstWeapon(true), m_ArrowSpawn(false)
 {
 }
 
@@ -527,6 +529,7 @@ void CPlayer::Key_Input()
 				if (CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId != ITEM_END) {
 					m_eCurState = ATTACK;
 					mbIsAttack = true;
+					m_ArrowSpawn = false;
 				}
 			}
 			else {
@@ -568,6 +571,8 @@ void CPlayer::Key_Input()
 
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, 'Z') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
 			m_SelectFirstWeapon = !m_SelectFirstWeapon;
+			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"will_weapon_change.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 		}
 	}
 }
@@ -789,38 +794,65 @@ void CPlayer::SoundEffet()
 		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 		break;
 	case CPlayer::ATTACK:
-		if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
-			if (m_tFrame.iFrameStart == 3) {
-				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
-			}
-			if (m_tFrame.iFrameStart == 7) {
-				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
-			}
-		}
-
-		if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
-			if (m_tFrame.iFrameStart == 3) {
-				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
-			}
-			if (m_tFrame.iFrameStart == 7) {
-				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
-			}
-		}
-
 		if (m_SelectFirstWeapon&& CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
 			if (m_tFrame.iFrameStart == 2) {
 				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+
+			if (m_tFrame.iFrameStart == 4) {
+				if (!m_ArrowSpawn) {
+					switch (m_eCurDir)
+					{
+					case LEFT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX - 10, m_tInfo.fY, LEFT));
+						break;
+					case RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX + 10, m_tInfo.fY, RIGHT));
+						break;
+					case UP:
+					case UP_LEFT:
+					case UP_RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX, m_tInfo.fY - 10, UP));
+						break;
+					case DOWN:
+					case DOWN_LEFT:
+					case DOWN_RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX, m_tInfo.fY + 10, DOWN));
+						break;
+					}
+					m_ArrowSpawn = true;
+				}
 			}
 		}
 		if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
 			if (m_tFrame.iFrameStart == 2) {
 				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+			if (m_tFrame.iFrameStart == 4) {
+				if (!m_ArrowSpawn) {
+					switch (m_eCurDir)
+					{
+					case LEFT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX - 10, m_tInfo.fY, LEFT));
+						break;
+					case RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX + 10, m_tInfo.fY, RIGHT));
+						break;
+					case UP:
+					case UP_LEFT:
+					case UP_RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX, m_tInfo.fY - 10, UP));
+						break;
+					case DOWN:
+					case DOWN_LEFT:
+					case DOWN_RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX, m_tInfo.fY + 10, DOWN));
+						break;
+					}
+					m_ArrowSpawn = true;
+				}
 			}
 		}
 
@@ -868,10 +900,14 @@ void CPlayer::Attack()
 
 			if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
 				m_tFrame.iFrameEnd = 8;
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 			}
 
 			if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
 				m_tFrame.iFrameEnd = 17;
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 			}
 		}
 	}
@@ -906,10 +942,14 @@ void CPlayer::Attack()
 			m_tRenderSizeY = 200.f;
 
 			if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 4) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing2.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 				m_tFrame.iFrameEnd = 8;
 			}
 
 			if (6 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart < 8) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"short_sword_main_swing3.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 				m_tFrame.iFrameEnd = 17;
 			}
 		}

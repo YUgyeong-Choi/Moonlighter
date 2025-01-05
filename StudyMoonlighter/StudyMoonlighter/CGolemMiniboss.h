@@ -14,6 +14,7 @@ public:
     void Release() override;
     void RenderHpUi(HDC _hDC);
     void OnCollision();
+    void OnCollision(CObject* _obj);
 private:
     void Change_Motion();
     void SwordAttack();

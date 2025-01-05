@@ -133,7 +133,7 @@ void CInventoryShop::Render(HDC hDC)
             SelectObject(hDC, OldFont);
             DeleteObject(hFont1);
         }
-
+        SetTextColor(hDC, RGB(0, 0, 0));
         if (inventory[rowIndex][columnIndex]->Get_Item().itemId != ITEM_END) {
             image = Image::FromFile(L"../MoonlighterAssets/Ui/GUI_ItemNameLabel.png");
             graphics.DrawImage(image, WINCX / 2 - 155, 550, 0, 0, 310, 34, UnitPixel);

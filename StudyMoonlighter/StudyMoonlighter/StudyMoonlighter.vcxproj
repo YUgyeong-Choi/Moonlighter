@@ -139,6 +139,7 @@
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CAnimationScene.h" />
     <ClInclude Include="CInventoryShop.h" />
+    <ClInclude Include="CPlayerArrow.h" />
     <ClInclude Include="CPriceSlot.h" />
     <ClInclude Include="CSellSlot.h" />
     <ClInclude Include="CShopPlayer.h" />
@@ -211,6 +212,7 @@
   <ItemGroup>
     <ClCompile Include="CAnimationScene.cpp" />
     <ClCompile Include="CInventoryShop.cpp" />
+    <ClCompile Include="CPlayerArrow.cpp" />
     <ClCompile Include="CPriceSlot.cpp" />
     <ClCompile Include="CSellSlot.cpp" />
     <ClCompile Include="CShopPlayer.cpp" />

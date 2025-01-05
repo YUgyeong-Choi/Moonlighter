@@ -12,6 +12,7 @@ public:
     void Render(HDC hDC) override;
     void Release() override;
     void OnCollision();
+    void OnCollision(CObject* _obj);
 private:
     void Shoot();
 };

@@ -144,6 +144,21 @@ void CTurretBroken::OnCollision()
 	}
 }
 
+void CTurretBroken::OnCollision(CObject* _obj)
+{
+	if (_obj->Get_OBJID() == OBJ_PLAYER_ARROW) {
+		if (m_bCanHit) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
+				m_iAttackedDamage = _obj->Get_AttackDamage();
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot_impact.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+			}
+		}
+	}
+}
+
 void CTurretBroken::Shoot()
 {
 	CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);

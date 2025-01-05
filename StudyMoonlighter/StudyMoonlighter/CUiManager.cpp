@@ -23,9 +23,6 @@ void CUiManager::Initialize()
 		}
 	}
 
-	AddItem(SWORD);
-	AddItem(BOW);
-
 	inventory[1][5] = new CSpecialSlot(HELMET);
 	inventory[2][5] = new CSpecialSlot(ARMOR);
 	inventory[3][5] = new CSpecialSlot(BOOTS);
@@ -63,6 +60,7 @@ void CUiManager::Render(HDC hDC)
 		case SC_FIELD:
 		case SC_GOLEMBOSS:
 		case SC_TUTORIAL:
+			m_eCurUi = UI_WEAPON;
 			break;
 		case SC_SHOP:
 			break;
@@ -80,6 +78,7 @@ void CUiManager::Render(HDC hDC)
 	switch (m_eCurUi)
 	{
 	case UI_DUNGEON:
+		Weapon_Ui(hDC);
 		Dungeon_Ui(hDC);
 		break;
 	case UI_INVEN:
@@ -89,6 +88,9 @@ void CUiManager::Render(HDC hDC)
 		break;
 	case UI_INVENSHOP:
 		Shop_Ui(hDC);
+		break;
+	case UI_WEAPON:
+		Weapon_Ui(hDC);
 		break;
 	case UI_END:
 		break;
@@ -215,6 +217,36 @@ void CUiManager::Shop_Ui(HDC hDC)
 	graphics.DrawImage(image, 700, 320, 0, 0, 198, 190, UnitPixel);
 
 	m_InvenShop->Render(hDC);
+	delete image;
+}
+
+void CUiManager::Weapon_Ui(HDC hDC)
+{
+	Image* image(nullptr);
+	Graphics graphics(hDC);
+	bool check = static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Get_FirstWeapon();
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Weapon_circle.png");
+	graphics.DrawImage(image, 950, 50, 0, 0, 70, 70, UnitPixel);
+	if (check) {
+		if (Get_Wepon1()->Get_Item().itemId == SWORD) {
+			image = Image::FromFile(Get_Wepon1()->Get_Item().pImageUrl);
+			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+		}
+		else if (Get_Wepon1()->Get_Item().itemId == BOW) {
+			image = Image::FromFile(Get_Wepon1()->Get_Item().pImageUrl);
+			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+		}
+	}
+	else {
+		if (Get_Wepon2()->Get_Item().itemId == SWORD) {
+			image = Image::FromFile(Get_Wepon2()->Get_Item().pImageUrl);
+			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+		}
+		else if (Get_Wepon2()->Get_Item().itemId == BOW) {
+			image = Image::FromFile(Get_Wepon2()->Get_Item().pImageUrl);
+			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+		}
+	}
 	delete image;
 }
 

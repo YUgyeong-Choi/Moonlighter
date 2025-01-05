@@ -5,6 +5,7 @@
 #include "CSoundManager.h"
 #include "CKeyManager.h"
 #include "CAbstractFactory.h"
+#include "CUiManager.h"
 
 #include "CPlayer.h"
 #include "CObjectManager.h"
@@ -16,6 +17,7 @@ CAnimationScene::CAnimationScene():m_bPortalFinish(false), m_pGrandpa(nullptr)
 
 void CAnimationScene::Initialize()
 {
+	CUiManager::GetInstance()->AddItem(BOW);
 	CSoundManager::Get_Instance()->StopAll();
 	CSoundManager::Get_Instance()->PlayBGM(L"intro.wav", g_fBackgroundVolume, true);
 	ADD_BMP(L"../MoonlighterAssets/Map/DungeonsEntrance_Base.bmp", L"DungeonField");

@@ -206,7 +206,15 @@ void CGolemHead::OnCollision(CObject* _obj)
             m_AttackCount = 2;
             m_tFrame.iFrameEnd = 11;
         }
-
+    }
+    if (_obj->Get_OBJID() == OBJ_PLAYER_ARROW) {
+        if (m_bCanHit) {
+            if (m_fAttacktedTime + 500 < GetTickCount64()) {
+                m_iAttackedDamage = _obj->Get_AttackDamage();
+                m_bCanHit = false;
+                m_fAttacktedTime = GetTickCount64();
+            }
+        }
     }
 }
 
