@@ -23,7 +23,7 @@ void CGolemBoss::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_wave.bmp", L"GolemBossWave");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_launch.bmp", L"GolemBossLaunch");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_recover.bmp", L"GolemBossRecover");
-	m_eOBJID = OBJ_MONSTER;
+	m_eOBJID = OBJ_BOSS;
 
 	m_tInfo.fCX = 260.f;
 	m_tInfo.fCY = 150;
@@ -131,7 +131,7 @@ int CGolemBoss::Update()
 
 			if (m_tFrame.iFrameStart == 20 && m_preFrame != 20) {
 				m_preFrame = 20;
-				//SpawnFanRockRandom(600, 20);
+				SpawnRockRandom(60);
 			}
 
 		}
@@ -300,12 +300,12 @@ void CGolemBoss::SpawnRockCircle(float radius, int numRocks)
 	}
 }
 
-void CGolemBoss::SpawnFanRockRandom(float radius, int numRocks)
+void CGolemBoss::SpawnRockRandom(int numRocks)
 {
 	for (int i = 0; i < numRocks; ++i) {
-		float angle = (i*20) * PI / (numRocks - 1); // 각도 계산
-		float x = m_tInfo.fX + radius * cos(angle);
-		float y = m_tInfo.fY + radius * sin(angle);
+		int x = rand() % 1400 + 500;
+		int y = rand() % 630 + 600;
 		CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBossRock>::Create(x, y));
 	}
 }
+

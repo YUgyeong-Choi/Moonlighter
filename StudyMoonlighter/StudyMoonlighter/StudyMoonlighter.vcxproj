@@ -138,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CAnimationScene.h" />
+    <ClInclude Include="CGolemBossRockDead.h" />
     <ClInclude Include="CInventoryShop.h" />
     <ClInclude Include="CPlayerArrow.h" />
     <ClInclude Include="CPriceSlot.h" />
@@ -211,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAnimationScene.cpp" />
+    <ClCompile Include="CGolemBossRockDead.cpp" />
     <ClCompile Include="CInventoryShop.cpp" />
     <ClCompile Include="CPlayerArrow.cpp" />
     <ClCompile Include="CPriceSlot.cpp" />

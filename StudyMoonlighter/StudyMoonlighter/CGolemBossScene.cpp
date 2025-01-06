@@ -108,7 +108,7 @@ void CGolemBossScene::Key_Input()
 
 void CGolemBossScene::Create_MapObj()
 {
-	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemBoss>::Create(1176, 500));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_BOSS, CAbstractFactory<CGolemBoss>::Create(1176, 500));
 }
 
 void CGolemBossScene::Offset()
@@ -129,10 +129,10 @@ void CGolemBossScene::Offset()
 
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 
-	if (iOffSetminY > _copyPlayer->Get_Info().fY + iScrollY)
+	if (iOffSetminY > _copyPlayer->Get_Info().fY - 150 + iScrollY)
 		CScrollManager::Get_Instance()->Set_ScrollY(_copyPlayer->Get_Speed());
 
-	if (iOffSetmaxY < _copyPlayer->Get_Info().fY + iScrollY)
+	if (iOffSetmaxY < _copyPlayer->Get_Info().fY - 150 + iScrollY)
 		CScrollManager::Get_Instance()->Set_ScrollY(-_copyPlayer->Get_Speed());
 }
 

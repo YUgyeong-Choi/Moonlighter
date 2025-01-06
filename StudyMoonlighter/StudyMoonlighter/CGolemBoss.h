@@ -17,15 +17,14 @@ public:
 private:
     void Change_Frame();
     void SpawnRockCircle(float radius, int numRocks);
-    void SpawnFanRockRandom(float radius, int numRocks);
+    void SpawnRockRandom(int numRocks);
 private:
     ULONGLONG m_fPatternCool;
     bool m_IsWake;
     GolemBossPattern m_eCurPattern;
     GolemBossPattern m_ePrePattern;
     vector<GolemBossPattern> m_Pattern = {
-    IDLE,IDLE,SPAWNCIRCLE, IDLE, WAVE, WAVE,WAVE,IDLE, IDLE, PUNCHARM, WAVE,WAVE,WAVE, SPAWNRANDOM, IDLE, WAVE,WAVE,WAVE,
-    SPAWNCIRCLE, WAVE,WAVE,WAVE,IDLE
+    IDLE,IDLE,SPAWNCIRCLE,IDLE, IDLE, SPAWNRANDOM, IDLE, IDLE
     };
     int m_PatternIndex;
     float m_preFrame;
