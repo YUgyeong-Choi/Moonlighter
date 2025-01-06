@@ -165,6 +165,7 @@ void CVisitor::OnCollision(CObject* _obj)
 		m_eCurPattern = CVisitor::IDLE;
 		if (!m_AddMoney) {
 			static_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Money(m_item.num * price);
+			CUiManager::GetInstance()->Get_Moenyui();
 			m_AddMoney = true;
 			m_SellFinish = true;
 			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);

@@ -14,6 +14,7 @@
 #include "CShowCase.h"
 #include "CShopTable.h"
 #include "CShopSign.h"
+#include "CCashRegister.h"
 
 #include "CVisitorIrish.h"
 #include "CVisitorMerchantfemale.h"
@@ -186,6 +187,7 @@ void CShopScene::Create_MapObj()
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShowCase>::Create(380, 680));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopTable>::Create(630, 580));
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCashRegister>::Create(570, 580));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopSign>::Create(500, 200));
 

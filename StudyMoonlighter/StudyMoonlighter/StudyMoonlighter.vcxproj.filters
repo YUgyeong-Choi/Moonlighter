@@ -186,9 +186,6 @@
     <ClInclude Include="CMainGame.h">
       <Filter>00_MainGame</Filter>
     </ClInclude>
-    <ClInclude Include="Define.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CSceneManager.h">
       <Filter>99_Managers\SceneManager</Filter>
     </ClInclude>
@@ -386,6 +383,12 @@
     </ClInclude>
     <ClInclude Include="CGolemBossRockDead.h">
       <Filter>02_Object\08_DeadObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CCashRegister.h">
+      <Filter>02_Object\07_Shop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -592,6 +595,9 @@
     </ClCompile>
     <ClCompile Include="CGolemBossRockDead.cpp">
       <Filter>02_Object\08_DeadObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CCashRegister.cpp">
+      <Filter>02_Object\07_Shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

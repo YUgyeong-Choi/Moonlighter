@@ -36,9 +36,6 @@ void CShopTable::Render(HDC hDC)
 	Graphics graphics(hDC);
 	Image* image = Image::FromFile(L"../MoonlighterAssets/Map/Shop/shop_main_table.png");
 	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, 0, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
-
-	image = Image::FromFile(L"../MoonlighterAssets/Map/Shop/cash_register01.png");
-	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX +15, (int)m_tRenderRect.top + iScrollY, 0, 0, 52, 46, UnitPixel);
 	delete image;
 
 	if (g_bDevmode) {

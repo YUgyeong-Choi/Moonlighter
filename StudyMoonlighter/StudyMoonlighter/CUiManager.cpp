@@ -22,6 +22,7 @@ void CUiManager::Initialize()
 			inventory[i][j] = new CInvenSlot(i, j);
 		}
 	}
+	AddItem(RICHJELLY);
 
 	inventory[1][5] = new CSpecialSlot(HELMET);
 	inventory[2][5] = new CSpecialSlot(ARMOR);
@@ -36,12 +37,31 @@ void CUiManager::Initialize()
 	m_InvenShop = new CInventoryShop();
 	m_InvenShop->Initialize();
 	m_InvenShop->Copy_Inven(inventory);
+	m_bGetMoney = false;
+
+	m_tFrame.iFrameStart = 0;
+	m_tFrame.iFrameEnd = 4;
+	m_tFrame.dwSpeed = 120;
+	m_tFrame.dwTime = GetTickCount64();
 }
 
 void CUiManager::Update()
 {
 	m_Inven->Update();
 	m_InvenShop->Update();
+
+	if (m_bGetMoney) {
+		if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
+		{
+			++m_tFrame.iFrameStart;
+
+			if (m_tFrame.iFrameStart > m_tFrame.iFrameEnd) {
+				m_tFrame.iFrameStart = 0;
+				m_bGetMoney = false;
+			}
+			m_tFrame.dwTime = GetTickCount64();
+		}
+	}
 }
 
 void CUiManager::Render(HDC hDC)
@@ -99,10 +119,10 @@ void CUiManager::Render(HDC hDC)
 	}
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
-	graphics.DrawImage(image, 5, 10, 0, 0, 70, 70, UnitPixel);
+	graphics.DrawImage(image, 5, 20, 0, 0, 70, 70, UnitPixel);
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold1.png");
-	graphics.DrawImage(image, 11, 16, 0, 0, 64, 64, UnitPixel);
+	graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
 
 	//hp ¹Ù
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/HealthBar_Circle.png");
@@ -151,15 +171,16 @@ void CUiManager::Render(HDC hDC)
 	RECT rect = { 160, 50, 260, 70 }; 
 	DrawText(hDC, szHpBar, _tcslen(szHpBar), &rect, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
 
+	//Money
 	TCHAR szMoney[64];
 	if (CPlayer* _player = dynamic_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
 		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
-		RECT rect2 = { 20, 90, 70, 110 };
+		RECT rect2 = { 20, 100, 70, 120 };
 		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
 	}
 	else if (CShopPlayer* _player = dynamic_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
 		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
-		RECT rect2 = { 20, 90, 70, 110 };
+		RECT rect2 = { 20, 100, 70, 120 };
 		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
 	}
 
@@ -167,7 +188,13 @@ void CUiManager::Render(HDC hDC)
 	DeleteObject(hFont1);
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Coin.png");
-	graphics.DrawImage(image, 10, 95, 0, 0, 18, 18, UnitPixel);
+	graphics.DrawImage(image, 10, 105, 0, 0, 18, 18, UnitPixel);
+
+	if (m_bGetMoney) {
+		image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_Falling.png");
+		graphics.DrawImage(image, 25, -5 + m_tFrame.iFrameStart*7, 0, m_tFrame.iFrameStart*32, 32, 32, UnitPixel);
+	}
+
 
 	delete image;
 }
@@ -232,27 +259,43 @@ void CUiManager::Weapon_Ui(HDC hDC)
 	Graphics graphics(hDC);
 	bool check = static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Get_FirstWeapon();
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Weapon_circle.png");
-	graphics.DrawImage(image, 950, 50, 0, 0, 70, 70, UnitPixel);
+	graphics.DrawImage(image, 945, 50, 0, 0, 70, 70, UnitPixel);
 	if (check) {
 		if (Get_Wepon1()->Get_Item().itemId == SWORD) {
 			image = Image::FromFile(Get_Wepon1()->Get_Item().pImageUrl);
-			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
 		else if (Get_Wepon1()->Get_Item().itemId == BOW) {
 			image = Image::FromFile(Get_Wepon1()->Get_Item().pImageUrl);
-			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
 	}
 	else {
 		if (Get_Wepon2()->Get_Item().itemId == SWORD) {
 			image = Image::FromFile(Get_Wepon2()->Get_Item().pImageUrl);
-			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
 		else if (Get_Wepon2()->Get_Item().itemId == BOW) {
 			image = Image::FromFile(Get_Wepon2()->Get_Item().pImageUrl);
-			graphics.DrawImage(image, 960, 60, 0, 0, 70, 70, UnitPixel);
+			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
 	}
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/button_Z.png");
+	graphics.DrawImage(image, 925, 95, 0, 0, 64, 64, UnitPixel);
+
+
+	image = Image::FromFile(L"../MoonlighterAssets/Items/potion.png");
+	graphics.DrawImage(image, 970, 2, 0, 0, 48, 48, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/button_E.png");
+	graphics.DrawImage(image, 930, -4, 0, 0, 64, 64, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/button_Space.png");
+	graphics.DrawImage(image, 880, -4, 0, 0, 64, 64, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/will_roll.png");
+	graphics.DrawImage(image, 865, 30, 0, 0, 35, 40, UnitPixel);
 	delete image;
 }
 
