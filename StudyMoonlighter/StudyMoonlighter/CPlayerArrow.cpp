@@ -117,6 +117,9 @@ void CPlayerArrow::OnCollision(CObject* _obj)
 		break;
 	case OBJ_PORTAL:
 		break;
+	case OBJ_BOSS:
+		m_iHp--;
+		break;
 	case OBJ_END:
 		break;
 	default:

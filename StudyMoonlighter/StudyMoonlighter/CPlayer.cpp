@@ -401,7 +401,7 @@ void CPlayer::OnCollision(CObject* _obj)
 	case OBJ_MONSTER:
 		if (!m_bIsRoll && m_bCanHit) {
 			if (m_fAttacktedTime + 500 < GetTickCount64()) {
-				m_iAttackedDamage = 5;
+				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
 			}
@@ -437,6 +437,15 @@ void CPlayer::OnCollision(CObject* _obj)
 		CUiManager::GetInstance()->AddItem(static_cast<CItem*>(_obj)->Get_ItemType());
 		break;
 	case OBJ_END:
+		break;
+	case OBJ_BOSS:
+		if (!m_bIsRoll && m_bCanHit) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
+				m_iAttackedDamage = _obj->Get_AttackDamage();
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+			}
+		}
 		break;
 	default:
 		break;

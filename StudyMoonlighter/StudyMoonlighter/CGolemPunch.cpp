@@ -17,7 +17,7 @@ void CGolemPunch::Initialize()
 
     m_tFrame.iFrameStart = 0;
     m_tFrame.iFrameEnd = 8;
-    m_tFrame.dwSpeed = 200;
+    m_tFrame.dwSpeed = 300;
     m_tFrame.dwTime = GetTickCount64();
 
     m_tRenderSizeX = 10.f;
@@ -25,6 +25,7 @@ void CGolemPunch::Initialize()
     m_eRender = RENDER_GAMEOBJECT;
 
     m_iPunchTime = 3;
+    m_iAttackDamage = 20;
 
     m_targetObj = CObjectManager::Get_Instance()->Get_Player(); 
 }
@@ -73,6 +74,15 @@ int CGolemPunch::Update()
         }
     }
 
+    if (m_iPunchTime != 0) {
+        if (2 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart <= 3) {
+            m_HitBox = { (int)m_tInfo.fX - 25 , (int)m_PunchY + 10 , (int)m_tInfo.fX + 25 , (int)m_PunchY + 60 };
+        }
+        else {
+            m_HitBox = { 0,0,0,0 };
+        }
+    }
+
     if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
         m_bCanUp = true;
     }
@@ -105,7 +115,8 @@ void CGolemPunch::Render(HDC hDC)
 
 
     if (g_bDevmode) {
-        Renderbox(hDC, m_tInfo.fX - 32, m_tInfo.fY - 32, m_tInfo.fX + 32, m_tInfo.fY + 32, iScrollX, iScrollY);
+        //Renderbox(hDC, m_tInfo.fX - 32, m_tInfo.fY - 32, m_tInfo.fX + 32, m_tInfo.fY + 32, iScrollX, iScrollY);
+        Hitbox(hDC, m_HitBox, iScrollX, iScrollY);
     }
 }
 

@@ -46,6 +46,9 @@ void CGolemBoss::Initialize()
 
 	m_targetObj = CObjectManager::Get_Instance()->Get_Player();
 	count = 10;
+
+	m_iHp = 1000;
+	m_iAttackDamage = 10;
 }
 
 int CGolemBoss::Update()
@@ -223,6 +226,7 @@ int CGolemBoss::Update()
 
 void CGolemBoss::Late_Update()
 {
+	Hit();
 	OnCollision();
 	__super::Move_Frame();
 	if (!static_cast<CGolemBossScene*>(CSceneManager::GetInstance()->Get_Scene())->Get_bBossOffSet()) {
@@ -319,6 +323,11 @@ void CGolemBoss::Render(HDC hDC)
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
 
+	TCHAR szBoss[64];
+	_stprintf_s(szBoss, _T("BossHp: %d"), m_iHp);
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+	TextOut(hDC, 700, 10, szBoss, _tcslen(szBoss));
 }
 
 void CGolemBoss::Release()
@@ -327,6 +336,15 @@ void CGolemBoss::Release()
 
 void CGolemBoss::OnCollision(CObject* _obj)
 {
+	if (_obj->Get_OBJID() == OBJ_PLAYER_ARROW) {
+		if (m_bCanHit) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
+				m_iAttackedDamage = _obj->Get_AttackDamage();
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+			}
+		}
+	}
 }
 
 void CGolemBoss::Change_Frame()
@@ -440,12 +458,13 @@ void CGolemBoss::Shoot()
 
 void CGolemBoss::OnCollision()
 {
-	CObject* _obj = CObjectManager::Get_Instance()->Get_Player();
+	//몬스터 소환
+	CObject* _copyPlayer = CObjectManager::Get_Instance()->Get_Player();
 
-	float fRadius = (_obj->Get_Info().fCX + 50) * 0.5f;
+	float fRadius = (_copyPlayer->Get_Info().fCX + 50) * 0.5f;
 
-	float fWidth = abs(_obj->Get_Info().fX - m_hitBoxX);
-	float fHeight = abs(_obj->Get_Info().fY - m_hitBoxY);
+	float fWidth = abs(_copyPlayer->Get_Info().fX - m_hitBoxX);
+	float fHeight = abs(_copyPlayer->Get_Info().fY - m_hitBoxY);
 
 	float fDiagonal = powf((fWidth * fWidth + fHeight * fHeight), 0.5f);
 
@@ -468,5 +487,17 @@ void CGolemBoss::OnCollision()
 		removeTick = 0;
 		m_MonsterHitox = { 0,0,0,0 };
 	}
+
+	//검이랑 충돌
+	if (CCollisionManager::CollisionRectWeapon(_copyPlayer, this)) {
+		if (m_bCanHit) {
+			if (m_fAttacktedTime + 500 < GetTickCount64()) {
+				m_iAttackedDamage = _copyPlayer->Get_AttackDamage();
+				m_bCanHit = false;
+				m_fAttacktedTime = GetTickCount64();
+			}
+		}
+	}
+	
 }
 

@@ -68,6 +68,11 @@ void CObjectManager::Late_Update()
 	CCollisionManager::CollisionRectExMapObj(m_ObjList[OBJ_NPC], m_ObjList[OBJ_MAPOBJ]);
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER_ARROW], m_ObjList[OBJ_MAPOBJ]);
 	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER_ARROW], m_ObjList[OBJ_MONSTER]);
+
+	CCollisionManager::CollisionRectWeapon(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BOSS]);
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_PLAYER_ARROW], m_ObjList[OBJ_BOSS]);
+	CCollisionManager::CollisionRect(m_ObjList[OBJ_BOSS], m_ObjList[OBJ_PLAYER]);
+	CCollisionManager::CollisionRectWeapon(m_ObjList[OBJ_BOSS], m_ObjList[OBJ_PLAYER]);
 }
 
 void CObjectManager::Render(HDC hDC)

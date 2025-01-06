@@ -49,8 +49,8 @@ int CGolemBossRock::Update()
         }
         if ((int)m_tInfo.fY == m_iRockY) {
             m_bArrive = true;
-            m_tInfo.fCX = 30.f;
-            m_tInfo.fCY = 30.f;
+            m_tInfo.fCX = 40.f;
+            m_tInfo.fCY = 40.f;
         }
     }
     __super::Update_Rect();
