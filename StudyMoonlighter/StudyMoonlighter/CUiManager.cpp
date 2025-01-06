@@ -28,7 +28,7 @@ void CUiManager::Initialize()
 	inventory[3][5] = new CSpecialSlot(BOOTS);
 	inventory[0][5] = new CSpecialSlot(WEAPON1);
 	inventory[0][6] = new CSpecialSlot(WEAPON2);
-	inventory[2][6] = new CSpecialSlot(POTION);
+	inventory[2][6] = new CSpecialSlot(OUTFIT_POTION);
 
 	m_Inven = new CInventory();
 	m_Inven->Copy_Inven(inventory);

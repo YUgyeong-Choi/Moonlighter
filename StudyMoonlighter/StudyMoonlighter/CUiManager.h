@@ -19,6 +19,7 @@ public:
 	CInventoryShop* Get_InvenShop() { return m_InvenShop; }
 	CInvenSlot* Get_Wepon1() { return inventory[0][5]; }
 	CInvenSlot* Get_Wepon2() { return inventory[0][6]; }
+	CInvenSlot* Get_Potion() { return inventory[2][6]; }
 public:
 	static CUiManager* GetInstance()
 	{

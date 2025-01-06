@@ -11,7 +11,7 @@
 #include "CAbstractFactory.h"
 #include "CPlayerArrow.h"
 
-CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false), m_SelectFirstWeapon(true), m_ArrowSpawn(false)
+CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false), m_SelectFirstWeapon(true), m_ArrowSpawn(false), m_bGetPotion(false), m_bCanPotionUse(true)
 {
 }
 
@@ -43,6 +43,11 @@ void CPlayer::Initialize()
 	m_PandentFrame.dwSpeed = 100;
 	m_PandentFrame.dwTime = GetTickCount64();
 
+	m_PotionFrame.iFrameStart = 0;
+	m_PotionFrame.iFrameEnd = 9;
+	m_PotionFrame.dwSpeed = 100;
+	m_PotionFrame.dwTime = GetTickCount64();
+
 	m_tRenderSizeX = 80.f;
 	m_tRenderSizeY = 80.f;
 	m_eRender = RENDER_GAMEOBJECT;
@@ -50,6 +55,7 @@ void CPlayer::Initialize()
 	m_iHp = 100;
 	m_iMaxHp = m_iHp;
 	m_iAttackDamage = 25;
+	m_iHeal = 20;
 }
 
 int CPlayer::Update()
@@ -65,6 +71,14 @@ int CPlayer::Update()
 			m_PandentFrame.iFrameStart = 0;
 		}
 	}
+
+	if (m_bGetPotion) {
+		if (m_PotionFrame.iFrameStart == m_PotionFrame.iFrameEnd) {
+			m_bGetPotion = false;
+			m_PotionFrame.iFrameStart = 0;
+		}
+	}
+
 	if (m_iHp <= 0) {
 		//return OBJ_DEAD;
 	}
@@ -105,6 +119,17 @@ void CPlayer::Late_Update()
 {
 	Rolling();
 	Hit();
+	if (!m_bCanPotionUse) {
+		m_iHp++;
+		if (m_iHp > 100) {
+			m_iHp = 100;
+		}
+		m_iHeal--;
+		if (m_iHeal <= 0) {
+			m_iHeal = 20;
+			m_bCanPotionUse = true;
+		}
+	}
 	SoundEffet();
 	if (m_eCurState != FALL) {
 		__super::Move_Frame();
@@ -119,6 +144,18 @@ void CPlayer::Late_Update()
 				m_PandentFrame.iFrameStart = 0;
 
 			m_PandentFrame.dwTime = GetTickCount64();
+		}
+	}
+
+	if (m_bGetPotion) {
+		if (m_PotionFrame.dwTime + m_PotionFrame.dwSpeed < GetTickCount64())
+		{
+			++m_PotionFrame.iFrameStart;
+
+			if (m_PotionFrame.iFrameStart > m_PotionFrame.iFrameEnd)
+				m_PotionFrame.iFrameStart = 0;
+
+			m_PotionFrame.dwTime = GetTickCount64();
 		}
 	}
 }
@@ -136,6 +173,13 @@ void CPlayer::Render(HDC hDC)
 		graphics.DrawImage(image, (int)m_tInfo.fX - 90 + iScrollX, (int)m_tInfo.fY - 50 + iScrollY, (int)180 * m_PandentFrame.iFrameStart, 0, (int)180, (int)100, UnitPixel);
 		delete image;
 		return;
+	}
+
+	if (m_bGetPotion) {
+		Image* image;
+		image = Image::FromFile(L"../MoonlighterAssets/Player/Potion/get_potion.png");
+		graphics.DrawImage(image, (int)m_tInfo.fX - 100 + iScrollX, (int)m_tInfo.fY - 100 + iScrollY, (int)200 * m_PotionFrame.iFrameStart, 0, (int)200, (int)200, UnitPixel);
+		delete image;
 	}
 
 	Image* image(nullptr);
@@ -583,6 +627,24 @@ void CPlayer::Key_Input()
 			m_SelectFirstWeapon = !m_SelectFirstWeapon;
 			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 			CSoundManager::Get_Instance()->PlaySound(L"will_weapon_change.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+		}
+
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F5) && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+			CUiManager::GetInstance()->AddItem(POTION);
+			m_bGetPotion = true;
+		}
+
+
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, 'E') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+			if (CUiManager::GetInstance()->Get_Potion()->Get_Item().num > 0) {
+				if (m_bCanPotionUse) {
+					m_bCanPotionUse = false;
+					CUiManager::GetInstance()->Get_Potion()->Sub_ItemNum();
+					if (CUiManager::GetInstance()->Get_Potion()->Get_Item().num == 0) {
+						CUiManager::GetInstance()->Get_Potion()->Item_Init();
+					}
+				}
+			}
 		}
 	}
 }

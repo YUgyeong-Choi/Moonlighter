@@ -35,7 +35,11 @@ private:
 	bool m_bIsRoll;
 	bool m_bFalling;
 	bool m_bUsePendant;
+	bool m_bGetPotion;
+	bool m_bCanPotionUse;
 	float m_fRollTime;
+
+	int m_iHeal;
 
 	bool mbIsAttack;
 	bool m_bOnslime;
@@ -52,6 +56,7 @@ private:
 	bool m_bInvenOpen;
 	bool m_NoRenderPlayer;
 	FRAME m_PandentFrame;
+	FRAME m_PotionFrame;
 
 	bool m_SelectFirstWeapon;
 	bool m_ArrowSpawn;

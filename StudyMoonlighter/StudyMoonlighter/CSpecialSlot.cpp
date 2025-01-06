@@ -40,7 +40,7 @@ void CSpecialSlot::Render(HDC hDC)
 	case WEAPON2:
 		graphics.DrawImage(image, 734, 157, 0, 0, 54, 54, UnitPixel);
 		break;
-	case POTION:
+	case OUTFIT_POTION:
 		graphics.DrawImage(image, 584, 288, 0, 0, 54, 54, UnitPixel);
 		break;
 	case OUTFIT_END:
@@ -66,7 +66,9 @@ void CSpecialSlot::Render(HDC hDC)
 			image = Image::FromFile(item.pImageUrl);
 			graphics.DrawImage(image, 737, 160, 0, 0, 48, 48, UnitPixel);
 			break;
-		case POTION:
+		case OUTFIT_POTION:
+			image = Image::FromFile(item.pImageUrl);
+			graphics.DrawImage(image, 587, 291, 0, 0, 48, 48, UnitPixel);
 			break;
 		case OUTFIT_ITEM:
 			break;
