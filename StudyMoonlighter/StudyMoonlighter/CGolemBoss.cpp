@@ -23,6 +23,9 @@ void CGolemBoss::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_wave.bmp", L"GolemBossWave");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_launch.bmp", L"GolemBossLaunch");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_recover.bmp", L"GolemBossRecover");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickypre.bmp", L"GolemBossStickyPre");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyidle.bmp", L"GolemBossStickyIdle");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyend.bmp", L"GolemBossStickyEnd");
 	m_eOBJID = OBJ_BOSS;
 
 	m_tInfo.fCX = 260.f;
@@ -72,11 +75,21 @@ int CGolemBoss::Update()
 			}
 		}
 		break;
-	case CGolemBoss::WAVE:
+	case CGolemBoss::SHOOTPRE:
 		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
-			m_eCurPattern = m_Pattern.at(m_PatternIndex);
-			m_PatternIndex++;
-			m_tFrame.iFrameStart = 0;
+			m_eCurPattern = SHOOTIDLE;
+			m_preFrame = 0;
+		}
+		break;
+	case CGolemBoss::SHOOTIDLE:
+		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
+			m_eCurPattern = SHOOTEND;
+			m_preFrame = 0;
+		}
+		break;
+	case CGolemBoss::SHOOTEND:
+		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
+			m_eCurPattern = IDLE;
 			m_preFrame = 0;
 		}
 		break;
@@ -133,7 +146,6 @@ int CGolemBoss::Update()
 				m_preFrame = 20;
 				SpawnRockRandom(60);
 			}
-
 		}
 		else {
 			m_HitBox = { 0,0,0,0 };
@@ -179,7 +191,14 @@ void CGolemBoss::Render(HDC hDC)
 	case CGolemBoss::IDLENOARM:
 		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossIdleNoram");
 		break;
-	case CGolemBoss::WAVE:
+	case CGolemBoss::SHOOTPRE:
+		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossStickyPre");
+		break;
+	case CGolemBoss::SHOOTIDLE:
+		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossStickyIdle");
+		break;
+	case CGolemBoss::SHOOTEND:
+		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossStickyEnd");
 		break;
 	case CGolemBoss::SPAWNCIRCLE:
 	case CGolemBoss::SPAWNRANDOM:
@@ -197,14 +216,6 @@ void CGolemBoss::Render(HDC hDC)
 		break;
 	default:
 		break;
-	}
-
-	if (m_eCurPattern == WAVE) {
-		HDC hMemDC2 = CBitManager::GetInstance()->FindImage(L"GolemBossWave");
-		int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
-		int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-		GdiTransparentBlt(hDC, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC2, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, RGB(255, 255, 255));
-
 	}
 	
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
@@ -253,9 +264,21 @@ void CGolemBoss::Change_Frame()
 			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
-		case CGolemBoss::WAVE:
+		case CGolemBoss::SHOOTPRE:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 15;
+			m_tFrame.dwSpeed = 80;
+			m_tFrame.dwTime = GetTickCount64();
+			break;
+		case CGolemBoss::SHOOTIDLE:
+			m_tFrame.iFrameStart = 0;
+			m_tFrame.iFrameEnd = 15;
+			m_tFrame.dwSpeed = 80;
+			m_tFrame.dwTime = GetTickCount64();
+			break;
+		case CGolemBoss::SHOOTEND:
+			m_tFrame.iFrameStart = 0;
+			m_tFrame.iFrameEnd = 22;
 			m_tFrame.dwSpeed = 80;
 			m_tFrame.dwTime = GetTickCount64();
 			break;

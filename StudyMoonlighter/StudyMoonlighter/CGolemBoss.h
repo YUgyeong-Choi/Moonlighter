@@ -3,7 +3,7 @@
 class CGolemBoss : public CMonster
 {
 private:
-    enum GolemBossPattern { WAKEUP, IDLE, IDLENOARM, WAVE, SPAWNCIRCLE, PUNCHARM, RECOVERARM, SPAWNRANDOM, DEATH, NONE };
+    enum GolemBossPattern { WAKEUP, IDLE, IDLENOARM, SHOOTPRE, SHOOTIDLE, SHOOTEND, SPAWNCIRCLE, PUNCHARM, RECOVERARM, SPAWNRANDOM, DEATH, NONE };
 public:
     CGolemBoss();
     virtual ~CGolemBoss() { Release(); }
@@ -24,7 +24,7 @@ private:
     GolemBossPattern m_eCurPattern;
     GolemBossPattern m_ePrePattern;
     vector<GolemBossPattern> m_Pattern = {
-    IDLE,IDLE,SPAWNCIRCLE,IDLE, IDLE, SPAWNRANDOM, IDLE, IDLE
+    IDLE,IDLE,SPAWNCIRCLE,IDLE, IDLE, PUNCHARM, IDLE, IDLE, SPAWNRANDOM, IDLE, IDLE, SHOOTPRE,IDLE
     };
     int m_PatternIndex;
     float m_preFrame;
