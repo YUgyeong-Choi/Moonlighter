@@ -18,15 +18,26 @@ private:
     void Change_Frame();
     void SpawnRockCircle(float radius, int numRocks);
     void SpawnRockRandom(int numRocks);
+    void Shoot();
+    void OnCollision();
 private:
-    ULONGLONG m_fPatternCool;
     bool m_IsWake;
     GolemBossPattern m_eCurPattern;
     GolemBossPattern m_ePrePattern;
     vector<GolemBossPattern> m_Pattern = {
-    IDLE,IDLE,SPAWNCIRCLE,IDLE, IDLE, PUNCHARM, IDLE, IDLE, SPAWNRANDOM, IDLE, IDLE, SHOOTPRE,IDLE
+    IDLE,IDLE,SPAWNCIRCLE,IDLE, IDLE, PUNCHARM, IDLE, IDLE, SPAWNRANDOM, IDLE, SHOOTPRE,IDLE
     };
     int m_PatternIndex;
     float m_preFrame;
+    bool m_Shoot;
+    int tick;
+    float m_fAngle;
+    MONSTERTYPE m_monster;
+
+    int m_hitBoxX;
+    int m_hitBoxY;
+    int removeTick;
+    RECT m_MonsterHitox;
+    int count;
 };
 

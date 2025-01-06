@@ -9,8 +9,11 @@
 #include "CAbstractFactory.h"
 #include "CGolemBossRock.h"
 #include "CGolemPunch.h"
+#include "CCollisionManager.h"
+#include "CBabySlime.h"
+#include "CSlimeHermit.h"
 
-CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false), m_fPatternCool(0), m_PatternIndex(0), m_preFrame(0)
+CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false) , m_PatternIndex(0), m_preFrame(0), m_Shoot(false), m_fAngle(0), m_monster(MONSTER_END), m_hitBoxX(0), m_hitBoxY(0), tick(0), removeTick(0), m_MonsterHitox{0,0,0,0}, count(0)
 {
 }
 
@@ -26,6 +29,7 @@ void CGolemBoss::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickypre.bmp", L"GolemBossStickyPre");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyidle.bmp", L"GolemBossStickyIdle");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyend.bmp", L"GolemBossStickyEnd");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyPunch.bmp", L"GolemBossStickyPunch");
 	m_eOBJID = OBJ_BOSS;
 
 	m_tInfo.fCX = 260.f;
@@ -39,17 +43,64 @@ void CGolemBoss::Initialize()
 	m_tRenderSizeX = 1024.f;
 	m_tRenderSizeY = 1024.f;
 	m_eRender = RENDER_GAMEOBJECT;
+
+	m_targetObj = CObjectManager::Get_Instance()->Get_Player();
+	count = 10;
 }
 
 int CGolemBoss::Update()
 {
+	//보스 처음 화면 관련
 	if (static_cast<CGolemBossScene*>(CSceneManager::GetInstance()->Get_Scene())->Get_bBossOffSet() && !m_IsWake) {
 		m_eCurPattern = WAKEUP;
 		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
 			static_cast<CGolemBossScene*>(CSceneManager::GetInstance()->Get_Scene())->Set_bWakeup();
 			m_IsWake = true;
 			m_eCurPattern = IDLE;
-			m_fPatternCool = GetTickCount64();
+		}
+	}
+
+	//보스 몬스터 타입 생성
+	if (m_eCurPattern == SHOOTIDLE) {
+		tick++;
+		if (tick > 50) {
+			if (m_monster == MONSTER_END) {
+				m_hitBoxX = m_tInfo.fX - 150;
+				m_hitBoxY = m_tInfo.fY  + 30;
+				Shoot();
+				tick = 0;
+
+				//각도
+				float playerX = m_targetObj->Get_Info().fX;
+				float playerY = m_targetObj->Get_Info().fY;
+				float deltaX = playerX - m_hitBoxX;
+				float deltaY = playerY - m_hitBoxY;
+				float length = sqrtf(deltaX * deltaX + deltaY * deltaY);
+				float angleCos = deltaX / length;
+
+				m_fAngle = acosf(angleCos) * (180.f / PI);
+				count--;
+
+				if (count == 0) {
+					m_Shoot = true;
+					m_monster = MONSTER_END;
+					removeTick = 0;
+					m_MonsterHitox = { 0,0,0,0 };
+					tick = 0;
+				}
+			}
+		}
+	}
+
+	if (m_monster != MONSTER_END) {
+		m_hitBoxX = m_hitBoxX + (8 * cosf(m_fAngle * (PI / 180.f)));
+		m_hitBoxY = m_hitBoxY + (8 * sinf(m_fAngle * (PI / 180.f)));
+		removeTick++;
+		m_MonsterHitox = { m_hitBoxX - 25, m_hitBoxY - 25, m_hitBoxX + 25, m_hitBoxY + 25 };
+		if (removeTick > 100) {
+			m_monster = MONSTER_END;
+			removeTick = 0;
+			m_MonsterHitox = { 0,0,0,0 };
 		}
 	}
 
@@ -78,11 +129,12 @@ int CGolemBoss::Update()
 	case CGolemBoss::SHOOTPRE:
 		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
 			m_eCurPattern = SHOOTIDLE;
+			m_Shoot = false;
 			m_preFrame = 0;
 		}
 		break;
 	case CGolemBoss::SHOOTIDLE:
-		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
+		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd && m_Shoot) {
 			m_eCurPattern = SHOOTEND;
 			m_preFrame = 0;
 		}
@@ -171,6 +223,7 @@ int CGolemBoss::Update()
 
 void CGolemBoss::Late_Update()
 {
+	OnCollision();
 	__super::Move_Frame();
 	if (!static_cast<CGolemBossScene*>(CSceneManager::GetInstance()->Get_Scene())->Get_bBossOffSet()) {
 		m_tFrame.iFrameStart = 0;
@@ -179,7 +232,7 @@ void CGolemBoss::Late_Update()
 
 void CGolemBoss::Render(HDC hDC)
 {
-	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossIdle");
+	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossWakeup");
 	switch (m_eCurPattern)
 	{
 	case CGolemBoss::WAKEUP:
@@ -217,15 +270,52 @@ void CGolemBoss::Render(HDC hDC)
 	default:
 		break;
 	}
-	
+
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+	
 	GdiTransparentBlt(hDC, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, RGB(255, 255, 255));
 
+	if (m_eCurPattern == SHOOTIDLE) {
+		HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossStickyPunch");
+		GdiTransparentBlt(hDC, (int)m_tInfo.fX - 220 + iScrollX, (int)m_tInfo.fY - 130 + iScrollY, 150, 150, hMemDC, 0, 0, 150, 150, RGB(255, 255, 255));
+		//Rect rc = { (int)m_tInfo.fX - 220 - 75 + iScrollX, (int)m_tInfo.fY - 130 - 75 + iScrollY,(int)m_tInfo.fX - 220 + 75 + iScrollX, (int)m_tInfo.fY - 130 + 75 + iScrollY };
+		//Graphics gfx(hDC);
+		//ImageAttributes imgAttr;
+		//Color magenta(255, 255, 255);
+		//imgAttr.SetColorKey(magenta, magenta);
+		//gfx.SetInterpolationMode(InterpolationModeHighQualityBicubic);
+		//Bitmap bmp(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyPunch.bmp");
+		//int centerX = m_tInfo.fX - 220 + iScrollX;
+		//int centerY = m_tInfo.fX - 130 + iScrollY;
+		//gfx.TranslateTransform(centerX, centerY);
+		//gfx.RotateTransform(m_fAngle);
+		//gfx.TranslateTransform(-centerX, -centerY);
+		//gfx.DrawImage( &bmp, rc, 0, 0, 150, 150,UnitPixel, &imgAttr);
+	}
+
+	if (m_eCurPattern == SHOOTIDLE && m_monster != MONSTER_END) {
+		Graphics graphics(hDC);
+		Image* image(nullptr);
+	
+		switch (m_monster)
+		{
+		case BABYSLIME:
+			image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/boss/babyslime.png");
+			graphics.DrawImage(image, m_hitBoxX - 50 + iScrollX, m_hitBoxY - 50 + iScrollY, 0, 0, 100, 100, UnitPixel);
+			break;
+		case SLIME_HERMIT:
+			image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/boss/golem_soldier.png");
+			graphics.DrawImage(image, m_hitBoxX - 50 + iScrollX, m_hitBoxY - 50 + iScrollY, 0, 0, 100, 100, UnitPixel);
+			break;
+		}
+		delete image;
+	}
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Hitbox(hDC, m_HitBox, iScrollX, iScrollY);
+		HitCircle(hDC, m_MonsterHitox, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
 
@@ -267,19 +357,19 @@ void CGolemBoss::Change_Frame()
 		case CGolemBoss::SHOOTPRE:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 15;
-			m_tFrame.dwSpeed = 80;
+			m_tFrame.dwSpeed = 120;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::SHOOTIDLE:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 15;
-			m_tFrame.dwSpeed = 80;
+			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::SHOOTEND:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 22;
-			m_tFrame.dwSpeed = 80;
+			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::SPAWNCIRCLE:
@@ -329,6 +419,54 @@ void CGolemBoss::SpawnRockRandom(int numRocks)
 		int x = rand() % 1400 + 500;
 		int y = rand() % 630 + 600;
 		CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBossRock>::Create(x, y));
+	}
+}
+
+void CGolemBoss::Shoot()
+{
+	int num = rand() % 2;
+	switch (num)
+	{
+	case 0:
+		m_monster = BABYSLIME;
+		break;
+	case 1:
+		m_monster = SLIME_HERMIT;
+		break;
+	default:
+		break;
+	}
+}
+
+void CGolemBoss::OnCollision()
+{
+	CObject* _obj = CObjectManager::Get_Instance()->Get_Player();
+
+	float fRadius = (_obj->Get_Info().fCX + 50) * 0.5f;
+
+	float fWidth = abs(_obj->Get_Info().fX - m_hitBoxX);
+	float fHeight = abs(_obj->Get_Info().fY - m_hitBoxY);
+
+	float fDiagonal = powf((fWidth * fWidth + fHeight * fHeight), 0.5f);
+
+	bool check = fRadius >= fDiagonal;
+
+	if (check) {
+		switch (m_monster)
+		{
+		case BABYSLIME:
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(m_hitBoxX-40, m_hitBoxY- 40));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(m_hitBoxX- 40, m_hitBoxY+ 40));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(m_hitBoxX+ 40, m_hitBoxY- 40));
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CBabySlime>::Create(m_hitBoxX+ 40, m_hitBoxY+ 40));
+			break;
+		case SLIME_HERMIT:
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CSlimeHermit>::Create(m_hitBoxX, m_hitBoxY));
+			break;
+		}
+		m_monster = MONSTER_END;
+		removeTick = 0;
+		m_MonsterHitox = { 0,0,0,0 };
 	}
 }
 
