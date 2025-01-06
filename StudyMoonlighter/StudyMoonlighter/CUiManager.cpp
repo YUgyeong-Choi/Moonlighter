@@ -114,7 +114,13 @@ void CUiManager::Render(HDC hDC)
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/HealthBar_Base.png");
 	graphics.DrawImage(image, 115, 22, 0, 0, 146, 44, UnitPixel);
 
-	int hpWidth =  (132 * CObjectManager::Get_Instance()->Get_Player()->Get_Hp()) / CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp();
+	int hpWidth = 0;
+	if (CObjectManager::Get_Instance()->Get_Player()->Get_Hp() < 0) {
+		hpWidth = (132 * 0 / CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp());
+	}
+	else {
+		hpWidth = (132 * CObjectManager::Get_Instance()->Get_Player()->Get_Hp()) / CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp();
+	}
 	COLORREF color = RGB(237, 52, 52);
 
 	HBRUSH hBrush = CreateSolidBrush(color);
