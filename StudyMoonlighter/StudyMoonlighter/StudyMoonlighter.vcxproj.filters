@@ -390,6 +390,9 @@
     <ClInclude Include="CCashRegister.h">
       <Filter>02_Object\07_Shop</Filter>
     </ClInclude>
+    <ClInclude Include="CGolemDeadObj.h">
+      <Filter>02_Object\08_DeadObj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -598,6 +601,9 @@
     </ClCompile>
     <ClCompile Include="CCashRegister.cpp">
       <Filter>02_Object\07_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolemDeadObj.cpp">
+      <Filter>02_Object\08_DeadObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

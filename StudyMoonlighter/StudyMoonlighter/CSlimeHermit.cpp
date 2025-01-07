@@ -45,6 +45,7 @@ void CSlimeHermit::Initialize()
 int CSlimeHermit::Update()
 {
     if (m_iHp <= 0) {
+        CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory< CGolemDeadObj>::Create(m_tInfo.fX, m_tInfo.fY, HERMIT));
         CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
         static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(WHETSTONE);
         return OBJ_DEAD;
