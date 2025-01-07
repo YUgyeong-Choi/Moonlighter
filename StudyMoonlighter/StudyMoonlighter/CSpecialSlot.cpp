@@ -83,7 +83,7 @@ void CSpecialSlot::Render(HDC hDC)
 		{
 		case HELMET:
 			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_helmet.png");
-			graphics.DrawImage(image, 525, 227, 0, 0, 60, 60, UnitPixel);
+			graphics.DrawImage(image, 525, 227, 0, 0, 48, 48, UnitPixel);
 			break;
 		case ARMOR:
 			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_armor.png");

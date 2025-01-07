@@ -7,6 +7,7 @@
 #include "CAbstractFactory.h"
 #include "CObjectManager.h"
 #include "CShopPlayer.h"
+#include "CUiManager.h"
 
 CMenuScene::CMenuScene():m_bIsOpen(false), m_iOpenSize(0), m_iOpenTime(0), m_iWidth(0)
 {
@@ -73,7 +74,10 @@ int CMenuScene::Update()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F1)) {
-		CSceneManager::GetInstance()->SetScene(SC_ANIM);
+		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
+		CSceneManager::GetInstance()->SetScene(SC_GOLEMDUNGEON);
+		CUiManager::GetInstance()->AddItem(BOW);
+		CUiManager::GetInstance()->AddItem(SWORD);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F3)) {
