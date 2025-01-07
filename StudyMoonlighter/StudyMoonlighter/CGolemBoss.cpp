@@ -13,7 +13,7 @@
 #include "CBabySlime.h"
 #include "CSlimeHermit.h"
 
-CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false) , m_PatternIndex(0), m_preFrame(0), m_Shoot(false), m_fAngle(0), m_monster(MONSTER_END), m_hitBoxX(0), m_hitBoxY(0), tick(0), removeTick(0), m_MonsterHitox{0,0,0,0}, count(0)
+CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false) , m_PatternIndex(0), m_preFrame(0), m_Shoot(false), m_fAngle(0), m_monster(MONSTER_END), m_hitBoxX(0), m_hitBoxY(0), tick(0), removeTick(0), m_MonsterHitox{0,0,0,0}, count(0), m_bDead(false)
 {
 }
 
@@ -30,6 +30,7 @@ void CGolemBoss::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyidle.bmp", L"GolemBossStickyIdle");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyend.bmp", L"GolemBossStickyEnd");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyPunch.bmp", L"GolemBossStickyPunch");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_death.bmp", L"GolemBossDeath");
 	m_eOBJID = OBJ_BOSS;
 
 	m_tInfo.fCX = 260.f;
@@ -48,11 +49,15 @@ void CGolemBoss::Initialize()
 	count = 10;
 
 	m_iHp = 1000;
+	m_iMaxHp = m_iHp;
 	m_iAttackDamage = 10;
 }
 
 int CGolemBoss::Update()
 {
+	if (m_iHp <= 0) {
+		m_eCurPattern = DEATH;
+	}
 	//보스 처음 화면 관련
 	if (static_cast<CGolemBossScene*>(CSceneManager::GetInstance()->Get_Scene())->Get_bBossOffSet() && !m_IsWake) {
 		m_eCurPattern = WAKEUP;
@@ -107,6 +112,10 @@ int CGolemBoss::Update()
 		}
 	}
 
+	//보스 죽으면
+	if (m_eCurPattern == DEATH && m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
+		m_bDead = true;
+	}
 	switch (m_eCurPattern)
 	{
 	case CGolemBoss::WAKEUP:
@@ -152,9 +161,12 @@ int CGolemBoss::Update()
 		if (16 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart <= 35) {
 			m_HitBox = { (int)m_tInfo.fX - 50, (int)m_tInfo.fY + 100, (int)m_tInfo.fX + 100, (int)m_tInfo.fY + 200 };
 
-			if (m_tFrame.iFrameStart == 20 && m_preFrame != 20) {
-				m_preFrame = 20;
+			if (m_tFrame.iFrameStart == 18 && m_preFrame != 18) {
+				m_preFrame = 18;
 				SpawnRockCircle(300,20);
+				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_handcrash.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+
 			}
 
 			if (m_tFrame.iFrameStart == 25 && m_preFrame != 25) {
@@ -162,7 +174,7 @@ int CGolemBoss::Update()
 				SpawnRockCircle(500, 30);
 			}
 
-			if (m_tFrame.iFrameStart == 30 && m_preFrame != 30) {
+			if (m_tFrame.iFrameStart == 32 && m_preFrame != 32) {
 				m_preFrame = 30;
 				SpawnRockCircle(700, 40);
 			}
@@ -182,6 +194,22 @@ int CGolemBoss::Update()
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemPunch>::Create(0,0));
 		}
 
+		//if (m_tFrame.iFrameStart == 22 && m_preFrame != 22) {
+		//	CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+		//	CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_avalanch.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+		//}
+
+		//if (m_tFrame.iFrameStart == 22 && m_preFrame != 22) {
+		//	m_preFrame = 22;
+		//	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemPunch>::Create(0, 0));
+		//}
+
+		//if (m_tFrame.iFrameStart == 22 && m_preFrame != 22) {
+		//	m_preFrame = 22;
+		//	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemPunch>::Create(0, 0));
+		//}
+
+
 		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
 			m_eCurPattern = IDLENOARM;
 			m_preFrame = 0;
@@ -197,8 +225,10 @@ int CGolemBoss::Update()
 		if (16 <= m_tFrame.iFrameStart && m_tFrame.iFrameStart <= 35) {
 			m_HitBox = { (int)m_tInfo.fX - 50, (int)m_tInfo.fY + 100, (int)m_tInfo.fX + 100, (int)m_tInfo.fY + 200 };
 
-			if (m_tFrame.iFrameStart == 20 && m_preFrame != 20) {
-				m_preFrame = 20;
+			if (m_tFrame.iFrameStart == 18 && m_preFrame != 18) {
+				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_handcrash.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+				m_preFrame = 18;
 				SpawnRockRandom(60);
 			}
 		}
@@ -228,7 +258,10 @@ void CGolemBoss::Late_Update()
 {
 	Hit();
 	OnCollision();
-	__super::Move_Frame();
+	if (!m_bDead) {
+		__super::Move_Frame();
+	}
+	
 	if (!static_cast<CGolemBossScene*>(CSceneManager::GetInstance()->Get_Scene())->Get_bBossOffSet()) {
 		m_tFrame.iFrameStart = 0;
 	}
@@ -268,6 +301,7 @@ void CGolemBoss::Render(HDC hDC)
 		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossRecover");
 		break;
 	case CGolemBoss::DEATH:
+		hMemDC = CBitManager::GetInstance()->FindImage(L"GolemBossDeath");
 		break;
 	case CGolemBoss::NONE:
 		break;
@@ -322,12 +356,6 @@ void CGolemBoss::Render(HDC hDC)
 		HitCircle(hDC, m_MonsterHitox, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
 	}
-
-	TCHAR szBoss[64];
-	_stprintf_s(szBoss, _T("BossHp: %d"), m_iHp);
-	SetTextColor(hDC, RGB(255, 255, 255));
-	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 700, 10, szBoss, _tcslen(szBoss));
 }
 
 void CGolemBoss::Release()
@@ -354,7 +382,7 @@ void CGolemBoss::Change_Frame()
 		{
 		case CGolemBoss::WAKEUP:
 			CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-			CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_awake.wav", MONSTER_EFFECT, 0.1f, true);
+			CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_awake.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 31;
 			m_tFrame.dwSpeed = 100;
@@ -373,6 +401,8 @@ void CGolemBoss::Change_Frame()
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::SHOOTPRE:
+			CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_slimearm_prepare.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 15;
 			m_tFrame.dwSpeed = 120;
@@ -392,12 +422,16 @@ void CGolemBoss::Change_Frame()
 			break;
 		case CGolemBoss::SPAWNCIRCLE:
 		case CGolemBoss::SPAWNRANDOM:
+			CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_handcrash_prepare.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 41;
 			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::PUNCHARM:
+			//CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+			//CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_awalanch_pre.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 23;
 			m_tFrame.dwSpeed = 100;
@@ -410,6 +444,10 @@ void CGolemBoss::Change_Frame()
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::DEATH:
+			m_tFrame.iFrameStart = 0;
+			m_tFrame.iFrameEnd = 46;
+			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::NONE:
 			break;
@@ -454,6 +492,8 @@ void CGolemBoss::Shoot()
 	default:
 		break;
 	}
+	CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+	CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_slimearm.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 }
 
 void CGolemBoss::OnCollision()
@@ -495,6 +535,8 @@ void CGolemBoss::OnCollision()
 				m_iAttackedDamage = _copyPlayer->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
+				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			}
 		}
 	}

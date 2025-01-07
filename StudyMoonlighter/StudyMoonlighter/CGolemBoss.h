@@ -39,5 +39,6 @@ private:
     int removeTick;
     RECT m_MonsterHitox;
     int count;
+    bool m_bDead;
 };
 

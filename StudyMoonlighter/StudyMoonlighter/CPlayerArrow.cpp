@@ -58,7 +58,7 @@ int CPlayerArrow::Update()
 
 void CPlayerArrow::Late_Update()
 {
-	__super::Move_Frame();
+	//__super::Move_Frame();
 }
 
 void CPlayerArrow::Render(HDC hDC)
@@ -67,16 +67,16 @@ void CPlayerArrow::Render(HDC hDC)
 	switch (m_eDir)
 	{
 	case LEFT:
-		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/arrow_left.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/ARROW_LEFT_0.png");
 		break;
 	case RIGHT:
-		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/arrow_right.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/ARROW_RIGHT_0.png");
 		break;
 	case UP:
-		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/arrow_up.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/ARROW_UP_0.png");
 		break;
 	case DOWN:
-		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/arrow_down.png");
+		image = Image::FromFile(L"../MoonlighterAssets/Weapon/Bow/ARROW_DOWN_0.png");
 		break;
 	}
 

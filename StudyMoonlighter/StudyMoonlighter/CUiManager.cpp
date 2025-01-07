@@ -23,6 +23,7 @@ void CUiManager::Initialize()
 		}
 	}
 	AddItem(RICHJELLY);
+	AddItem(RICHJELLY);
 
 	inventory[1][5] = new CSpecialSlot(HELMET);
 	inventory[2][5] = new CSpecialSlot(ARMOR);
@@ -78,9 +79,11 @@ void CUiManager::Render(HDC hDC)
 			break;
 		case SC_VILLAGE:
 		case SC_FIELD:
-		case SC_GOLEMBOSS:
 		case SC_TUTORIAL:
 			m_eCurUi = UI_WEAPON;
+			break;
+		case SC_GOLEMBOSS:
+			m_eCurUi = UI_BOSS;
 			break;
 		case SC_SHOP:
 			break;
@@ -111,6 +114,10 @@ void CUiManager::Render(HDC hDC)
 		break;
 	case UI_WEAPON:
 		Weapon_Ui(hDC);
+		break;
+	case UI_BOSS:
+		Weapon_Ui(hDC);
+		Boss_Ui(hDC);
 		break;
 	case UI_END:
 		break;
@@ -296,6 +303,36 @@ void CUiManager::Weapon_Ui(HDC hDC)
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/will_roll.png");
 	graphics.DrawImage(image, 865, 30, 0, 0, 35, 40, UnitPixel);
+	delete image;
+}
+
+void CUiManager::Boss_Ui(HDC hDC)
+{
+	Image* image(nullptr);
+	Graphics graphics(hDC);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/boss_healbar.png");
+	graphics.DrawImage(image, WINCX/2-442, 680, 0, 0, 884, 24, UnitPixel);
+
+	int hpWidth = 0;
+	if (CObjectManager::Get_Instance()->Get_Boss()->Get_Hp() < 0) {
+		hpWidth = (0 / CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp());
+	}
+	else {
+		hpWidth = (865 * CObjectManager::Get_Instance()->Get_Boss()->Get_Hp() / CObjectManager::Get_Instance()->Get_Boss()->Get_MaxHp());
+	}
+	COLORREF color = RGB(237, 52, 52);
+
+	HBRUSH hBrush = CreateSolidBrush(color);
+	HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
+	RoundRect(hDC, WINCX / 2 - 441 +10, 685, WINCX / 2 - 441 + 10 + hpWidth, 700, 20, 20);
+
+	SelectObject(hDC, hOldBrush);
+	SelectObject(hDC, hOldPen);
+	DeleteObject(hBrush);
+	DeleteObject(hPen);
 	delete image;
 }
 

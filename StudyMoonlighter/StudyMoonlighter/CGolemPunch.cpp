@@ -3,8 +3,9 @@
 #include "CObjectManager.h"
 #include "CBitManager.h"
 #include "CScrollManager.h"
+#include "CSoundManager.h"
 
-CGolemPunch::CGolemPunch():m_iSize(0), m_bCanDown(false), m_PunchY(0), m_OriginPunchY(0), m_bCanUp(false), m_iPunchTime(3)
+CGolemPunch::CGolemPunch():m_iSize(0), m_bCanDown(false), m_PunchY(0), m_OriginPunchY(0), m_bCanUp(false), m_iPunchTime(3),m_sound(false)
 {
 }
 
@@ -17,7 +18,7 @@ void CGolemPunch::Initialize()
 
     m_tFrame.iFrameStart = 0;
     m_tFrame.iFrameEnd = 8;
-    m_tFrame.dwSpeed = 300;
+    m_tFrame.dwSpeed = 280;
     m_tFrame.dwTime = GetTickCount64();
 
     m_tRenderSizeX = 10.f;
@@ -44,6 +45,7 @@ int CGolemPunch::Update()
         else {
             m_bCanUp = false;
             m_bCanDown = false;
+            m_sound = false;
             m_tRenderSizeX = 10.f;
             m_tRenderSizeY = 10.f;
             m_iPunchTime--;
@@ -54,6 +56,15 @@ int CGolemPunch::Update()
         if (m_iSize < 400) {
             m_PunchY = (int)m_OriginPunchY + m_iSize;
             m_iSize += 20;
+
+            if (m_iPunchTime != 0 ) {
+                if (!m_sound) {
+                    CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+                    CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_wave.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+                    m_sound = true;
+                }
+            }
+
         }
     }
 

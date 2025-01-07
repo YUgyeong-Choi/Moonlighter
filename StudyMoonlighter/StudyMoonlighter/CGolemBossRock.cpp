@@ -5,6 +5,7 @@
 #include "CObjectManager.h"
 #include "CAbstractFactory.h"
 #include "CGolemBossRockDead.h"
+#include "CSoundManager.h"
 
 CGolemBossRock::CGolemBossRock():m_iRockY(0), m_bArrive(false), m_bIsDead(false), m_iRandom(0)
 {

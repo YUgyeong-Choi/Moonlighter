@@ -19,8 +19,8 @@ void CGolemBossScene::Initialize()
 {
 	CUiManager::GetInstance()->AddItem(SWORD);
 	CUiManager::GetInstance()->AddItem(BOW);
-	CSoundManager::Get_Instance()->StopSound(SOUND_BGM);
-	CSoundManager::Get_Instance()->PlaySound(L"golem_boss_track.wav", SOUND_BGM, g_fBackgroundVolume, true);
+	CSoundManager::Get_Instance()->StopAll();
+	CSoundManager::Get_Instance()->PlayBGM(L"golem_boss_track.wav", g_fBackgroundVolume, true);
 
 	m_fMapXSize = 2312.f;
 	m_fMapYSize = 1566.f;

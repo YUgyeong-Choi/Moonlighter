@@ -42,6 +42,7 @@ private:
 	void Inven_Ui(HDC hDC);
 	void Shop_Ui(HDC hDC);
 	void Weapon_Ui(HDC hDC);
+	void Boss_Ui(HDC hDC);
 	bool FindItem(ITEMTYPE _item);
 private:
 	static CUiManager* m_pInstance;

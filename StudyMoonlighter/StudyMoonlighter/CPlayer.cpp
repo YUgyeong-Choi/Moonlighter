@@ -404,7 +404,7 @@ void CPlayer::Render(HDC hDC)
 				m_tRenderSizeX,
 				m_tRenderSizeY),
 			(int)m_tRenderSizeX* m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
-	
+		
 	}
 
 	if (m_bUsePendant && !m_NoRenderPlayer) {

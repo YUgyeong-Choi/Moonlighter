@@ -29,6 +29,7 @@ public:
 	CObject* Get_LastItem() { return m_ObjList[OBJ_ITEM].back(); }
 	CObject* Get_LastNPC() { return m_ObjList[OBJ_NPC].back(); }
 	CObject* Get_Player() { return m_ObjList[OBJ_PLAYER].back(); }
+	CObject* Get_Boss() { return m_ObjList[OBJ_BOSS].back(); }
 	CObject* Get_FrontPlayer() { return m_ObjList[OBJ_PLAYER].front(); }
 	list<CObject*> Get_MapObjList(){ return m_ObjList[OBJ_MAPOBJ]; }
 	list<CObject*> Get_PortalList(){ return m_ObjList[OBJ_PORTAL]; }
