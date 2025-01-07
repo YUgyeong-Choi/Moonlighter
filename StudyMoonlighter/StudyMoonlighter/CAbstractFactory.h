@@ -1,6 +1,7 @@
 #pragma once
 #include "CObject.h"
 #include "CGolemDeadObj.h"
+#include "CMonsterDead.h"
 
 template<typename T>
 class CAbstractFactory
@@ -49,6 +50,15 @@ public:
 		pObj->Set_Pos(_fX, _fY);
 		pObj->Initialize();
 		static_cast<CGolemDeadObj*>(pObj)->Set_DeadType(_type);
+		return pObj;
+	}
+
+	static CObject* Create(float _fX, float _fY, ITEMTYPE _type)
+	{
+		CObject* pObj = new T;
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+		static_cast<CMonsterDead*>(pObj)->Set_ItemType(_type);
 		return pObj;
 	}
 };

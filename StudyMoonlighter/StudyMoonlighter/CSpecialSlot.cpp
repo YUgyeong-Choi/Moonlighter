@@ -78,6 +78,41 @@ void CSpecialSlot::Render(HDC hDC)
 			break;
 		}
 	}
+	else {
+		switch (m_OutfitType)
+		{
+		case HELMET:
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_helmet.png");
+			graphics.DrawImage(image, 525, 227, 0, 0, 60, 60, UnitPixel);
+			break;
+		case ARMOR:
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_armor.png");
+			graphics.DrawImage(image, 525, 286, 0, 0, 48, 48, UnitPixel);
+			break;
+		case BOOTS:
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_boots.png");
+			graphics.DrawImage(image, 525, 343, 0, 0, 48, 48, UnitPixel);
+			break;
+		case WEAPON1:
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_sword.png");
+			graphics.DrawImage(image, 593, 155, 0, 0, 48, 48, UnitPixel);
+			break;
+		case WEAPON2:
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_sword.png");
+			graphics.DrawImage(image, 732, 155, 0, 0, 48, 48, UnitPixel);
+			break;
+		case OUTFIT_POTION:
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Character_potion.png");
+			graphics.DrawImage(image, 582, 286, 0, 0, 48, 48, UnitPixel);
+			break;
+		case OUTFIT_ITEM:
+			break;
+		case OUTFIT_END:
+			break;
+		default:
+			break;
+		}
+	}
 
 	delete image;
 }

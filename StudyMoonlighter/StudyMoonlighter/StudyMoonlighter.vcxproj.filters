@@ -396,6 +396,9 @@
     <ClInclude Include="CGolemBreakable2.h">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
     </ClInclude>
+    <ClInclude Include="CMonsterDead.h">
+      <Filter>02_Object\08_DeadObj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -610,6 +613,9 @@
     </ClCompile>
     <ClCompile Include="CGolemBreakable2.cpp">
       <Filter>02_Object\99.MapObj\Dungeon1</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterDead.cpp">
+      <Filter>02_Object\08_DeadObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

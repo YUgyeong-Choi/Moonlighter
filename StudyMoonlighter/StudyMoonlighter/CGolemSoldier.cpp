@@ -6,8 +6,8 @@
 #include "CCollisionManager.h"
 #include "CSoundManager.h"
 #include "CCollisionManager.h"
-#include "CItem.h"
 #include "CAbstractFactory.h"
+#include "CMonsterDead.h"
 
 CGolemSoldier::CGolemSoldier()
 {
@@ -42,11 +42,8 @@ void CGolemSoldier::Initialize()
 int CGolemSoldier::Update()
 {
     if (m_iHp <= 0) {
+        CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX, m_tInfo.fY, BROKENSWORD));
         CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory< CGolemDeadObj>::Create(m_tInfo.fX, m_tInfo.fY, SOLDIER));
-        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
-        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(BROKENSWORD);
-        CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-        CSoundManager::Get_Instance()->PlaySound(L"enemy_death.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
         return OBJ_DEAD;
     }
     if (m_IsAttack) {

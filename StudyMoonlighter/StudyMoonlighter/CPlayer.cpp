@@ -55,7 +55,7 @@ void CPlayer::Initialize()
 	m_iHp = 100;
 	m_iMaxHp = m_iHp;
 	m_iAttackDamage = 25;
-	m_iHeal = 20;
+	m_iHeal = 30;
 }
 
 int CPlayer::Update()
@@ -418,16 +418,16 @@ void CPlayer::Render(HDC hDC)
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Attackbox(hDC, m_HitBox, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
-	}
 
-	TCHAR szPlayer[64];
-	_stprintf_s(szPlayer, _T("Player: X=%d, Y=%d, Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
-	TCHAR szScroll[64];
-	_stprintf_s(szScroll, _T("Scroll: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
-	SetTextColor(hDC, RGB(255, 255, 255));
-	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 300, 10, szPlayer, _tcslen(szPlayer));
-	TextOut(hDC, 300, 25, szScroll, _tcslen(szScroll));
+		TCHAR szPlayer[64];
+		_stprintf_s(szPlayer, _T("Player: X=%d, Y=%d, Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
+		TCHAR szScroll[64];
+		_stprintf_s(szScroll, _T("Scroll: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
+		SetTextColor(hDC, RGB(255, 255, 255));
+		SetBkMode(hDC, TRANSPARENT);
+		TextOut(hDC, 300, 10, szPlayer, _tcslen(szPlayer));
+		TextOut(hDC, 300, 25, szScroll, _tcslen(szScroll));
+	}
 
 	delete image;
 }

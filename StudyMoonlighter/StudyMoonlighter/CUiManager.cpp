@@ -263,7 +263,7 @@ void CUiManager::Weapon_Ui(HDC hDC)
 	Image* image(nullptr);
 	Graphics graphics(hDC);
 	bool check = static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Get_FirstWeapon();
-	image = Image::FromFile(L"../MoonlighterAssets/Ui/Weapon_circle.png");
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
 	graphics.DrawImage(image, 945, 50, 0, 0, 70, 70, UnitPixel);
 	if (check) {
 		if (Get_Wepon1()->Get_Item().itemId == SWORD) {
@@ -301,6 +301,16 @@ void CUiManager::Weapon_Ui(HDC hDC)
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/will_roll.png");
 	graphics.DrawImage(image, 865, 30, 0, 0, 35, 40, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
+	graphics.DrawImage(image, 945, 150, 0, 0, 70, 70, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Bag.png");
+	graphics.DrawImage(image, 958, 158, 0, 0, 46, 52, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Button_I.png");
+	graphics.DrawImage(image, 925, 195, 0, 0, 64, 64, UnitPixel);
+
 	delete image;
 }
 

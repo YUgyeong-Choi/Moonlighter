@@ -5,8 +5,8 @@
 #include "CBitManager.h"
 #include "CCollisionManager.h"
 #include "CSoundManager.h"
-#include "CItem.h"
 #include "CAbstractFactory.h"
+#include "CMonsterDead.h"
 
 CGolemHead::CGolemHead():m_AttackCount(0), m_IsAttack(false), m_fAngle(0)
 {
@@ -43,10 +43,7 @@ void CGolemHead::Initialize()
 int CGolemHead::Update()
 {
     if (m_iHp <= 0) {
-        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
-        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(TEETHSTONE);
-        CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-        CSoundManager::Get_Instance()->PlaySound(L"enemy_death.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+        CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX, m_tInfo.fY, TEETHSTONE));
         return OBJ_DEAD;
     }
     if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd && !m_IsAttack) {

@@ -46,7 +46,7 @@ void CGolemDungeon::Initialize()
 			}
 		}
 	}
-
+	CUiManager::GetInstance()->Set_UiType(UI_END);
 	m_TutorialDungeon[m_iTutorialIndeX][m_iTutorialIndeY]->Load_Map();
 	Create_MapObj();
 }
