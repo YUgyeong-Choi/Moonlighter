@@ -17,6 +17,7 @@
 #include "CGolemHead.h"
 #include "CGolemSoldier.h"
 #include "CSlimeHermit.h"
+#include "CGolemBreakable2.h"
 
 CFileManager* CFileManager::m_pInstance = nullptr;
 
@@ -154,6 +155,9 @@ void CFileManager::Load_MapObjFile(const TCHAR* _pFilePath, int _x, int _y)
 		}
 		else if (_MapObj.Get_MapObjType() == DUNGEON_SCROLL) {
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create((1024 * _y) + _MapObj.Get_Info().fX, (720 * _x) + _MapObj.Get_Info().fY));
+		}
+		else if (_MapObj.Get_MapObjType() == GOLEM_BROKEN2) {
+			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBreakable2>::Create((1024 * _y) + _MapObj.Get_Info().fX, (720 * _x) + _MapObj.Get_Info().fY));
 		}
 	}
 

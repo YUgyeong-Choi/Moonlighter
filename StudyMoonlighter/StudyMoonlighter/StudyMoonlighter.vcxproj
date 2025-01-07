@@ -140,6 +140,7 @@
     <ClInclude Include="CAnimationScene.h" />
     <ClInclude Include="CCashRegister.h" />
     <ClInclude Include="CGolemBossRockDead.h" />
+    <ClInclude Include="CGolemBreakable2.h" />
     <ClInclude Include="CGolemDeadObj.h" />
     <ClInclude Include="CInventoryShop.h" />
     <ClInclude Include="CPlayerArrow.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="CAnimationScene.cpp" />
     <ClCompile Include="CCashRegister.cpp" />
     <ClCompile Include="CGolemBossRockDead.cpp" />
+    <ClCompile Include="CGolemBreakable2.cpp" />
     <ClCompile Include="CGolemDeadObj.cpp" />
     <ClCompile Include="CInventoryShop.cpp" />
     <ClCompile Include="CPlayerArrow.cpp" />

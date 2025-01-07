@@ -343,7 +343,7 @@ void CGolemBoss::Render(HDC hDC)
 			graphics.DrawImage(image, m_hitBoxX - 50 + iScrollX, m_hitBoxY - 50 + iScrollY, 0, 0, 100, 100, UnitPixel);
 			break;
 		case SLIME_HERMIT:
-			image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/boss/golem_soldier.png");
+			image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/boss/slimehermit.png");
 			graphics.DrawImage(image, m_hitBoxX - 50 + iScrollX, m_hitBoxY - 50 + iScrollY, 0, 0, 100, 100, UnitPixel);
 			break;
 		}

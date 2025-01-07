@@ -2,8 +2,12 @@
 #include "CGolemBreakable.h"
 #include "CScrollManager.h"
 #include "CSoundManager.h"
+#include "CUiManager.h"
+#include "CObjectManager.h"
+#include "CAbstractFactory.h"
+#include "CItem.h"
 
-CGolemBreakable::CGolemBreakable():type(0), m_bIsBreak(true)
+CGolemBreakable::CGolemBreakable():type(0), m_bIsBreak(true), m_bAddItem(false)
 {
 }
 
@@ -81,5 +85,14 @@ void CGolemBreakable::OnCollision(CObject* _obj)
 		m_bIsBreak = false;
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 		CSoundManager::Get_Instance()->PlaySound(L"breakable_break.wav", SOUND_EFFECT, g_fEffectVolume, true);
+		if (!m_bAddItem) {
+			m_bAddItem = true;
+			int random = rand() % 2;
+			if (random) {
+				CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
+				static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(POTION);
+			}
+		}
+
 	}
 }

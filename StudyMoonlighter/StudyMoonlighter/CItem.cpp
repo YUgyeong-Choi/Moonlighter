@@ -78,7 +78,6 @@ void CItem::Set_ItemType(ITEMTYPE _type)
 		pImageUrl = L"../MoonlighterAssets/Items/0_BrokenSword.png";
 		break;
 	case FABRIC:
-
 		break;
 	case HARDENEDSTEEL:
 		pImageUrl = L"../MoonlighterAssets/Items/2_HardenedSteel.png";
@@ -97,6 +96,9 @@ void CItem::Set_ItemType(ITEMTYPE _type)
 		break;
 	case WHETSTONE:
 		pImageUrl = L"../MoonlighterAssets/Items/7_Whetstone.png";
+		break;
+	case POTION:
+		pImageUrl = L"../MoonlighterAssets/Items/potion.png";
 		break;
 	case ITEM_END:
 		break;

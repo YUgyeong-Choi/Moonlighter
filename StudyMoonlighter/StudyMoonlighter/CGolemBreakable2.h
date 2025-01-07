@@ -1,10 +1,10 @@
 #pragma once
 #include "CMapObj.h"
-class CGolemBreakable :public CMapObj
+class CGolemBreakable2 :public CMapObj
 {
 public:
-	CGolemBreakable();
-	virtual ~CGolemBreakable() { Release(); }
+	CGolemBreakable2();
+	virtual ~CGolemBreakable2() { Release(); }
 public:
 	void Initialize() override;
 	int Update() override;
@@ -12,11 +12,11 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 	void OnCollision(CObject* _obj);
+	void OnCollision();
 
 	bool Get_Breakable() { return m_bIsBreak; }
 private:
 	int type;
 	bool m_bIsBreak;
-	bool m_bAddItem;
 };
 

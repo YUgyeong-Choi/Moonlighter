@@ -2,6 +2,7 @@
 #include "CCollisionManager.h"
 #include "CPlayer.h"
 #include "CGolemBreakable.h"
+#include "CGolemBreakable2.h"
 #include "CGolemPunch.h"
 
 void CCollisionManager::CollisionRect(list<CObject*> _Dst, list<CObject*> _Src)
@@ -143,6 +144,11 @@ void CCollisionManager::CollisionRectExMapObj(list<CObject*> _Dst, list<CObject*
                     Dst->OnCollision(Src);
                 }
 
+                if (dynamic_cast<CGolemBreakable2*>(Src)) {
+                    if (!dynamic_cast<CGolemBreakable2*>(Src)->Get_Breakable()) {
+                        return;
+                    }
+                }
 
                 if (fX > fY)
                 {
