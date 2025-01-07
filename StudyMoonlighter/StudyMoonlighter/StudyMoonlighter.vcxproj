@@ -145,6 +145,7 @@
     <ClInclude Include="CInventoryShop.h" />
     <ClInclude Include="CMonsterDead.h" />
     <ClInclude Include="CPlayerArrow.h" />
+    <ClInclude Include="CPotionShop.h" />
     <ClInclude Include="CPriceSlot.h" />
     <ClInclude Include="CSellSlot.h" />
     <ClInclude Include="CShopPlayer.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="CVisitorMerchantfemale.h" />
     <ClInclude Include="CVisitorMerchantmale.h" />
     <ClInclude Include="CVisitorOldfemale.h" />
+    <ClInclude Include="CPotionNpc.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -223,6 +225,7 @@
     <ClCompile Include="CInventoryShop.cpp" />
     <ClCompile Include="CMonsterDead.cpp" />
     <ClCompile Include="CPlayerArrow.cpp" />
+    <ClCompile Include="CPotionShop.cpp" />
     <ClCompile Include="CPriceSlot.cpp" />
     <ClCompile Include="CSellSlot.cpp" />
     <ClCompile Include="CShopPlayer.cpp" />
@@ -284,6 +287,7 @@
     <ClCompile Include="CVisitorMerchantfemale.cpp" />
     <ClCompile Include="CVisitorMerchantmale.cpp" />
     <ClCompile Include="CVisitorOldfemale.cpp" />
+    <ClCompile Include="CPotionNpc.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

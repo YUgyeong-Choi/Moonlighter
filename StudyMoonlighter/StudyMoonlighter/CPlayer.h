@@ -18,6 +18,7 @@ public:
 	bool Get_IsRolling() { return m_bIsRoll; }
 	bool Get_CanHit() { return !m_bIsRoll && m_bCanHit; }
 	int Get_Money() { return m_iMoney; }
+	void Set_Money(int num) { m_iMoney -= num; }
 	void Set_State(int hp, int money, int maxHp);
 	void Set_Inven() { m_bInvenOpen = !m_bInvenOpen; }
 	bool Get_Inven() { return m_bInvenOpen; }

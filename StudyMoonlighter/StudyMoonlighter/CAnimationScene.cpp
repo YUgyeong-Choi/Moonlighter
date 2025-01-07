@@ -34,6 +34,7 @@ void CAnimationScene::Initialize()
 	Create_MapObj();
 	m_pGrandpa = CAbstractFactory<CVisitorMale>::Create(1200, 1200);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
+	CUiManager::GetInstance()->Set_UiType(UI_END);
 }
 
 int CAnimationScene::Update()

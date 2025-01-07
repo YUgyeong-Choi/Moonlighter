@@ -56,6 +56,7 @@ void CPlayer::Initialize()
 	m_iMaxHp = m_iHp;
 	m_iAttackDamage = 25;
 	m_iHeal = 30;
+	m_iMoney = 1000;
 }
 
 int CPlayer::Update()

@@ -41,7 +41,7 @@ void CDungeonEditScene::Initialize()
 	m_fMapYSize = 720.f;
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(150, WINCY / 2));
 	CUiManager::GetInstance()->AddItem(SWORD);
-	CUiManager::GetInstance()->Set_UiType(UI_DUNGEON);
+	CUiManager::GetInstance()->Set_UiType(UI_END);
 	Create_MapObj();
 }
 

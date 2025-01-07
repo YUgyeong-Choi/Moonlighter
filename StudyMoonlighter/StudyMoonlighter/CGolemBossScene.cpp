@@ -38,7 +38,7 @@ void CGolemBossScene::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_punch_up.bmp", L"GolemBossPunchUp");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/background_boss.bmp", L"GolemBossField");
 
-
+	CUiManager::GetInstance()->Set_UiType(UI_END);
 	Create_MapObj();
 }
 
@@ -92,9 +92,7 @@ void CGolemBossScene::Render(HDC hDC)
 
 void CGolemBossScene::Release()
 {
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_MONSTER);
+	CObjectManager::Get_Instance()->Delete_ALLNotPlayer();
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 

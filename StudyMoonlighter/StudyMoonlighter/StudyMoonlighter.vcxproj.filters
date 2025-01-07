@@ -157,14 +157,14 @@
     <Filter Include="02_Object\05_Inventory\Slot">
       <UniqueIdentifier>{c8cc07c6-efac-4843-bd0b-19a77b9629f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02_Object\04_Visitor\anim">
-      <UniqueIdentifier>{23e0b044-1d20-4ffb-aeb5-1d8f6ee34ea8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Object\04_Visitor\visitors">
       <UniqueIdentifier>{c312a7a3-1f47-4419-8de6-5454c0c5166d}</UniqueIdentifier>
     </Filter>
     <Filter Include="02_Object\08_DeadObj">
       <UniqueIdentifier>{c74956ae-cc90-4c82-80a7-918f64f49ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Object\09_Npc">
+      <UniqueIdentifier>{deffa685-2830-4162-85cf-dbe3a95ec595}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -363,9 +363,6 @@
     <ClInclude Include="CShopSign.h">
       <Filter>02_Object\07_Shop</Filter>
     </ClInclude>
-    <ClInclude Include="CVisitorMale.h">
-      <Filter>02_Object\04_Visitor\anim</Filter>
-    </ClInclude>
     <ClInclude Include="CVisitorIrish.h">
       <Filter>02_Object\04_Visitor\visitors</Filter>
     </ClInclude>
@@ -398,6 +395,15 @@
     </ClInclude>
     <ClInclude Include="CMonsterDead.h">
       <Filter>02_Object\08_DeadObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisitorMale.h">
+      <Filter>02_Object\09_Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="CPotionNpc.h">
+      <Filter>02_Object\09_Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="CPotionShop.h">
+      <Filter>02_Object\05_Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -584,9 +590,6 @@
     <ClCompile Include="CShopSign.cpp">
       <Filter>02_Object\07_Shop</Filter>
     </ClCompile>
-    <ClCompile Include="CVisitorMale.cpp">
-      <Filter>02_Object\04_Visitor\anim</Filter>
-    </ClCompile>
     <ClCompile Include="CVisitorIrish.cpp">
       <Filter>02_Object\04_Visitor\visitors</Filter>
     </ClCompile>
@@ -616,6 +619,15 @@
     </ClCompile>
     <ClCompile Include="CMonsterDead.cpp">
       <Filter>02_Object\08_DeadObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisitorMale.cpp">
+      <Filter>02_Object\09_Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="CPotionNpc.cpp">
+      <Filter>02_Object\09_Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="CPotionShop.cpp">
+      <Filter>02_Object\05_Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

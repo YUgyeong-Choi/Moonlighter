@@ -21,7 +21,7 @@ void CFieldScene::Initialize()
 	m_fMapYSize = 2048.f;
 	CScrollManager::Get_Instance()->Set_Scroll(-613, -960);
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
-	
+	CUiManager::GetInstance()->Set_UiType(UI_END);
 	Create_MapObj();
 }
 
@@ -52,7 +52,7 @@ void CFieldScene::Render(HDC hDC)
 
 void CFieldScene::Release()
 {
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+	CObjectManager::Get_Instance()->Delete_ALLNotPlayer();
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 

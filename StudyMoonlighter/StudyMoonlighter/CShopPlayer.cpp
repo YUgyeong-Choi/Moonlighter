@@ -13,6 +13,7 @@ CShopPlayer::CShopPlayer():m_iMoney(0), m_eCurState(STATE_END), m_ePreState(STAT
 
 void CShopPlayer::Initialize()
 {
+	
     m_eOBJID = OBJ_PLAYER;
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 45.f;

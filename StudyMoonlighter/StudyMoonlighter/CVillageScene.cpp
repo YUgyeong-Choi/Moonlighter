@@ -12,6 +12,8 @@
 #include "CPortal.h"
 #include "CSoundManager.h"
 #include "CUiManager.h"
+#include "CPotionNpc.h"
+
 CVillageScene::CVillageScene()
 {
 }
@@ -55,6 +57,7 @@ void CVillageScene::LateUpdate()
 {
 	Offset();
 	CObjectManager::Get_Instance()->Late_Update();
+	CUiManager::GetInstance()->Late_Update();
 	CScrollManager::Get_Instance()->Scroll_Lock();
 }
 
@@ -70,8 +73,7 @@ void CVillageScene::Render(HDC hDC)
 
 void CVillageScene::Release()
 {
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_MAPOBJ);
-	CObjectManager::Get_Instance()->Delete_ID(OBJ_PORTAL);
+	CObjectManager::Get_Instance()->Delete_ALLNotPlayer();
 	CObjectManager::Get_Instance()->RenderListClear();
 }
 
@@ -101,6 +103,8 @@ void CVillageScene::Create_MapObj()
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(FIELD);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(2600, 680, 100, 120));
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(FIELD);
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory<CPotionNpc>::Create(2020, 570, 100, 120));
 }
 
 void CVillageScene::Offset()

@@ -55,6 +55,7 @@ void CShopScene::Initialize()
 		m_showcasePrice[i] = 0;
 		m_CanNpcSpawn[i] = false;
 	}
+	CUiManager::GetInstance()->Set_UiType(UI_END);
 }
 
 int CShopScene::Update()

@@ -38,6 +38,9 @@ void CUiManager::Initialize()
 	m_InvenShop->Copy_Inven(inventory);
 	m_bGetMoney = false;
 
+	m_potionShop = new CPotionShop();
+	m_potionShop->Initialize();
+
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 4;
 	m_tFrame.dwSpeed = 120;
@@ -48,6 +51,7 @@ void CUiManager::Update()
 {
 	m_Inven->Update();
 	m_InvenShop->Update();
+	m_potionShop->Update();
 
 	if (m_bGetMoney) {
 		if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
@@ -61,6 +65,11 @@ void CUiManager::Update()
 			m_tFrame.dwTime = GetTickCount64();
 		}
 	}
+}
+
+void CUiManager::Late_Update()
+{
+	m_potionShop->Late_Update();
 }
 
 void CUiManager::Render(HDC hDC)
@@ -84,6 +93,7 @@ void CUiManager::Render(HDC hDC)
 			m_eCurUi = UI_BOSS;
 			break;
 		case SC_SHOP:
+			m_eCurUi = UI_SHOPBASIC;
 			break;
 		case SC_ANIM:
 			break;
@@ -94,35 +104,59 @@ void CUiManager::Render(HDC hDC)
 		}
 	}
 
-	Image* image(nullptr);
-	Graphics graphics(hDC);
 	switch (m_eCurUi)
 	{
 	case UI_DUNGEON:
+		Basic_Ui(hDC);
 		Weapon_Ui(hDC);
 		Dungeon_Ui(hDC);
 		break;
 	case UI_INVEN:
+		Basic_Ui(hDC);
 		Inven_Ui(hDC);
 		break;
-	case UI_INVENCHEST:
+	case UI_SHOPBASIC:
+		Basic_Ui(hDC);
 		break;
 	case UI_INVENSHOP:
+		Basic_Ui(hDC);
 		Shop_Ui(hDC);
 		break;
 	case UI_WEAPON:
+		Basic_Ui(hDC);
 		Weapon_Ui(hDC);
 		break;
 	case UI_BOSS:
+		Basic_Ui(hDC);
 		Weapon_Ui(hDC);
 		Boss_Ui(hDC);
+		break;
+	case UI_POTIONSHOP:
+		PotionShop_Ui(hDC);
 		break;
 	case UI_END:
 		break;
 	default:
 		break;
 	}
+}
 
+void CUiManager::Release()
+{
+	for (int i = 0; i < 4; ++i) {
+		for (int j = 0; j < 7; ++j) {
+			Safe_Delete<CInvenSlot*>(inventory[i][j]);
+		}
+	}
+	Safe_Delete<CInventory*>(m_Inven);
+	Safe_Delete<CInventoryShop*>(m_InvenShop);
+	Safe_Delete<CPotionShop*>(m_potionShop);
+}
+
+void CUiManager::Basic_Ui(HDC hDC)
+{
+	Image* image(nullptr);
+	Graphics graphics(hDC);
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
 	graphics.DrawImage(image, 5, 20, 0, 0, 70, 70, UnitPixel);
 
@@ -149,10 +183,10 @@ void CUiManager::Render(HDC hDC)
 	COLORREF color = RGB(237, 52, 52);
 
 	HBRUSH hBrush = CreateSolidBrush(color);
-	HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0)); 
+	HPEN hPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
 	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
-	RoundRect(hDC, 128, 32, 128+ hpWidth, 57, 10, 10);
+	RoundRect(hDC, 128, 32, 128 + hpWidth, 57, 10, 10);
 
 	SelectObject(hDC, hOldBrush);
 	SelectObject(hDC, hOldPen);
@@ -173,7 +207,7 @@ void CUiManager::Render(HDC hDC)
 	TCHAR szHpBar[64];
 	_stprintf_s(szHpBar, _T("%d/%d"), CObjectManager::Get_Instance()->Get_Player()->Get_Hp(), CObjectManager::Get_Instance()->Get_Player()->Get_MaxHp());
 
-	RECT rect = { 160, 50, 260, 70 }; 
+	RECT rect = { 160, 50, 260, 70 };
 	DrawText(hDC, szHpBar, _tcslen(szHpBar), &rect, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
 
 	//Money
@@ -197,22 +231,11 @@ void CUiManager::Render(HDC hDC)
 
 	if (m_bGetMoney) {
 		image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_Falling.png");
-		graphics.DrawImage(image, 25, -5 + m_tFrame.iFrameStart*7, 0, m_tFrame.iFrameStart*32, 32, 32, UnitPixel);
+		graphics.DrawImage(image, 25, -5 + m_tFrame.iFrameStart * 7, 0, m_tFrame.iFrameStart * 32, 32, 32, UnitPixel);
 	}
 
 
 	delete image;
-}
-
-void CUiManager::Release()
-{
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 7; ++j) {
-			Safe_Delete<CInvenSlot*>(inventory[i][j]);
-		}
-	}
-	Safe_Delete<CInventory*>(m_Inven);
-	Safe_Delete<CInventoryShop*>(m_InvenShop);
 }
 
 void CUiManager::Dungeon_Ui(HDC hDC)
@@ -342,6 +365,94 @@ void CUiManager::Boss_Ui(HDC hDC)
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
 	delete image;
+}
+
+void CUiManager::PotionShop_Ui(HDC hDC)
+{
+	Image* image(nullptr);
+	Graphics graphics(hDC);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Back/Back.png");
+	ImageAttributes imgAttr;
+	ColorMatrix cm = {
+	1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 240 / 255.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+	};
+
+	imgAttr.SetColorMatrix(&cm);
+	graphics.DrawImage(image, Gdiplus::Rect(0, 0, 1024, 720), 0, 0, 1024, 720, UnitPixel, &imgAttr);
+
+
+	//왼쪽 위
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
+	graphics.DrawImage(image, 5, 20, 0, 0, 70, 70, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold1.png");
+	graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
+
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+
+	HFONT hFont1 = CreateFont(
+		25, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+	);
+
+	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
+
+	TCHAR szMoney[64];
+	if (CPlayer* _player = dynamic_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
+		RECT rect2 = { 20, 100, 70, 120 };
+		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+	}
+	else if (CShopPlayer* _player = dynamic_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
+		RECT rect2 = { 20, 100, 70, 120 };
+		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+	}
+
+	SelectObject(hDC, OldFont);
+	DeleteObject(hFont1);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Coin.png");
+	graphics.DrawImage(image, 10, 105, 0, 0, 18, 18, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/PotionNpc/Witch_Figure_Potions.png");
+	graphics.DrawImage(image, 50, 250, 0, 0, 300, 412, UnitPixel);
+
+	image = Image::FromFile(L"../MoonlighterAssets/PotionNpc/Items_Base.png");
+	graphics.DrawImage(image, 350, 100, 0, 0, 450, 227, UnitPixel);
+
+	SetTextColor(hDC, RGB(0, 0, 0));
+	SetBkMode(hDC, TRANSPARENT);
+
+	HFONT hFont2 = CreateFont(
+		25, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+	);
+
+	HFONT OldFont2 = (HFONT)SelectObject(hDC, hFont2);
+
+	TCHAR szTitle[64];
+	_stprintf_s(szTitle, _T("물약 목록: "));
+	RECT rect2 = { 380, 120, 480, 140 };
+	DrawText(hDC, szTitle, _tcslen(szTitle), &rect2, DT_LEFT | DT_SINGLELINE | DT_VCENTER);
+
+	SelectObject(hDC, OldFont2);
+	DeleteObject(hFont2);
+
+	image = Image::FromFile(L"../MoonlighterAssets/PotionNpc/Witch_Jar.png");
+	graphics.DrawImage(image, 420, 350, 0, 0, 300, 326, UnitPixel);
+
+	delete image;
+
+	m_potionShop->Render(hDC);
 }
 
 
