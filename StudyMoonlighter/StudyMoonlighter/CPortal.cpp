@@ -66,12 +66,11 @@ void CPortal::Render(HDC hDC)
 			break;
 		case SHOP:
 		case DUNGEON:
+		case GOLEMBOSS:
 			_stprintf_s(szEnter, _T("들어가기"));
 			TextOut(hDC, (int)m_tInfo.fX + iScrollX + 80, (int)m_tInfo.fY - 55 + iScrollY, szEnter, _tcslen(szEnter));
 			break;
 		case FIELD:
-			break;
-		case GOLEMBOSS:
 			break;
 		case PORTAL_END:
 			break;
@@ -125,10 +124,10 @@ void CPortal::OnCollision(CObject* _obj)
 			CSceneManager::GetInstance()->SetScene(SC_FIELD);
 			break;
 		case GOLEMBOSS:
-			m_bEnter = true;
-			if (m_bEnter) {
+			if (m_bEnter && alpha == 255) {
 				CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
 			}
+			m_bCollision = true;
 			break;
 		case SHOP:
 			if (m_bEnter && alpha==255) {
@@ -156,6 +155,13 @@ void CPortal::KeyInput()
 		if (m_ePortalType == SHOP) {
 			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 			CSoundManager::Get_Instance()->PlaySound(L"shop_door_opening.wav", SOUND_EFFECT, g_fEffectVolume, false);
+		}
+	}
+
+	if (m_ePortalType == GOLEMBOSS) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_BOSS, 'J') && m_bCollision) {
+			m_bEnter = true;
+			m_eRender = RENDER_UI;
 		}
 	}
 }

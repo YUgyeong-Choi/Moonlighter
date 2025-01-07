@@ -22,8 +22,6 @@ void CUiManager::Initialize()
 			inventory[i][j] = new CInvenSlot(i, j);
 		}
 	}
-	AddItem(RICHJELLY);
-	AddItem(RICHJELLY);
 
 	inventory[1][5] = new CSpecialSlot(HELMET);
 	inventory[2][5] = new CSpecialSlot(ARMOR);

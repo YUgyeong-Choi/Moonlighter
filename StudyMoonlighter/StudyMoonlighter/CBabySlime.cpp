@@ -34,10 +34,16 @@ void CBabySlime::Initialize()
 	m_iAttackDamage = 12;
 	m_iMaxHp = m_iHp;
 	m_fSpeed = 1.f;
+	InitHitFrame();
 }
 
 int CBabySlime::Update()
 {
+	if (m_bHit) {
+		if (m_HitFrame.iFrameStart == m_HitFrame.iFrameEnd) {
+			m_bHit = false;
+		}
+	}
 	if (m_iHp <= 0) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
 		static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(RICHJELLY);
@@ -76,6 +82,9 @@ void CBabySlime::Late_Update()
 {
 	OnCollision();
 	Hit();
+	if (m_bHit) {
+		Move_Frame_Hit();
+	}
 	__super::Move_Frame();
 }
 
@@ -92,37 +101,8 @@ void CBabySlime::Render(HDC hDC)
 
 
 	if (!m_bCanHit) {
-		ImageAttributes imgAttrs;
-		ColorMatrix colorMatrix;
-		if (m_iAttackedDamage % 2 == 0) {
-			colorMatrix = {
-				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
-				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  // Green channel
-				0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // Blue channel
-				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel
-				1.0f, 1.0f, 1.0f, 0.0f, 1.0f   // Set translation to add white color
-			};
-
-		}
-		else {
-			colorMatrix = {
-				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
-				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Green channel (set to 0 to remove green)
-				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Blue channel (set to 0 to remove blue)
-				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel (no change to transparency)
-				1.0f, 0.0f, 0.0f, 0.0f, 1.0f   // Translation to add red color
-			};
-		}
-		imgAttrs.SetColorMatrix(&colorMatrix);
-		graphics.DrawImage(image,
-			Gdiplus::Rect(
-				(int)m_tRenderRect.left + iScrollX,
-				(int)m_tRenderRect.top + iScrollY,
-				m_tRenderSizeX,
-				m_tRenderSizeY),
-			(int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
-
 		RenderHpUi(hDC);
+		HitEffect(hDC);
 	}
 
 	if (g_bDevmode) {
@@ -149,6 +129,7 @@ void CBabySlime::OnCollision()
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+				m_bHit = true;
 			}
 		}
 	}

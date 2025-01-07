@@ -106,6 +106,7 @@ void CGolemPunch::Late_Update()
     if (m_bCanDown) {
         __super::Move_Frame();
     }
+
 }
 
 void CGolemPunch::Render(HDC hDC)

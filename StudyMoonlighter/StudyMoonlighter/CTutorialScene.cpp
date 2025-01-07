@@ -39,7 +39,6 @@ void CTutorialScene::Initialize()
 	m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
 
 	CUiManager::GetInstance()->AddItem(SWORD);
-	CUiManager::GetInstance()->AddItem(BOW);
 
 	Create_MapObj();
 }

@@ -51,6 +51,7 @@ void CGolemMiniboss::Initialize()
     m_iHp = 300;
     m_iMaxHp= m_iHp; 
     m_iAttackDamage = 23;
+    InitHitFrame();
 }
 
 int CGolemMiniboss::Update()
@@ -156,6 +157,9 @@ void CGolemMiniboss::Late_Update()
 {
     OnCollision();
     Hit();
+    if (m_bHit) {
+        Move_Frame_Hit();
+    }
     __super::Move_Frame();
 }
 
@@ -251,6 +255,9 @@ void CGolemMiniboss::Render(HDC hDC)
     }
 
     RenderHpUi(hDC);
+    if (!m_bCanHit) {
+        HitEffect(hDC);
+    }
 
     if (g_bDevmode) {
         Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
@@ -295,6 +302,7 @@ void CGolemMiniboss::OnCollision()
                 m_fAttacktedTime = GetTickCount64();
                 CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
                 CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+                m_bHit = true;
             }
         }
     }

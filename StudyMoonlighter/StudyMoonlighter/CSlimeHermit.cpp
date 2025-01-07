@@ -39,6 +39,7 @@ void CSlimeHermit::Initialize()
     m_iHp = 100;
     m_iMaxHp = m_iHp;
     m_iAttackDamage = 17;
+    InitHitFrame();
 }
 
 int CSlimeHermit::Update()
@@ -145,6 +146,9 @@ void CSlimeHermit::Late_Update()
     OnCollision();
     Hit();
     Check_PlayerIn();
+    if (m_bHit) {
+        Move_Frame_Hit();
+    }
     __super::Move_Frame();
 }
 
@@ -175,6 +179,7 @@ void CSlimeHermit::Render(HDC hDC)
 
     if (!m_bCanHit) {
         RenderHpUi(hDC);
+        HitEffect(hDC);
     }
 
     if (g_bDevmode) {
@@ -201,6 +206,7 @@ void CSlimeHermit::OnCollision()
                 m_fAttacktedTime = GetTickCount64();
                 CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
                 CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+                m_bHit = true;
             }
         }
     }

@@ -24,6 +24,7 @@ void CGolemBossScene::Initialize()
 
 	m_fMapXSize = 2312.f;
 	m_fMapYSize = 1566.f;
+	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1160, 1182);
 	CScrollManager::Get_Instance()->Set_Scroll(-600, -702);
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 

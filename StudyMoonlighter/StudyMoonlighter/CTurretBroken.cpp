@@ -32,6 +32,7 @@ void CTurretBroken::Initialize()
 	m_iHp = 50;
 	m_iAttackDamage = 12;
 	m_iMaxHp = m_iHp;
+	InitHitFrame();
 }
 
 int CTurretBroken::Update()
@@ -53,6 +54,9 @@ void CTurretBroken::Late_Update()
 {
 	OnCollision();
 	Hit();
+	if (m_bHit) {
+		Move_Frame_Hit();
+	}
 	__super::Move_Frame();
 }
 
@@ -82,37 +86,8 @@ void CTurretBroken::Render(HDC hDC)
 	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 
 	if (!m_bCanHit) {
-		ImageAttributes imgAttrs;
-		ColorMatrix colorMatrix;
-		if (m_iAttackedDamage % 2 == 0) {
-			colorMatrix = {
-				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
-				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,  // Green channel
-				0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // Blue channel
-				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel
-				1.0f, 1.0f, 1.0f, 0.0f, 1.0f   // Set translation to add white color
-			};
-
-		}
-		else {
-			colorMatrix = {
-				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Red channel
-				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Green channel (set to 0 to remove green)
-				0.0f, 0.0f, 0.0f, 0.0f, 0.0f,  // Blue channel (set to 0 to remove blue)
-				0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  // Alpha channel (no change to transparency)
-				1.0f, 0.0f, 0.0f, 0.0f, 1.0f   // Translation to add red color
-			};
-		}
-		imgAttrs.SetColorMatrix(&colorMatrix);
-		graphics.DrawImage(image,
-			Gdiplus::Rect(
-				(int)m_tRenderRect.left + iScrollX,
-				(int)m_tRenderRect.top + iScrollY,
-				m_tRenderSizeX,
-				m_tRenderSizeY),
-			(int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, Gdiplus::UnitPixel, &imgAttrs);
-
 		RenderHpUi(hDC);
+		HitEffect(hDC);
 	}
 
 
@@ -139,6 +114,7 @@ void CTurretBroken::OnCollision()
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot_impact.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+				m_bHit = true;
 			}
 		}
 	}

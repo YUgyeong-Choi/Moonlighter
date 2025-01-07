@@ -67,6 +67,9 @@ void CFieldScene::Create_MapObj()
 {
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(700, 930, 100, 100));
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(DUNGEON);
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(1700, 930, 100, 100));
+	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(GOLEMBOSS);
 }
 
 void CFieldScene::Offset()
