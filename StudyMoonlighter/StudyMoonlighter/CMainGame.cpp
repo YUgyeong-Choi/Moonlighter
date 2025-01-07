@@ -10,14 +10,14 @@
 #include "CSoundManager.h"
 
 bool g_bDevmode = false;
-//float	g_fEffectVolume(0.6f);
-//float	g_fBackgroundVolume(0.5f);
-//float	g_fPlayerVolume(0.7f);
-//float	g_fMonsterVolume(0.6f);
-float	g_fEffectVolume(0.2f);
-float	g_fBackgroundVolume(0.1f);
-float	g_fPlayerVolume(0.3f);
-float	g_fMonsterVolume(0.2f);
+float	g_fEffectVolume(0.6f);
+float	g_fBackgroundVolume(0.5f);
+float	g_fPlayerVolume(0.7f);
+float	g_fMonsterVolume(0.6f);
+//float	g_fEffectVolume(0.2f);
+//float	g_fBackgroundVolume(0.1f);
+//float	g_fPlayerVolume(0.3f);
+//float	g_fMonsterVolume(0.2f);
 
 CMainGame::CMainGame():m_hDC(nullptr), m_dwTime(GetTickCount64()), m_iFPS(0)
 {

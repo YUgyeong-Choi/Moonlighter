@@ -5,7 +5,7 @@
 #include "CScrollManager.h"
 #include "CSoundManager.h"
 
-CGolemPunch::CGolemPunch():m_iSize(0), m_bCanDown(false), m_PunchY(0), m_OriginPunchY(0), m_bCanUp(false), m_iPunchTime(3),m_sound(false)
+CGolemPunch::CGolemPunch():m_iSize(0), m_bCanDown(false), m_PunchY(0), m_OriginPunchY(0), m_bCanUp(false), m_iPunchTime(3),m_sound(false), m_sound2(false)
 {
 }
 
@@ -41,11 +41,20 @@ int CGolemPunch::Update()
         if (m_iSize >= 20) {
             m_PunchY = (int)m_OriginPunchY + m_iSize;
             m_iSize -= 20;
+            if (m_iPunchTime != 0) {
+                if (!m_sound2) {
+                    CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+                    CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_handcrash_prepare.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+                    m_sound2 = true;
+                }
+            }
+
         }
         else {
             m_bCanUp = false;
             m_bCanDown = false;
             m_sound = false;
+            m_sound2 = false;
             m_tRenderSizeX = 10.f;
             m_tRenderSizeY = 10.f;
             m_iPunchTime--;
@@ -60,7 +69,7 @@ int CGolemPunch::Update()
             if (m_iPunchTime != 0 ) {
                 if (!m_sound) {
                     CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-                    CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_wave.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+                    CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_handcrash.wav", MONSTER_EFFECT, g_fMonsterVolume+0.2f, true);
                     m_sound = true;
                 }
             }

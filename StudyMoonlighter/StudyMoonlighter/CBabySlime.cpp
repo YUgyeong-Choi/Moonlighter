@@ -48,6 +48,8 @@ int CBabySlime::Update()
 		CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory< CGolemDeadObj>::Create(m_tInfo.fX, m_tInfo.fY, SLIME));
 		CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
 		static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(RICHJELLY);
+		CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+		CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_slime_pop.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 		return OBJ_DEAD;
 	}
 	m_fTimeSinceLastStep += 0.1f;
@@ -129,7 +131,7 @@ void CBabySlime::OnCollision()
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 				m_bHit = true;
 			}
 		}
@@ -145,7 +147,7 @@ void CBabySlime::OnCollision(CObject* _obj)
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot_impact.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			}
 		}
 	}

@@ -22,5 +22,6 @@ private:
     float m_OriginPunchY;
     int m_iPunchTime;
     bool m_sound;
+    bool m_sound2;
 };
 

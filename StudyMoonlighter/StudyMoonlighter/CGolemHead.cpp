@@ -45,6 +45,8 @@ int CGolemHead::Update()
     if (m_iHp <= 0) {
         CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
         static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(TEETHSTONE);
+        CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+        CSoundManager::Get_Instance()->PlaySound(L"enemy_death.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
         return OBJ_DEAD;
     }
     if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd && !m_IsAttack) {
@@ -188,6 +190,8 @@ void CGolemHead::OnCollision(CObject* _obj)
                 m_iAttackedDamage = _obj->Get_AttackDamage();
                 m_bCanHit = false;
                 m_fAttacktedTime = GetTickCount64();
+                CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+                CSoundManager::Get_Instance()->PlaySound(L"gassuit_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
             }
         }
     }
@@ -204,7 +208,7 @@ void CGolemHead::OnCollision()
                 m_bCanHit = false;
                 m_fAttacktedTime = GetTickCount64();
                 CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-                CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_babyslime_hit.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+                CSoundManager::Get_Instance()->PlaySound(L"gassuit_hit.wav", MONSTER_EFFECT, g_fMonsterVolume , true);
                 m_bHit = true;
             }
         }

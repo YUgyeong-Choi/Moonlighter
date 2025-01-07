@@ -40,6 +40,8 @@ int CTurretBroken::Update()
 	if (m_iHp <= 0) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY));
 		static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(IRONBAR);
+		CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+		CSoundManager::Get_Instance()->PlaySound(L"enemy_death.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 		return OBJ_DEAD;
 	}
 	if (m_tFrame.iFrameStart == 7) {
@@ -113,7 +115,7 @@ void CTurretBroken::OnCollision()
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot_impact.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 				m_bHit = true;
 			}
 		}
@@ -129,7 +131,7 @@ void CTurretBroken::OnCollision(CObject* _obj)
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
 				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot_impact.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.5f, true);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_golem_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			}
 		}
 	}
@@ -138,6 +140,6 @@ void CTurretBroken::OnCollision(CObject* _obj)
 void CTurretBroken::Shoot()
 {
 	CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-	CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+	CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_turret_shot.wav", MONSTER_EFFECT, g_fMonsterVolume-0.2f, true);
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, CAbstractFactory<CTurretDownBullet>::Create(m_tInfo.fX, m_tInfo.fY-10, m_eDir));
 }

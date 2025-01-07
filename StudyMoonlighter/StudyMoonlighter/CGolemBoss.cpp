@@ -370,6 +370,8 @@ void CGolemBoss::OnCollision(CObject* _obj)
 				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
+				CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_hit.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			}
 		}
 	}
@@ -444,6 +446,8 @@ void CGolemBoss::Change_Frame()
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::DEATH:
+			CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_death.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 46;
 			m_tFrame.dwSpeed = 100;
