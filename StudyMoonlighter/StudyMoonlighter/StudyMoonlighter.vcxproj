@@ -150,6 +150,7 @@
     <ClInclude Include="CSellSlot.h" />
     <ClInclude Include="CShopPlayer.h" />
     <ClInclude Include="CShopScene.h" />
+    <ClInclude Include="CShopSellAll.h" />
     <ClInclude Include="CShopSign.h" />
     <ClInclude Include="CShopTable.h" />
     <ClInclude Include="CShowCase.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="CSellSlot.cpp" />
     <ClCompile Include="CShopPlayer.cpp" />
     <ClCompile Include="CShopScene.cpp" />
+    <ClCompile Include="CShopSellAll.cpp" />
     <ClCompile Include="CShopSign.cpp" />
     <ClCompile Include="CShopTable.cpp" />
     <ClCompile Include="CShowCase.cpp" />

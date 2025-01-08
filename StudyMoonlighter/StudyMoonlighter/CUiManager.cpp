@@ -5,10 +5,16 @@
 #include "CPlayer.h"
 #include "CShopPlayer.h"
 #include "CSpecialSlot.h"
+#include "CBitManager.h"
 CUiManager* CUiManager::m_pInstance = nullptr;
 
 void CUiManager::Initialize()
 {
+	ADD_BMP(L"../MoonlighterAssets/Ui/Inventory_base.bmp", L"InventoryBase");
+	ADD_BMP(L"../MoonlighterAssets/Ui/Showcase_base.bmp", L"ShowcaseBase");
+	ADD_BMP(L"../MoonlighterAssets/Ui/Bag_paperbase.bmp", L"BagPaperbase");
+	ADD_BMP(L"../MoonlighterAssets/Ui/Gold_circle.bmp", L"GoldCircle");
+
 	inventory.resize(4);
 	for (int i = 0; i < 4; ++i) {
 		inventory[i].resize(7);
@@ -157,8 +163,8 @@ void CUiManager::Basic_Ui(HDC hDC)
 {
 	Image* image(nullptr);
 	Graphics graphics(hDC);
-	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
-	graphics.DrawImage(image, 5, 20, 0, 0, 70, 70, UnitPixel);
+	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GoldCircle");
+	GdiTransparentBlt(hDC, 5, 20, 70, 70, hMemDC, 0, 0, 70, 70, RGB(255, 255, 255));
 
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold1.png");
 	graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
@@ -257,8 +263,8 @@ void CUiManager::Inven_Ui(HDC hDC)
 	Image* image(nullptr);
 	Graphics graphics(hDC);
 
-	image = Image::FromFile(L"../MoonlighterAssets/Ui/Inventory_base.png");
-	graphics.DrawImage(image, 100, 100, 0, 0, 1038, 548, UnitPixel);
+	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"InventoryBase");
+	GdiTransparentBlt(hDC, 100, 100, 830, 438, hMemDC, 0, 0, 830, 438, RGB(255, 255, 255));
 	m_Inven->Render(hDC);
 	delete image;
 }
@@ -268,14 +274,14 @@ void CUiManager::Shop_Ui(HDC hDC)
 	Image* image(nullptr);
 	Graphics graphics(hDC);
 
-	image = Image::FromFile(L"../MoonlighterAssets/Ui/Bag_paperbase.png");
-	graphics.DrawImage(image, 100, 100, 0, 0, 385, 435, UnitPixel);
+	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"BagPaperbase");
+	GdiTransparentBlt(hDC, 100, 100, 385, 435, hMemDC, 0, 0, 385, 435, RGB(255, 255, 255));
 
-	image = Image::FromFile(L"../MoonlighterAssets/Ui/Showcase_base.png");
-	graphics.DrawImage(image, 500, 120, 0, 0, 198, 190, UnitPixel);
-	graphics.DrawImage(image, 700, 120, 0, 0, 198, 190, UnitPixel);
-	graphics.DrawImage(image, 500, 320, 0, 0, 198, 190, UnitPixel);
-	graphics.DrawImage(image, 700, 320, 0, 0, 198, 190, UnitPixel);
+	hMemDC = CBitManager::GetInstance()->FindImage(L"ShowcaseBase");
+	GdiTransparentBlt(hDC, 500, 120, 198, 190, hMemDC, 0, 0, 198, 190, RGB(255, 255, 255));
+	GdiTransparentBlt(hDC, 700, 120, 198, 190, hMemDC, 0, 0, 198, 190, RGB(255, 255, 255));
+	GdiTransparentBlt(hDC, 500, 320, 198, 190, hMemDC, 0, 0, 198, 190, RGB(255, 255, 255));
+	GdiTransparentBlt(hDC, 700, 320, 198, 190, hMemDC, 0, 0, 198, 190, RGB(255, 255, 255));
 
 	m_InvenShop->Render(hDC);
 	delete image;

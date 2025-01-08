@@ -44,7 +44,7 @@ int CGolemPunch::Update()
             if (m_iPunchTime != 0) {
                 if (!m_sound2) {
                     CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-                    CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_handcrash_prepare.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+                    CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_handcrash_prepare.wav", MONSTER_EFFECT, g_fMonsterVolume + 0.2f, true);
                     m_sound2 = true;
                 }
             }

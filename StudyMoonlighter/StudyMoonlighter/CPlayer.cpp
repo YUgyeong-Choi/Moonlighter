@@ -449,6 +449,8 @@ void CPlayer::OnCollision(CObject* _obj)
 				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"will_damaged.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 			}
 		}
 		break;
@@ -458,6 +460,8 @@ void CPlayer::OnCollision(CObject* _obj)
 				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
 				m_fAttacktedTime = GetTickCount64();
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"will_damaged.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 			}
 		}
 		break;
@@ -485,6 +489,8 @@ void CPlayer::OnCollision(CObject* _obj)
 		break;
 	case OBJ_BOSS:
 		if (!m_bIsRoll && m_bCanHit) {
+			CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+			CSoundManager::Get_Instance()->PlaySound(L"will_damaged.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 			if (m_fAttacktedTime + 500 < GetTickCount64()) {
 				m_iAttackedDamage = _obj->Get_AttackDamage();
 				m_bCanHit = false;
@@ -641,6 +647,8 @@ void CPlayer::Key_Input()
 				if (m_bCanPotionUse) {
 					m_bCanPotionUse = false;
 					CUiManager::GetInstance()->Get_Potion()->Sub_ItemNum();
+					CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+					CSoundManager::Get_Instance()->PlaySound(L"will_potion_used.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 					if (CUiManager::GetInstance()->Get_Potion()->Get_Item().num == 0) {
 						CUiManager::GetInstance()->Get_Potion()->Item_Init();
 					}
@@ -926,6 +934,119 @@ void CPlayer::SoundEffet()
 					}
 					m_ArrowSpawn = true;
 				}
+			}
+		}
+
+		if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+			if (m_tFrame.iFrameStart == 2) {
+				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
+				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
+			}
+
+			if (m_tFrame.iFrameStart == 4) {
+				if (!m_ArrowSpawn) {
+					switch (m_eCurDir)
+					{
+					case LEFT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX - 10, m_tInfo.fY, LEFT));
+						break;
+					case RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX + 10, m_tInfo.fY, RIGHT));
+						break;
+					case UP:
+					case UP_LEFT:
+					case UP_RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX, m_tInfo.fY - 10, UP));
+						break;
+					case DOWN:
+					case DOWN_LEFT:
+					case DOWN_RIGHT:
+						CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER_ARROW, CAbstractFactory<CPlayerArrow>::Create(m_tInfo.fX, m_tInfo.fY + 10, DOWN));
+						break;
+					}
+					m_ArrowSpawn = true;
+				}
+			}
+		}
+		if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+
+			if (4 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-1);
+			}
+			if (5 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(1);
+			}
+			if (6 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-1);
+			}
+			if (7 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(1);
+			}
+			if (8 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-1);
+			}
+			if (9 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(1);
+			}
+
+			if (11 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-2);
+			}
+			if (12 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(2);
+			}
+			if (13 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-2);
+			}
+			if (14 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(2);
+			}
+			if (15 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-2);
+			}
+			if (16 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(2);
+			}
+		}
+
+
+		if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+			if (4 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-1);
+			}
+			if (5 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(1);
+			}
+			if (6 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-1);
+			}
+			if (7 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(1);
+			}
+			if (8 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-1);
+			}
+			if (9 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(1);
+			}
+
+			if (11 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-2);
+			}
+			if (12 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(2);
+			}
+			if (13 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-2);
+			}
+			if (14 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(2);
+			}
+			if (15 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(-2);
+			}
+			if (16 == m_tFrame.iFrameStart) {
+				CScrollManager::Get_Instance()->Set_ScrollX(2);
 			}
 		}
 

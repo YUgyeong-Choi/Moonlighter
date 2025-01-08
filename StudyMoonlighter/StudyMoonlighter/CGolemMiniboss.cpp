@@ -8,6 +8,7 @@
 #include "CGolemScroll.h"
 #include "CAbstractFactory.h"
 #include "CItem.h"
+#include "CGolemDeadObj.h"
 
 CGolemMiniboss::CGolemMiniboss(): m_eCurPatten(GolemMiniPattern::END), m_ePrePatten(GolemMiniPattern::END), m_iAttackTick(0), m_iAttackMaze(0), m_IsAttack(false), m_radius(0)
 {
@@ -57,12 +58,8 @@ void CGolemMiniboss::Initialize()
 int CGolemMiniboss::Update()
 {
     if (m_iHp <= 0) {
-        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX-10, m_tInfo.fY));
-        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(WATERSPHERE);
-        CObjectManager::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(m_tInfo.fX+10, m_tInfo.fY));
-        static_cast<CItem*>(CObjectManager::Get_Instance()->Get_LastItem())->Set_ItemType(HARDENEDSTEEL);
-        CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-        CSoundManager::Get_Instance()->PlaySound(L"enemy_death.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
+        CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX- 20, m_tInfo.fY, WATERSPHERE));
+        CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX+ 20, m_tInfo.fY, HARDENEDSTEEL));
         return OBJ_DEAD;
     }
     m_iAttackTick++;

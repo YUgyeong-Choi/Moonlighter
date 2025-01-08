@@ -39,6 +39,7 @@ int CTurretBroken::Update()
 {
 	if (m_iHp <= 0) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX, m_tInfo.fY, IRONBAR));
+
 		return OBJ_DEAD;
 	}
 	if (m_tFrame.iFrameStart == 7) {

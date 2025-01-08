@@ -82,6 +82,7 @@ int CMenuScene::Update()
 
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F3)) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
+		CUiManager::GetInstance()->AddItem(RICHJELLY);
 		CSceneManager::GetInstance()->SetScene(SC_SHOP);
 	}
 
@@ -89,6 +90,8 @@ int CMenuScene::Update()
 		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 		static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1160, 1182);
 		CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
+		CUiManager::GetInstance()->AddItem(BOW);
+		CUiManager::GetInstance()->AddItem(SWORD);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F5)) {
