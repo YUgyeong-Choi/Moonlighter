@@ -139,6 +139,8 @@
     <ClInclude Include="CAbstractFactory.h" />
     <ClInclude Include="CAnimationScene.h" />
     <ClInclude Include="CCashRegister.h" />
+    <ClInclude Include="CGamble.h" />
+    <ClInclude Include="CGambleKey.h" />
     <ClInclude Include="CGolemBossRockDead.h" />
     <ClInclude Include="CGolemBreakable2.h" />
     <ClInclude Include="CGolemDeadObj.h" />
@@ -220,6 +222,8 @@
   <ItemGroup>
     <ClCompile Include="CAnimationScene.cpp" />
     <ClCompile Include="CCashRegister.cpp" />
+    <ClCompile Include="CGamble.cpp" />
+    <ClCompile Include="CGambleKey.cpp" />
     <ClCompile Include="CGolemBossRockDead.cpp" />
     <ClCompile Include="CGolemBreakable2.cpp" />
     <ClCompile Include="CGolemDeadObj.cpp" />

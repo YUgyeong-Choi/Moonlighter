@@ -14,6 +14,16 @@ void CUiManager::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Ui/Showcase_base.bmp", L"ShowcaseBase");
 	ADD_BMP(L"../MoonlighterAssets/Ui/Bag_paperbase.bmp", L"BagPaperbase");
 	ADD_BMP(L"../MoonlighterAssets/Ui/Gold_circle.bmp", L"GoldCircle");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/slotmachine_ui.bmp", L"Slotmachine");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/Gold_Falling.bmp", L"GoldFalling");
+
+	ADD_BMP(L"../MoonlighterAssets/Gamble/banana.bmp", L"Banana");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/cherry.bmp", L"Cherry");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/grape.bmp", L"Grape");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/lemon.bmp", L"Lemon");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/orange.bmp", L"Orange");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/strawberry.bmp", L"Strawberry");
+	ADD_BMP(L"../MoonlighterAssets/Gamble/watermelon.bmp", L"Watermelon");
 
 	inventory.resize(4);
 	for (int i = 0; i < 4; ++i) {
@@ -47,6 +57,9 @@ void CUiManager::Initialize()
 	m_potionShop = new CPotionShop();
 	m_potionShop->Initialize();
 
+	m_gamble = new CGambleKey();
+	m_gamble->Initialize();
+
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 4;
 	m_tFrame.dwSpeed = 120;
@@ -58,6 +71,7 @@ void CUiManager::Update()
 	m_Inven->Update();
 	m_InvenShop->Update();
 	m_potionShop->Update();
+	m_gamble->Update();
 
 	if (m_bGetMoney) {
 		if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount64())
@@ -76,6 +90,7 @@ void CUiManager::Update()
 void CUiManager::Late_Update()
 {
 	m_potionShop->Late_Update();
+	m_gamble->Late_Update();
 }
 
 void CUiManager::Render(HDC hDC)
@@ -140,6 +155,9 @@ void CUiManager::Render(HDC hDC)
 	case UI_POTIONSHOP:
 		PotionShop_Ui(hDC);
 		break;
+	case UI_GAMBLE:
+		GambleUi(hDC);
+		break;
 	case UI_END:
 		break;
 	default:
@@ -157,6 +175,7 @@ void CUiManager::Release()
 	Safe_Delete<CInventory*>(m_Inven);
 	Safe_Delete<CInventoryShop*>(m_InvenShop);
 	Safe_Delete<CPotionShop*>(m_potionShop);
+	Safe_Delete<CGambleKey*>(m_gamble);
 }
 
 void CUiManager::Basic_Ui(HDC hDC)
@@ -459,6 +478,64 @@ void CUiManager::PotionShop_Ui(HDC hDC)
 	delete image;
 
 	m_potionShop->Render(hDC);
+}
+
+void CUiManager::GambleUi(HDC hDC)
+{
+	Image* image(nullptr);
+	Graphics graphics(hDC);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Back/Back.png");
+	ImageAttributes imgAttr;
+	ColorMatrix cm = {
+	1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 240 / 255.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+	};
+
+	imgAttr.SetColorMatrix(&cm);
+	graphics.DrawImage(image, Gdiplus::Rect(0, 0, 1024, 720), 0, 0, 1024, 720, UnitPixel, &imgAttr);
+
+	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"Slotmachine");
+	GdiTransparentBlt(hDC, (int)(WINCX / 2 - 355 / 2), (int)(WINCY / 2 - 600 / 2), 355, 600, hMemDC, 0, 0, 355, 600, RGB(255, 255, 255));
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/button_Space.png");
+	graphics.DrawImage(image, 750, WINCY/2-32, 0, 0, 64, 64, UnitPixel);
+
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+
+	HFONT hFont1 = CreateFont(
+		25, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"m3x6"
+	);
+
+	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
+
+	TCHAR szClick[64];
+	_stprintf_s(szClick, _T("Click!"));
+	RECT rect2 = { 790, WINCY/2-50, 890, WINCY / 2 + 50 };
+	DrawText(hDC, szClick, _tcslen(szClick), &rect2, DT_CENTER | DT_SINGLELINE | DT_VCENTER);
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/button_R.png");
+	graphics.DrawImage(image, 750, WINCY / 2 - 32-100, 0, 0, 64, 64, UnitPixel);
+
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+
+	TCHAR szAgain[64];
+	_stprintf_s(szAgain, _T("Again!"));
+	RECT rect3 = { 790, WINCY / 2 - 50-100, 890, WINCY / 2 + 50 -100};
+	DrawText(hDC, szAgain, _tcslen(szAgain), &rect3, DT_CENTER | DT_SINGLELINE | DT_VCENTER);
+
+	SelectObject(hDC, OldFont);
+	DeleteObject(hFont1);
+
+	delete image;
+	m_gamble->Render(hDC);
 }
 
 

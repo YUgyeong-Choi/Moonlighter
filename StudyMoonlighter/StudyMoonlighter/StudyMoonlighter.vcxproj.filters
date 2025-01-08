@@ -166,6 +166,9 @@
     <Filter Include="02_Object\09_Npc">
       <UniqueIdentifier>{deffa685-2830-4162-85cf-dbe3a95ec595}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02_Object\10_Gameble">
+      <UniqueIdentifier>{315b90e7-7340-477b-ad31-6c50e66a6654}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -408,6 +411,12 @@
     <ClInclude Include="CShopSellAll.h">
       <Filter>02_Object\07_Shop</Filter>
     </ClInclude>
+    <ClInclude Include="CGamble.h">
+      <Filter>02_Object\10_Gameble</Filter>
+    </ClInclude>
+    <ClInclude Include="CGambleKey.h">
+      <Filter>02_Object\10_Gameble</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -634,6 +643,12 @@
     </ClCompile>
     <ClCompile Include="CShopSellAll.cpp">
       <Filter>02_Object\07_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="CGamble.cpp">
+      <Filter>02_Object\10_Gameble</Filter>
+    </ClCompile>
+    <ClCompile Include="CGambleKey.cpp">
+      <Filter>02_Object\10_Gameble</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

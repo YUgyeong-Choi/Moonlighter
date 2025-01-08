@@ -83,6 +83,8 @@ int CMenuScene::Update()
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F3)) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
 		CUiManager::GetInstance()->AddItem(RICHJELLY);
+		CUiManager::GetInstance()->AddItem(BOW);
+		CUiManager::GetInstance()->AddItem(SWORD);
 		CSceneManager::GetInstance()->SetScene(SC_SHOP);
 	}
 

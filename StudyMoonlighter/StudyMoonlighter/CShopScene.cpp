@@ -16,6 +16,7 @@
 #include "CShopSign.h"
 #include "CCashRegister.h"
 #include "CShopSellAll.h"
+#include "CGamble.h"
 
 #include "CVisitorIrish.h"
 #include "CVisitorMerchantfemale.h"
@@ -112,6 +113,7 @@ void CShopScene::LateUpdate()
 	OnCollision();
 	CheckOffset();
 	CObjectManager::Get_Instance()->Late_Update();
+	CUiManager::GetInstance()->Late_Update();
 }
 
 void CShopScene::Render(HDC hDC)
@@ -194,6 +196,8 @@ void CShopScene::Create_MapObj()
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopSign>::Create(500, 150));
 	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CShopSellAll>::Create(450, 270));
+
+	CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGamble>::Create(650, 150));
 
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PORTAL, CAbstractFactory<CPortal>::Create(565, 760, 80, 40));
 	static_cast<CPortal*>(CObjectManager::Get_Instance()->Get_LastPortal())->Set_PortalType(VILLAGE);

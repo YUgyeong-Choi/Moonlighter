@@ -3,6 +3,7 @@
 #include "CInventory.h"
 #include "CInventoryShop.h"
 #include "CPotionShop.h"
+#include "CGambleKey.h"
 class CUiManager
 {
 public:
@@ -24,7 +25,7 @@ public:
 	CInvenSlot* Get_Wepon1() { return inventory[0][5]; }
 	CInvenSlot* Get_Wepon2() { return inventory[0][6]; }
 	CInvenSlot* Get_Potion() { return inventory[2][6]; }
-
+	CGambleKey* Get_Gamble() { return m_gamble; }
 	void Get_Moenyui() { m_bGetMoney = true; }
 public:
 	static CUiManager* GetInstance()
@@ -50,6 +51,7 @@ private:
 	void Weapon_Ui(HDC hDC);
 	void Boss_Ui(HDC hDC);
 	void PotionShop_Ui(HDC hDC);
+	void GambleUi(HDC hDC);
 	bool FindItem(ITEMTYPE _item);
 private:
 	static CUiManager* m_pInstance;
@@ -60,4 +62,5 @@ private:
 	CPotionShop* m_potionShop;
 	bool m_bGetMoney;
 	FRAME m_tFrame;
+	CGambleKey* m_gamble;
 };
