@@ -10,10 +10,6 @@ CTurretDownBullet::CTurretDownBullet()
 void CTurretDownBullet::Initialize()
 {
 	m_eOBJID = OBJ_MONSTER_BULLET;
-	m_tFrame.iFrameStart = 0;
-	m_tFrame.iFrameEnd = 5;
-	m_tFrame.dwSpeed = 100;
-	m_tFrame.dwTime = GetTickCount64();
 
 	m_eRender = RENDER_GAMEOBJECT;
 
@@ -64,7 +60,6 @@ int CTurretDownBullet::Update()
 
 void CTurretDownBullet::Late_Update()
 {
-	__super::Move_Frame();
 }
 
 void CTurretDownBullet::Render(HDC hDC)
@@ -91,7 +86,7 @@ void CTurretDownBullet::Render(HDC hDC)
 	int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
 
-	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
+	graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, 0, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);

@@ -34,7 +34,7 @@ void CGolemHead::Initialize()
 
     m_AttackCount = 2;
 
-    m_iHp = 150;
+    m_iHp = 100;
     m_iMaxHp = m_iHp;
     m_iAttackDamage = 5;
     InitHitFrame();

@@ -7,7 +7,7 @@
 #include "CPlayer.h"
 #include "CBitManager.h"
 
-CPotionShop::CPotionShop():rowIndex(0), columnIndex(0), m_craft(false)
+CPotionShop::CPotionShop():rowIndex(0), columnIndex(0), m_craft(false), up(0)
 {
 }
 
@@ -27,6 +27,11 @@ int CPotionShop::Update()
 {
     if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
         m_craft = false;
+        up = 0;
+    }
+
+    if (m_craft) {
+        up +=0.5f;
     }
     KeyInput();
 	return 0;
@@ -92,6 +97,9 @@ void CPotionShop::Render(HDC hDC)
     if(m_craft){
         HDC hMemDC = CBitManager::GetInstance()->FindImage(L"CraftPotion");
         GdiTransparentBlt(hDC, 570 - 100, 320, 200, 260, hMemDC, m_tFrame.iFrameStart * 200, 0, 200, 260, RGB(255, 255, 255));
+
+        image = Image::FromFile(L"../MoonlighterAssets/PotionNpc/Potion2.png");
+        graphics.DrawImage(image, 540, (int)(440 - up), 0, 0, 50, 50, UnitPixel);
     }
 
 

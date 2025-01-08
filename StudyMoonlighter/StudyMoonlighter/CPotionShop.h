@@ -18,5 +18,6 @@ private:
 	int columnIndex;
 	FRAME m_tFrame;
 	bool m_craft;
+	float up;
 };
 
