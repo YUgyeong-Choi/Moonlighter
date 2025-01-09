@@ -56,6 +56,12 @@ void CGolemBoss::Initialize()
 int CGolemBoss::Update()
 {
 	if (m_iHp <= 0) {
+		if (m_eCurPattern != DEATH) {
+			CSoundManager::Get_Instance()->StopAll();
+			CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_death.wav", SOUND_EFFECT, 1, true);
+			CSoundManager::Get_Instance()->PlayBGM(L"golem_dungeon_floor.wav", g_fBackgroundVolume, true);
+		}
+
 		m_eCurPattern = DEATH;
 	}
 	//보스 처음 화면 관련
@@ -125,7 +131,7 @@ int CGolemBoss::Update()
 			m_eCurPattern = m_Pattern.at(m_PatternIndex);
 			m_PatternIndex++;
 			if (m_PatternIndex >= m_Pattern.size()) {
-				m_PatternIndex = 0;
+				m_PatternIndex = 3;
 			}
 			m_preFrame = 0;
 		}

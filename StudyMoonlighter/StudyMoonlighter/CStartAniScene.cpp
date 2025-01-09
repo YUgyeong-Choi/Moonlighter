@@ -23,7 +23,7 @@ void CStartAniScene::Initialize()
 	m_tFrame.dwTime = GetTickCount64();
 	CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 	CSoundManager::Get_Instance()->StopAll();
-	CSoundManager::Get_Instance()->PlayBGM(L"intro.wav", g_fBackgroundVolume, true);
+	CSoundManager::Get_Instance()->PlayBGM(L"intro.wav", g_fBackgroundVolume+0.1f, true);
 }
 
 int CStartAniScene::Update()
