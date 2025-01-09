@@ -60,6 +60,7 @@ int CGolemMiniboss::Update()
     if (m_iHp <= 0) {
         CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX- 20, m_tInfo.fY, WATERSPHERE));
         CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX+ 20, m_tInfo.fY, HARDENEDSTEEL));
+        CObjectManager::Get_Instance()->Add_Object(OBJ_NOCOL, CAbstractFactory<CMonsterDead>::Create(m_tInfo.fX+ 20, m_tInfo.fY+20, BOW));
         return OBJ_DEAD;
     }
     m_iAttackTick++;

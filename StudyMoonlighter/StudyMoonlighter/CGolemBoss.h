@@ -41,5 +41,6 @@ private:
     RECT m_MonsterHitox;
     int count;
     bool m_bDead;
+    bool m_bSpawn;
 };
 

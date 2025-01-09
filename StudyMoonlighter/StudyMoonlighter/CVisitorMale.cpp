@@ -4,14 +4,17 @@
 #include "CKeyManager.h"
 #include "CSoundManager.h"
 #include "CSceneManager.h"
+#include "CObjectManager.h"
+#include "CPlayer.h"
 
 CVisitorMale::CVisitorMale(): charIndex(0), tick(0), cnt(0), talkFinish(false), m_Appear(false), m_dead(false)
 {
 	_stprintf_s(text[0], _T("도박으로 전재산을 잃었다는 소문이"));
 	_stprintf_s(text[1], _T("마을 전체에 퍼졌네"));
 	_stprintf_s(text[2], _T("아이고,,,"));
-	_stprintf_s(text[3], _T("골렘 보스를 잡으면 돈을 많이 준단다"));
-	_stprintf_s(text[4], _T("도전해 보거라"));
+	_stprintf_s(text[3], _T("골렘 보스를 잡으면"));
+	_stprintf_s(text[4], _T("돈을 많이 준다는 소문이 있네"));
+	_stprintf_s(text[5], _T("도전해 보거라"));
 	_stprintf_s(name, _T("Zenon"));
 }
 
@@ -32,11 +35,13 @@ void CVisitorMale::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	CSoundManager::Get_Instance()->PlaySound(L"slimychest_appear.wav", SOUND_EFFECT, g_fEffectVolume, true);
+	static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Inven();
 }
 
 int CVisitorMale::Update()
 {
 	if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd && m_dead) {
+		static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Inven();
 		return OBJ_DEAD;
 	}
 
@@ -157,7 +162,7 @@ void CVisitorMale::KeyInput()
 			cnt++;
 			talkFinish = false;
 			charIndex = 0;
-			if (cnt == 4) {
+			if (cnt == 6) {
 				m_dead = true;
 			}
 			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);

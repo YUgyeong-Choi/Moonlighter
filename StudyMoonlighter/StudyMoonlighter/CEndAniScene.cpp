@@ -59,7 +59,7 @@ void CEndAniScene::Render(HDC hDC)
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
 
-	if (m_tFrame.iFrameStart < 7) {
+	if (m_tFrame.iFrameStart < 14) {
 		HFONT hFont1 = CreateFont(
 			30, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 			DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
@@ -76,7 +76,7 @@ void CEndAniScene::Render(HDC hDC)
 		SelectObject(hDC, OldFont);
 		DeleteObject(hFont1);
 	}
-	else if(m_tFrame.iFrameStart < 14){
+	else if(m_tFrame.iFrameStart < 21){
 		HFONT hFont1 = CreateFont(
 			30, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 			DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,

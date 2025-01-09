@@ -111,7 +111,7 @@ void CStartAniScene::Render(HDC hDC)
 		DeleteObject(hFont1);
 	}
 	else {
-		if (m_tFrame.iFrameStart < 13) {
+		if (m_tFrame.iFrameStart < 17) {
 			HFONT hFont1 = CreateFont(
 				30, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,

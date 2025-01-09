@@ -132,16 +132,16 @@ void CShopPlayer::Render(HDC hDC)
 	if (g_bDevmode) {
 		Hitbox(hDC, m_tRect, iScrollX, iScrollY);
 		Renderbox(hDC, m_tRenderRect, iScrollX, iScrollY);
-	}
 
-	TCHAR szPlayer[64];
-	_stprintf_s(szPlayer, _T("Player: X=%d, Y=%d, Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
-	TCHAR szScroll[64];
-	_stprintf_s(szScroll, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
-	SetTextColor(hDC, RGB(255, 255, 255));
-	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 300, 10, szPlayer, _tcslen(szPlayer));
-	TextOut(hDC, 300, 25, szScroll, _tcslen(szScroll));
+		TCHAR szPlayer[64];
+		_stprintf_s(szPlayer, _T("Player: X=%d, Y=%d, Hp=%d"), (int)m_tInfo.fX, (int)m_tInfo.fY, m_iHp);
+		TCHAR szScroll[64];
+		_stprintf_s(szScroll, _T("Player: X=%d, Y=%d"), (int)iScrollX, (int)iScrollY);
+		SetTextColor(hDC, RGB(255, 255, 255));
+		SetBkMode(hDC, TRANSPARENT);
+		TextOut(hDC, 300, 10, szPlayer, _tcslen(szPlayer));
+		TextOut(hDC, 300, 25, szScroll, _tcslen(szScroll));
+	}
 
 	delete image;
 }

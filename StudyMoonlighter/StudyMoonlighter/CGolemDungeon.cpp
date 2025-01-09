@@ -29,6 +29,14 @@ CGolemDungeon::CGolemDungeon():m_iTutorialIndeX(0), m_iTutorialIndeY(0), m_dir(D
 void CGolemDungeon::Initialize()
 {
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/slime_puddle1.bmp", L"DungeonBackgroundSlime");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_predown.bmp", L"golem_head_predown");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_preup.bmp", L"golem_head_preup");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_preleft.bmp", L"golem_head_preleft");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_preright.bmp", L"golem_head_preright");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rolldown.bmp", L"golem_head_rolldown");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rollleft.bmp", L"golem_head_rollleft");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rollright.bmp", L"golem_head_rollright");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rollup.bmp", L"golem_head_rollup");
 	CSoundManager::Get_Instance()->StopAll();
 	CSoundManager::Get_Instance()->PlayBGM(L"golem_dungeon_floor.wav", g_fBackgroundVolume, true);
 

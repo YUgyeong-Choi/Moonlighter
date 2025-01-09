@@ -81,7 +81,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            if (dwTime + 10 < GetTickCount64())
+            if (dwTime + 7 < GetTickCount64())
             {
                 MainGame.Update();
                 MainGame.LateUpdate();

@@ -34,7 +34,7 @@ void CGolemHead::Initialize()
 
     m_AttackCount = 2;
 
-    m_iHp = 100;
+    m_iHp = 75;
     m_iMaxHp = m_iHp;
     m_iAttackDamage = 5;
     InitHitFrame();
@@ -112,21 +112,24 @@ void CGolemHead::Late_Update()
 
 void CGolemHead::Render(HDC hDC)
 {
-    Image* image(nullptr);
+    int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
+    int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
+    HDC hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_preleft");
+    //
     if (m_IsAttack) {
         switch (m_eDir)
         {
         case LEFT:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rollleft.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_rollleft");
             break;
         case RIGHT:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rollright.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_rollright");
             break;
         case UP:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rollup.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_rollup");
             break;
         case DOWN:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_rolldown.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_rolldown");
             break;
         }
     }
@@ -134,26 +137,21 @@ void CGolemHead::Render(HDC hDC)
         switch (m_eDir)
         {
         case LEFT:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_preleft.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_preleft");
             break;
         case RIGHT:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_preright.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_preright");
             break;
         case UP:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_preup.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_preup");
             break;
         case DOWN:
-            image = Image::FromFile(L"../MoonlighterAssets/Map/Dungeon1/golem_head/golem_head_predown.png");
+            hMemDC = CBitManager::GetInstance()->FindImage(L"golem_head_predown");
             break;
         }
     }
+    GdiTransparentBlt(hDC, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, m_tRenderSizeX, (int)m_tRenderSizeY, hMemDC, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, m_tRenderSizeX, (int)m_tRenderSizeY, RGB(255, 255, 255));
 
-    Graphics graphics(hDC);
-
-    int		iScrollX = (int)CScrollManager::Get_Instance()->Get_ScrollX();
-    int		iScrollY = (int)CScrollManager::Get_Instance()->Get_ScrollY();
-
-    graphics.DrawImage(image, (int)m_tRenderRect.left + iScrollX, (int)m_tRenderRect.top + iScrollY, (int)m_tRenderSizeX * m_tFrame.iFrameStart, 0, (int)m_tRenderSizeX, (int)m_tRenderSizeY, UnitPixel);
 
     if (!m_bCanHit) {
         RenderHpUi(hDC);
@@ -165,7 +163,6 @@ void CGolemHead::Render(HDC hDC)
         Hitbox(hDC, m_tRect, iScrollX, iScrollY);
         //HitCircle(hDC, m_checkCircle);
     }
-    delete image;
 }
 
 void CGolemHead::Release()

@@ -100,6 +100,9 @@ void CItem::Set_ItemType(ITEMTYPE _type)
 	case POTION:
 		pImageUrl = L"../MoonlighterAssets/Items/potion.png";
 		break;
+	case BOW:
+		pImageUrl = L"../MoonlighterAssets/Items/hunter_bow.png";
+		break;
 	case ITEM_END:
 		break;
 	default:

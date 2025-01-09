@@ -51,6 +51,7 @@ int CGolemBossScene::Update()
 
 	if (m_Finish && alpha == 255) {
 		CSceneManager::GetInstance()->SetScene(SC_FINALANI);
+		return 0;
 	}
 
 	if (m_bBossOffSetTrue) {

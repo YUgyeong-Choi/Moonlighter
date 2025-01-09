@@ -185,8 +185,29 @@ void CUiManager::Basic_Ui(HDC hDC)
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"GoldCircle");
 	GdiTransparentBlt(hDC, 5, 20, 70, 70, hMemDC, 0, 0, 70, 70, RGB(255, 255, 255));
 
-	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold1.png");
-	graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
+	if (CPlayer* _player = dynamic_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		if (_player->Get_Money() > 9999) {
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold2.png");
+			graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
+		}
+		else {
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold1.png");
+			graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
+		}
+	}
+
+	if (CShopPlayer* _player = dynamic_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		if (_player->Get_Money() > 9999) {
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold2.png");
+			graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
+		}
+		else {
+			image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold1.png");
+			graphics.DrawImage(image, 11, 26, 0, 0, 64, 64, UnitPixel);
+		}
+	}
+
+	
 
 	//hp ¹Ù
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/HealthBar_Circle.png");
