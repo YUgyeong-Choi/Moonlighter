@@ -101,6 +101,10 @@ int CMenuScene::Update()
 		CSceneManager::GetInstance()->SetScene(SC_FIELD);
 	}
 
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F6)) {
+		CSceneManager::GetInstance()->SetScene(SC_FINALANI);
+	}
+
 	if (m_bIsOpen) {
 		m_iOpenSize += 2;
 	}

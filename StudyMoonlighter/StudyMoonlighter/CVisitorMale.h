@@ -11,13 +11,9 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
-	void TarGetPosition();
 private:
-	void Change_Motion();
 	void KeyInput();
 private:
-	bool m_bYArrive;
-	bool m_bXArrive;
 	int charIndex;
 	int tick;
 	TCHAR text[6][64];
@@ -25,5 +21,7 @@ private:
 	
 	int cnt;
 	bool talkFinish;
+	bool m_Appear;
+	bool m_dead;
 };
 

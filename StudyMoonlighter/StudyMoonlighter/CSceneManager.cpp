@@ -8,7 +8,7 @@
 #include "CDungeonEditScene.h"
 #include "CGolemBossScene.h"
 #include "CGolemDungeon.h"
-#include "CAnimationScene.h"
+#include "CEndAniScene.h"
 #include "CShopScene.h"
 #include "CStartAniScene.h"
 
@@ -52,8 +52,8 @@ void CSceneManager::SetScene(SCENEID eID)
 		case SC_EDIT:
 			m_pScene = new CDungeonEditScene;
 			break;
-		case SC_ANIM:
-			m_pScene = new CAnimationScene;
+		case SC_FINALANI:
+			m_pScene = new CEndAniScene;
 			break;
 		case SC_SHOP:
 			m_pScene = new CShopScene;

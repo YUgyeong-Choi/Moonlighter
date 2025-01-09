@@ -10,8 +10,9 @@
 #include "CAbstractFactory.h"
 #include "CGolemScroll.h"
 #include "CSoundManager.h"
+#include "CSceneManager.h"
 
-CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false), m_bScrollOpen(false)
+CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false), m_bScrollOpen(false), m_Finish(false), alpha(0)
 {
 }
 
@@ -44,6 +45,14 @@ void CGolemBossScene::Initialize()
 
 int CGolemBossScene::Update()
 {
+	if (m_Finish) {
+		alpha += 5;
+	}
+
+	if (m_Finish && alpha == 255) {
+		CSceneManager::GetInstance()->SetScene(SC_FINALANI);
+	}
+
 	if (m_bBossOffSetTrue) {
 		if (!m_bScrollOpen) {
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemScroll>::Create(1176, 700));
@@ -87,7 +96,35 @@ void CGolemBossScene::Render(HDC hDC)
 
 	delete image;
 	CObjectManager::Get_Instance()->Render(hDC);
+
+	if (static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Get_Money() > 9999) {
+		Image* image(nullptr);
+		image = Image::FromFile(L"../MoonlighterAssets/Ui/player_end.png");
+		graphics.DrawImage(image,(int) CObjectManager::Get_Instance()->Get_Player()->Get_Info().fX+20 + iScrollX, (int)CObjectManager::Get_Instance()->Get_Player()->Get_Info().fY - 100 + iScrollY, (int)0, 0, 60, 60, UnitPixel);
+		delete image;
+		m_Finish = true;
+	}
+
 	CUiManager::GetInstance()->Render(hDC);
+
+	if (m_Finish) {
+		Image* image(nullptr);
+		Graphics graphics(hDC);
+
+		image = Image::FromFile(L"../MoonlighterAssets/Back/Back.png");
+		ImageAttributes imgAttr;
+		ColorMatrix cm = {
+		1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		imgAttr.SetColorMatrix(&cm);
+		graphics.DrawImage(image, Gdiplus::Rect(0, 0, 1024, 720), 0, 0, 1024, 720, UnitPixel, &imgAttr);
+		delete image;
+	}
 }
 
 void CGolemBossScene::Release()

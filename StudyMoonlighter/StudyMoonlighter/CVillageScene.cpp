@@ -13,6 +13,7 @@
 #include "CSoundManager.h"
 #include "CUiManager.h"
 #include "CPotionNpc.h"
+#include "CVisitorMale.h"
 
 CVillageScene::CVillageScene()
 {
@@ -30,7 +31,7 @@ void CVillageScene::Initialize()
 		int maxHp = _player->Get_MaxHp();
 		CObjectManager::Get_Instance()->Delete_ID(OBJ_PLAYER);
 		CObjectManager::Get_Instance()->RenderListClear();
-		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(1600, 585));
+		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(1684, 585));
 		CScrollManager::Get_Instance()->Set_Scroll(-1139, -291);
 		static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_State(hp, money, maxHp);
 	}
@@ -82,6 +83,10 @@ void CVillageScene::Key_Input()
 {
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE,VK_F1)) {
 		g_bDevmode = !g_bDevmode;
+	}
+
+	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F5)) {
+		CObjectManager::Get_Instance()->Add_Object(OBJ_NPC, CAbstractFactory<CVisitorMale>::Create(1498, 667));
 	}
 }
 

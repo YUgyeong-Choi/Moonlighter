@@ -116,7 +116,7 @@ void CUiManager::Render(HDC hDC)
 		case SC_SHOP:
 			m_eCurUi = UI_SHOPBASIC;
 			break;
-		case SC_ANIM:
+		case SC_FINALANI:
 			break;
 		case SC_END:
 			break;
@@ -239,12 +239,12 @@ void CUiManager::Basic_Ui(HDC hDC)
 	TCHAR szMoney[64];
 	if (CPlayer* _player = dynamic_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
 		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
-		RECT rect2 = { 20, 100, 70, 120 };
+		RECT rect2 = { 20, 100, 80, 120 };
 		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
 	}
 	else if (CShopPlayer* _player = dynamic_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
 		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
-		RECT rect2 = { 20, 100, 70, 120 };
+		RECT rect2 = { 20, 100, 80, 120 };
 		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
 	}
 
@@ -516,7 +516,7 @@ void CUiManager::GambleUi(HDC hDC)
 	HFONT OldFont = (HFONT)SelectObject(hDC, hFont1);
 
 	TCHAR szClick[64];
-	_stprintf_s(szClick, _T("Click!"));
+	_stprintf_s(szClick, _T("Space!"));
 	RECT rect2 = { 790, WINCY/2-50, 890, WINCY / 2 + 50 };
 	DrawText(hDC, szClick, _tcslen(szClick), &rect2, DT_CENTER | DT_SINGLELINE | DT_VCENTER);
 
@@ -530,6 +530,22 @@ void CUiManager::GambleUi(HDC hDC)
 	_stprintf_s(szAgain, _T("Again!"));
 	RECT rect3 = { 790, WINCY / 2 - 50-100, 890, WINCY / 2 + 50 -100};
 	DrawText(hDC, szAgain, _tcslen(szAgain), &rect3, DT_CENTER | DT_SINGLELINE | DT_VCENTER);
+
+	TCHAR szMoney[64];
+	if (CPlayer* _player = dynamic_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
+		RECT rect2 = { 20, 100, 70, 120 };
+		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+	}
+	else if (CShopPlayer* _player = dynamic_cast<CShopPlayer*>(CObjectManager::Get_Instance()->Get_Player())) {
+		_stprintf_s(szMoney, _T("%d"), _player->Get_Money());
+		RECT rect2 = { 20, 100, 70, 120 };
+		DrawText(hDC, szMoney, _tcslen(szMoney), &rect2, DT_RIGHT | DT_SINGLELINE | DT_VCENTER);
+	}
+
+	image = Image::FromFile(L"../MoonlighterAssets/Ui/Coin.png");
+	graphics.DrawImage(image, 10, 105, 0, 0, 18, 18, UnitPixel);
+
 
 	SelectObject(hDC, OldFont);
 	DeleteObject(hFont1);

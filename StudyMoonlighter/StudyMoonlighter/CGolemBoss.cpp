@@ -12,6 +12,7 @@
 #include "CCollisionManager.h"
 #include "CBabySlime.h"
 #include "CSlimeHermit.h"
+#include "CCoin.h"
 
 CGolemBoss::CGolemBoss():m_ePrePattern(NONE), m_eCurPattern(NONE), m_IsWake(false) , m_PatternIndex(0), m_preFrame(0), m_Shoot(false), m_fAngle(0), m_monster(MONSTER_END), m_hitBoxX(0), m_hitBoxY(0), tick(0), removeTick(0), m_MonsterHitox{0,0,0,0}, count(0), m_bDead(false)
 {
@@ -31,6 +32,7 @@ void CGolemBoss::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyend.bmp", L"GolemBossStickyEnd");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_stickyPunch.bmp", L"GolemBossStickyPunch");
 	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/boss1_death.bmp", L"GolemBossDeath");
+	ADD_BMP(L"../MoonlighterAssets/Map/Dungeon1/boss/Coin.bmp", L"Coin");
 	m_eOBJID = OBJ_BOSS;
 
 	m_tInfo.fCX = 260.f;
@@ -48,7 +50,7 @@ void CGolemBoss::Initialize()
 	m_targetObj = CObjectManager::Get_Instance()->Get_Player();
 	count = 10;
 
-	m_iHp = 1000;
+	m_iHp = 10;
 	m_iMaxHp = m_iHp;
 	m_iAttackDamage = 10;
 }
@@ -60,6 +62,8 @@ int CGolemBoss::Update()
 			CSoundManager::Get_Instance()->StopAll();
 			CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_death.wav", SOUND_EFFECT, 1, true);
 			CSoundManager::Get_Instance()->PlayBGM(L"golem_dungeon_floor.wav", g_fBackgroundVolume, true);
+			SpawnMoney(300,10);
+			SpawnMoney(400,15);
 		}
 
 		m_eCurPattern = DEATH;
@@ -199,21 +203,6 @@ int CGolemBoss::Update()
 			m_preFrame = 22;
 			CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemPunch>::Create(0,0));
 		}
-
-		//if (m_tFrame.iFrameStart == 22 && m_preFrame != 22) {
-		//	CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-		//	CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_avalanch.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
-		//}
-
-		//if (m_tFrame.iFrameStart == 22 && m_preFrame != 22) {
-		//	m_preFrame = 22;
-		//	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemPunch>::Create(0, 0));
-		//}
-
-		//if (m_tFrame.iFrameStart == 22 && m_preFrame != 22) {
-		//	m_preFrame = 22;
-		//	CObjectManager::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CGolemPunch>::Create(0, 0));
-		//}
 
 
 		if (m_tFrame.iFrameStart == m_tFrame.iFrameEnd) {
@@ -425,8 +414,6 @@ void CGolemBoss::Change_Frame()
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 		case CGolemBoss::PUNCHARM:
-			//CSoundManager::Get_Instance()->StopSound(MONSTER_EFFECT);
-			//CSoundManager::Get_Instance()->PlaySound(L"golem_dungeon_king_golem_awalanch_pre.wav", MONSTER_EFFECT, g_fMonsterVolume, true);
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 23;
 			m_tFrame.dwSpeed = 100;
@@ -472,6 +459,16 @@ void CGolemBoss::SpawnRockRandom(int numRocks)
 		int x = rand() % 1400 + 500;
 		int y = rand() % 630 + 600;
 		CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CGolemBossRock>::Create(x, y));
+	}
+}
+
+void CGolemBoss::SpawnMoney(float radius, int numRocks)
+{
+	for (int i = 0; i < numRocks; ++i) {
+		float angle = i * PI / (numRocks - 1);
+		float x = m_tInfo.fX + radius * cos(angle);
+		float y = m_tInfo.fY + radius * sin(angle);
+		CObjectManager::Get_Instance()->Add_Object(OBJ_MAPOBJ, CAbstractFactory<CCoin>::Create(x, y));
 	}
 }
 

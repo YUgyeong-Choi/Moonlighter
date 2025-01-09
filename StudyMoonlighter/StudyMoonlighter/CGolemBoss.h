@@ -18,6 +18,7 @@ private:
     void Change_Frame();
     void SpawnRockCircle(float radius, int numRocks);
     void SpawnRockRandom(int numRocks);
+    void SpawnMoney(float radius, int numRocks);
     void Shoot();
     void OnCollision();
 private:

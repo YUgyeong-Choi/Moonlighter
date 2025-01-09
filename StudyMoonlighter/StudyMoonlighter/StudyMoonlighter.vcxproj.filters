@@ -136,9 +136,6 @@
     <Filter Include="01_Scenes\09_Dungeon">
       <UniqueIdentifier>{1a5f327a-73fe-4384-95d2-785d45d0c30b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Scenes\06_AnimationScene">
-      <UniqueIdentifier>{3e9aa369-0d48-4c25-a84b-c8e243bbea11}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02_Object\04_Visitor">
       <UniqueIdentifier>{d0e44318-11cd-44fc-96e5-497411929b67}</UniqueIdentifier>
     </Filter>
@@ -169,8 +166,11 @@
     <Filter Include="02_Object\10_Gameble">
       <UniqueIdentifier>{315b90e7-7340-477b-ad31-6c50e66a6654}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01_Scenes\StartAimationScene">
+    <Filter Include="01_Scenes\06_StartAimationScene">
       <UniqueIdentifier>{d35db8ef-3ded-4db7-9670-93b6f3c88815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Scenes\08_EndAnimationScene">
+      <UniqueIdentifier>{93660e5f-ef11-4537-ae7d-cdc37414dc9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -327,9 +327,6 @@
     <ClInclude Include="CGolemDungeon.h">
       <Filter>01_Scenes\04_GolemDungeon</Filter>
     </ClInclude>
-    <ClInclude Include="CAnimationScene.h">
-      <Filter>01_Scenes\06_AnimationScene</Filter>
-    </ClInclude>
     <ClInclude Include="CVisitor.h">
       <Filter>02_Object\04_Visitor</Filter>
     </ClInclude>
@@ -421,7 +418,13 @@
       <Filter>02_Object\10_Gameble</Filter>
     </ClInclude>
     <ClInclude Include="CStartAniScene.h">
-      <Filter>01_Scenes\StartAimationScene</Filter>
+      <Filter>01_Scenes\06_StartAimationScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CCoin.h">
+      <Filter>02_Object\06.Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CEndAniScene.h">
+      <Filter>01_Scenes\08_EndAnimationScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -566,9 +569,6 @@
     <ClCompile Include="CGolemDungeon.cpp">
       <Filter>01_Scenes\04_GolemDungeon</Filter>
     </ClCompile>
-    <ClCompile Include="CAnimationScene.cpp">
-      <Filter>01_Scenes\06_AnimationScene</Filter>
-    </ClCompile>
     <ClCompile Include="CVisitor.cpp">
       <Filter>02_Object\04_Visitor</Filter>
     </ClCompile>
@@ -657,7 +657,13 @@
       <Filter>02_Object\10_Gameble</Filter>
     </ClCompile>
     <ClCompile Include="CStartAniScene.cpp">
-      <Filter>01_Scenes\StartAimationScene</Filter>
+      <Filter>01_Scenes\06_StartAimationScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CCoin.cpp">
+      <Filter>02_Object\06.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CEndAniScene.cpp">
+      <Filter>01_Scenes\08_EndAnimationScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

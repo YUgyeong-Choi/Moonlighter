@@ -1,11 +1,10 @@
 #pragma once
 #include "CScene.h"
-#include "CVisitorMale.h"
-class CAnimationScene :public CScene
+class CEndAniScene :public CScene
 {
 public:
-	CAnimationScene();
-	virtual ~CAnimationScene() { Release(); }
+	CEndAniScene();
+	virtual ~CEndAniScene() { Release(); }
 public:
 	void Initialize() override;
 	int Update() override;
@@ -16,8 +15,7 @@ public:
 	void Create_MapObj() override;
 	void Offset() override;
 private:
-	FRAME m_tPortalFrame;
-	bool m_bPortalFinish;
-	CObject* m_pGrandpa;
+	FRAME m_tFrame;
+	bool m_Finish;
 };
 
