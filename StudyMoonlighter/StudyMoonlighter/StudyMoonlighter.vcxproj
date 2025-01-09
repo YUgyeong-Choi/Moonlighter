@@ -198,6 +198,7 @@
     <ClInclude Include="CScrollWasd.h" />
     <ClInclude Include="CSlimeHermit.h" />
     <ClInclude Include="CSoundManager.h" />
+    <ClInclude Include="CStartAniScene.h" />
     <ClInclude Include="CTree1.h" />
     <ClInclude Include="CTurretBroken.h" />
     <ClInclude Include="CTurretDownBullet.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="CScrollWasd.cpp" />
     <ClCompile Include="CSlimeHermit.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
+    <ClCompile Include="CStartAniScene.cpp" />
     <ClCompile Include="CTree1.cpp" />
     <ClCompile Include="CTurretBroken.cpp" />
     <ClCompile Include="CTurretDownBullet.cpp" />

@@ -20,6 +20,7 @@ CVillageScene::CVillageScene()
 
 void CVillageScene::Initialize()
 {
+
 	CSoundManager::Get_Instance()->StopAll();
 	CSoundManager::Get_Instance()->PlayBGM(L"rynoka_day_normal.wav", g_fBackgroundVolume,true);
 	ADD_BMP(L"../MoonlighterAssets/Map/MainVillage.bmp", L"VillageBackground");

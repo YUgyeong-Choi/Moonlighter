@@ -62,7 +62,7 @@ int CMenuScene::Update()
 	if (m_iOpenSize >= 350) {
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE,VK_RETURN))
 		{
-			CSceneManager::GetInstance()->SetScene(SC_TUTORIAL);
+			CSceneManager::GetInstance()->SetScene(SC_STARTANI);
 		}
 		m_bIsOpen = false;
 		CSoundManager::Get_Instance()->PlaySound(L"main_menu_door_opened_loop.wav", SOUND_EFFECT, g_fEffectVolume, false);

@@ -10,6 +10,7 @@
 #include "CGolemDungeon.h"
 #include "CAnimationScene.h"
 #include "CShopScene.h"
+#include "CStartAniScene.h"
 
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 
@@ -29,6 +30,9 @@ void CSceneManager::SetScene(SCENEID eID)
 		{
 		case SC_MENU:
 			m_pScene = new CMenuScene;
+			break;
+		case SC_STARTANI:
+			m_pScene = new CStartAniScene;
 			break;
 		case SC_VILLAGE:
 			m_pScene = new CVillageScene;

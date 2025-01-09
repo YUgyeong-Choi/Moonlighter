@@ -64,7 +64,7 @@ int CTutorialScene::Update()
 				m_iTutorialIndex++;
 				if (m_iTutorialIndex == 4) {
 					CObjectManager::Get_Instance()->Delete_ALL();
-					CSceneManager::GetInstance()->SetScene(SC_ANIM);
+					CSceneManager::GetInstance()->SetScene(SC_VILLAGE);
 					return 0;
 				}
 				m_bMapMove = true;
@@ -115,6 +115,7 @@ void CTutorialScene::Release()
 	}
 	CObjectManager::Get_Instance()->Delete_ALL();
 	CObjectManager::Get_Instance()->RenderListClear();
+	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
 }
 
 void CTutorialScene::Key_Input()
