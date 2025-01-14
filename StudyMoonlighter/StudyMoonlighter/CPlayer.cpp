@@ -56,7 +56,7 @@ void CPlayer::Initialize()
 	m_iMaxHp = m_iHp;
 	m_iAttackDamage = 25;
 	m_iHeal = 30;
-	m_iMoney = 1000;
+	m_iMoney = 0;
 }
 
 int CPlayer::Update()
@@ -636,7 +636,8 @@ void CPlayer::Key_Input()
 			CSoundManager::Get_Instance()->PlaySound(L"will_weapon_change.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
 		}
 
-		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F5) && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
+		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F6 
+		) && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
 			CUiManager::GetInstance()->AddItem(POTION);
 			m_bGetPotion = true;
 		}
