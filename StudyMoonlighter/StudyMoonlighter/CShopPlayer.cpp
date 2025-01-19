@@ -6,6 +6,7 @@
 #include "CUiManager.h"
 #include "CInventory.h"
 #include "CSoundManager.h"
+#include "CInventoryManager.h"
 
 CShopPlayer::CShopPlayer():m_iMoney(0), m_eCurState(STATE_END), m_ePreState(STATE_END), m_bIsRoll(false), m_bInvenOpen(false)
 {
@@ -249,7 +250,7 @@ void CShopPlayer::Key_Input()
 		m_bInvenOpen = !m_bInvenOpen;
 		if (m_bInvenOpen) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVEN);
-			static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+			static_cast<CInventory*>(CInventoryManager::GetInstance()->Get_Inven())->InitXY();
 			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 			CSoundManager::Get_Instance()->PlaySound(L"gui_inventory_open.wav", SOUND_EFFECT, g_fEffectVolume, true);
 		}

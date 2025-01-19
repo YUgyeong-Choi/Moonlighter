@@ -6,6 +6,7 @@
 #include "CUiManager.h"
 #include "CShopPlayer.h"
 #include "CSoundManager.h"
+#include "CInventoryManager.h"
 
 CShopSellAll::CShopSellAll():m_bActive(false)
 {
@@ -85,7 +86,7 @@ void CShopSellAll::Release()
 
 void CShopSellAll::SellAll()
 {
-	vector<vector<CInvenSlot*>> inven = CUiManager::GetInstance()->Get_Inventory();
+	vector<vector<CInvenSlot*>> inven = CInventoryManager::GetInstance()->Get_Inventory();
 	CObject* _player = CObjectManager::Get_Instance()->Get_Player();
 	for (int i = 0; i < 4; ++i) {
 		for (int j = 0; j < 5; ++j) {

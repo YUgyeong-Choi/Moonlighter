@@ -15,6 +15,7 @@
 #include "CSceneManager.h"
 #include "CSoundManager.h"
 #include "CGolemScroll.h"
+#include "CInventoryManager.h"
 
 
 CTutorialScene::CTutorialScene() :m_iTutorialIndex(0), m_dir(DIR_END), m_iMove(0), m_bMapMove(false)
@@ -38,7 +39,7 @@ void CTutorialScene::Initialize()
 	}
 	m_TutorialDungeon[m_iTutorialIndex]->Load_Map();
 
-	CUiManager::GetInstance()->AddItem(SWORD);
+	CInventoryManager::GetInstance()->AddItem(SWORD);
 	CUiManager::GetInstance()->Set_UiType(UI_END);
 
 	Create_MapObj();
@@ -86,6 +87,7 @@ int CTutorialScene::Update()
 
 	CObjectManager::Get_Instance()->Update();
 	CUiManager::GetInstance()->Update();
+	CInventoryManager::GetInstance()->Update();
     return 0;
 }
 

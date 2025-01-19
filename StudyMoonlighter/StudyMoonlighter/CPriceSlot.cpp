@@ -3,6 +3,7 @@
 #include "CKeyManager.h"
 #include "CUiManager.h"
 #include "CSoundManager.h"
+#include "CInventoryManager.h"
 
 CPriceSlot::CPriceSlot() : m_iPrice(0), key_type(KEY_END), m_iPriceIndex(0), m_bActive(false)
 {
@@ -140,7 +141,7 @@ void CPriceSlot::Calc_Price()
 void CPriceSlot::Key_Input()
 {
 	if (CKeyManager::Get_Instance()->Key_Down(key_type, 'A') && m_bActive) {
-		if (CUiManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
+		if (CInventoryManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
 			m_iPriceIndex--;
 			if (m_iPriceIndex < 0) {
 				m_iPriceIndex = 0;
@@ -151,7 +152,7 @@ void CPriceSlot::Key_Input()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(key_type, 'D') && m_bActive) {
-		if (CUiManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
+		if (CInventoryManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
 			m_iPriceIndex++;
 			if (m_iPriceIndex > 5) {
 				m_iPriceIndex = 5;
@@ -162,7 +163,7 @@ void CPriceSlot::Key_Input()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(key_type, 'W') && m_bActive) {
-		if (CUiManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
+		if (CInventoryManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
 			m_OnePrice[m_iPriceIndex]++;
 			if (m_OnePrice[m_iPriceIndex] > 9) {
 				m_OnePrice[m_iPriceIndex] = 9;
@@ -173,7 +174,7 @@ void CPriceSlot::Key_Input()
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(key_type, 'S') && m_bActive) {
-		if (CUiManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
+		if (CInventoryManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
 			m_OnePrice[m_iPriceIndex]--;
 			if (m_OnePrice[m_iPriceIndex] < 0) {
 				m_OnePrice[m_iPriceIndex] = 0;
@@ -185,8 +186,8 @@ void CPriceSlot::Key_Input()
 
 
 	if (CKeyManager::Get_Instance()->Key_Down(key_type , 'K') && m_bActive) {
-		if (CUiManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
-			CUiManager::GetInstance()->Get_InvenShop()->Off_IsPriceTime();
+		if (CInventoryManager::GetInstance()->Get_InvenShop()->Get_IsPriceTime()) {
+			CInventoryManager::GetInstance()->Get_InvenShop()->Off_IsPriceTime();
 			m_bActive = false;
 			CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 			CSoundManager::Get_Instance()->PlaySound(L"gui_selector_movement.wav", SOUND_EFFECT, g_fEffectVolume, true);

@@ -11,6 +11,7 @@
 #include "CGolemScroll.h"
 #include "CSoundManager.h"
 #include "CSceneManager.h"
+#include "CInventoryManager.h"
 
 CGolemBossScene::CGolemBossScene():m_bWake(false), m_bBossOffSetTrue(false), m_bScrollOpen(false), m_Finish(false), alpha(0)
 {
@@ -67,6 +68,7 @@ int CGolemBossScene::Update()
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
 	CUiManager::GetInstance()->Update();
+	CInventoryManager::GetInstance()->Update();
 	return 0;
 }
 

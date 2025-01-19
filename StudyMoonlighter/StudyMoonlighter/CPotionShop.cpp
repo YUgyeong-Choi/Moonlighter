@@ -6,6 +6,7 @@
 #include "CObjectManager.h"
 #include "CPlayer.h"
 #include "CBitManager.h"
+#include "CInventoryManager.h"
 
 CPotionShop::CPotionShop():rowIndex(0), columnIndex(0), m_craft(false), up(0)
 {
@@ -142,7 +143,7 @@ void CPotionShop::KeyInput()
                         CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
                         CSoundManager::Get_Instance()->PlaySound(L"shop_item_sold.wav", SOUND_EFFECT, g_fEffectVolume, true);
                         static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Money(100);
-                        CUiManager::GetInstance()->AddItem(POTION);
+                        CInventoryManager::GetInstance()->AddItem(POTION);
                         m_craft = true;
                     }
                     break;

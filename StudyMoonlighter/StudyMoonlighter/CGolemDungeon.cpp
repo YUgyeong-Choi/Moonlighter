@@ -10,6 +10,7 @@
 #include "CSoundManager.h"
 #include "CBitManager.h"
 #include "CKeyManager.h"
+#include "CInventoryManager.h"
 
 CGolemDungeon::CGolemDungeon():m_iTutorialIndeX(0), m_iTutorialIndeY(0), m_dir(DIR_END), m_iMove(0), m_bMapMove(false)
 {
@@ -117,7 +118,7 @@ int CGolemDungeon::Update()
 	}
 	CObjectManager::Get_Instance()->Update();
 	CUiManager::GetInstance()->Update();
-	CUiManager::GetInstance()->Update();
+	CInventoryManager::GetInstance()->Update();
 	return 0;
 }
 

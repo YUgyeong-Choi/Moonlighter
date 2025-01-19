@@ -6,6 +6,7 @@
 #include "CShopPlayer.h"
 #include "CSpecialSlot.h"
 #include "CBitManager.h"
+#include "CInventoryManager.h"
 CUiManager* CUiManager::m_pInstance = nullptr;
 
 void CUiManager::Initialize()
@@ -24,34 +25,6 @@ void CUiManager::Initialize()
 	ADD_BMP(L"../MoonlighterAssets/Gamble/orange.bmp", L"Orange");
 	ADD_BMP(L"../MoonlighterAssets/Gamble/strawberry.bmp", L"Strawberry");
 	ADD_BMP(L"../MoonlighterAssets/Gamble/watermelon.bmp", L"Watermelon");
-
-	inventory.resize(4);
-	for (int i = 0; i < 4; ++i) {
-		inventory[i].resize(7);
-		for (int j = 0; j < 7; ++j) {
-			inventory[i][j] = nullptr;
-		}
-	}
-
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 5; ++j) {
-			inventory[i][j] = new CInvenSlot(i, j);
-		}
-	}
-
-	inventory[1][5] = new CSpecialSlot(HELMET);
-	inventory[2][5] = new CSpecialSlot(ARMOR);
-	inventory[3][5] = new CSpecialSlot(BOOTS);
-	inventory[0][5] = new CSpecialSlot(WEAPON1);
-	inventory[0][6] = new CSpecialSlot(WEAPON2);
-	inventory[2][6] = new CSpecialSlot(OUTFIT_POTION);
-
-	m_Inven = new CInventory();
-	m_Inven->Copy_Inven(inventory);
-
-	m_InvenShop = new CInventoryShop();
-	m_InvenShop->Initialize();
-	m_InvenShop->Copy_Inven(inventory);
 	m_bGetMoney = false;
 
 	m_potionShop = new CPotionShop();
@@ -68,8 +41,6 @@ void CUiManager::Initialize()
 
 void CUiManager::Update()
 {
-	m_Inven->Update();
-	m_InvenShop->Update();
 	m_potionShop->Update();
 	m_gamble->Update();
 
@@ -167,13 +138,6 @@ void CUiManager::Render(HDC hDC)
 
 void CUiManager::Release()
 {
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 7; ++j) {
-			Safe_Delete<CInvenSlot*>(inventory[i][j]);
-		}
-	}
-	Safe_Delete<CInventory*>(m_Inven);
-	Safe_Delete<CInventoryShop*>(m_InvenShop);
 	Safe_Delete<CPotionShop*>(m_potionShop);
 	Safe_Delete<CGambleKey*>(m_gamble);
 }
@@ -305,7 +269,7 @@ void CUiManager::Inven_Ui(HDC hDC)
 
 	HDC hMemDC = CBitManager::GetInstance()->FindImage(L"InventoryBase");
 	GdiTransparentBlt(hDC, 100, 100, 830, 438, hMemDC, 0, 0, 830, 438, RGB(255, 255, 255));
-	m_Inven->Render(hDC);
+	CInventoryManager::GetInstance()->Get_Inven()->Render(hDC);
 	delete image;
 }
 
@@ -322,8 +286,7 @@ void CUiManager::Shop_Ui(HDC hDC)
 	GdiTransparentBlt(hDC, 700, 120, 198, 190, hMemDC, 0, 0, 198, 190, RGB(255, 255, 255));
 	GdiTransparentBlt(hDC, 500, 320, 198, 190, hMemDC, 0, 0, 198, 190, RGB(255, 255, 255));
 	GdiTransparentBlt(hDC, 700, 320, 198, 190, hMemDC, 0, 0, 198, 190, RGB(255, 255, 255));
-
-	m_InvenShop->Render(hDC);
+	CInventoryManager::GetInstance()->Get_InvenShop()->Render(hDC);
 	delete image;
 }
 
@@ -335,22 +298,22 @@ void CUiManager::Weapon_Ui(HDC hDC)
 	image = Image::FromFile(L"../MoonlighterAssets/Ui/Gold_circle.png");
 	graphics.DrawImage(image, 945, 50, 0, 0, 70, 70, UnitPixel);
 	if (check) {
-		if (Get_Wepon1()->Get_Item().itemId == SWORD) {
-			image = Image::FromFile(Get_Wepon1()->Get_Item().pImageUrl);
+		if (CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+			image = Image::FromFile(CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().pImageUrl);
 			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
-		else if (Get_Wepon1()->Get_Item().itemId == BOW) {
-			image = Image::FromFile(Get_Wepon1()->Get_Item().pImageUrl);
+		else if (CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+			image = Image::FromFile(CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().pImageUrl);
 			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
 	}
 	else {
-		if (Get_Wepon2()->Get_Item().itemId == SWORD) {
-			image = Image::FromFile(Get_Wepon2()->Get_Item().pImageUrl);
+		if (CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+			image = Image::FromFile(CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().pImageUrl);
 			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
-		else if (Get_Wepon2()->Get_Item().itemId == BOW) {
-			image = Image::FromFile(Get_Wepon2()->Get_Item().pImageUrl);
+		else if (CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+			image = Image::FromFile(CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().pImageUrl);
 			graphics.DrawImage(image, 955, 60, 0, 0, 70, 70, UnitPixel);
 		}
 	}
@@ -573,37 +536,4 @@ void CUiManager::GambleUi(HDC hDC)
 
 	delete image;
 	m_gamble->Render(hDC);
-}
-
-
-void CUiManager::AddItem(ITEMTYPE _item)
-{
-	if (FindItem(_item)) {
-		return;
-	}
-	else {
-		for (int i = 0; i < 4; ++i) {
-			for (int j = 0; j < 5; ++j) {
-				if (inventory[i][j]->Get_Item().itemId == ITEM_END) {
-					inventory[i][j]->Set_ItemType(_item);
-					return;
-				}
-			}
-		}
-	}
-}
-
-bool CUiManager::FindItem(ITEMTYPE _item)
-{
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 5; ++j) {
-			if (_item == inventory[i][j]->Get_Item().itemId) {
-				if (inventory[i][j]->Get_Item().maxNum > inventory[i][j]->Get_Item().num) {
-					inventory[i][j]->Add_ItemNum();
-					return true;
-				}
-			}
-		}
-	}
-	return false;
 }

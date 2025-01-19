@@ -6,6 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CFileManager.h"
 #include "CUiManager.h"
+#include "CInventoryManager.h"
 
 //여기 밑에는 지워도 되는 헤더 파일
 #include "CCollisionBox.h"
@@ -40,7 +41,7 @@ void CDungeonEditScene::Initialize()
 	m_fMapXSize = 1024.f;
 	m_fMapYSize = 720.f;
 	CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(150, WINCY / 2));
-	CUiManager::GetInstance()->AddItem(SWORD);
+	CInventoryManager::GetInstance()->AddItem(SWORD);
 	CUiManager::GetInstance()->Set_UiType(UI_END);
 	Create_MapObj();
 }

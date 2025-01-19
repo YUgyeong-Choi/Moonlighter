@@ -17,6 +17,7 @@
 #include "CCashRegister.h"
 #include "CShopSellAll.h"
 #include "CGamble.h"
+#include "CInventoryManager.h"
 
 #include "CVisitorIrish.h"
 #include "CVisitorMerchantfemale.h"
@@ -46,7 +47,7 @@ void CShopScene::Initialize()
 	CScrollManager::Get_Instance()->Set_ScrollLock(m_fMapXSize, m_fMapYSize);
 
 	Create_MapObj();
-	CUiManager::GetInstance()->Get_InvenShop()->Set_Showcase();
+	CInventoryManager::GetInstance()->Get_InvenShop()->Set_Showcase();
 	list<CObject*> mapObjList = CObjectManager::Get_Instance()->Get_MapObjList();
 
 	m_showcaseItem.resize(4);
@@ -62,8 +63,8 @@ void CShopScene::Initialize()
 
 int CShopScene::Update()
 {
-	m_showcaseItem = CUiManager::GetInstance()->Get_InvenShop()->Get_PriceSlotITEM();
-	m_showcasePrice = CUiManager::GetInstance()->Get_InvenShop()->Get_PriceSlotPrice();
+	m_showcaseItem = CInventoryManager::GetInstance()->Get_InvenShop()->Get_PriceSlotITEM();
+	m_showcasePrice = CInventoryManager::GetInstance()->Get_InvenShop()->Get_PriceSlotPrice();
 
 	tick++;
 	if (m_bShopOpen) {
@@ -104,6 +105,7 @@ int CShopScene::Update()
 	Offset();
 	CObjectManager::Get_Instance()->Update();
 	CUiManager::GetInstance()->Update();
+	CInventoryManager::GetInstance()->Update();
 	return 0;
 }
 

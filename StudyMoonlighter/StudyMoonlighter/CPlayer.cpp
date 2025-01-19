@@ -10,6 +10,7 @@
 #include "CItem.h"
 #include "CAbstractFactory.h"
 #include "CPlayerArrow.h"
+#include "CInventoryManager.h"
 
 CPlayer::CPlayer():m_bIsRoll(false), m_eCurState(STATE_END), m_ePreState(STATE_END), m_ePreDir(DIR_END), m_eCurDir(DIR_END), m_fRollTime(0), alpha(255), mbIsAttack(false), m_fComboTime(0), m_bFalling(false), m_bOnslime(false), m_bInvenOpen(false), m_iMoney(0), m_bUsePendant(false), m_NoRenderPlayer(false), m_SelectFirstWeapon(true), m_ArrowSpawn(false), m_bGetPotion(false), m_bCanPotionUse(true)
 {
@@ -253,7 +254,7 @@ void CPlayer::Render(HDC hDC)
 		break;
 	case CPlayer::ATTACK:
 		if (m_SelectFirstWeapon) {
-			if (CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+			if (CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
 				switch (m_eCurDir)
 				{
 				case LEFT:
@@ -274,7 +275,7 @@ void CPlayer::Render(HDC hDC)
 					break;
 				}
 			}
-			else if (CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+			else if (CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
 				switch (m_eCurDir)
 				{
 				case LEFT:
@@ -297,7 +298,7 @@ void CPlayer::Render(HDC hDC)
 			}
 		}
 		else {
-			if (CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+			if (CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
 				switch (m_eCurDir)
 				{
 				case LEFT:
@@ -318,7 +319,7 @@ void CPlayer::Render(HDC hDC)
 					break;
 				}
 			}
-			else if (CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+			else if (CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
 				switch (m_eCurDir)
 				{
 				case LEFT:
@@ -483,7 +484,7 @@ void CPlayer::OnCollision(CObject* _obj)
 	case OBJ_PORTAL:
 		break;
 	case OBJ_ITEM:
-		CUiManager::GetInstance()->AddItem(static_cast<CItem*>(_obj)->Get_ItemType());
+		CInventoryManager::GetInstance()->AddItem(static_cast<CItem*>(_obj)->Get_ItemType());
 		break;
 	case OBJ_END:
 		break;
@@ -586,14 +587,14 @@ void CPlayer::Key_Input()
 
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_ATTACK,'K') && !m_bIsRoll && !m_bInvenOpen && !m_bUsePendant) {
 			if (m_SelectFirstWeapon) {
-				if (CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId != ITEM_END) {
+				if (CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId != ITEM_END) {
 					m_eCurState = ATTACK;
 					mbIsAttack = true;
 					m_ArrowSpawn = false;
 				}
 			}
 			else {
-				if (CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId != ITEM_END) {
+				if (CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId != ITEM_END) {
 					m_eCurState = ATTACK;
 					mbIsAttack = true;
 					m_ArrowSpawn = false;
@@ -615,7 +616,7 @@ void CPlayer::Key_Input()
 			m_bInvenOpen = !m_bInvenOpen;
 			if (m_bInvenOpen) {
 				CUiManager::GetInstance()->Set_UiType(UI_INVEN);
-				static_cast<CInventory*>(CUiManager::GetInstance()->Get_Inven())->InitXY();
+				static_cast<CInventory*>(CInventoryManager::GetInstance()->Get_Inven())->InitXY();
 				CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"gui_inventory_open.wav", SOUND_EFFECT, g_fEffectVolume, true);
 			}
@@ -638,20 +639,20 @@ void CPlayer::Key_Input()
 
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F6 
 		) && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
-			CUiManager::GetInstance()->AddItem(POTION);
+			CInventoryManager::GetInstance()->AddItem(POTION);
 			m_bGetPotion = true;
 		}
 
 
 		if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, 'E') && !m_bIsRoll && !(m_eCurState == ATTACK) && !m_bInvenOpen) {
-			if (CUiManager::GetInstance()->Get_Potion()->Get_Item().num > 0) {
+			if (CInventoryManager::GetInstance()->Get_Potion()->Get_Item().num > 0) {
 				if (m_bCanPotionUse) {
 					m_bCanPotionUse = false;
-					CUiManager::GetInstance()->Get_Potion()->Sub_ItemNum();
+					CInventoryManager::GetInstance()->Get_Potion()->Sub_ItemNum();
 					CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 					CSoundManager::Get_Instance()->PlaySound(L"will_potion_used.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
-					if (CUiManager::GetInstance()->Get_Potion()->Get_Item().num == 0) {
-						CUiManager::GetInstance()->Get_Potion()->Item_Init();
+					if (CInventoryManager::GetInstance()->Get_Potion()->Get_Item().num == 0) {
+						CInventoryManager::GetInstance()->Get_Potion()->Item_Init();
 					}
 				}
 			}
@@ -746,16 +747,16 @@ void CPlayer::Change_Motion()
 			break;
 
 		case CPlayer::ATTACK:
-			if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+			if (m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
 				m_tFrame.iFrameEnd = 4;
 			}
-			if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+			if (!m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
 				m_tFrame.iFrameEnd = 4;
 			}
-			if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+			if (m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
 				m_tFrame.iFrameEnd = 10;
 			}
-			if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+			if (!m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
 				m_tFrame.iFrameEnd = 10;
 			}
 
@@ -876,7 +877,7 @@ void CPlayer::SoundEffet()
 		CSoundManager::Get_Instance()->PlaySound(L"will_fall.wav", SOUND_EFFECT, g_fPlayerVolume, true);
 		break;
 	case CPlayer::ATTACK:
-		if (m_SelectFirstWeapon&& CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+		if (m_SelectFirstWeapon&& CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
 			if (m_tFrame.iFrameStart == 2) {
 				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
@@ -907,7 +908,7 @@ void CPlayer::SoundEffet()
 				}
 			}
 		}
-		if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+		if (!m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
 			if (m_tFrame.iFrameStart == 2) {
 				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
@@ -938,7 +939,7 @@ void CPlayer::SoundEffet()
 			}
 		}
 
-		if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+		if (m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
 			if (m_tFrame.iFrameStart == 2) {
 				CSoundManager::Get_Instance()->StopSound(PLAYER_EFFECT);
 				CSoundManager::Get_Instance()->PlaySound(L"bow_main_attack_shoot.wav", PLAYER_EFFECT, g_fPlayerVolume, true);
@@ -969,7 +970,7 @@ void CPlayer::SoundEffet()
 				}
 			}
 		}
-		if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+		if (!m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
 
 			if (4 == m_tFrame.iFrameStart) {
 				CScrollManager::Get_Instance()->Set_ScrollX(-1);
@@ -1011,7 +1012,7 @@ void CPlayer::SoundEffet()
 		}
 
 
-		if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+		if (m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
 			if (4 == m_tFrame.iFrameStart) {
 				CScrollManager::Get_Instance()->Set_ScrollX(-1);
 			}
@@ -1063,7 +1064,7 @@ void CPlayer::SoundEffet()
 
 void CPlayer::Attack()
 {
-	if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
+	if (m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == SWORD) {
 		if (mbIsAttack) {
 			switch (m_eCurDir)
 			{
@@ -1107,7 +1108,7 @@ void CPlayer::Attack()
 		}
 	}
 
-	if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
+	if (!m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == SWORD) {
 		if (mbIsAttack) {
 			switch (m_eCurDir)
 			{
@@ -1150,14 +1151,14 @@ void CPlayer::Attack()
 		}
 	}
 
-	if (m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
+	if (m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon1()->Get_Item().itemId == BOW) {
 		if (mbIsAttack) {
 			m_tRenderSizeX = 200.f;
 			m_tRenderSizeY = 200.f;
 		}
 	}
 
-	if (!m_SelectFirstWeapon && CUiManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
+	if (!m_SelectFirstWeapon && CInventoryManager::GetInstance()->Get_Wepon2()->Get_Item().itemId == BOW) {
 		if (mbIsAttack) {
 			m_tRenderSizeX = 200.f;
 			m_tRenderSizeY = 200.f;

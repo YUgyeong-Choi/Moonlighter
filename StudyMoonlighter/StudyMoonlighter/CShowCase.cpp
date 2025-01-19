@@ -7,6 +7,7 @@
 #include "CUiManager.h"
 #include "CInventoryShop.h"
 #include "CSoundManager.h"
+#include "CInventoryManager.h"
 
 CShowCase::CShowCase():m_bActive(false), m_iItemMove(0), y(1), tick(0)
 {
@@ -127,7 +128,7 @@ void CShowCase::KeyInput()
 		_shopPlayer->Set_Inven(true);
 		if (CUiManager::GetInstance()->Get_UiType() != UI_INVENSHOP) {
 			CUiManager::GetInstance()->Set_UiType(UI_INVENSHOP);
-			static_cast<CInventoryShop*>(CUiManager::GetInstance()->Get_InvenShop())->InitXY();
+			static_cast<CInventoryShop*>(CInventoryManager::GetInstance()->Get_InvenShop())->InitXY();
 		}
 		CSoundManager::Get_Instance()->StopSound(SOUND_EFFECT);
 		CSoundManager::Get_Instance()->PlaySound(L"gui_inventory_open.wav", SOUND_EFFECT, g_fEffectVolume, true);

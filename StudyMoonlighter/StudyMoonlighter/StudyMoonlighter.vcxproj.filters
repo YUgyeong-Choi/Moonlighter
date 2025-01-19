@@ -172,6 +172,9 @@
     <Filter Include="01_Scenes\08_EndAnimationScene">
       <UniqueIdentifier>{93660e5f-ef11-4537-ae7d-cdc37414dc9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99_Managers\InventoryManager">
+      <UniqueIdentifier>{9995450f-1458-49d3-9ebc-f084fa030591}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -426,6 +429,9 @@
     <ClInclude Include="CEndAniScene.h">
       <Filter>01_Scenes\08_EndAnimationScene</Filter>
     </ClInclude>
+    <ClInclude Include="CInventoryManager.h">
+      <Filter>99_Managers\InventoryManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StudyMoonlighter.cpp">
@@ -664,6 +670,9 @@
     </ClCompile>
     <ClCompile Include="CEndAniScene.cpp">
       <Filter>01_Scenes\08_EndAnimationScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventoryManager.cpp">
+      <Filter>99_Managers\InventoryManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 #include "CSceneManager.h"
 #include "CSoundManager.h"
 #include "CShopScene.h"
+#include "CInventoryManager.h"
 
 CVisitor::CVisitor():m_eCurPattern(CVisitor::END), m_ePrePattern(CVisitor::END), m_fSellX(0), m_fSellY(0), m_fCounterX(0), m_fCounterY(0), m_bSellXY(false), tick(0), m_itemState(ITEMSTATE_END), m_itemTalk(false), m_bTableXY(false), m_fBeforeCounterX(0), m_fBeforeCounterY(0), m_bBeforeTableXY(false), m_AddMoney(false), m_SellFinish(false), m_sound(false)
 {
@@ -86,7 +87,7 @@ int CVisitor::Update()
 					m_SellFinish = true;
 				}
 				else {
-					CUiManager::GetInstance()->Get_InvenShop()->Set_InitSlot(m_index);
+					CInventoryManager::GetInstance()->Get_InvenShop()->Set_InitSlot(m_index);
 				}
 				static_cast<CShopScene*>(CSceneManager::GetInstance()->Get_Scene())->Set_NpcCanSpawn(m_index);
 			}

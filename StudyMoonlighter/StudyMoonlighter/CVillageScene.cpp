@@ -14,6 +14,7 @@
 #include "CUiManager.h"
 #include "CPotionNpc.h"
 #include "CVisitorMale.h"
+#include "CInventoryManager.h"
 
 CVillageScene::CVillageScene()
 {
@@ -52,6 +53,7 @@ int CVillageScene::Update()
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
 	CUiManager::GetInstance()->Update();
+	CInventoryManager::GetInstance()->Update();
 	return 0;
 }
 

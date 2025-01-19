@@ -8,6 +8,7 @@
 #include "CObjectManager.h"
 #include "CShopPlayer.h"
 #include "CUiManager.h"
+#include "CInventoryManager.h"
 
 CMenuScene::CMenuScene():m_bIsOpen(false), m_iOpenSize(0), m_iOpenTime(0), m_iWidth(0)
 {
@@ -77,14 +78,14 @@ int CMenuScene::Update()
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F1)) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
 		CSceneManager::GetInstance()->SetScene(SC_GOLEMDUNGEON);
-		CUiManager::GetInstance()->AddItem(BOW);
-		CUiManager::GetInstance()->AddItem(SWORD);
+		CInventoryManager::GetInstance()->AddItem(BOW);
+		CInventoryManager::GetInstance()->AddItem(SWORD);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F3)) {
 		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(2040, 646));
-		CUiManager::GetInstance()->AddItem(BOW);
-		CUiManager::GetInstance()->AddItem(SWORD);
+		CInventoryManager::GetInstance()->AddItem(BOW);
+		CInventoryManager::GetInstance()->AddItem(SWORD);
 		CSceneManager::GetInstance()->SetScene(SC_SHOP);
 	}
 
@@ -92,8 +93,8 @@ int CMenuScene::Update()
 		CObjectManager::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create(WINCX / 2, WINCY / 2));
 		static_cast<CPlayer*>(CObjectManager::Get_Instance()->Get_Player())->Set_Pos(1160, 1182);
 		CSceneManager::GetInstance()->SetScene(SC_GOLEMBOSS);
-		CUiManager::GetInstance()->AddItem(BOW);
-		CUiManager::GetInstance()->AddItem(SWORD);
+		CInventoryManager::GetInstance()->AddItem(BOW);
+		CInventoryManager::GetInstance()->AddItem(SWORD);
 	}
 
 	if (CKeyManager::Get_Instance()->Key_Down(KEY_MODE, VK_F5)) {

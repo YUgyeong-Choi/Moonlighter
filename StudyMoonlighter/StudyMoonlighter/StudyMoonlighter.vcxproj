@@ -145,6 +145,7 @@
     <ClInclude Include="CGolemBossRockDead.h" />
     <ClInclude Include="CGolemBreakable2.h" />
     <ClInclude Include="CGolemDeadObj.h" />
+    <ClInclude Include="CInventoryManager.h" />
     <ClInclude Include="CInventoryShop.h" />
     <ClInclude Include="CMonsterDead.h" />
     <ClInclude Include="CPlayerArrow.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="CGolemBossRockDead.cpp" />
     <ClCompile Include="CGolemBreakable2.cpp" />
     <ClCompile Include="CGolemDeadObj.cpp" />
+    <ClCompile Include="CInventoryManager.cpp" />
     <ClCompile Include="CInventoryShop.cpp" />
     <ClCompile Include="CMonsterDead.cpp" />
     <ClCompile Include="CPlayerArrow.cpp" />

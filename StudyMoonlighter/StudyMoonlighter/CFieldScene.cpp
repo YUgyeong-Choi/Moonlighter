@@ -8,6 +8,7 @@
 #include "CAbstractFactory.h"
 #include "CPortal.h"
 #include "CUiManager.h"
+#include "CInventoryManager.h"
 
 CFieldScene::CFieldScene()
 {
@@ -29,7 +30,7 @@ int CFieldScene::Update()
 {
 	Key_Input();
 	CObjectManager::Get_Instance()->Update();
-
+	CInventoryManager::GetInstance()->Update();
 	return 0;
 }
 

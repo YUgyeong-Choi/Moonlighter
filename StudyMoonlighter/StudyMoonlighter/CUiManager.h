@@ -1,13 +1,11 @@
 #pragma once
 #include "Define.h"
-#include "CInventory.h"
-#include "CInventoryShop.h"
 #include "CPotionShop.h"
 #include "CGambleKey.h"
 class CUiManager
 {
 public:
-	CUiManager() :m_eCurUi(UI_END), m_Inven(nullptr){ ; }
+	CUiManager() :m_eCurUi(UI_END){ ; }
 	~CUiManager() {; }
 public:
 	void Initialize();
@@ -16,15 +14,8 @@ public:
 	void Render(HDC hDC);
 	void Release();
 	void Set_UiType(UITYPE _type) { m_eCurUi = _type; }
-	void AddItem(ITEMTYPE _item);
 	UITYPE Get_UiType() { return m_eCurUi; }
-	vector<vector<CInvenSlot*>> Get_Inventory() { return inventory; }
-	CInventory* Get_Inven() { return m_Inven; }
-	CInventoryShop* Get_InvenShop() { return m_InvenShop; }
 	CPotionShop* Get_PotionShop() { return m_potionShop; }
-	CInvenSlot* Get_Wepon1() { return inventory[0][5]; }
-	CInvenSlot* Get_Wepon2() { return inventory[0][6]; }
-	CInvenSlot* Get_Potion() { return inventory[2][6]; }
 	CGambleKey* Get_Gamble() { return m_gamble; }
 	void Get_Moenyui() { m_bGetMoney = true; }
 public:
@@ -52,13 +43,9 @@ private:
 	void Boss_Ui(HDC hDC);
 	void PotionShop_Ui(HDC hDC);
 	void GambleUi(HDC hDC);
-	bool FindItem(ITEMTYPE _item);
 private:
 	static CUiManager* m_pInstance;
-	vector<vector<CInvenSlot*>> inventory;
 	UITYPE m_eCurUi;
-	CInventory* m_Inven;
-	CInventoryShop* m_InvenShop;
 	CPotionShop* m_potionShop;
 	bool m_bGetMoney;
 	FRAME m_tFrame;

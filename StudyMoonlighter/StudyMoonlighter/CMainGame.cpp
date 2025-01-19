@@ -8,6 +8,7 @@
 #include "CFileManager.h"
 #include "CUiManager.h"
 #include "CSoundManager.h"
+#include "CInventoryManager.h"
 
 bool g_bDevmode = false;
 float	g_fEffectVolume(0.6f);
@@ -34,6 +35,7 @@ void CMainGame::Initialize()
 	CSceneManager::GetInstance()->SetScene(SC_MENU);
 	CSoundManager::Get_Instance()->Initialize();
 	CUiManager::GetInstance()->Initialize();
+	CInventoryManager::GetInstance()->Initialize();
 }
 
 void CMainGame::Update()
@@ -76,7 +78,9 @@ void CMainGame::Release()
 	CScrollManager::Destroy_Instance();
 	CFileManager::DestroyInstance();
 	CUiManager::GetInstance()->Release();
+	CInventoryManager::GetInstance()->Release();
 	CUiManager::DestroyInstance();
+	CInventoryManager::DestroyInstance();
 	CSoundManager::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }
